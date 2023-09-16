@@ -1,16 +1,26 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite",
+    "db:drop": "drizzle-kit drop"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.42.0",
+    "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.19.13",
+    "drizzle-orm": "^0.28.6",
+    "eslint": "^8.49.0",
     "nuxt": "^3.7.3"
   }
 }
