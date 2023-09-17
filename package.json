@@ -21,6 +21,7 @@
     "drizzle-kit": "^0.19.13",
     "drizzle-orm": "^0.28.6",
     "eslint": "^8.49.0",
+    "firebase-admin": "^11.10.1",
     "nuxt": "^3.7.3"
   }
 }

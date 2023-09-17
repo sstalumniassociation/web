@@ -1,63 +1,12 @@
-# Nuxt 3 Minimal Starter
+# SST Alumni Web App
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This repository contains both the web app and the API for the SST Alumni platform.
 
-## Setup
+[iOS App](https://github.com/sstalumniassociation/ios)
 
-Make sure to install the dependencies:
+## Getting Started
 
-```bash
-# npm
-npm install
+Please get access or set up the following services:
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+* Turso
+* Firebase
