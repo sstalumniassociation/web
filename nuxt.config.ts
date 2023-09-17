@@ -24,12 +24,12 @@ export default defineNuxtConfig({
       sessionCookie: true,
     },
 
-    // appCheck: {
-    //   debug: true,
-    //   isTokenAutoRefreshEnabled: true,
-    //   provider: 'ReCaptchaEnterprise',
-    //   key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu',
-    // },
+    appCheck: {
+      debug: process.env.FIREBASE_APP_CHECK_DEBUG_TOKEN || process.env.NODE_ENV !== 'production',
+      isTokenAutoRefreshEnabled: true,
+      provider: 'ReCaptchaEnterprise',
+      key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu',
+    },
   },
 
   runtimeConfig: {

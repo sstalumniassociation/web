@@ -1,5 +1,6 @@
 // @ts-expect-error Bad types
 import { verifyIdToken } from 'web-auth-library/google'
+import type { UserToken } from 'web-auth-library/dist/google'
 import type { EventHandler, EventHandlerRequest } from 'h3'
 
 export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
@@ -16,7 +17,7 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
     }
 
     const idToken = authorization.substring(7, authorization.length)
-    await verifyIdToken({
+    const data: UserToken = await verifyIdToken({
       idToken,
       projectId: useRuntimeConfig().firebase.projectId,
     })
