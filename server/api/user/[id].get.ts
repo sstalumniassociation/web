@@ -1,4 +1,4 @@
-export default defineProtectedEventHandler(event => ({
+export default defineEventHandler(event => ({
   id: event.context.params!.id,
   name: 'Qin Guan',
   memberId: 'ABC-1',
