@@ -7,6 +7,7 @@ import { createId } from '@paralleldrive/cuid2'
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(), // Use Firebase Auth provided ID as SSOT
   name: text('name').notNull(), // Ignore Firebase Auth provided values and force user to provide their own
+  email: text('email').notNull(),
   memberId: text('member_id').notNull().unique(), // Member ID for tracking by SSTAA Admin
   graduationYear: integer('graduation_year').notNull(),
   memberType: text('member_type', {
@@ -33,6 +34,7 @@ export const events = sqliteTable('events', {
 export const usersToEvents = sqliteTable('users_events', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   eventId: text('event_id').notNull().references(() => events.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+  admissionKey: text('admission_key').notNull(),
 }, t => ({
   pk: primaryKey(t.userId, t.eventId),
 }))

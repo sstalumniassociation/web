@@ -8,4 +8,11 @@ export default defineEventHandler(event => ({
   badgeImage: 'https://www.sst.edu.sg/images/default-source/album/2019-2020/2020-01-24-homecoming/20200124_182000.jpg?sfvrsn=2',
   startDateTime: dayjs(Date.now()).valueOf(),
   endDateTime: dayjs(Date.now()).valueOf(),
+  attendees: [
+    {
+      id: '123',
+      name: 'Qin Guan',
+      admissionKey: '123',
+    },
+  ],
 }))
