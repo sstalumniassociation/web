@@ -10,7 +10,9 @@ export default defineNuxtConfig({
   ],
 
   css: [
-    'framework7/framework7-bundle.min.css',
+    'framework7/css/bundle',
+    'framework7-icons/css/framework7-icons.css',
+    'material-icons/iconfont/material-icons.css',
   ],
 
   vuefire: {
