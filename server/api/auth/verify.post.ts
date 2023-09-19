@@ -26,5 +26,8 @@ export default defineProtectedEventHandler(async (event) => {
     })
   }
 
-  return { ok: true }
+  return {
+    id: user?.id,
+    registered: true,
+  }
 })
