@@ -46,7 +46,8 @@ export default defineNuxtConfig({
       authToken: '' || process.env.TURSO_AUTH_TOKEN,
     },
 
-    firebaseAppCheck: {
+    firebase: {
+      projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
     },
   },
 })
