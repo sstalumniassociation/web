@@ -4,7 +4,7 @@ const verifyRequestBody = z.object({
   email: z.string().email(),
 })
 
-export default defineProtectedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const result = await verifyRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
