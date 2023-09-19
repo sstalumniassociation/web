@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     where: (users, { eq }) => eq(users.email, data.email),
   })
 
-  if (user === null) {
+  if (!user) {
     throw createError({
       status: 404,
       statusMessage: 'Not found',
