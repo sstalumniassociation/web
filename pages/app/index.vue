@@ -3,6 +3,6 @@
 
 <template>
   <div>
-    Imagine a landing page here!
+    hello!
   </div>
 </template>

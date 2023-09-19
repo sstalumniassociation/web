@@ -27,4 +27,6 @@ export default defineProtectedEventHandler(async (event) => {
     .returning()
 
   return user
+}, {
+  allowUnlinkedUser: true,
 })

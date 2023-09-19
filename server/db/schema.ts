@@ -1,5 +1,6 @@
+import type { InferSelectModel } from 'drizzle-orm'
 import { relations } from 'drizzle-orm'
-import { int, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { createId } from '@paralleldrive/cuid2'
 
 // Tables
@@ -7,7 +8,7 @@ import { createId } from '@paralleldrive/cuid2'
 export const users = sqliteTable('users', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
   memberId: text('member_id').notNull().unique(), // Member ID for tracking by SSTAA Admin
-  firebaseId: text('firebase_id').notNull().unique(), // Use Firebase Auth provided ID as SSOT
+  firebaseId: text('firebase_id').unique(), // Use Firebase Auth provided ID as SSOT
   name: text('name').notNull(), // Ignore Firebase Auth provided values and force user to provide their own
   email: text('email').notNull().unique(),
   graduationYear: integer('graduation_year').notNull(),
@@ -21,6 +22,8 @@ export const users = sqliteTable('users', {
     ],
   }),
 })
+
+export type User = InferSelectModel<typeof users>
 
 export const events = sqliteTable('events', {
   id: text('id').primaryKey(),
