@@ -4,7 +4,7 @@ const verifyRequestBody = z.object({
   email: z.string().email(),
 })
 
-export default defineCachedEventHandler(async (event) => {
+export default defineProtectedEventHandler(async (event) => {
   const result = await verifyRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
@@ -27,6 +27,4 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   return { ok: true }
-}, {
-  maxAge: 60 * 60 * 24,
 })

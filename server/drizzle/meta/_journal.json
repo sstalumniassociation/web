@@ -15,6 +15,27 @@
       "when": 1695126561835,
       "tag": "0001_wealthy_valeria_richards",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1695127050309,
+      "tag": "0002_peaceful_phil_sheldon",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1695127082331,
+      "tag": "0003_young_pyro",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1695128452007,
+      "tag": "0004_special_tenebrous",
+      "breakpoints": true
     }
   ]
 }

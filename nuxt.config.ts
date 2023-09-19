@@ -9,6 +9,10 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
   ],
 
+  css: [
+    'framework7/framework7-bundle.min.css',
+  ],
+
   vuefire: {
     emulators: false,
 

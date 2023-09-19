@@ -5,10 +5,11 @@ import { createId } from '@paralleldrive/cuid2'
 // Tables
 
 export const users = sqliteTable('users', {
-  id: text('id').primaryKey(), // Use Firebase Auth provided ID as SSOT
-  name: text('name').notNull(), // Ignore Firebase Auth provided values and force user to provide their own
-  email: text('email').notNull(),
+  id: text('id').primaryKey().$defaultFn(() => createId()),
   memberId: text('member_id').notNull().unique(), // Member ID for tracking by SSTAA Admin
+  firebaseId: text('firebase_id').notNull().unique(), // Use Firebase Auth provided ID as SSOT
+  name: text('name').notNull(), // Ignore Firebase Auth provided values and force user to provide their own
+  email: text('email').notNull().unique(),
   graduationYear: integer('graduation_year').notNull(),
   memberType: text('member_type', {
     enum: [

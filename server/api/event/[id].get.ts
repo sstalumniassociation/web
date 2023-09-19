@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export default defineEventHandler(event => ({
+export default defineProtectedEventHandler(event => ({
   id: event.context.params!.id,
   name: 'SST Homecoming 2024',
   description: 'SST Homecoming 2024',
