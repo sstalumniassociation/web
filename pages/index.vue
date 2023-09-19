@@ -3,7 +3,5 @@ const user = useCurrentUser()
 </script>
 
 <template>
-  <div>
-    {{ user }}
-  </div>
+  <div>{{ user }}</div>
 </template>

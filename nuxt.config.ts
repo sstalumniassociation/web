@@ -1,34 +1,36 @@
+import { isDevelopment } from 'std-env'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false, // Firebase
   devtools: { enabled: true },
-
-  ssr: false, // Firebase *sighs*
 
   modules: [
     'nuxt-vuefire',
   ],
 
   vuefire: {
+    emulators: false,
+
     config: {
-      apiKey: 'AIzaSyC0JXbZ3JWmKC-cEaK3bUl8sQO1lShM1GA',
-      authDomain: 'sstaa-app.firebaseapp.com',
-      databaseURL: 'https://sstaa-app-default-rtdb.asia-southeast1.firebasedatabase.app',
-      projectId: 'sstaa-app',
-      storageBucket: 'sstaa-app.appspot.com',
-      messagingSenderId: '717632543205',
-      appId: '1:717632543205:web:e7918e4133d4cc209cf70c',
+      projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
+      apiKey: 'AIzaSyC0JXbZ3JWmKC-cEaK3bUl8sQO1lShM1GA' || process.env.FIREBASE_API_KEY,
+      authDomain: 'sstaa-app.firebaseapp.com' || process.env.FIREBASE_AUTH_DOMAIN,
+      databaseURL: 'https://sstaa-app-default-rtdb.asia-southeast1.firebasedatabase.app' || process.env.FIREBASE_DATABASE_URL,
+      storageBucket: 'sstaa-app.appspot.com' || process.env.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: '717632543205' || process.env.FIREBASE_MESSAGING_SENDER_ID,
+      appId: '1:717632543205:web:e7918e4133d4cc209cf70c' || process.env.FIREBASE_APP_ID,
     },
 
     auth: {
       enabled: true,
-      sessionCookie: true,
     },
 
     appCheck: {
-      debug: process.env.FIREBASE_APP_CHECK_DEBUG_TOKEN || process.env.NODE_ENV !== 'production',
+      debug: process.env.FIREBASE_APP_CHECK_DEBUG_TOKEN || isDevelopment,
+      provider: 'ReCaptchaEnterprise' || process.env.FIREBASE_APP_CHECK_PROVIDER,
+      key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu' || process.env.FIREBASE_APP_CHECK_KEY,
       isTokenAutoRefreshEnabled: true,
-      provider: 'ReCaptchaEnterprise',
-      key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu',
     },
   },
 
@@ -37,8 +39,8 @@ export default defineNuxtConfig({
       url: '' || process.env.TURSO_URL,
       authToken: '' || process.env.TURSO_AUTH_TOKEN,
     },
-    firebase: {
-      projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
+
+    firebaseAppCheck: {
     },
   },
 })
