@@ -28,6 +28,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     id: user?.id,
-    registered: true,
+    linked: !!user.firebaseId,
   }
 })
