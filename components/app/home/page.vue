@@ -1,6 +1,7 @@
 <script>
 import {
   f7BlockTitle,
+  f7Button,
   f7Icon,
   f7Link,
   f7List,
@@ -29,6 +30,7 @@ export default {
     F7Link: f7Link,
     F7Searchbar: f7Searchbar,
     F7Icon: f7Icon,
+    F7Button: f7Button,
   },
   props: {
     f7router: Object,
@@ -75,6 +77,15 @@ export default {
         </template>
       </F7ListItem>
     </F7List>
+
+    <F7BlockTitle class="searchbar-found">
+      {{ $pwa.offlineReady }}
+      {{ $pwa.needRefresh }}
+    </F7BlockTitle>
+
+    <F7Button @click="$pwa.updateServiceWorker()">
+      reload
+    </F7Button>
 
     <F7BlockTitle class="searchbar-found">
       Components
