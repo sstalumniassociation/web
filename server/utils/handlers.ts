@@ -7,6 +7,7 @@ import type { User } from '~/server/db/schema'
 declare module 'h3' {
   interface H3EventContext {
     user?: User
+    firebaseId?: string
   }
 }
 
@@ -49,6 +50,7 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
     }
 
     event.context.user = user
+    event.context.firebaseId = sub
 
     return handler(event)
   })
