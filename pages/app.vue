@@ -10,27 +10,49 @@ import Framework7 from 'framework7/lite-bundle'
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
-import { AppHomePage, LazyAppEventsPage } from '#components'
+import { AppHomePage } from '#components'
 
 Framework7.use(Framework7Vue)
 
 const appRoutes = [
   {
-    path: '/',
+    name: 'home',
+    path: '/app',
     component: AppHomePage,
   },
   {
-    path: '/events',
-    component: LazyAppEventsPage,
+    name: 'events',
+    path: '/app/events',
+    asyncComponent: () => import('~/components/app/events/page.vue'),
   },
 ]
 
+useHeadSafe({
+  meta: [
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover',
+    },
+    {
+      name: 'apple-mobile-web-app-capable',
+      content: 'yes',
+    },
+    {
+      name: 'apple-mobile-web-app-status-bar-style',
+      content: 'black-translucent',
+    },
+    {
+      name: 'theme-color',
+      content: '#000000',
+    },
+    {
+      name: 'apple-touch-icon',
+      content: 'logo.png',
+    },
+  ],
+})
+
 const route = useRoute()
-const url = (() => {
-  if (route.path.length === 4)
-    return '/'
-  return route.path.slice(4, route.path.length)
-})()
 </script>
 
 <template>
@@ -42,7 +64,12 @@ const url = (() => {
   >
     <f7View
       main
-      :url="url"
-    />
+      :url="route.path"
+      :master-detail-breakpoint="768"
+      preload-previous-page
+      ios-swipe-back
+    >
+      <NuxtPage />
+    </f7View>
   </f7App>
 </template>
