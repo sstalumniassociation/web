@@ -10,6 +10,10 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
   ],
 
+  routeRules: {
+    '/': { prerender: true },
+  },
+
   pwa: {
     registerType: 'autoUpdate',
     client: {
@@ -17,8 +21,8 @@ export default defineNuxtConfig({
       periodicSyncForUpdates: 60 * 60,
     },
     workbox: {
-      navigateFallback: '/app',
-      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
     },
     devOptions: {
       enabled: true,
