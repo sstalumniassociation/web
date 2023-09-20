@@ -11,10 +11,23 @@ export default defineNuxtConfig({
   ],
 
   pwa: {
-    devOptions: { enabled: true },
     registerType: 'autoUpdate',
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 60 * 60,
+    },
+    workbox: {
+      navigateFallback: '/app',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      type: 'module',
+    },
     manifest: {
-      start_url: '/app?standalone=true',
+      scope: '/app',
+      start_url: '/app',
       name: 'SSTAA',
       short_name: 'SSTAA',
       description: 'The SST Alumni App',
