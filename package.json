@@ -17,6 +17,7 @@
     "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@vite-pwa/nuxt": "^0.1.1",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "drizzle-kit": "^0.19.13",

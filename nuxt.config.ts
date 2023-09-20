@@ -7,7 +7,11 @@ export default defineNuxtConfig({
 
   modules: [
     'nuxt-vuefire',
+    '@vite-pwa/nuxt',
   ],
+
+  pwa: {
+  },
 
   vuefire: {
     emulators: false,

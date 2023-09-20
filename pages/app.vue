@@ -28,6 +28,7 @@ const appRoutes = [
 ]
 
 useHeadSafe({
+  titleTemplate: 'SSTAA - %s',
   meta: [
     {
       name: 'viewport',
@@ -56,6 +57,7 @@ const route = useRoute()
 </script>
 
 <template>
+  <VitePwaManifest />
   <f7App
     name="SSTAA"
     theme="md"
