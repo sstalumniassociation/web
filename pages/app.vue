@@ -25,6 +25,11 @@ const appRoutes = [
     path: '/app/events',
     asyncComponent: () => import('~/components/app/events/page.vue'),
   },
+  {
+    name: 'auth',
+    path: '/app/auth',
+    asyncComponent: () => import('~/components/app/auth/page.vue'),
+  },
 ]
 
 useSeoMeta({
