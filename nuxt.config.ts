@@ -14,6 +14,29 @@ export default defineNuxtConfig({
     '/': { prerender: true },
   },
 
+  app: {
+    head: {
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover',
+        },
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes',
+        },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
+        {
+          name: 'theme-color',
+          content: '#000000',
+        },
+      ],
+    },
+  },
+
   pwa: {
     registerType: 'autoUpdate',
     client: {
@@ -25,7 +48,7 @@ export default defineNuxtConfig({
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
     },
     devOptions: {
-      enabled: true,
+      enabled: process.env.VITE_DEV_PWA === 'true',
       suppressWarnings: true,
       type: 'module',
     },
