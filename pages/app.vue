@@ -27,8 +27,30 @@ const appRoutes = [
   },
 ]
 
+useSeoMeta({
+  description: 'The SST Alumni App',
+})
+
 useHeadSafe({
-  titleTemplate: 'SSTAA - %s',
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - SSTAA` : 'SSTAA'
+  },
+  link: [
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+    },
+    {
+      rel: 'apple-touch-icon',
+      href: '/apple-touch-icon-180x180.png',
+      sizes: '180x180',
+    },
+    {
+      rel: 'mask-icon',
+      href: '/maskable-icon-512x512.png',
+      color: '#ffffff',
+    },
+  ],
   meta: [
     {
       name: 'viewport',
@@ -45,10 +67,6 @@ useHeadSafe({
     {
       name: 'theme-color',
       content: '#000000',
-    },
-    {
-      name: 'apple-touch-icon',
-      content: 'logo.png',
     },
   ],
 })

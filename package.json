@@ -10,13 +10,15 @@
     "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate:sqlite",
     "db:push": "drizzle-kit push:sqlite",
-    "db:drop": "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop",
+    "pwa:generate-assets": "pwa-assets-generator --preset minimal public/logo.png"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.42.0",
     "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@vite-pwa/assets-generator": "^0.0.10",
     "@vite-pwa/nuxt": "^0.1.1",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
