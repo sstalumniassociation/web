@@ -67,6 +67,7 @@ const route = useRoute()
     <f7View
       main
       :url="route.path"
+      class="safe-areas"
       :master-detail-breakpoint="768"
       preload-previous-page
       ios-swipe-back
