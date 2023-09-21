@@ -10,7 +10,7 @@ import Framework7 from 'framework7/lite-bundle'
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
-import { AppHomePage } from '#components'
+import AppHomePage from '~/pages/app/index.vue'
 
 Framework7.use(Framework7Vue)
 
@@ -24,11 +24,6 @@ const appRoutes = [
     name: 'events',
     path: '/app/events',
     asyncComponent: () => import('~/components/app/events/page.vue'),
-  },
-  {
-    name: 'auth',
-    path: '/app/auth',
-    asyncComponent: () => import('~/components/app/auth/page.vue'),
   },
 ]
 

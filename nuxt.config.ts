@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 
   modules: [
     'nuxt-vuefire',
+    '@unocss/nuxt',
     '@vite-pwa/nuxt',
   ],
 

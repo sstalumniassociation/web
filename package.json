@@ -18,6 +18,7 @@
     "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@unocss/nuxt": "^0.56.0",
     "@vite-pwa/assets-generator": "^0.0.10",
     "@vite-pwa/nuxt": "^0.1.1",
     "dayjs": "^1.11.9",
