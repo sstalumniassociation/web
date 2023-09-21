@@ -1,4 +1,6 @@
+import { defu } from 'defu'
 import { getAuth } from 'firebase/auth'
+import type { UseFetchOptions } from '#app'
 
 export const $api = $fetch.create({
   async onRequest(context) {
@@ -10,3 +12,19 @@ export const $api = $fetch.create({
     }
   },
 })
+
+export function useApiFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
+  const defaults: UseFetchOptions<T> = {
+    $fetch: $api,
+  }
+  const params = defu(options, defaults)
+  return useFetch(url, params)
+}
+
+export function useLazyApiFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
+  const defaults: UseFetchOptions<T> = {
+    $fetch: $api,
+  }
+  const params = defu(options, defaults)
+  return useLazyFetch(url, params)
+}

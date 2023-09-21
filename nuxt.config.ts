@@ -5,6 +5,10 @@ export default defineNuxtConfig({
   ssr: false, // Firebase
   devtools: { enabled: true },
 
+  vue: {
+    defineModel: true,
+  },
+
   modules: [
     'nuxt-vuefire',
     '@unocss/nuxt',

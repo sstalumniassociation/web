@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { FetchError } from 'ofetch'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { f7, f7Button, f7List, f7ListInput, f7LoginScreenTitle, f7Page } from 'framework7-vue'
+import { f7, f7Button, f7List, f7ListInput, f7LoginScreen, f7LoginScreenTitle, f7Page } from 'framework7-vue'
 import { FirebaseError } from 'firebase/app'
+
+const opened = defineModel<boolean>('opened')
 
 const FIREBASE_ERROR_MESSAGES: Record<string, string> = {
   'auth/user-disabled': 'Your account has been temporarily disabled. Please try again later.',
@@ -121,29 +123,31 @@ function handleFirebaseError(err: FirebaseError) {
 </script>
 
 <template>
-  <f7Page login-screen no-toolbar no-navbar no-swipeback>
-    <f7LoginScreenTitle>SSTAA</f7LoginScreenTitle>
-    <f7List form @submit.prevent="login">
-      <f7ListInput
-        v-model:value="state.email" label="Email" type="email" placeholder="Your email address" autofocus
-        validate required
-      />
-      <template v-if="state.accountLinked !== null">
+  <f7LoginScreen v-model:opened="opened">
+    <f7Page login-screen>
+      <f7LoginScreenTitle>Sign in to SSTAA</f7LoginScreenTitle>
+      <f7List form @submit.prevent="login">
         <f7ListInput
-          v-model:value="state.password" validate label="Password" type="password" placeholder="Your password"
-          required
+          v-model:value="state.email" label="Email" type="email" placeholder="Your email address"
+          validate required
         />
-        <f7ListInput
-          v-if="state.accountLinked === false" v-model:value="state.confirmPassword" validate
-          label="Confirm password" type="password" placeholder="Confirm password" required
-        />
-      </template>
+        <template v-if="state.accountLinked !== null">
+          <f7ListInput
+            v-model:value="state.password" validate label="Password" type="password" placeholder="Your password"
+            required
+          />
+          <f7ListInput
+            v-if="state.accountLinked === false" v-model:value="state.confirmPassword" validate
+            label="Confirm password" type="password" placeholder="Confirm password" required
+          />
+        </template>
 
-      <f7List inset>
-        <f7Button type="submit" preloader :loading="state.pending" :disabled="state.pending">
-          {{ !state.accountLinked ? 'Continue' : 'Login' }}
-        </f7Button>
+        <f7List inset>
+          <f7Button type="submit" preloader :loading="state.pending" :disabled="state.pending">
+            {{ !state.accountLinked ? 'Continue' : 'Login' }}
+          </f7Button>
+        </f7List>
       </f7List>
-    </f7List>
-  </f7Page>
+    </f7Page>
+  </f7LoginScreen>
 </template>

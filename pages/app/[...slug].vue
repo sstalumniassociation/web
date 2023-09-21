@@ -10,7 +10,7 @@ import Framework7 from 'framework7/lite-bundle'
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
-import AppHomePage from '~/pages/app/index.vue'
+import { AppHomePage } from '#components'
 
 Framework7.use(Framework7Vue)
 
@@ -58,21 +58,14 @@ const route = useRoute()
 
 <template>
   <VitePwaManifest />
-  <f7App
-    name="SSTAA"
-    theme="md"
-    dark-mode
-    :routes="appRoutes"
-  >
+  <f7App name="SSTAA" theme="md" dark-mode :routes="appRoutes">
     <f7View
       main
-      :url="route.path"
       class="safe-areas"
+      :url="route.path"
       :master-detail-breakpoint="768"
-      preload-previous-page
       ios-swipe-back
-    >
-      <NuxtPage />
-    </f7View>
+      preload-previous-page
+    />
   </f7App>
 </template>
