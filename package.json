@@ -31,7 +31,6 @@
     "framework7-vue": "^8.3.0",
     "material-icons": "^1.13.11",
     "nuxt": "^3.7.3",
-    "nuxt-api-party": "^0.20.0",
     "nuxt-vuefire": "^0.3.0",
     "vuefire": "^3.1.17",
     "web-auth-library": "^1.0.3",
