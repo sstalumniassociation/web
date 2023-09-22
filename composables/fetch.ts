@@ -15,7 +15,7 @@ export const $api = $fetch.create({
 
 type ApiFetchRequest<T> = Ref<T> | T | (() => T)
 
-export function useApiFetch<ReqT extends string, ResT>(request: ApiFetchRequest<ReqT>, options: UseFetchOptions<ResT> = {}) {
+export function useApiFetch<ResT, ReqT extends string = string>(request: ApiFetchRequest<ReqT>, options: UseFetchOptions<ResT> = {}) {
   const defaults: UseFetchOptions<ResT> = {
     $fetch: $api,
   }
@@ -23,7 +23,7 @@ export function useApiFetch<ReqT extends string, ResT>(request: ApiFetchRequest<
   return useFetch(request, params)
 }
 
-export function useLazyApiFetch<ReqT extends string, ResT>(request: ApiFetchRequest<ReqT>, options: Omit<UseFetchOptions<ResT>, 'lazy'> = {}) {
+export function useLazyApiFetch<ResT, ReqT extends string = string>(request: ApiFetchRequest<ReqT>, options: Omit<UseFetchOptions<ResT>, 'lazy'> = {}) {
   const defaults: UseFetchOptions<ResT> = {
     $fetch: $api,
   }

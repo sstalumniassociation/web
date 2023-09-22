@@ -15,9 +15,9 @@ const state = reactive({
   showLoginScreen: false,
 })
 
-watchEffect(() => {
+watch([authLoaded, auth], (values) => {
   setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
-    state.showLoginScreen = authLoaded.value && !auth.value
+    state.showLoginScreen = values[0] && !values[1]
   }, 1000)
 })
 </script>
