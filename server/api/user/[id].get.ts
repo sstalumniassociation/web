@@ -1,5 +1,5 @@
 export default defineProtectedEventHandler(async (event) => {
-  if (event.context.firebaseId !== event.context.params!.firebaseId) {
+  if (event.context.firebaseId !== event.context.params!.id) {
     throw createError({
       status: 403,
       statusMessage: 'Forbidden',

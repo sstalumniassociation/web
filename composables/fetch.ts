@@ -13,18 +13,20 @@ export const $api = $fetch.create({
   },
 })
 
-export function useApiFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
-  const defaults: UseFetchOptions<T> = {
+type ApiFetchRequest<T> = Ref<T> | T | (() => T)
+
+export function useApiFetch<ReqT extends string, ResT>(request: ApiFetchRequest<ReqT>, options: UseFetchOptions<ResT> = {}) {
+  const defaults: UseFetchOptions<ResT> = {
     $fetch: $api,
   }
   const params = defu(options, defaults)
-  return useFetch(url, params)
+  return useFetch(request, params)
 }
 
-export function useLazyApiFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
-  const defaults: UseFetchOptions<T> = {
+export function useLazyApiFetch<ReqT extends string, ResT>(request: ApiFetchRequest<ReqT>, options: Omit<UseFetchOptions<ResT>, 'lazy'> = {}) {
+  const defaults: UseFetchOptions<ResT> = {
     $fetch: $api,
   }
   const params = defu(options, defaults)
-  return useLazyFetch(url, params)
+  return useLazyFetch(request, params)
 }
