@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Block, f7BlockTitle, f7Link, f7Navbar, f7Page, f7Tab, f7Tabs, f7Toolbar } from 'framework7-vue'
+import { f7Block, f7BlockTitle, f7Icon, f7Link, f7List, f7ListItem, f7NavLeft, f7NavTitle, f7Navbar, f7Page, f7Panel, f7Tab, f7Tabs, f7Toolbar } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 import { useIsCurrentUserLoaded } from 'vuefire'
 
@@ -29,48 +29,41 @@ const showForbidden = computed(() => {
 <template>
   <f7Page>
     <CommonLoginScreen v-model:opened="state.showLoginScreen" />
-    <f7Navbar title="SSTAA Admin" />
+    <f7Navbar>
+      <f7NavLeft v-if="!showForbidden">
+        <f7Link panel-open="left" icon-ios="f7:menu" icon-md="material:menu" />
+      </f7NavLeft>
+      <f7NavTitle>
+        SSTAA Admin
+      </f7NavTitle>
+    </f7Navbar>
 
     <LazyAdminHomeForbidden v-if="showForbidden" />
 
-    <f7Toolbar v-else position="bottom" tabbar icons>
-      <f7Link
-        tab-link="#events"
-        tab-link-active
-        text="Events"
-        icon-md="material:today"
-      />
-      <f7Link
-        tab-link="#members"
-        text="Members"
-        icon-md="material:account_circle"
-      />
-      <f7-link
-        tab-link="#settings"
-        text="Settings"
-        icon-md="material:settings"
-      />
-    </f7Toolbar>
+    <template v-else>
+      <f7Panel left cover>
+        <f7List menu-list strong-ios outline-ios>
+          <f7ListItem selected link title="Events">
+            <template #media>
+              <f7Icon md="material:today" />
+            </template>
+          </f7ListItem>
 
-    <f7Tabs>
-      <f7Tab id="events" tab-active>
-        <f7BlockTitle large>
-          Events
-        </f7BlockTitle>
-        <AdminHomeEventsTable />
-      </f7Tab>
+          <f7ListItem link title="Members">
+            <template #media>
+              <f7Icon md="material:account_circle" />
+            </template>
+          </f7ListItem>
 
-      <f7Tab id="members">
-        <f7BlockTitle large>
-          Members
-        </f7BlockTitle>
-      </f7Tab>
+          <f7ListItem link title="Settings">
+            <template #media>
+              <f7Icon md="material:settings" />
+            </template>
+          </f7ListItem>
+        </f7list>
+      </f7Panel>
 
-      <f7Tab id="settings">
-        <f7BlockTitle large>
-          Settings
-        </f7BlockTitle>
-      </f7Tab>
-    </f7Tabs>
+      <AdminHomeEventsTable />
+    </template>
   </f7Page>
 </template>

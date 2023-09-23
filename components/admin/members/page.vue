@@ -4,6 +4,6 @@ import { f7Page } from 'framework7-vue'
 
 <template>
   <f7Page>
-    event
+    Imagine a page here
   </f7Page>
 </template>
