@@ -17,7 +17,7 @@ export default defineProtectedEventHandler(async (event) => {
 
   const { data } = result
 
-  const user = await event.context.database.update(users)
+  const updatedUsers = await event.context.database.update(users)
     .set({
       firebaseId: data.firebaseId,
     })
@@ -26,7 +26,14 @@ export default defineProtectedEventHandler(async (event) => {
     )
     .returning()
 
-  return user
+  if (updatedUsers.length === 1) {
+    throw createError({
+      status: 500,
+      statusMessage: 'Internal server error',
+    })
+  }
+
+  return updatedUsers[0]
 }, {
   allowUnlinkedUser: true,
 })
