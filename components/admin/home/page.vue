@@ -9,6 +9,7 @@ defineProps<{
 
 const auth = useCurrentUser()
 const authLoaded = useIsCurrentUserLoaded()
+const { data: user } = useUser()
 
 const state = reactive({
   showLoginScreen: false,
@@ -19,24 +20,23 @@ watch([authLoaded, auth], (values) => {
     state.showLoginScreen = values[0] && !values[1]
   }, 1000)
 })
+
+const showForbidden = computed(() => {
+  return user.value?.memberType !== 'exco'
+})
 </script>
 
 <template>
   <f7Page>
     <CommonLoginScreen v-model:opened="state.showLoginScreen" />
-    <f7Navbar large transparent :sliding="false">
-      <f7NavTitle sliding>
-        SSTAA Admin
-      </f7NavTitle>
-      <f7NavTitleLarge>
-        SSTAA Admin
-      </f7NavTitleLarge>
-    </f7Navbar>
+    <f7Navbar title="SSTAA Admin" />
 
-    <f7List inset class="space-y-8">
-      <div class="space-y-3">
-        <f7SkeletonBlock v-for="n in 3" :key="n" class="rounded-md" effect="fade" height="10rem" />
-      </div>
+    <LazyAdminHomeForbidden v-if="showForbidden" />
+
+    <f7List v-else inset class="space-y-8">
+      <f7BlockTitle>
+        Events
+      </f7BlockTitle>
     </f7List>
   </f7Page>
 </template>
