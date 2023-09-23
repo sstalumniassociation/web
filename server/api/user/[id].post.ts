@@ -26,7 +26,7 @@ export default defineProtectedEventHandler(async (event) => {
     )
     .returning()
 
-  if (updatedUsers.length === 1) {
+  if (updatedUsers.length > 1) {
     throw createError({
       status: 500,
       statusMessage: 'Internal server error',
