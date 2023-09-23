@@ -9,7 +9,10 @@ export default defineProtectedEventHandler(async (event) => {
     })
   }
 
-  await event.context.database.delete(users)
+  await event.context.database.update(users)
+    .set({
+      firebaseId: null,
+    })
     .where(
       eq(users.id, event.context.params!.id),
     )
