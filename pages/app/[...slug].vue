@@ -35,6 +35,12 @@ useHeadSafe({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - SSTAA` : 'SSTAA'
   },
+  meta: [
+    {
+      name: 'color-scheme',
+      content: 'dark',
+    },
+  ],
   link: [
     {
       rel: 'icon',

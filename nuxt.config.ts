@@ -4,6 +4,7 @@ import { isDevelopment } from 'std-env'
 export default defineNuxtConfig({
   ssr: false, // Firebase
   devtools: { enabled: true },
+  spaLoadingTemplate: './app/spa-loading-template.html',
 
   vue: {
     defineModel: true,
