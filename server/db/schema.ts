@@ -83,6 +83,16 @@ export const bookings = sqliteTable('bookings', {
   }),
 })
 
+export const news = sqliteTable('news', {
+  id: text('id').primaryKey().$defaultFn(() => createId()),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  heroImageAlt: text('hero_image_alt').notNull(),
+  heroImageUrl: text('hero_image_url').notNull(),
+  ctaTitle: text('cta_title').notNull(),
+  ctaUrl: text('cta_url').notNull(),
+})
+
 // Relations
 
 export const usersRelations = relations(users, ({ many }) => ({

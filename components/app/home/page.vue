@@ -9,8 +9,6 @@ defineProps<{
 
 const auth = useCurrentUser()
 const authLoaded = useIsCurrentUserLoaded()
-// TODO @qin-guan: Error state handling
-const { data: user, isLoading: userIsLoading } = useUser()
 
 const state = reactive({
   showLoginScreen: false,
@@ -40,12 +38,8 @@ watch([authLoaded, auth], (values) => {
         <AppHomeMembershipCard />
       </div>
 
-      <f7BlockTitle>
-        What's Happening
-      </f7BlockTitle>
-
-      <div class="space-y-3">
-        <f7SkeletonBlock v-for="n in 3" :key="n" class="rounded-md" effect="fade" height="10rem" />
+      <div>
+        <AppHomeNews />
       </div>
     </f7List>
   </f7Page>

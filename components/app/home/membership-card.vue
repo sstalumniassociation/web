@@ -20,27 +20,27 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
     </div>
 
     <f7Card v-else-if="user" class="m-0!">
-      <f7CardHeader class="h-45 rounded-[16px]!" valign="top" :class="membershipGradient[user.memberType!]">
+      <f7CardContent class="h-45 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
         <div class="flex flex-col w-full h-full">
           <div class="flex flex-col flex-1">
             <span class="font-bold text-3xl">
               {{ user.name }}
             </span>
-            <span class="font-mono text-base">
+            <span class="font-mono">
               {{ user.memberId }}
             </span>
           </div>
-          <div class="flex flex-col text-base">
+          <div class="flex flex-col">
             <span class="font-semibold">
               Class of {{ user.graduationYear }}
             </span>
-            <span class="text-sm">
+            <span>
               {{ user.memberType?.[0].toLocaleUpperCase() }}{{ user.memberType?.slice(1, user.memberType?.length) }}
               member
             </span>
           </div>
         </div>
-      </f7CardHeader>
+      </f7CardContent>
       <f7CardFooter>
         <span>
           <strong>Coming back?</strong>
