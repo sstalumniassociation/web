@@ -1,18 +1,23 @@
 import dayjs from 'dayjs'
+import { usersToEvents, events } from '~/server/db/schema'
+import { eq } from 'drizzle-orm'
 
-export default defineProtectedEventHandler(event => ({
-  id: event.context.params!.id,
-  name: 'SST Homecoming 2024',
-  description: 'SST Homecoming 2024',
-  location: 'SST',
-  badgeImage: 'https://www.sst.edu.sg/images/default-source/album/2019-2020/2020-01-24-homecoming/20200124_182000.jpg?sfvrsn=2',
-  startDateTime: dayjs(Date.now()).valueOf(),
-  endDateTime: dayjs(Date.now()).valueOf(),
-  attendees: [
-    {
-      id: '123',
-      name: 'Qin Guan',
-      admissionKey: '123',
-    },
-  ],
-}))
+export default defineProtectedEventHandler(async (event) => {
+  const eventId = event.context.params!.id
+
+  const result = await event.context.database.select().from(events)
+    .where(eq(events.id, eventId))
+    .leftJoin(usersToEvents, eq(events.id, usersToEvents.eventId))
+
+  if (result === undefined || result[0]["users_events"] === null) {
+    throw createError({
+      status: 400,
+      statusMessage: "Bad Request"
+    })
+  }
+
+  return {
+    ...result[0]["events"],
+    attendees: result[0]["users_events"]
+  }
+})
