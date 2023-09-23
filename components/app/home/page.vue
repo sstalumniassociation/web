@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Link, f7List, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7Tab, f7Tabs, f7Toolbar } from 'framework7-vue'
+import { f7Link, f7List, f7Page, f7Tab, f7Tabs, f7Toolbar } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 import { useIsCurrentUserLoaded } from 'vuefire'
 
@@ -39,7 +39,7 @@ watch([authLoaded, auth], (values) => {
       />
       <f7Link
         tab-link="#events"
-        text="events"
+        text="Events"
         icon-md="material:events"
       />
       <f7Link
@@ -51,15 +51,17 @@ watch([authLoaded, auth], (values) => {
 
     <f7Tabs>
       <f7Tab id="home" tab-active>
-        <f7List inset class="space-y-8">
-          <div>
-            <AppHomeMembershipCard />
-          </div>
+        <f7Page no-navbar>
+          <f7List inset class="space-y-8">
+            <div>
+              <AppHomeMembershipCard />
+            </div>
 
-          <div>
-            <AppHomeNews />
-          </div>
-        </f7List>
+            <div>
+              <AppHomeNews />
+            </div>
+          </f7List>
+        </f7Page>
       </f7Tab>
 
       <f7Tab id="services">
