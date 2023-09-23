@@ -10,4 +10,8 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   return event.context.user
+}, {
+  cache: {
+    maxAge: 5,
+  },
 })

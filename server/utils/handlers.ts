@@ -1,8 +1,10 @@
 // @ts-expect-error Bad types
 import { verifyIdToken } from 'web-auth-library/google'
+import { defu } from 'defu'
 import type { UserToken } from 'web-auth-library/dist/google'
 import type { EventHandler, EventHandlerRequest } from 'h3'
-import type { User } from '~/server/db/schema'
+import type { CachedEventHandlerOptions } from 'nitropack'
+import type { User } from '~/shared/types'
 
 declare module 'h3' {
   interface H3EventContext {
@@ -12,13 +14,20 @@ declare module 'h3' {
 }
 
 export interface DefineProtectedEventHandlerOptions {
-  allowUnlinkedUser: boolean // Allow users which do not have a `firebaseId` linked in database
+  cache?: Pick<CachedEventHandlerOptions, 'maxAge'>
+  allowUnlinkedUser?: boolean // Allow users which do not have a `firebaseId` linked in database
+}
+
+const defaultOptions: DefineProtectedEventHandlerOptions = {
+  allowUnlinkedUser: false,
 }
 
 export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>,
-  options: DefineProtectedEventHandlerOptions = { allowUnlinkedUser: false },
+  _options?: DefineProtectedEventHandlerOptions,
 ): EventHandler<T, D> {
+  const options = defu(_options, defaultOptions)
+
   return defineEventHandler<T>(async (event) => {
     const authorization = getHeader(event, 'Authorization') ?? ''
 
@@ -34,6 +43,9 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
       idToken,
       projectId: useRuntimeConfig().firebase.projectId,
     })
+
+    if (options.cache?.maxAge)
+      setHeader(event, 'Cache-Control', `max-age=${options.cache.maxAge}`)
 
     if (options.allowUnlinkedUser)
       return handler(event)

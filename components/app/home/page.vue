@@ -9,7 +9,8 @@ defineProps<{
 
 const auth = useCurrentUser()
 const authLoaded = useIsCurrentUserLoaded()
-const { data: user } = useUser()
+// TODO @qin-guan: Error state handling
+const { data: user, isLoading: userIsLoading } = useUser()
 
 const state = reactive({
   showLoginScreen: false,
@@ -27,21 +28,17 @@ watch([authLoaded, auth], (values) => {
     <AppLoginScreen v-model:opened="state.showLoginScreen" />
     <f7Navbar large transparent :sliding="false">
       <f7NavTitle sliding>
-        Nice
+        SSTAA
       </f7NavTitle>
       <f7NavTitleLarge>
-        Welcome,
-        <f7SkeletonText v-if="!user?.name" effect="fade">
-          Placeholder name
-        </f7SkeletonText>
-        <span v-else>
-          {{ user?.name }}
-        </span>
+        SSTAA
       </f7NavTitleLarge>
     </f7Navbar>
 
     <f7List inset class="space-y-8">
-      <f7SkeletonBlock class="rounded-md" effect="fade" height="15rem" />
+      <div>
+        <AppHomeMembershipCard />
+      </div>
 
       <f7BlockTitle>
         What's Happening

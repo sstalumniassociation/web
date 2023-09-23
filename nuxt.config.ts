@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
     '@unocss/nuxt',
     '@vite-pwa/nuxt',
+    '@vueuse/nuxt',
   ],
 
   routeRules: {
