@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
-const createEventRequestBody = z.object({
+const createPostRequestBody = z.object({
     id: z.string().nonempty(),
     name: z.string().nonempty(),
     description: z.string().nonempty(),
@@ -19,7 +19,7 @@ export default defineProtectedEventHandler(async (event) => {
         })
     }
 
-    const result = await createEventRequestBody.safeParseAsync(await readBody(event))
+    const result = await createPostRequestBody.safeParseAsync(await readBody(event))
     if (!result.success) {
         throw createError({
             status: 400,
@@ -29,16 +29,16 @@ export default defineProtectedEventHandler(async (event) => {
 
     const { data } = result
 
-    // const checkDuplicate = await event.context.database.query.events.findFirst({
-    //     where: (events, { eq }) => eq(events.id, data.id)
-    // })
+    const checkDuplicate = await event.context.database.query.events.findFirst({
+        where: (events, { eq }) => eq(events.id, data.id)
+    })
 
-    // if (checkDuplicate !== undefined) {
-    //     throw createError({
-    //         status: 400,
-    //         statusMessage: 'Event with same ID exists',
-    //     })
-    // }
+    if (checkDuplicate !== undefined) {
+        throw createError({
+            status: 400,
+            statusMessage: 'Event with same ID exists',
+        })
+    }
 
     const addedEvent = await event.context.database.insert(events).values(data)
 
