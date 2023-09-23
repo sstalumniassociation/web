@@ -6,10 +6,10 @@ import { f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page } from 'framework7-vue'
   <f7Page>
     <f7Navbar large transparent :sliding="false">
       <f7NavTitle sliding>
-        Events & Bookings
+        Alumni Services
       </f7NavTitle>
       <f7NavTitleLarge>
-        Events & Bookings
+        Alumni Services
       </f7NavTitleLarge>
     </f7Navbar>
   </f7Page>
