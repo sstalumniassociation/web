@@ -8,6 +8,8 @@ const graduationYear = computed(() => {
 })
 
 const dependencies = Object.keys(devDependencies)
+
+const { mutate: userSignOutMutate } = useUserSignOutMutation()
 </script>
 
 <template>
@@ -30,6 +32,15 @@ const dependencies = Object.keys(devDependencies)
           To update this information, contact us at <a href="mailto:app@sstaa.org">app@sstaa.org</a>
         </span>
       </f7ListItem>
+    </f7List>
+
+    <f7List inset strong>
+      <f7ListButton color="red" @click="userSignOutMutate()">
+        Sign out
+      </f7ListButton>
+      <f7ListButton color="red">
+        Delete and unlink my account
+      </f7ListButton>
     </f7List>
 
     <f7List inset strong>
