@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Card, f7CardContent, f7CardHeader, f7SkeletonBlock } from 'framework7-vue'
+import { f7BlockTitle, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7SkeletonBlock } from 'framework7-vue'
 
 const { data: news, isLoading: newsIsLoading } = useNewsArticles()
 </script>
@@ -30,6 +30,11 @@ const { data: news, isLoading: newsIsLoading } = useNewsArticles()
           <f7CardContent>
             {{ article.description }}
           </f7CardContent>
+          <f7CardFooter v-if="article.ctaTitle && article.ctaUrl">
+            <f7Button tonal :href="article.ctaUrl" external target="_blank">
+              {{ article.ctaTitle }}
+            </f7Button>
+          </f7CardFooter>
         </f7Card>
       </template>
     </div>

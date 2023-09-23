@@ -10,7 +10,7 @@ import Framework7 from 'framework7/lite-bundle'
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
-import { AdminHomePage } from '#components'
+import { AdminHomePage, AdminMembersPage, AdminSettingsPage } from '#components'
 
 Framework7.use(Framework7Vue)
 
@@ -19,6 +19,16 @@ const appRoutes = [
     name: 'home',
     path: '/admin',
     component: AdminHomePage,
+  },
+  {
+    name: 'members',
+    path: '/admin/members',
+    component: AdminMembersPage,
+  },
+  {
+    name: 'settings',
+    path: '/admin/settings',
+    component: AdminSettingsPage,
   },
 ]
 

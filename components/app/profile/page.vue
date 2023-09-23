@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Block, f7BlockTitle, f7Link, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavRight, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7Popup, f7View } from 'framework7-vue'
+import { f7BlockTitle, f7Link, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavRight, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7Popup, f7View } from 'framework7-vue'
 import { devDependencies } from '~/package.json'
 
 const { data: user } = useUser()

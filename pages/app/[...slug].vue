@@ -20,11 +20,6 @@ const appRoutes = [
     path: '/app',
     component: AppHomePage,
   },
-  {
-    name: 'events',
-    path: '/app/events',
-    asyncComponent: () => import('~/components/app/events/page.vue'),
-  },
 ]
 
 useSeoMeta({
