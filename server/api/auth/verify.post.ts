@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const result = await verifyRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
-      status: 400,
+      statusCode: 400,
       statusMessage: 'Bad request',
     })
   }
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   if (!user) {
     throw createError({
-      status: 404,
+      statusCode: 404,
       statusMessage: 'Not found',
     })
   }

@@ -17,7 +17,7 @@ export default defineProtectedEventHandler(async (event) => {
   const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
-      status: 400,
+      statusCode: 400,
       statusMessage: 'Bad request',
     })
   }
@@ -38,7 +38,7 @@ export default defineProtectedEventHandler(async (event) => {
 
   if (updatedEvent.length > 1) {
     throw createError({
-      status: 500,
+      statusCode: 500,
       statusMessage: 'Internal server error',
     })
   }

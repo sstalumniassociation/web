@@ -73,7 +73,7 @@ export const bookings = sqliteTable('bookings', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   slotId: text('slot_id').notNull().references(() => slots.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-  status: text('status', {
+  statusCode: text('status', {
     enum: [
       'pending',
       'cancelled',

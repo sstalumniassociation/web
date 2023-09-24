@@ -2,9 +2,9 @@ import { eq } from 'drizzle-orm'
 import { users } from '~/server/db/schema'
 
 export default defineProtectedEventHandler(async (event) => {
-  if (event.context.user!.id !== event.context.params!.id) {
+  if (event.context.appUser!.id !== event.context.params!.id) {
     throw createError({
-      status: 403,
+      statusCode: 403,
       statusMessage: 'Forbidden',
     })
   }

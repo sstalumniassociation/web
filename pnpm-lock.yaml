@@ -7,7 +7,7 @@ settings:
 devDependencies:
   '@antfu/eslint-config':
     specifier: latest
-    version: 1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2)
+    version: 1.0.0-beta.7(eslint@8.49.0)(typescript@5.2.2)
   '@libsql/client':
     specifier: ^0.3.4
     version: 0.3.4
@@ -105,8 +105,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@antfu/eslint-config@1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-niRdTOSKrLgND+DyK+I5Mejy5xzjjDCCqGQV/KhefLDxZ5AGfEnClw00R5BvBHg7cBhcVoKbTqeFrjIgHaSX7g==}
+  /@antfu/eslint-config@1.0.0-beta.7(eslint@8.49.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-6NGzVXzNikd7dTdkwjLPXMklDZp9csU6JwPsypJDCIbAA5F2OHhugo+pSgYaMsHa7fdC6QMDLL4u5G2Q9Okqtg==}
     peerDependencies:
       eslint: '>=8.0.0'
     dependencies:

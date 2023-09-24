@@ -8,7 +8,7 @@ import type { User } from '~/shared/types'
 
 declare module 'h3' {
   interface H3EventContext {
-    user?: User
+    appUser?: User // Vuefire is using `user` property so we have to use appUser
     firebaseId?: string
   }
 }
@@ -34,7 +34,7 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
 
     if (!authorization.startsWith('Bearer ')) {
       throw createError({
-        status: 403,
+        statusCode: 403,
         statusMessage: 'Unauthorized',
       })
     }
@@ -57,7 +57,7 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
 
     if (user === null) {
       throw createError({
-        status: 401,
+        statusCode: 401,
         statusMessage: 'Unauthorized',
       })
     }
@@ -65,13 +65,13 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
     if (options.restrictTo) {
       if (!user?.memberType || !options.restrictTo.includes(user.memberType)) {
         throw createError({
-          status: 403,
+          statusCode: 403,
           statusMessage: 'Forbidden',
         })
       }
     }
 
-    event.context.user = user
+    event.context.appUser = user
     event.context.firebaseId = sub
 
     return handler(event)
