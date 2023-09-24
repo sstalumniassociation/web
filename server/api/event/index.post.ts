@@ -2,10 +2,10 @@ import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
 const createEventRequestBody = z.object({
-    id: z.string().nonempty(),
-    name: z.string().nonempty(),
-    description: z.string().nonempty(),
-    location: z.string().nonempty(),
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    location: z.string(),
     badgeImage: z.string().url(),
     startDateTime: z.string().datetime(),
     endDateTime: z.string().datetime()
