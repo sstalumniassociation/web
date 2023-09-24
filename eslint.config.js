@@ -7,7 +7,7 @@ export default antfu({
 }, {
   rules: {
     // https://github.com/antfu/eslint-config/pull/214
-    'n/prefer-global/process': [
+    'node/prefer-global/process': [
       'off',
       'never',
     ],

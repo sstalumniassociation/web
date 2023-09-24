@@ -109,7 +109,7 @@ export default defineNuxtConfig({
       debug: process.env.FIREBASE_APP_CHECK_DEBUG_TOKEN || isDevelopment,
       provider: 'ReCaptchaEnterprise' || process.env.FIREBASE_APP_CHECK_PROVIDER,
       key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu' || process.env.FIREBASE_APP_CHECK_KEY,
-      isTokenAutoRefreshEnabled: true,
+      isTokenAutoRefreshEnabled: false,
     },
   },
 
