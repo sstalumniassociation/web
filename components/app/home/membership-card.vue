@@ -21,7 +21,7 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
 
     <f7Card v-else-if="user" class="m-0!">
       <f7CardContent class="h-45 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
-        <div class="flex flex-col w-full h-full">
+        <div class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col flex-1">
             <span class="font-bold text-3xl">
               {{ user.name }}
