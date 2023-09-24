@@ -1,18 +1,41 @@
 import dayjs from 'dayjs'
+import { eq } from 'drizzle-orm'
+import { z } from 'zod'
+import { events } from '~/server/db/schema'
 
-export default defineProtectedEventHandler(event => ({
-  id: event.context.params!.id,
-  name: 'SST Homecoming 2024',
-  description: 'SST Homecoming 2024',
-  location: 'SST',
-  badgeImage: 'https://www.sst.edu.sg/images/default-source/album/2019-2020/2020-01-24-homecoming/20200124_182000.jpg?sfvrsn=2',
-  startDateTime: dayjs(Date.now()).valueOf(),
-  endDateTime: dayjs(Date.now()).valueOf(),
-  attendees: [
-    {
-      id: '123',
-      name: 'Qin Guan',
-      admissionKey: '123',
-    },
-  ],
-}))
+const updateEventRequestBody = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  location: z.string(),
+  badgeImage: z.string().url(),
+  startDateTime: z.string().datetime(),
+  endDateTime: z.string().datetime()
+})
+
+export default defineProtectedEventHandler(async (event) => {
+  if (event.context.user?.memberType !== "exco") {
+    throw createError({
+        status: 401,
+        statusMessage: "Unauthorised"
+    })
+  }
+
+  const eventId = event.context.params!.id
+
+  const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
+  if (!result.success) {
+      throw createError({
+          status: 400,
+          statusMessage: 'Bad Request',
+      })
+  }
+
+  const { data } = result
+
+  const updateEvent = await event.context.database.update(events)
+    .set(data)
+    .where(eq(events.id, eventId))
+  
+  return updateEvent
+})
