@@ -10,7 +10,8 @@ import Framework7 from 'framework7/lite-bundle'
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
-import { AdminHomePage, AdminMembersPage, AdminSettingsPage } from '#components'
+import { useIsCurrentUserLoaded } from 'vuefire'
+import { AdminHomePage, AdminMembersPage } from '#components'
 
 Framework7.use(Framework7Vue)
 
@@ -19,6 +20,11 @@ const appRoutes = [
     name: 'home',
     path: '/admin',
     component: AdminHomePage,
+  },
+  {
+    name: 'members',
+    path: '/admin/members',
+    component: AdminMembersPage,
   },
 ]
 
@@ -49,6 +55,19 @@ useHeadSafe({
 })
 
 const route = useRoute()
+
+const auth = useCurrentUser()
+const authLoaded = useIsCurrentUserLoaded()
+
+const state = reactive({
+  showLoginScreen: false,
+})
+
+watch([authLoaded, auth], (values) => {
+  setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
+    state.showLoginScreen = values[0] && !values[1]
+  }, 1000)
+})
 </script>
 
 <template>
@@ -61,6 +80,8 @@ const route = useRoute()
       :master-detail-breakpoint="768"
       ios-swipe-back
       preload-previous-page
-    />
+    >
+      <CommonLoginScreen v-model:opened="state.showLoginScreen" />
+    </f7View>
   </f7App>
 </template>

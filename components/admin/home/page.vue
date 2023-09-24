@@ -7,19 +7,7 @@ const props = defineProps<{
   f7route: Router.Route
 }>()
 
-const auth = useCurrentUser()
-const authLoaded = useIsCurrentUserLoaded()
 const { data: user } = useUser()
-
-const state = reactive({
-  showLoginScreen: false,
-})
-
-watch([authLoaded, auth], (values) => {
-  setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
-    state.showLoginScreen = values[0] && !values[1]
-  }, 1000)
-})
 
 const showForbidden = computed(() => {
   if (!user.value) // Should load placeholder data
@@ -30,8 +18,6 @@ const showForbidden = computed(() => {
 
 <template>
   <f7Page>
-    <CommonLoginScreen v-model:opened="state.showLoginScreen" />
-
     <f7Navbar>
       <f7NavLeft v-if="!showForbidden">
         <f7Link panel-open="left" icon-ios="f7:menu" icon-md="material:menu" />
