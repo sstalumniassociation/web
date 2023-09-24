@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
+import { EventWithAttendees } from '~/shared/types';
 
 const { data: events } = useEvents()
 
+const state = reactive({
+  eventId: "",
+  eventName: ""
+})
+
+function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
+  state.eventId = event.id
+  state.eventName = event.name
+
+  if (type === "delete") {
+
+  } else {
+
+  }
+}
 
 </script>
 
@@ -23,8 +39,11 @@ const { data: events } = useEvents()
           {{ event.description }}
         </f7CardContent>
         <f7CardFooter>
-          <f7Button tonal>
+          <f7Button tonal @click="handleOnClick(event, 'details')">
             Open
+          </f7Button>
+          <f7Button tonal color="red" @click="handleOnClick(event, 'delete')">
+            Delete
           </f7Button>
         </f7CardFooter>
       </f7Card>
@@ -59,7 +78,7 @@ const { data: events } = useEvents()
             </tr>
           </thead>
           <tbody>
-            <tr v-for="event in events" :key="event.id" @click="`/event/${event.id}`">
+            <tr v-for="event in events" :key="event.id" @click="handleOnClick(event, 'details')">
               <td class="label-cell">
                 {{ event.name }}
               </td>
@@ -72,10 +91,16 @@ const { data: events } = useEvents()
               <td class="numeric-cell">
                 {{ event.attendees.length }}
               </td>
+              <td>
+                <f7Button tonal color="red" class="popup-open" @click="handleOnClick(event, 'delete')" data-popup=".delete-event-popup">
+                  Delete
+                </f7Button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <AdminHomeDeleteEventPopup :key="state.eventId" :eventId="state.eventId" :eventName="state.eventName" />
 </template>
