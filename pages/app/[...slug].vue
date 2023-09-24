@@ -22,7 +22,7 @@ const appRoutes = [
   },
 ]
 
-const dark = usePreferredDark()
+const dark = useDark()
 
 useSeoMeta({
   description: 'The SST Alumni App',
