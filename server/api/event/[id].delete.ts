@@ -1,6 +1,5 @@
-import dayjs from 'dayjs'
-import { events } from '~/server/db/schema'
 import { eq } from 'drizzle-orm'
+import { events } from '~/server/db/schema'
 
 export default defineProtectedEventHandler(async (event) => {
   const eventId = event.context.params!.id
@@ -9,4 +8,4 @@ export default defineProtectedEventHandler(async (event) => {
     .where(eq(events.id, eventId))
 
   return deleteEvent.rowsAffected
-}, undefined, { restrictTo: ["exco"] })
+}, { restrictTo: ['exco'] })

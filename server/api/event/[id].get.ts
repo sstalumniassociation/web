@@ -1,46 +1,41 @@
-import dayjs from 'dayjs'
-import { usersToEvents, events } from '~/server/db/schema'
-import { eq } from 'drizzle-orm'
-
 export default defineProtectedEventHandler(async (event) => {
   const eventId = event.context.params!.id
 
-  interface resultType {
-    attendees?: {
-      userId: string;
-      eventId: string;
-      admissionKey: string;
-    }[];
-    id: string;
-    name: string;
-    description: string;
-    location: string;
-    badgeImage: string;
-    startDateTime: string;
-    endDateTime: string;
-    usersToEvents?: {
-      userId: string;
-      eventId: string;
-      admissionKey: string;
-    }[];
-  }
-
-  const result: resultType[] = await event.context.database.query.events.findMany({
-    where: eq(events.id, eventId),
+  const result = await event.context.database.query.events.findFirst({
+    where: (events, { eq }) => eq(events.id, eventId),
     with: {
       usersToEvents: {
-        where: eq(usersToEvents.eventId, eventId)
-      }
-    }
+        with: {
+          user: {
+            columns: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        columns: {
+          admissionKey: true,
+        },
+      },
+    },
   })
-  result[0]["attendees"] = result[0]["usersToEvents"]
-  delete result[0]["usersToEvents"]
 
-  if (result === undefined) {
+  if (!result) {
     throw createError({
       status: 400,
-      statusMessage: "Bad Request"
+      statusMessage: 'Bad request',
     })
   }
-  return result[0]
+
+  const { usersToEvents, ...data } = result
+
+  return {
+    ...data,
+    attendees: usersToEvents.map(({ admissionKey, user }) => ({
+      ...user,
+      admissionKey,
+    })),
+  }
+}, {
+  restrictTo: ['exco'],
 })
