@@ -28,7 +28,7 @@ const menuLinks = [
 </script>
 
 <template>
-  <f7Panel left reveal>
+  <f7Panel left cover>
     <f7Page>
       <f7List menu-list strong-ios outline-ios>
         <f7ListItem v-for="link in menuLinks" :key="link.path" :link="link.path" :selected="selectedPath === link.path" :title="link.title" @click="selectedPath = link.path">

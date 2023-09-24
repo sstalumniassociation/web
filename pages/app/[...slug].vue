@@ -22,6 +22,8 @@ const appRoutes = [
   },
 ]
 
+const dark = usePreferredDark()
+
 useSeoMeta({
   description: 'The SST Alumni App',
 })
@@ -59,7 +61,7 @@ const route = useRoute()
 
 <template>
   <VitePwaManifest />
-  <f7App name="SSTAA" theme="md" :routes="appRoutes">
+  <f7App name="SSTAA" theme="md" :dark-mode="dark" :routes="appRoutes">
     <f7View
       main
       class="safe-areas"

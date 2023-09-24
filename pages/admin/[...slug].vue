@@ -20,16 +20,6 @@ const appRoutes = [
     path: '/admin',
     component: AdminHomePage,
   },
-  {
-    name: 'members',
-    path: '/admin/members',
-    component: AdminMembersPage,
-  },
-  {
-    name: 'settings',
-    path: '/admin/settings',
-    component: AdminSettingsPage,
-  },
 ]
 
 useSeoMeta({
