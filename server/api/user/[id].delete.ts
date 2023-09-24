@@ -17,5 +17,5 @@ export default defineProtectedEventHandler(async (event) => {
       eq(users.id, event.context.params!.id),
     )
 
-  return { ok: true }
+  return sendNoContent(event)
 })

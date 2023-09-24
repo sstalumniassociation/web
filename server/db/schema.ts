@@ -23,7 +23,7 @@ export const users = sqliteTable('users', {
 })
 
 export const events = sqliteTable('events', {
-  id: text('id').primaryKey(),
+  id: text('id').primaryKey().$defaultFn(() => createId()),
   name: text('name').notNull(),
   description: text('description').notNull(),
   location: text('location').notNull(),

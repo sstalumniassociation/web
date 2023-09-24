@@ -24,7 +24,7 @@ export default defineProtectedEventHandler(async (event) => {
 
   const { data } = result
 
-  await event.context.database.update(events)
+  const updatedEvent = await event.context.database.update(events)
     .set({
       name: data.name,
       description: data.description,
@@ -34,8 +34,16 @@ export default defineProtectedEventHandler(async (event) => {
       endDateTime: data.endDateTime,
     })
     .where(eq(events.id, eventId))
+    .returning()
 
-  return sendNoContent(event)
+  if (updatedEvent.length > 1) {
+    throw createError({
+      status: 500,
+      statusMessage: 'Internal server error',
+    })
+  }
+
+  return updatedEvent[0]
 }, {
   restrictTo: ['exco'],
 })

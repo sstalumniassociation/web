@@ -36,6 +36,4 @@ export default defineProtectedEventHandler(async (event) => {
       admissionKey,
     })),
   }
-}, {
-  restrictTo: ['exco'],
 })

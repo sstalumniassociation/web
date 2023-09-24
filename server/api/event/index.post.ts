@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
 const createEventRequestBody = z.object({
-  id: z.string(),
   name: z.string(),
   description: z.string(),
   location: z.string(),
@@ -22,9 +21,8 @@ export default defineProtectedEventHandler(async (event) => {
 
   const { data } = result
 
-  const addedEvent = await event.context.database.insert(events)
+  const createdEvent = await event.context.database.insert(events)
     .values({
-      id: data.id,
       name: data.name,
       description: data.description,
       location: data.location,
@@ -32,15 +30,16 @@ export default defineProtectedEventHandler(async (event) => {
       startDateTime: data.startDateTime,
       endDateTime: data.endDateTime,
     })
+    .returning()
 
-  if (addedEvent.rowsAffected === 0) {
+  if (createdEvent.length > 1) {
     throw createError({
       status: 500,
       statusMessage: 'Internal server error',
     })
   }
 
-  return data
+  return createdEvent[0]
 }, {
   restrictTo: ['exco'],
 })
