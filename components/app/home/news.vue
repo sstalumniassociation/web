@@ -22,7 +22,7 @@ const { data: news, isLoading: newsIsLoading } = useNewsArticles()
         </span>
         <f7Card v-for="article in news" :key="article.id" class="m-0!">
           <f7CardHeader class="h-45 rounded-[16px]! overflow-hidden bg-center bg-contain relative" valign="bottom" :style="`background-image: url(${article.heroImageUrl})`">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70" />
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent dark:to-black/70 to-white/70" />
             <span class="z-10">
               {{ article.title }}
             </span>
