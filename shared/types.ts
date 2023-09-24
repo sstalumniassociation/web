@@ -9,3 +9,16 @@ export type Event = InferSelectModel<typeof events>
 export type EventWithAttendees = Event & { attendees: UserRestrictedWithAdmissionKey[] }
 
 export type NewsArticle = InferSelectModel<typeof news>
+
+export interface BuildInfo {
+  version: string
+  commit: string
+  shortCommit: string
+  time: number
+}
+
+declare module '@nuxt/schema' {
+  interface NuxtAppConfig {
+    buildInfo: BuildInfo
+  }
+}

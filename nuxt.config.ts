@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
+    '~/modules/build-info',
   ],
 
   routeRules: {

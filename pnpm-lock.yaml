@@ -7,7 +7,7 @@ settings:
 devDependencies:
   '@antfu/eslint-config':
     specifier: latest
-    version: 1.0.0-beta.4(eslint@8.49.0)(typescript@5.2.2)
+    version: 1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2)
   '@libsql/client':
     specifier: ^0.3.4
     version: 0.3.4
@@ -77,6 +77,9 @@ devDependencies:
   nuxt-vuefire:
     specifier: ^0.3.0
     version: 0.3.0(@firebase/app-types@0.9.0)(firebase@10.4.0)(rollup@2.79.1)(vuefire@3.1.17)
+  simple-git:
+    specifier: ^3.20.0
+    version: 3.20.0
   vuefire:
     specifier: ^3.1.17
     version: 3.1.17(firebase@10.4.0)(vue@3.3.4)
@@ -102,8 +105,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@antfu/eslint-config@1.0.0-beta.4(eslint@8.49.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-4QLToVBpsMo0W8Xw6m2E64ALC2Aq0um3MPT7J1fWj3ySkvLAcGG0GP8F/tl/3iJvWBjKua2nyMNzO4IdEannZw==}
+  /@antfu/eslint-config@1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-niRdTOSKrLgND+DyK+I5Mejy5xzjjDCCqGQV/KhefLDxZ5AGfEnClw00R5BvBHg7cBhcVoKbTqeFrjIgHaSX7g==}
     peerDependencies:
       eslint: '>=8.0.0'
     dependencies:
@@ -114,7 +117,7 @@ packages:
       '@typescript-eslint/parser': 6.7.2(eslint@8.49.0)(typescript@5.2.2)
       eslint: 8.49.0
       eslint-define-config: 1.23.0
-      eslint-plugin-antfu: 1.0.0-beta.4(eslint@8.49.0)(typescript@5.2.2)
+      eslint-plugin-antfu: 1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.49.0)
       eslint-plugin-i: 2.28.1(@typescript-eslint/parser@6.7.2)(eslint@8.49.0)
       eslint-plugin-jsdoc: 46.8.2(eslint@8.49.0)
@@ -2696,7 +2699,7 @@ packages:
       pkg-types: 1.0.3
       rc9: 2.1.1
       semver: 7.5.4
-      simple-git: 3.19.1
+      simple-git: 3.20.0
       sirv: 2.0.3
       unimport: 3.3.0(rollup@2.79.1)
       vite: 4.4.9
@@ -5958,8 +5961,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-antfu@1.0.0-beta.4(eslint@8.49.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-SbN6Sp6t/4dyLgJkme+OHOifPp4pFCUXmhwY2cPBwUa1aC//olNl4Us9zuGDFoaHy0ArXDJu3SLPeqaFci1AoQ==}
+  /eslint-plugin-antfu@1.0.0-beta.6(eslint@8.49.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-AbHAYYVv8BhjH4FkoSZWV+FxYwZUspqr0Zo5y4K0Jm8BhwXo6+UaQrpW3exxraJmsVTXty+Hlkcd4ysQV6DICw==}
     dependencies:
       '@typescript-eslint/utils': 6.7.2(eslint@8.49.0)(typescript@5.2.2)
     transitivePeerDependencies:
@@ -9966,8 +9969,8 @@ packages:
       simple-concat: 1.0.1
     dev: true
 
-  /simple-git@3.19.1:
-    resolution: {integrity: sha512-Ck+rcjVaE1HotraRAS8u/+xgTvToTuoMkT9/l9lvuP5jftwnYUp6DwuJzsKErHgfyRk8IB8pqGHWEbM3tLgV1w==}
+  /simple-git@3.20.0:
+    resolution: {integrity: sha512-ozK8tl2hvLts8ijTs18iFruE+RoqmC/mqZhjs/+V7gS5W68JpJ3+FCTmLVqmR59MaUQ52MfGQuWsIqfsTbbJ0Q==}
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1

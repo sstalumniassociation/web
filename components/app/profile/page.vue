@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { f7BlockTitle, f7Link, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavRight, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7Popup, f7View } from 'framework7-vue'
+import dayjs from 'dayjs'
 import { devDependencies } from '~/package.json'
+
+const appConfig = useAppConfig()
 
 const { data: user } = useUser()
 const graduationYear = computed(() => {
@@ -47,6 +50,17 @@ const { mutate: userSignOutMutate } = useUserSignOutMutation()
       <f7ListButton popup-open="#acknowledgements">
         Acknowledgements
       </f7ListButton>
+    </f7List>
+
+    <f7List>
+      <f7ListItem class="opacity-80 text-sm">
+        v{{ appConfig.buildInfo.version }}
+        <br>
+        <br>
+        Built on {{ dayjs(appConfig.buildInfo.time).format('DD/MM/YYYY HH:mm') }}
+        <br>
+        Commit: {{ appConfig.buildInfo.shortCommit }}
+      </f7ListItem>
     </f7List>
 
     <f7Popup id="acknowledgements" push>

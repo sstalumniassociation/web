@@ -53,10 +53,10 @@ const { data: events } = useEvents()
                 {{ event.name }}
               </td>
               <td class="label-cell">
-                {{ dayjs(event.startDateTime).format('DD-MM-YYYY hh:mm') }}
+                {{ dayjs(event.startDateTime).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="label-cell">
-                {{ dayjs(event.endDateTime).format('DD-MM-YYYY hh:mm') }}
+                {{ dayjs(event.endDateTime).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="numeric-cell">
                 {{ event.attendees.length }}
