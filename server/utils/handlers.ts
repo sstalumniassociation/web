@@ -16,6 +16,7 @@ declare module 'h3' {
 export interface DefineProtectedEventHandlerOptions {
   cache?: Pick<CachedEventHandlerOptions, 'maxAge'>
   allowUnlinkedUser?: boolean // Allow users which do not have a `firebaseId` linked in database
+  restrictTo?: Array<User['memberType']>
 }
 
 const defaultOptions: DefineProtectedEventHandlerOptions = {
@@ -59,6 +60,15 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
         status: 401,
         statusMessage: 'Unauthorized',
       })
+    }
+
+    if (options.restrictTo) {
+      if (!user?.memberType || !options.restrictTo.includes(user.memberType)) {
+        throw createError({
+          status: 403,
+          statusMessage: 'Forbidden',
+        })
+      }
     }
 
     event.context.user = user

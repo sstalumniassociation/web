@@ -1,18 +1,39 @@
-import dayjs from 'dayjs'
+export default defineProtectedEventHandler(async (event) => {
+  const eventId = event.context.params!.id
 
-export default defineProtectedEventHandler(event => ({
-  id: event.context.params!.id,
-  name: 'SST Homecoming 2024',
-  description: 'SST Homecoming 2024',
-  location: 'SST',
-  badgeImage: 'https://www.sst.edu.sg/images/default-source/album/2019-2020/2020-01-24-homecoming/20200124_182000.jpg?sfvrsn=2',
-  startDateTime: dayjs(Date.now()).valueOf(),
-  endDateTime: dayjs(Date.now()).valueOf(),
-  attendees: [
-    {
-      id: '123',
-      name: 'Qin Guan',
-      admissionKey: '123',
+  const result = await event.context.database.query.events.findFirst({
+    where: (events, { eq }) => eq(events.id, eventId),
+    with: {
+      usersToEvents: {
+        with: {
+          user: {
+            columns: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        columns: {
+          admissionKey: true,
+        },
+      },
     },
-  ],
-}))
+  })
+
+  if (!result) {
+    throw createError({
+      status: 400,
+      statusMessage: 'Bad request',
+    })
+  }
+
+  const { usersToEvents, ...data } = result
+
+  return {
+    ...data,
+    attendees: usersToEvents.map(({ admissionKey, user }) => ({
+      ...user,
+      admissionKey,
+    })),
+  }
+})

@@ -1,8 +1,7 @@
-import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
-const updateEventRequestBody = z.object({
+const createEventRequestBody = z.object({
   name: z.string(),
   description: z.string(),
   location: z.string(),
@@ -12,9 +11,7 @@ const updateEventRequestBody = z.object({
 })
 
 export default defineProtectedEventHandler(async (event) => {
-  const eventId = event.context.params!.id
-
-  const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
+  const result = await createEventRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
       status: 400,
@@ -24,8 +21,8 @@ export default defineProtectedEventHandler(async (event) => {
 
   const { data } = result
 
-  const updatedEvent = await event.context.database.update(events)
-    .set({
+  const createdEvent = await event.context.database.insert(events)
+    .values({
       name: data.name,
       description: data.description,
       location: data.location,
@@ -33,17 +30,16 @@ export default defineProtectedEventHandler(async (event) => {
       startDateTime: data.startDateTime,
       endDateTime: data.endDateTime,
     })
-    .where(eq(events.id, eventId))
     .returning()
 
-  if (updatedEvent.length > 1) {
+  if (createdEvent.length > 1) {
     throw createError({
       status: 500,
       statusMessage: 'Internal server error',
     })
   }
 
-  return updatedEvent[0]
+  return createdEvent[0]
 }, {
   restrictTo: ['exco'],
 })
