@@ -8,8 +8,9 @@ import Framework7 from 'framework7/lite-bundle'
 
 // @ts-expect-error Missing types
 import Framework7Vue from 'framework7-vue/bundle'
-import { f7App, f7View } from 'framework7-vue'
+import { f7App, f7Link, f7Tab, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
+import { useIsCurrentUserLoaded } from 'vuefire'
 import { AppHomePage } from '#components'
 
 Framework7.use(Framework7Vue)
@@ -57,18 +58,73 @@ useHeadSafe({
 })
 
 const route = useRoute()
+
+const auth = useCurrentUser()
+const authLoaded = useIsCurrentUserLoaded()
+
+const state = reactive({
+  showLoginScreen: false,
+})
+
+watch([authLoaded, auth], (values) => {
+  setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
+    state.showLoginScreen = values[0] && !values[1]
+  }, 1000)
+})
 </script>
 
 <template>
   <VitePwaManifest />
   <f7App name="SSTAA" theme="md" :dark-mode="dark" :routes="appRoutes">
-    <f7View
-      main
+    <f7Views
+      tabs
       class="safe-areas"
       :url="route.path"
       :master-detail-breakpoint="768"
       ios-swipe-back
       preload-previous-page
-    />
+    >
+      <CommonLoginScreen v-model:opened="state.showLoginScreen" />
+
+      <f7Toolbar position="bottom" tabbar icons>
+        <f7Link
+          tab-link="#home"
+          tab-link-active
+          text="Home"
+          icon-md="material:home"
+        />
+        <f7Link
+          tab-link="#services"
+          text="Services"
+          icon-md="material:sparkle"
+        />
+        <f7Link
+          tab-link="#events"
+          text="Events"
+          icon-md="material:events"
+        />
+        <f7Link
+          tab-link="#profile"
+          text="Profile"
+          icon-md="material:account_circle"
+        />
+      </f7Toolbar>
+
+      <f7View id="home" tab tab-active>
+        <AppHomePage />
+      </f7View>
+
+      <f7View id="services" tab>
+        <AppServicesPage />
+      </f7View>
+
+      <f7View id="events" tab>
+        <AppEventsPage />
+      </f7View>
+
+      <f7View id="profile" tab>
+        <AppProfilePage />
+      </f7View>
+    </f7Views>
   </f7App>
 </template>
