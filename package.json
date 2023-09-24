@@ -12,7 +12,9 @@
     "db:generate": "drizzle-kit generate:sqlite",
     "db:push": "drizzle-kit push:sqlite",
     "db:drop": "drizzle-kit drop",
-    "pwa:generate-assets": "pwa-assets-generator --preset minimal public/logo.png"
+    "pwa:generate-assets": "pwa-assets-generator --preset minimal public/logo.png",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --cache --fix ."
   },
   "devDependencies": {
     "@antfu/eslint-config": "latest",
