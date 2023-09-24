@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Block, f7BlockHeader, f7BlockTitle, f7Button, f7PageContent } from 'framework7-vue'
+import { f7Block, f7BlockTitle, f7Button, f7PageContent } from 'framework7-vue'
 </script>
 
 <template>

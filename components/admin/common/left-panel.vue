@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7, f7Block, f7BlockTitle, f7Icon, f7Link, f7List, f7ListItem, f7NavLeft, f7NavTitle, f7Navbar, f7Page, f7Panel, f7Tab, f7Tabs, f7Toolbar } from 'framework7-vue'
+import { f7Icon, f7List, f7ListItem, f7Page, f7Panel } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 
 const props = defineProps<{

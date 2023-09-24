@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7SkeletonBlock } from 'framework7-vue'
+import { f7Card, f7CardContent, f7CardFooter, f7SkeletonBlock } from 'framework7-vue'
 import type { User } from '~/shared/types'
 
 const { data: user, isLoading: userIsLoading } = useUser()
