@@ -5,19 +5,42 @@ import { eq } from 'drizzle-orm'
 export default defineProtectedEventHandler(async (event) => {
   const eventId = event.context.params!.id
 
-  const result = await event.context.database.select().from(events)
-    .where(eq(events.id, eventId))
-    .leftJoin(usersToEvents, eq(events.id, usersToEvents.eventId))
+  interface resultType {
+    attendees?: {
+      userId: string;
+      eventId: string;
+      admissionKey: string;
+    }[];
+    id: string;
+    name: string;
+    description: string;
+    location: string;
+    badgeImage: string;
+    startDateTime: string;
+    endDateTime: string;
+    usersToEvents?: {
+      userId: string;
+      eventId: string;
+      admissionKey: string;
+    }[];
+  }
 
-  if (result === undefined || result[0]["users_events"] === null) {
+  const result: resultType[] = await event.context.database.query.events.findMany({
+    where: eq(events.id, eventId),
+    with: {
+      usersToEvents: {
+        where: eq(usersToEvents.eventId, eventId)
+      }
+    }
+  })
+  result[0]["attendees"] = result[0]["usersToEvents"]
+  delete result[0]["usersToEvents"]
+
+  if (result === undefined) {
     throw createError({
       status: 400,
       statusMessage: "Bad Request"
     })
   }
-
-  return {
-    ...result[0]["events"],
-    attendees: result[0]["users_events"]
-  }
+  return result[0]
 })

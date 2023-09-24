@@ -22,9 +22,14 @@ const defaultOptions: DefineProtectedEventHandlerOptions = {
   allowUnlinkedUser: false,
 }
 
+interface eventParameters {
+  restrictTo?: Array<"exco" | "associate" | "affiliate" | "ordinary" | "revoked">
+}
+
 export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>,
   _options?: DefineProtectedEventHandlerOptions,
+  params?: eventParameters
 ): EventHandler<T, D> {
   const options = defu(_options, defaultOptions)
 
@@ -55,6 +60,13 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
     })
 
     if (user === null) {
+      throw createError({
+        status: 401,
+        statusMessage: 'Unauthorized',
+      })
+    }
+
+    if (user?.memberType === null || user?.memberType === undefined || params?.restrictTo?.includes(user?.memberType)) {
       throw createError({
         status: 401,
         statusMessage: 'Unauthorized',

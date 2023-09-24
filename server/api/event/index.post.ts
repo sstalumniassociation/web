@@ -9,16 +9,9 @@ const createEventRequestBody = z.object({
     badgeImage: z.string().url(),
     startDateTime: z.string().datetime(),
     endDateTime: z.string().datetime()
-})
+}).strict()
 
 export default defineProtectedEventHandler(async (event) => {
-    if (event.context.user?.memberType !== "exco") {
-        throw createError({
-            status: 401,
-            statusMessage: "Unauthorised"
-        })
-    }
-
     const result = await createEventRequestBody.safeParseAsync(await readBody(event))
     if (!result.success) {
         throw createError({
@@ -28,17 +21,6 @@ export default defineProtectedEventHandler(async (event) => {
     }
 
     const { data } = result
-
-    // const checkDuplicate = await event.context.database.query.events.findFirst({
-    //     where: (events, { eq }) => eq(events.id, data.id)
-    // })
-
-    // if (checkDuplicate !== undefined) {
-    //     throw createError({
-    //         status: 400,
-    //         statusMessage: 'Event with same ID exists',
-    //     })
-    // }
 
     const addedEvent = await event.context.database.insert(events).values(data)
 
@@ -50,4 +32,4 @@ export default defineProtectedEventHandler(async (event) => {
     }
 
     return data
-})
+}, undefined, { restrictTo: ["exco"] })

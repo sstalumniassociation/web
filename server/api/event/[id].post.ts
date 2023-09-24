@@ -11,16 +11,9 @@ const updateEventRequestBody = z.object({
   badgeImage: z.string().url(),
   startDateTime: z.string().datetime(),
   endDateTime: z.string().datetime()
-})
+}).strict()
 
 export default defineProtectedEventHandler(async (event) => {
-  if (event.context.user?.memberType !== "exco") {
-    throw createError({
-        status: 401,
-        statusMessage: "Unauthorised"
-    })
-  }
-
   const eventId = event.context.params!.id
 
   const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
@@ -38,4 +31,4 @@ export default defineProtectedEventHandler(async (event) => {
     .where(eq(events.id, eventId))
   
   return updateEvent
-})
+}, undefined, { restrictTo: ["exco"] })
