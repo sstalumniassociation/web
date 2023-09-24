@@ -3,6 +3,8 @@ import dayjs from 'dayjs'
 import { f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
 
 const { data: events } = useEvents()
+
+
 </script>
 
 <template>
@@ -30,6 +32,15 @@ const { data: events } = useEvents()
 
     <div class="hidden md:inline">
       <div class="data-table data-table-init card">
+        <div class="card-header">
+          <div class="data-table-title">Events</div>
+          <div></div>
+          <div class="data-table-actions">
+            <a class="button popup-open icon-only" data-popup=".create-event-popup">
+              <i class="icon f7-icons"> plus_circle </i>
+            </a>
+          </div>
+        </div>
         <table>
           <thead>
             <tr>
@@ -48,7 +59,7 @@ const { data: events } = useEvents()
             </tr>
           </thead>
           <tbody>
-            <tr v-for="event in events" :key="event.id">
+            <tr v-for="event in events" :key="event.id" @click="`/event/${event.id}`">
               <td class="label-cell">
                 {{ event.name }}
               </td>

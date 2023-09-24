@@ -30,7 +30,9 @@ const showForbidden = computed(() => {
 
     <template v-else>
       <AdminCommonLeftPanel :route="props.f7route" />
+      <f7-block-title large class="ml-4">Events</f7-block-title>
       <AdminHomeEventsTable />
+      <AdminHomeCreateEventPopup />
     </template>
   </f7Page>
 </template>
