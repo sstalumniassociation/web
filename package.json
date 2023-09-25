@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "latest",
+    "@cloudflare/workers-types": "^4.20230914.0",
     "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
     "@paralleldrive/cuid2": "^2.2.2",

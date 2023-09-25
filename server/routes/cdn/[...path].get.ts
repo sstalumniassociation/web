@@ -1,8 +1,9 @@
 import type { R2Bucket } from '@cloudflare/workers-types'
 
-export default defineCachedEventHandler(async (event) => {
+export default defineProtectedEventHandler(async (event) => {
   const bucket: R2Bucket = event.context.cloudflare.env.R2_SSTAA
   const file = await bucket.get(event.context.params!.path)
+
   if (!file) {
     throw createError({
       statusCode: 404,
@@ -10,7 +11,14 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  return sendStream(event, file.body as any)
+  const headers = new Headers()
+  file.writeHttpMetadata(headers as any)
+  headers.set('etag', file.httpEtag)
+  setResponseHeaders(event, Object.fromEntries(headers.entries()))
+
+  return file.body
 }, {
-  maxAge: 60,
+  cache: {
+    maxAge: 60 * 60,
+  },
 })
