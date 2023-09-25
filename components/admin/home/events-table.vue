@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
+import { f7, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
 import { EventWithAttendees } from '~/shared/types';
+import Router from "vue-router";
 
 const { data: events } = useEvents()
 
@@ -10,15 +11,9 @@ const state = reactive({
   eventName: ""
 })
 
-function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
+function handleOnClick(event: EventWithAttendees) {
   state.eventId = event.id
   state.eventName = event.name
-
-  if (type === "delete") {
-
-  } else {
-
-  }
 }
 
 </script>
@@ -39,10 +34,10 @@ function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
           {{ event.description }}
         </f7CardContent>
         <f7CardFooter>
-          <f7Button tonal @click="handleOnClick(event, 'details')">
+          <f7Button tonal @click="">
             Open
           </f7Button>
-          <f7Button tonal color="red" @click="handleOnClick(event, 'delete')">
+          <f7Button tonal color="red" @click="handleOnClick(event)">
             Delete
           </f7Button>
         </f7CardFooter>
@@ -78,7 +73,7 @@ function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="event in events" :key="event.id" @click="handleOnClick(event, 'details')">
+            <tr v-for="event in events" :key="event.id" @click="">
               <td class="label-cell">
                 {{ event.name }}
               </td>
@@ -92,7 +87,7 @@ function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
                 {{ event.attendees.length }}
               </td>
               <td>
-                <f7Button tonal color="red" class="popup-open" @click="handleOnClick(event, 'delete')" data-popup=".delete-event-popup">
+                <f7Button tonal color="red" class="popup-open" @click="handleOnClick(event)" data-popup=".delete-event-popup">
                   Delete
                 </f7Button>
               </td>
@@ -102,5 +97,7 @@ function handleOnClick(event: EventWithAttendees, type: "delete" | "details") {
       </div>
     </div>
   </div>
+
   <AdminHomeDeleteEventPopup :key="state.eventId" :eventId="state.eventId" :eventName="state.eventName" />
+  <AdminHomeCreateEventPopup />
 </template>

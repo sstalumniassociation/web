@@ -31,9 +31,6 @@ const showForbidden = computed(() => {
     <template v-else>
       <AdminCommonLeftPanel :route="props.f7route" />
       <AdminHomeEventsTable />
-
-      <AdminHomeCreateEventPopup />
-      <AdminHomeDeleteEventPopup />
     </template>
   </f7Page>
 </template>

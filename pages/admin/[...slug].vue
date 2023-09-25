@@ -11,7 +11,7 @@ import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7View } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
-import { AdminHomePage, AdminMembersPage } from '#components'
+import { AdminHomePage, AdminMembersPage, AdminEventSlug } from '#components'
 
 Framework7.use(Framework7Vue)
 
@@ -25,6 +25,11 @@ const appRoutes = [
     name: 'members',
     path: '/admin/members',
     component: AdminMembersPage,
+  },
+  {
+    name: "event-details",
+    path: '/admin/event/:id',
+    component: AdminEventSlug
   },
 ]
 

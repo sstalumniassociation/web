@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { f7Link, f7NavRight, f7Navbar, f7Page, f7Popup, f7List, f7ListInput, f7Button } from 'framework7-vue';
 
 const event = reactive({
-    id: '',
     name: '',
     description: '',
     location: '',
@@ -12,29 +10,33 @@ const event = reactive({
     endDateTime: '',
 })
 
-const pending = ref(false)
-const popupOpened = ref(false)
+const state = reactive({
+    pending: false,
+    isCreated: false,
+    isError: false,
+})
 
 async function createEvent() {
-    pending.value = true
+    state.pending = true
+    try {
+        event.startDateTime = new Date(event.startDateTime).toISOString()
+        event.endDateTime = new Date(event.endDateTime).toISOString()
+        const res = await $api("/api/event/", {
+            method: "POST",
+            body: {
+                ...event
+            }
+        })
 
-    // try {
-    //     const res = await $api("/api/event/", {
-    //         method: "POST",
-    //         body: {
-    //             ...event
-    //         }
-    //     })
-    // } catch (err) {
-
-    // }
-
-    popupOpened.value = false
+        state.isCreated = true
+    } catch (err) {
+        state.isError = true
+    }
 }
 </script>
 
 <template>
-    <f7Popup v-model:opened:="popupOpened" class="create-event-popup">
+    <f7Popup class="create-event-popup">
         <f7Page>
             <f7Navbar title="Create Event">
                 <f7NavRight>
@@ -43,17 +45,22 @@ async function createEvent() {
             </f7Navbar>
             <f7Page>
                 <f7List form @submit.prevent="createEvent">
-                    <f7ListInput v-model:value="event.name" label="Name" placeholder="What is your event called?" required/>
-                    <f7ListInput v-model:value="event.description" label="Description" placeholder="Short description of your event" required/>
-                    <f7ListInput v-model:value="event.location" label="Location" placeholder="Where is it held?" required/>
-                    <f7ListInput v-model:value="event.badgeImage" type="url" label="Image URL" placeholder="https://example.com" required validate />
-                    <f7ListInput v-model:value="event.startDateTime" type="datetime-local" label="Start Date and Time" placeholder="When does your event start" required/>
-                    <f7ListInput v-model:value="event.endDateTime" type="datetime-local" label="End Date and Time" placeholder="When does your event end" required/>
+                    <f7ListInput v-model:value="event.name" label="Name" placeholder="What is your event called?" required :disabled="state.isCreated" />
+                    <f7ListInput v-model:value="event.description" label="Description" placeholder="Short description of your event" required :disabled="state.isCreated" />
+                    <f7ListInput v-model:value="event.location" label="Location" placeholder="Where is it held?" required :disabled="state.isCreated" />
+                    <f7ListInput v-model:value="event.badgeImage" type="url" label="Image URL" placeholder="https://example.com" required validate :disabled="state.isCreated" />
+                    <f7ListInput v-model:value="event.startDateTime" type="datetime-local" label="Start Date and Time" placeholder="When does your event start" required :disabled="state.isCreated" />
+                    <f7ListInput v-model:value="event.endDateTime" type="datetime-local" label="End Date and Time" placeholder="When does your event end" required :disabled="state.isCreated" />
 
                     <f7List inset>
-                        <f7Button fill type="submit" preloader :loading="pending" :disabled="pending">
+                        <f7Button v-if="!state.isCreated" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
                             Done
                         </f7Button>
+                        <f7Button v-if="state.isCreated || state.isError" fill popup-close>
+                            Close
+                        </f7Button>
+                        <p v-if="state.isCreated" class="text-center">Successfully created event! You may now close the popup.</p>
+                        <p v-if="state.isError" class="text-center">Something went wrong... Please try again later.</p>
                     </f7List>
                 </f7List>
             </f7Page>
