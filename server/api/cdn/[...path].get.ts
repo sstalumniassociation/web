@@ -1,6 +1,6 @@
 import type { R2Bucket } from '@cloudflare/workers-types'
 
-export default defineCachedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const bucket: R2Bucket = event.context.cloudflare.env.R2_SSTAA
   const file = await bucket.get(event.context.params!.path)
   if (!file) {
@@ -10,7 +10,5 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  return file.body
-}, {
-  maxAge: 60,
+  return sendStream(event, file.body as any)
 })
