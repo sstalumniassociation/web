@@ -5,12 +5,32 @@ const props = defineProps(["eventId", "eventName"])
 
 const state = reactive({
     pending: false,
-    verification: ""
+    verification: "",
+    msg: "",
+    isError: false,
 })
 
 async function deleteEvent() {
     state.pending = true
 
+    if (state.verification !== props.eventId) {
+        state.msg = "Verification failed! Ensure you typed the Event ID correctly."
+        state.pending = false
+        return
+    }
+
+    try {
+        const res = await $api(`/api/event/${props.eventId}`, {
+            method: "DELETE"
+        })
+
+        console.log(res)
+        state.msg = "Delete successful! You can close this popup now."
+    } catch (err) {
+        state.isError = true
+    }
+
+    state.pending = false
 }
 
 </script>
@@ -29,12 +49,16 @@ async function deleteEvent() {
                     <p class="text-4">This event will be <b>permanently deleted</b>, including the record of the attendees who attended the event.</p>
                 </f7Block>
                 <f7List form @submit.prevent="deleteEvent">
-                    <f7ListInput v-model:value="state.verification" :label="`To verify, type ${props.eventId} in the field below:`" :placeholder="props.eventId" required/>
+                    <f7ListInput v-model:value="state.verification" :label="`To verify, type the Event ID (${props.eventId}) in the field below:`" :placeholder="props.eventId" required validate :pattern="props.eventId" :disabled="state.msg.includes('successful')" />
 
                     <f7List inset>
-                        <f7Button fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
+                        <f7Button v-if="!state.isError" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
                             Continue
                         </f7Button>
+                        <f7Button v-if="state.isError" fill popup-close="">
+                            Close
+                        </f7Button>
+                        <p class="text-center">{{ state.msg }}</p>
                     </f7List>
                 </f7List>
             </f7Page>

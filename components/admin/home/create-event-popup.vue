@@ -14,6 +14,7 @@ const state = reactive({
     pending: false,
     isCreated: false,
     isError: false,
+    newEventId: "",
 })
 
 async function createEvent() {
@@ -28,6 +29,7 @@ async function createEvent() {
             }
         })
 
+        state.newEventId = res.id
         state.isCreated = true
     } catch (err) {
         state.isError = true
@@ -59,7 +61,7 @@ async function createEvent() {
                         <f7Button v-if="state.isCreated || state.isError" fill popup-close>
                             Close
                         </f7Button>
-                        <p v-if="state.isCreated" class="text-center">Successfully created event! You may now close the popup.</p>
+                        <p v-if="state.isCreated" class="text-center">Successfully created event with ID <b>{{ state.newEventId }}</b>! You may now close the popup.</p>
                         <p v-if="state.isError" class="text-center">Something went wrong... Please try again later.</p>
                     </f7List>
                 </f7List>
