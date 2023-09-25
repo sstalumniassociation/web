@@ -15,12 +15,12 @@ export function useEvents() {
   })
 }
 
-export function useEvent(id: string) {
+export function useEvent(id: MaybeRef<string>) {
   const firebaseCurrentUser = useCurrentUser()
   const queryClient = useQueryClient()
   return useQuery({
     queryKey: queryKeyFactory.events,
-    queryFn: () => $api<EventWithAttendees>('/api/event'),
+    queryFn: () => $api<EventWithAttendees>(`/api/event/${toValue(id)}`),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
     placeholderData() {
       return queryClient.getQueryData<EventWithAttendees[]>(queryKeyFactory.events)?.find(event => event.id === id)

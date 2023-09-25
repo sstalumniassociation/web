@@ -11,7 +11,7 @@ import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
-import { AppHomePage } from '#components'
+import { AppHomePage, AppServicesEventPage } from '#components'
 
 Framework7.use(Framework7Vue)
 
@@ -20,6 +20,10 @@ const appRoutes = [
     name: 'home',
     path: '/app',
     component: AppHomePage,
+  },
+  {
+    path: '/app/services/event/:id',
+    component: AppServicesEventPage,
   },
 ]
 

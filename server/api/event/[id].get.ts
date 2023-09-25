@@ -22,8 +22,8 @@ export default defineProtectedEventHandler(async (event) => {
 
   if (!result) {
     throw createError({
-      statusCode: 400,
-      statusMessage: 'Bad request',
+      statusCode: 404,
+      statusMessage: 'Not found',
     })
   }
 
@@ -36,4 +36,8 @@ export default defineProtectedEventHandler(async (event) => {
       admissionKey,
     })),
   }
+}, {
+  cache: {
+    maxAge: 10,
+  },
 })
