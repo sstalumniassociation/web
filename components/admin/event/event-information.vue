@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { f7Card, f7CardHeader, f7Chip, f7CardContent } from 'framework7-vue';
-import { EventWithAttendees } from '~/shared/types';
 
 const props = defineProps(["event"])
 

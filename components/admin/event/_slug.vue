@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 import { f7Link, f7NavLeft, f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
 import type { Router } from 'framework7/types'
@@ -29,13 +30,11 @@ const showForbidden = computed(() => {
         <LazyAdminHomeForbidden v-if="showForbidden" />
 
         <template v-else>
-            <div>
-                <AdminEventInformation :event="event" />
-            </div>
+            <AdminEventInformation :event="event" />
 
-            <div>
-                <AdminEventCheckedinUsers :event="event" />
-            </div>
+            <AdminEventUploadAttendees :event="event" />
+
+            <AdminEventCheckedinUsers :event="event" />
         </template>
     </f7Page>
 </template>
