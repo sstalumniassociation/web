@@ -10,7 +10,7 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  return sendStream(event, file.body as any)
+  return file.body
 }, {
   maxAge: 60,
 })
