@@ -1,6 +1,28 @@
 <script setup lang="ts">
-    import { f7List, f7ListItem, f7Card, f7CardContent, f7CardHeader } from 'framework7-vue';
+    import { f7List, f7ListItem, f7Card, f7CardContent, f7CardHeader, f7Button } from 'framework7-vue';
+    import { parse } from 'papaparse'
+    import { ref } from 'vue'
+
     const props = defineProps(["event"])
+
+    const uploadedCSV = ref({})
+    const file = ref<File | undefined>(undefined)
+
+    function handleFileUpload(e: Event) {
+        const files = (e.target as HTMLInputElement).files
+        file.value = files?.[0]
+        // parse(file, {
+        //     skipEmptyLines: true,
+        //     complete: function () {
+
+        //     }
+        // })
+        console.log(file.value)
+    }
+
+    function uploadToDB() {
+
+    }
 </script>
 
 <template>
@@ -12,7 +34,21 @@
             </div>
         </f7CardHeader>
         <f7CardContent>
-            Upload CSV goes here
+            <div class="space-y-2">
+                <div class="space-x-5">
+                    <label class="inline-block p-2 px-4 bg-[#007aff]/[0.4] hover:bg-[#007aff]/[0.7] duration-100 rounded-xl cursor-pointer"> 
+                        <input type="file" accept=".csv" @change="handleFileUpload($event)" class="display-none"/>
+                        <div class="space-x-2">
+                            <i class="icon f7-icons size-22">upload_circle_fill</i>
+                            <span class="text-md font-semibold">Upload File</span>
+                        </div>
+                    </label>
+                    <span><b>{{ file ? `Uploaded File:` : '' }}</b> {{ file ? file.name : '' }}</span>
+                </div>
+                <f7Button v-if="file" tonal class="flex-inline max-w-xs" @click="uploadToDB">
+                    Populate Database
+                </f7Button>
+            </div>
         </f7CardContent>
     </f7Card>
 </template>

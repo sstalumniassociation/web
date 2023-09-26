@@ -7,8 +7,6 @@ import { EventWithAttendees } from '~/shared/types';
 const props = defineProps<{
     f7route: Router.Route
 }>()
-console.log(props.f7route.params.id!)
-
 const { data: user } = useUser()
 const { data: event } = useEvent(props.f7route.params.id!)
 

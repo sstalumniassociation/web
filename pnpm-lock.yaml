@@ -35,6 +35,9 @@ devDependencies:
   '@ts-rest/vue-query':
     specifier: ^3.30.2
     version: 3.30.2(@tanstack/vue-query@4.35.3)(@ts-rest/core@3.30.2)(vue@3.3.4)(zod@3.22.2)
+  '@types/papaparse':
+    specifier: ^5.3.9
+    version: 5.3.9
   '@unocss/nuxt':
     specifier: ^0.56.0
     version: 0.56.1(postcss@8.4.30)(rollup@2.79.1)(vite@4.4.9)(webpack@5.88.2)
@@ -92,6 +95,9 @@ devDependencies:
   qrcode:
     specifier: ^1.5.3
     version: 1.5.3
+  papaparse:
+    specifier: ^5.4.1
+    version: 5.4.1
   simple-git:
     specifier: ^3.20.0
     version: 3.20.0
@@ -3566,6 +3572,12 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+    dev: true
+
+  /@types/papaparse@5.3.9:
+    resolution: {integrity: sha512-sZcrKD63qA4/6GyBcVvX6AIp0AkpfyYk00CUQHMBvb4+OVXTZWyXUvidUZaai1wyKUVyJoxO7mgREam/pMRrDw==}
+    dependencies:
+      '@types/node': 20.6.3
     dev: true
 
   /@types/resolve@1.17.1:
@@ -9172,6 +9184,10 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - supports-color
+    dev: true
+
+  /papaparse@5.4.1:
+    resolution: {integrity: sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==}
     dev: true
 
   /parent-module@1.0.1:
