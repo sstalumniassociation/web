@@ -2,6 +2,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 import type { events, news, users } from '~/server/db/schema'
 
 export type User = InferSelectModel<typeof users>
+export type ImportedUser = Omit<User, 'firebaseId' | 'id'>
 export type UserRestricted = Pick<User, 'id' | 'name'>
 export type UserRestrictedWithAdmissionKey = UserRestricted & { admissionKey: string }
 

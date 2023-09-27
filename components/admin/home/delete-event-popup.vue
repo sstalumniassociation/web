@@ -7,30 +7,22 @@ const state = reactive({
     pending: false,
     verification: "",
     msg: "",
-    isError: false,
+    isDeleted: false,
 })
 
 async function deleteEvent() {
     state.pending = true
 
-    if (state.verification !== props.event.id) {
-        state.msg = "Verification failed! Ensure you typed the Event ID correctly."
-        state.pending = false
-        return
-    }
-
     try {
-        const res = await $api(`/api/event/${props.event.id}`, {
+        await $api(`/api/event/${props.event.id}`, {
             method: "DELETE"
         })
-
-        console.log(res)
-        state.msg = "Delete successful! You can close this popup now."
     } catch (err) {
-        state.isError = true
+        console.error(`Deleting Event (${props.event.name}) failed.`)
     }
 
     state.pending = false
+    state.isDeleted = true
 }
 
 </script>
@@ -49,16 +41,16 @@ async function deleteEvent() {
                     <p class="text-4">This event will be <b>permanently deleted</b>, including the record of the attendees who attended the event.</p>
                 </f7Block>
                 <f7List form @submit.prevent="deleteEvent">
-                    <f7ListInput v-model:value="state.verification" :label="`To verify, type the Event ID (${props.event.id}) in the field below:`" :placeholder="props.event.id" required validate :pattern="props.event.id" :disabled="state.msg.includes('successful')" />
+                    <f7ListInput v-model:value="state.verification" :label="`To verify, type the Event Name (${props.event.name}) in the field below:`" :placeholder="props.event.name" required validate :pattern="props.event.name" :disabled="state.isDeleted" />
 
                     <f7List inset>
-                        <f7Button v-if="!state.isError" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
+                        <f7Button v-if="!state.isDeleted" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
                             Continue
                         </f7Button>
-                        <f7Button v-if="state.isError" fill popup-close="">
+                        <f7Button v-if="state.isDeleted" fill popup-close="">
                             Close
                         </f7Button>
-                        <p class="text-center">{{ state.msg }}</p>
+                        <p class="text-center" v-if="state.isDeleted">Delete successful! You can close this popup now.</p>
                     </f7List>
                 </f7List>
             </f7Page>

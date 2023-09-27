@@ -111,6 +111,6 @@ function showDetails(event: EventWithAttendees) {
   </div>
 
   <AdminHomeDeleteEventPopup :event="selectedEvent" />
-  <!-- <AdminHomeUpdateEventPopup :event="selectedEvent" /> -->
+  <AdminHomeUpdateEventPopup :event="selectedEvent" />
   <AdminHomeCreateEventPopup />
 </template>
