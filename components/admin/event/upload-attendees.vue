@@ -9,8 +9,11 @@
 
     let uploadedAttendees: ImportedUser[]
     const pending = ref(false)
-    const isUploaded = ref(true)
-    const didError = ref(false)
+    const isUploaded = ref(false)
+    const error = ref({
+        didError: false,
+        msg: ""
+    })
     const file = ref<File | undefined>(undefined)
 
     // Check for Type
@@ -18,10 +21,9 @@
         return file instanceof File
     }
     
-    async function handleFileUpload(e: Event) {
+    function handleFileUpload(e: Event) {
         pending.value = true
-        const files = (e.target as HTMLInputElement).files
-        file.value = files?.[0]
+        file.value = (e.target as HTMLInputElement).files?.[0]
         
         // Parse the CSV File
         if (isFile(file.value)) {
@@ -30,43 +32,46 @@
                 header: true,
                 complete: function (results: ParseResult<ImportedUser>) {
                     uploadedAttendees = results.data
+
+                    if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(["name", "memberId", "email", "graduationYear", "memberType"].sort())) {
+                        error.value.didError = true
+                        error.value.msg = "CSV has missing fields! Please check the file and reupload it."
+                        return
+                    }
+                    
+                    pending.value = uploadedAttendees === undefined
                 }
             })
         }
-
-        await uploadToDB(uploadedAttendees)
-
-        pending.value = false
-        if (!didError) { isUploaded.value = true }
-        
     }
 
-    async function uploadToDB(data: unknown[]) {
+    async function uploadToDB() {
         // Upload to users database
-        const splittedUsers = [];
-        for (let i = 0; i < uploadedAttendees.length; i += 30) {
-            splittedUsers.push(uploadedAttendees.slice(i, i + 30));
-        }
-
         let createdUsers = []
-        for (let i = 0; i < splittedUsers.length; i++) {
+        for (let i = 0; i < uploadedAttendees.length; i += 30) {
+            let usersBatch = uploadedAttendees.slice(i, i + 29)
+
+            usersBatch = usersBatch.map(item => ({
+                ...item,
+                graduationYear: parseInt(item.graduationYear.toString(), 10)
+            }))
+
             try {
                 const res = await $api("/api/user/bulk", {
                     method: "POST",
-                    body: splittedUsers[i]
+                    body: usersBatch
                 })
 
                 createdUsers.push(res)
             } catch (err) {
-                didError.value = true
-                console.error(`Failed to push chunk ${i} to the users database.`)
+                error.value.didError = true
+                error.value.msg = `Failed to push chunk ${i} to the users database.`
             }
         }
-
         // Upload to users_event database
-        for (let i = 0; i < splittedUsers.length; i += 30) {
+        for (let i = 0; i < createdUsers.length; i += 1) {
             let chunk = []
-            for (let j = 0; j < splittedUsers[i].length; i++) {
+            for (let j = 0; j < createdUsers[i].length; j += 1) {
                 chunk.push({
                     userId: createdUsers[i][j].id,
                     eventId: props.event.id,
@@ -80,10 +85,13 @@
                     body: chunk
                 })
             } catch (err) {
-                didError.value = true
-                console.error(`Failed to push chunk ${i} to the users_event database.`)
+                error.value.didError = true
+                error.value.msg = `Failed to push chunk ${i} to the users_event database.`
             }
         }
+
+        pending.value = false
+        if (!error.value.didError) { isUploaded.value = true }
     }
 </script>
 
@@ -110,7 +118,8 @@
                 <f7Button v-if="file" tonal class="flex-inline max-w-xs" @click="uploadToDB" :loading="pending" :disabled="pending">
                     Populate Database
                 </f7Button>
-                <span v-if="isUploaded">Successfully added {{ uploadedAttendees.length }} users to the database. </span>
+                <span v-if="isUploaded">Successfully added users to the database. </span>
+                <span v-if="error.didError">{{ error.msg }}</span>
             </div>
         </f7CardContent>
     </f7Card>

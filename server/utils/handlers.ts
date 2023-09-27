@@ -61,7 +61,7 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
         statusMessage: 'Unauthorized',
       })
     }
-
+    
     if (options.restrictTo) {
       if (!user?.memberType || !options.restrictTo.includes(user.memberType)) {
         throw createError({

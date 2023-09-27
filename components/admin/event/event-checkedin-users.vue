@@ -9,12 +9,8 @@
             <span class="font-semibold text-2xl">Attendees</span>
         </f7CardHeader>
         <f7CardContent>
-            <f7List v-for="attendee in props.event.attendees" simple-list dividers-ios strong inset>
-                <f7ListItem>
-                    <div>
-                        <span class="text-md">{{ attendee.name }}</span>
-                        <span class="font-light">{{ attendee.id }}</span>
-                    </div>
+            <f7List v-for="attendee in props.event.attendees" media-list dividers-ios strong inset>
+                <f7ListItem :title="attendee.name" :subtitle="`ID: ${attendee.id}`">
                 </f7ListItem>
             </f7List>
         </f7CardContent>

@@ -1,8 +1,6 @@
-
 <script setup lang="ts">
 import { f7Link, f7NavLeft, f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
 import type { Router } from 'framework7/types'
-import { EventWithAttendees } from '~/shared/types';
 
 const props = defineProps<{
     f7route: Router.Route
