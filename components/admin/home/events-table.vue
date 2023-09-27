@@ -2,18 +2,20 @@
 import dayjs from 'dayjs'
 import { f7, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
 import { EventWithAttendees } from '~/shared/types';
+import { ref } from 'vue'
 
 const { data: events } = useEvents()
 
-const state = reactive({
-  eventId: "",
-  eventName: ""
+const selectedEvent = ref<EventWithAttendees>({
+  id: "",
+  name: "",
+  description: "",
+  location: "",
+  badgeImage: "",
+  startDateTime:"",
+  endDateTime: "",
+  attendees: [],
 })
-
-function prepareProps(event: EventWithAttendees) {
-  state.eventId = event.id
-  state.eventName = event.name
-}
 
 function showDetails(event: EventWithAttendees) {
   f7.views.main.router.navigate(`/admin/event/${ event.id }`, {
@@ -39,10 +41,10 @@ function showDetails(event: EventWithAttendees) {
           {{ event.description }}
         </f7CardContent>
         <f7CardFooter>
-          <f7Button tonal @click="showDetails(event)">
+          <f7Button tonal @click="() => selectedEvent = event">
             Open
           </f7Button>
-          <f7Button tonal color="red" @click="prepareProps(event)" class="popup-open" data-popup=".delete-event-popup">
+          <f7Button tonal color="red" @click="() => selectedEvent = event" class="popup-open" data-popup=".delete-event-popup">
             Delete
           </f7Button>
         </f7CardFooter>
@@ -92,9 +94,14 @@ function showDetails(event: EventWithAttendees) {
                 {{ event.attendees.length }}
               </td>
               <td>
-                <f7Button tonal color="red" class="popup-open" @click="prepareProps(event)" data-popup=".delete-event-popup">
-                  Delete
-                </f7Button>
+                <div class="flex-inline space-x-3">
+                  <f7Button tonal class="popup-open" @click="() => selectedEvent = event" data-popup=".update-event-popup">
+                    Update
+                  </f7Button>
+                  <f7Button tonal color="red" class="popup-open" @click="() => selectedEvent = event" data-popup=".delete-event-popup">
+                    Delete
+                  </f7Button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -103,6 +110,7 @@ function showDetails(event: EventWithAttendees) {
     </div>
   </div>
 
-  <AdminHomeDeleteEventPopup :key="state.eventId" :eventId="state.eventId" :eventName="state.eventName" />
+  <AdminHomeDeleteEventPopup :event="selectedEvent" />
+  <!-- <AdminHomeUpdateEventPopup :event="selectedEvent" /> -->
   <AdminHomeCreateEventPopup />
 </template>
