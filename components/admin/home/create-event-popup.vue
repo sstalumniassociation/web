@@ -35,6 +35,13 @@ async function createEvent() {
         state.isError = true
     }
 }
+
+function resetRefs() {
+    state.pending = false
+    state.isCreated = false
+    state.isError = false
+    state.newEventId = ""
+}
 </script>
 
 <template>
@@ -58,7 +65,7 @@ async function createEvent() {
                         <f7Button v-if="!state.isCreated" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
                             Done
                         </f7Button>
-                        <f7Button v-if="state.isCreated || state.isError" fill popup-close>
+                        <f7Button v-if="state.isCreated || state.isError" fill popup-close @click="resetRefs">
                             Close
                         </f7Button>
                         <p v-if="state.isCreated" class="text-center">Successfully created event with ID <b>{{ state.newEventId }}</b>! You may now close the popup.</p>

@@ -25,6 +25,13 @@ async function deleteEvent() {
     state.isDeleted = true
 }
 
+function resetRefs() {
+    state.pending = false
+    state.verification = ""
+    state.msg = ""
+    state.isDeleted = false
+}
+
 </script>
 
 <template>
@@ -47,7 +54,7 @@ async function deleteEvent() {
                         <f7Button v-if="!state.isDeleted" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
                             Continue
                         </f7Button>
-                        <f7Button v-if="state.isDeleted" fill popup-close="">
+                        <f7Button v-if="state.isDeleted" fill popup-close @click="resetRefs">
                             Close
                         </f7Button>
                         <p class="text-center" v-if="state.isDeleted">Delete successful! You can close this popup now.</p>
