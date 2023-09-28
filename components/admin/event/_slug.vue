@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { f7Link, f7NavLeft, f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
+import { f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 
 const props = defineProps<{
-    f7route: Router.Route
+  f7route: Router.Route
 }>()
 const { data: user } = useUser()
 const { data: event } = useEvent(props.f7route.params.id!)
 
 const showForbidden = computed(() => {
-    if (!user.value) // Should load placeholder data
-        return false
-    return user.value.memberType !== 'exco'
+  if (!user.value) // Should load placeholder data
+    return false
+  return user.value.memberType !== 'exco'
 })
 </script>
 
 <template>
-    <f7Page>
-        <f7Navbar back-link="Back">
-            <f7NavTitle>
-                Event Details
-            </f7NavTitle>
-        </f7Navbar>
+  <f7Page>
+    <f7Navbar back-link="Back">
+      <f7NavTitle>
+        Event Details
+      </f7NavTitle>
+    </f7Navbar>
 
-        <LazyAdminHomeForbidden v-if="showForbidden" />
+    <LazyAdminHomeForbidden v-if="showForbidden" />
 
-        <template v-else>
-            <AdminEventInformation :event="event" />
+    <template v-else>
+      <AdminEventInformation :event="event" />
 
-            <AdminEventUploadAttendees :event="event" />
+      <AdminEventUploadAttendees :event="event" />
 
-            <AdminEventCheckedinUsers :event="event" />
-        </template>
-    </f7Page>
+      <AdminEventCheckedinUsers :event="event" />
+    </template>
+  </f7Page>
 </template>

@@ -20,7 +20,6 @@ const bulkCreateUserRequestBody = z.array(
 export default defineProtectedEventHandler(async (event) => {
   const result = await bulkCreateUserRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
-    console.log(result.error)
     throw createError({
       statusCode: 400,
       statusMessage: 'Bad request',
