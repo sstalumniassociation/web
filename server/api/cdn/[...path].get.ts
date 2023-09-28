@@ -1,6 +1,14 @@
 import type { R2Bucket } from '@cloudflare/workers-types'
 
 export default defineEventHandler(async (event) => {
+  if (!event.context.cloudflare) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Internal server error',
+      cause: 'Cloudflare R2 not available in this environment.',
+    })
+  }
+
   const bucket: R2Bucket = event.context.cloudflare.env.R2_SSTAA
   const file = await bucket.get(event.context.params!.path)
 
