@@ -59,7 +59,7 @@ function showDetails(event: EventWithAttendees) {
           <div />
           <div class="data-table-actions">
             <a class="button popup-open icon-only" data-popup=".create-event-popup">
-              <f7Icon icon="plus_circle"></f7Icon>
+              <f7Icon icon="plus_circle" />
             </a>
           </div>
         </div>

@@ -10,9 +10,9 @@ const state = reactive({
 })
 
 const mutation = useMutation({
-  mutationFn: (id) => $api(`/api/event/${id}`, {
-      method: 'DELETE',
-  })
+  mutationFn: id => $api(`/api/event/${id}`, {
+    method: 'DELETE',
+  }),
 })
 
 async function deleteEvent() {
@@ -22,7 +22,7 @@ async function deleteEvent() {
 function resetRefs() {
   state.verification = ''
   state.msg = ''
-  mutation.reset
+  mutation.reset()
 }
 </script>
 

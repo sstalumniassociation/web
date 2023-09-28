@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 import { useMutation } from '@tanstack/vue-query'
-import type { Event } from '~/shared/types'
 import { ref } from 'vue'
+import type { Event } from '~/shared/types'
 
 const event = reactive({
   name: '',
@@ -14,15 +14,15 @@ const event = reactive({
 })
 
 const mutation = useMutation({
-  mutationFn: (newEvent: Omit<Event, 'id'>) => $api("/api/event", {
-    method: "POST",
+  mutationFn: (newEvent: Omit<Event, 'id'>) => $api('/api/event', {
+    method: 'POST',
     body: {
-      ...newEvent
-    }
-  })
+      ...newEvent,
+    },
+  }),
 })
 
-const newEventId = ref("")
+const newEventId = ref('')
 
 async function createEvent() {
   event.startDateTime = new Date(event.startDateTime).toISOString()
@@ -34,7 +34,7 @@ async function createEvent() {
 
 function resetRefs() {
   newEventId.value = ''
-  mutation.reset
+  mutation.reset()
 }
 </script>
 

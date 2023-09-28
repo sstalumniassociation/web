@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 import { f7Block, f7BlockTitle, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 
 const props = defineProps(['event'])
@@ -9,8 +9,8 @@ const updatedValues = reactive({
   description: props.event.description,
   location: props.event.location,
   badgeImage: props.event.badgeImage,
-  startDateTime:  dayjs(props.event.startDateTime * 1000).format("YYYY-MM-DDTHH:mm"),
-  endDateTime: dayjs(props.event.endDateTime * 1000).format("YYYY-MM-DDTHH:mm"),
+  startDateTime: dayjs(props.event.startDateTime * 1000).format('YYYY-MM-DDTHH:mm'),
+  endDateTime: dayjs(props.event.endDateTime * 1000).format('YYYY-MM-DDTHH:mm'),
 })
 
 // const state = reactive({
