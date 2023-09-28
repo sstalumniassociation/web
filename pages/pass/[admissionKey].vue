@@ -25,7 +25,7 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
 </script>
 
 <template>
-  <f7App>
+  <f7App theme="md">
     <f7View>
       <f7Page>
         <f7Navbar title="SST Alumni Association Passes" />
