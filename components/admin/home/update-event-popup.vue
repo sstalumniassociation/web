@@ -29,9 +29,8 @@ const updatedValues = reactive({
 //   msg: '',
 // })
 
-// async function updateEvent() {
-
-// }
+async function updateEvent() {
+}
 </script>
 
 <template>
@@ -51,15 +50,12 @@ const updatedValues = reactive({
         <f7Block>
           Some content goes here
         </f7Block>
-        <f7List form>
+        <f7List form @submit.prevent="updateEvent">
           <f7ListInput :placeholer="props.event.id" label="Event ID" disabled />
           <f7ListInput v-model:value="updatedValues.name" label="Event Name" :placeholder="props.event.name" />
           <f7ListInput v-model:value="updatedValues.description" label="Event Description" :placeholder="props.event.description" />
           <f7ListInput v-model:value="updatedValues.location" label="Event Location" :placeholder="props.event.location" />
           <f7ListInput v-model:value="updatedValues.badgeImage" label="Image URL" :placeholder="props.event.url" type="url" />
-          <f7ListInput v-model:value="updatedValues.startDateTime" label="Start Date and Time" :placeholder="epochToISO(props.event.startDateTime)" type="datetime-local" />
-          <f7ListInput v-model:value="updatedValues.endDateTime" label="End Date and Time" :placeholder="epochToISO(props.event.endDateTime)" type="datetime-local" />
-
           <f7List inset>
             <!-- <f7ListInput></f7ListInput> -->
           </f7List>

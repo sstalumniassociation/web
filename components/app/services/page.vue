@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { FetchError } from 'ofetch'
 import { f7, f7Block, f7BlockTitle, f7Button, f7Icon, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7PageContent, f7Sheet } from 'framework7-vue'
+import type { EventWithAttendees } from '~/shared/types'
+import { typeIsEventWithAttendees } from '~/composables/event'
 
 const sstaarsStore = useSstaarsStore()
 
@@ -16,7 +18,11 @@ async function click() {
 
   state.pending = true
   try {
-    const data = await $api(`/api/event/${state.eventId}`)
+    const data: EventWithAttendees | unknown = await $api(`/api/event/${state.eventId}`)
+
+    if (!typeIsEventWithAttendees(data))
+      return
+
     sstaarsStore.value.previousEvents[data.id] = data.name
     state.sheetOpened = false
     await nextTick(() => {

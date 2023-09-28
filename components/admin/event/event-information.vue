@@ -32,13 +32,13 @@ function convertEpochToSGT(epochTime: number) {
             <span class="font-bold text-3xl md:text-4xl">{{ props.event.name }}</span>
             <div>
               <div class="flex-inline shrink grow-0 p-1 px-4 border border-solid b-rounded-3">
-                {{ `0 / ${event.attendees.length} Attendees Checked-In` }}
+                {{ `0 / ${event.attendees.length}` }}
               </div>
             </div>
           </div>
           <div class="text-lg flex flex-col">
-            <span><b>{{ convertEpochToSGT(props.event.startDateTime) }}</b> to <b>{{ convertEpochToSGT(props.event.endDateTime) }}</b></span>
-            <span><b>Location:</b> {{ props.event.location }}</span>
+            <p><span class="font-bold">{{ convertEpochToSGT(props.event.startDateTime) }}</span> to <span class="font-bold">{{ convertEpochToSGT(props.event.endDateTime) }}</span></p>
+            <p><span class="font-bold">Location:</span> {{ props.event.location }}</p>
           </div>
         </div>
       </div>

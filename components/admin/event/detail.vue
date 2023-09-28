@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
 import type { Router } from 'framework7/types'
+import { typeIsEventWithAttendees } from '~/composables/event'
 
 const props = defineProps<{
   f7route: Router.Route
@@ -28,9 +29,9 @@ const showForbidden = computed(() => {
     <template v-else>
       <AdminEventInformation :event="event" />
 
-      <AdminEventUploadAttendees :event="event" />
+      <AdminEventUploadAttendees v-if="typeIsEventWithAttendees(event)" :event="event" />
 
-      <AdminEventCheckedinUsers :event="event" />
+      <AdminEventCheckedinUsers v-if="typeIsEventWithAttendees(event)" :event="event" />
     </template>
   </f7Page>
 </template>

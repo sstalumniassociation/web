@@ -4,9 +4,11 @@ import type { ParseResult } from 'papaparse'
 import { parse } from 'papaparse'
 import { ref } from 'vue'
 import { createId } from '@paralleldrive/cuid2'
-import type { ImportedUser } from '~/shared/types'
+import type { EventWithAttendees, ImportedUser } from '~/shared/types'
 
-const props = defineProps(['event'])
+const props = defineProps<{
+  event: EventWithAttendees
+}>()
 
 let uploadedAttendees: ImportedUser[]
 const pending = ref(false)
