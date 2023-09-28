@@ -4,13 +4,13 @@ import type { ParseResult } from 'papaparse'
 import { parse } from 'papaparse'
 import { ref } from 'vue'
 import { createId } from '@paralleldrive/cuid2'
-import type { EventWithAttendees, ImportedUser } from '~/shared/types'
+import type { EventWithAttendees, User } from '~/shared/types'
 
 const props = defineProps<{
   event: EventWithAttendees
 }>()
 
-let uploadedAttendees: ImportedUser[]
+let uploadedAttendees: Omit<User, 'firebaseId' | 'id'>[]
 const pending = ref(false)
 const isUploaded = ref(false)
 const error = ref({
@@ -33,7 +33,7 @@ function handleFileUpload(e: Event) {
     parse(file.value, {
       skipEmptyLines: true,
       header: true,
-      complete(results: ParseResult<ImportedUser>) {
+      complete(results: ParseResult<Omit<User, 'firebaseId' | 'id'>>) {
         uploadedAttendees = results.data
 
         if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(['name', 'memberId', 'email', 'graduationYear', 'memberType'].sort())) {
