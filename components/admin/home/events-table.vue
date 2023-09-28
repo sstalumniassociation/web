@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { f7, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
+import { f7, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip, f7Icon } from 'framework7-vue'
 import { ref } from 'vue'
 import type { EventWithAttendees } from '~/shared/types'
 
@@ -30,7 +30,7 @@ function showDetails(event: EventWithAttendees) {
       <f7Card v-for="event in events" :key="event.id">
         <f7CardHeader>
           <div class="flex flex-col items-start space-y-4">
-            <f7Chip outline :text="`0 / ${event.attendees !== undefined ? event.attendees.length : ''}`" />
+            <f7Chip outline :text="`0 / ${event.attendees.length}`" />
             <span>
               {{ event.name }}
             </span>
@@ -40,10 +40,10 @@ function showDetails(event: EventWithAttendees) {
           {{ event.description }}
         </f7CardContent>
         <f7CardFooter>
-          <f7Button tonal @click="() => selectedEvent = event">
+          <f7Button tonal @click="selectedEvent = event">
             Open
           </f7Button>
-          <f7Button tonal color="red" class="popup-open" data-popup=".delete-event-popup" @click="() => selectedEvent = event">
+          <f7Button tonal color="red" class="popup-open" data-popup=".delete-event-popup" @click="selectedEvent = event">
             Delete
           </f7Button>
         </f7CardFooter>
@@ -59,7 +59,7 @@ function showDetails(event: EventWithAttendees) {
           <div />
           <div class="data-table-actions">
             <a class="button popup-open icon-only" data-popup=".create-event-popup">
-              <i class="icon f7-icons"> plus_circle </i>
+              <f7Icon icon="plus_circle"></f7Icon>
             </a>
           </div>
         </div>
@@ -96,10 +96,10 @@ function showDetails(event: EventWithAttendees) {
               </td>
               <td>
                 <div class="flex-inline space-x-3">
-                  <f7Button tonal class="popup-open" data-popup=".update-event-popup" @click="() => selectedEvent = event">
+                  <f7Button tonal class="popup-open" data-popup=".update-event-popup" @click="selectedEvent = event">
                     Update
                   </f7Button>
-                  <f7Button tonal color="red" class="popup-open" data-popup=".delete-event-popup" @click="() => selectedEvent = event">
+                  <f7Button tonal color="red" class="popup-open" data-popup=".delete-event-popup" @click="selectedEvent = event">
                     Delete
                   </f7Button>
                 </div>

@@ -1,27 +1,16 @@
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import { f7Block, f7BlockTitle, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 
 const props = defineProps(['event'])
-
-function epochToISO(epochTime: number) {
-  const date = new Date(epochTime * 1000)
-
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  const hours = String(date.getHours()).padStart(2, '0')
-  const minutes = String(date.getMinutes()).padStart(2, '0')
-
-  return `${year}-${month}-${day}T${hours}:${minutes}`
-}
 
 const updatedValues = reactive({
   name: props.event.name,
   description: props.event.description,
   location: props.event.location,
   badgeImage: props.event.badgeImage,
-  startDateTime: epochToISO(props.event.startDateTime),
-  endDateTime: epochToISO(props.event.endDateTime),
+  startDateTime:  dayjs(props.event.startDateTime * 1000).format("YYYY-MM-DDTHH:mm"),
+  endDateTime: dayjs(props.event.endDateTime * 1000).format("YYYY-MM-DDTHH:mm"),
 })
 
 // const state = reactive({

@@ -1,36 +1,28 @@
 <script setup lang="ts">
 import { f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
+import { useMutation } from '@tanstack/vue-query'
 
 const props = defineProps(['event'])
 
 const state = reactive({
-  pending: false,
   verification: '',
   msg: '',
-  isDeleted: false,
+})
+
+const mutation = useMutation({
+  mutationFn: (id) => $api(`/api/event/${id}`, {
+      method: 'DELETE',
+  })
 })
 
 async function deleteEvent() {
-  state.pending = true
-
-  try {
-    await $api(`/api/event/${props.event.id}`, {
-      method: 'DELETE',
-    })
-  }
-  catch (err) {
-    console.error(`Deleting Event (${props.event.name}) failed.`)
-  }
-
-  state.pending = false
-  state.isDeleted = true
+  await mutation.mutateAsync(props.event.id)
 }
 
 function resetRefs() {
-  state.pending = false
   state.verification = ''
   state.msg = ''
-  state.isDeleted = false
+  mutation.reset
 }
 </script>
 
@@ -54,16 +46,16 @@ function resetRefs() {
           </p>
         </f7Block>
         <f7List form @submit.prevent="deleteEvent">
-          <f7ListInput v-model:value="state.verification" :label="`To verify, type the Event Name (${props.event.name}) in the field below:`" :placeholder="props.event.name" required validate :pattern="props.event.name" :disabled="state.isDeleted" />
+          <f7ListInput v-model:value="state.verification" :label="`To verify, type the Event Name (${props.event.name}) in the field below:`" :placeholder="props.event.name" required validate :pattern="props.event.name" :disabled="mutation.isSuccess.value" />
 
           <f7List inset>
-            <f7Button v-if="!state.isDeleted" fill type="submit" preloader :loading="state.pending" :disabled="state.pending">
+            <f7Button v-if="!mutation.isSuccess.value" fill type="submit" preloader :loading="mutation.isLoading.value" :disabled="mutation.isLoading.value">
               Continue
             </f7Button>
-            <f7Button v-if="state.isDeleted" fill popup-close @click="resetRefs">
+            <f7Button v-if="mutation.isSuccess.value" fill popup-close @click="resetRefs">
               Close
             </f7Button>
-            <p v-if="state.isDeleted" class="text-center">
+            <p v-if="mutation.isSuccess.value" class="text-center">
               Delete successful! You can close this popup now.
             </p>
           </f7List>
