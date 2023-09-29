@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMutation } from '@tanstack/vue-query'
+import { watch } from 'vue'
 import dayjs from 'dayjs'
 import { f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 import type { EventWithAttendees } from '~/shared/types'
@@ -17,8 +18,13 @@ const updatedValues = reactive({
   endDateTime: dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm'),
 })
 
-async function updateEvent() {
+watch(props, () => {
+  updatedValues.startDateTime = dayjs(Number.parseInt(props.event.startDateTime) * 1000).format('YYYY-MM-DDTHH:mm')
+  updatedValues.endDateTime = dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm')
+})
 
+async function updateEvent() {
+  mutation.mutate(props.event.id)
 }
 
 const mutation = useMutation({
@@ -46,14 +52,21 @@ const mutation = useMutation({
           Some content goes here
         </f7Block>
         <f7List form @submit.prevent="updateEvent">
-          <f7ListInput :placeholer="props.event.id" label="Event ID" disabled />
+          <f7ListInput :placeholder="props.event.id" label="Event ID" disabled />
           <f7ListInput v-model:value="updatedValues.name" label="Event Name" :placeholder="props.event.name" />
           <f7ListInput v-model:value="updatedValues.description" label="Event Description" :placeholder="props.event.description" />
           <f7ListInput v-model:value="updatedValues.location" label="Event Location" :placeholder="props.event.location" />
           <f7ListInput v-model:value="updatedValues.badgeImage" label="Image URL" :placeholder="props.event.badgeImage" type="url" />
+          <f7ListInput v-model:value="updatedValues.startDateTime" label="Start Date and Time" :placeholder="props.event.startDateTime" type="datetime-local" />
+          <f7ListInput v-model:value="updatedValues.endDateTime" label="End Date and Time" :placeholder="props.event.endDateTime" type="datetime-local" />
 
           <f7List inset>
-            <f7Button v-if="!mutation.isSuccess.value" />
+            <f7Button v-if="!mutation.isSuccess.value" fill type="submit" preloader :loading="mutation.isLoading.value" :disabled="mutation.isLoading.value">
+              Update Event
+            </f7Button>
+            <f7Button v-if="mutation.isSuccess.value" fill popup-close>
+              Close
+            </f7Button>
           </f7List>
         </f7List>
       </f7Page>
