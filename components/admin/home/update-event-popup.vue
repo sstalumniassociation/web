@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useMutation } from '@tanstack/vue-query'
 import dayjs from 'dayjs'
-import { f7Block, f7BlockTitle, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
+import { f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 import type { EventWithAttendees } from '~/shared/types'
 
 const props = defineProps<{
@@ -19,6 +20,12 @@ const updatedValues = reactive({
 async function updateEvent() {
 
 }
+
+const mutation = useMutation({
+  mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
+    method: 'PUT',
+  }),
+})
 </script>
 
 <template>
@@ -44,6 +51,10 @@ async function updateEvent() {
           <f7ListInput v-model:value="updatedValues.description" label="Event Description" :placeholder="props.event.description" />
           <f7ListInput v-model:value="updatedValues.location" label="Event Location" :placeholder="props.event.location" />
           <f7ListInput v-model:value="updatedValues.badgeImage" label="Image URL" :placeholder="props.event.badgeImage" type="url" />
+
+          <f7List inset>
+            <f7Button v-if="!mutation.isSuccess.value" />
+          </f7List>
         </f7List>
       </f7Page>
     </f7Page>
