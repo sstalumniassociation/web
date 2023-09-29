@@ -62,7 +62,6 @@ export function defineProtectedEventHandler<T extends EventHandlerRequest, D>(
       })
     }
 
-
     if (options.restrictTo) {
       if (!user?.memberType || !options.restrictTo.includes(user.memberType)) {
         throw createError({

@@ -25,8 +25,8 @@ const mutation = useMutation({
 const newEventId = ref('')
 
 async function createEvent() {
-  event.startDateTime = (new Date(event.startDateTime).getTime()/1000).toString()
-  event.endDateTime = (new Date(event.endDateTime).getTime()/1000).toString()
+  event.startDateTime = (new Date(event.startDateTime).getTime() / 1000).toString()
+  event.endDateTime = (new Date(event.endDateTime).getTime() / 1000).toString()
   const res = await mutation.mutateAsync(event)
 
   newEventId.value = res.id

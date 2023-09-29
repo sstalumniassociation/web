@@ -23,15 +23,15 @@ watch(props, () => {
   updatedValues.endDateTime = dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm')
 })
 
-async function updateEvent() {
-  mutation.mutate(props.event.id)
-}
-
 const mutation = useMutation({
   mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
     method: 'PUT',
   }),
 })
+
+async function updateEvent() {
+  mutation.mutate(props.event.id)
+}
 </script>
 
 <template>
