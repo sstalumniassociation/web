@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Button, f7Card, f7CardContent, f7CardHeader } from 'framework7-vue'
+import { f7Button, f7Card, f7CardContent, f7CardHeader, f7Icon } from 'framework7-vue'
 import type { ParseResult } from 'papaparse'
 import { parse } from 'papaparse'
 import { ref } from 'vue'
@@ -106,7 +106,7 @@ async function uploadToDB() {
     <f7CardHeader>
       <div class="flex flex-col space-y-1">
         <span class="font-semibold text-2xl">Upload Attendees</span>
-        <span class="text-base">Upload a <i>.csv</i> file containing the <b>Name, Email, Graduation Year and Member Type</b> of the attendees attending this event. Do ensure that this file contains headers for <b>all</b> the columns.</span>
+        <span class="text-base">Upload a <i>.csv</i> file containing the <span class="font-bold">Name, Email, Graduation Year and Member Type</span> of the attendees attending this event. Do ensure that this file contains headers for <span class="font-bold">all</span> the columns.</span>
       </div>
     </f7CardHeader>
     <f7CardContent>
@@ -115,11 +115,11 @@ async function uploadToDB() {
           <label class="inline-block p-2 px-4 bg-[#007aff]/[0.4] hover:bg-[#007aff]/[0.7] duration-100 rounded-xl cursor-pointer">
             <input type="file" accept=".csv" class="display-none" @change="handleFileUpload($event)">
             <div class="space-x-2">
-              <i class="icon f7-icons size-22">upload_circle_fill</i>
+              <f7Icon f7="upload_circle_fill" size="22" />
               <span class="text-md font-semibold">Upload File</span>
             </div>
           </label>
-          <span><b>{{ file ? `Uploaded File:` : '' }}</b> {{ file ? file.name : '' }}</span>
+          <span><span class="font-bold">{{ file ? `Uploaded File:` : '' }}</span> {{ file ? file.name : '' }}</span>
         </div>
         <f7Button v-if="file" tonal class="flex-inline max-w-xs" :loading="pending" :disabled="pending" @click="uploadToDB">
           Populate Database

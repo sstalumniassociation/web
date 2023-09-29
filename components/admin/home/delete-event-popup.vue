@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 import { useMutation } from '@tanstack/vue-query'
+import type { EventWithAttendees } from '~/shared/types'
 
-const props = defineProps(['event'])
+const props = defineProps<{
+  event: EventWithAttendees
+}>()
 
 const state = reactive({
   verification: '',
@@ -10,13 +13,13 @@ const state = reactive({
 })
 
 const mutation = useMutation({
-  mutationFn: id => $api(`/api/event/${id}`, {
-    method: 'DELETE',
+  mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
+    method: 'delete',
   }),
 })
 
-async function deleteEvent() {
-  await mutation.mutateAsync(props.event.id)
+function deleteEvent() {
+  mutation.mutate(props.event.id)
 }
 
 function resetRefs() {
@@ -50,7 +53,7 @@ function resetRefs() {
 
           <f7List inset>
             <f7Button v-if="!mutation.isSuccess.value" fill type="submit" preloader :loading="mutation.isLoading.value" :disabled="mutation.isLoading.value">
-              Continue
+              Delete Event
             </f7Button>
             <f7Button v-if="mutation.isSuccess.value" fill popup-close @click="resetRefs">
               Close

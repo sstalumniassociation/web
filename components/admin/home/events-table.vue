@@ -59,7 +59,7 @@ function showDetails(event: EventWithAttendees) {
           <div />
           <div class="data-table-actions">
             <a class="button popup-open icon-only" data-popup=".create-event-popup">
-              <f7Icon icon="plus_circle" />
+              <f7Icon f7="plus_circle" />
             </a>
           </div>
         </div>
@@ -86,10 +86,10 @@ function showDetails(event: EventWithAttendees) {
                 {{ event.name }}
               </td>
               <td class="label-cell" @click="showDetails(event)">
-                {{ dayjs(event.startDateTime).format('DD-MM-YYYY HH:mm') }}
+                {{ dayjs(parseInt(event.startDateTime) * 1000).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="label-cell" @click="showDetails(event)">
-                {{ dayjs(event.endDateTime).format('DD-MM-YYYY HH:mm') }}
+                {{ dayjs(parseInt(event.endDateTime) * 1000).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="numeric-cell" @click="showDetails(event)">
                 {{ event.attendees.length }}

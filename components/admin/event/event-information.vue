@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { f7Card, f7CardContent } from 'framework7-vue'
+import type { EventWithAttendees } from '~/shared/types'
 
-const props = defineProps(['event'])
+const props = defineProps<{
+  event: EventWithAttendees
+}>()
 
-function convertEpochToSGT(epochTime: number) {
-  const date = new Date(epochTime * 1000)
-  date.setUTCHours(date.getUTCHours() + 8)
+function convertEpochToSGT(epochTime: string) {
+  const date = new Date(Number.parseInt(epochTime) * 1000)
 
   const formattedDate = date.toLocaleDateString('en-SG', {
     day: '2-digit',
@@ -37,8 +39,8 @@ function convertEpochToSGT(epochTime: number) {
             </div>
           </div>
           <div class="text-lg flex flex-col">
-            <p><span class="font-bold">{{ convertEpochToSGT(props.event.startDateTime) }}</span> to <span class="font-bold">{{ convertEpochToSGT(props.event.endDateTime) }}</span></p>
-            <p><span class="font-bold">Location:</span> {{ props.event.location }}</p>
+            <span><span class="font-bold">{{ convertEpochToSGT(props.event.startDateTime) }}</span> to <span class="font-bold">{{ convertEpochToSGT(props.event.endDateTime) }}</span></span>
+            <span><span class="font-bold">Location:</span> {{ props.event.location }}</span>
           </div>
         </div>
       </div>

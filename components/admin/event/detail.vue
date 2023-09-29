@@ -6,14 +6,7 @@ import { typeIsEventWithAttendees } from '~/composables/event'
 const props = defineProps<{
   f7route: Router.Route
 }>()
-const { data: user } = useUser()
 const { data: event } = useEvent(props.f7route.params.id!)
-
-const showForbidden = computed(() => {
-  if (!user.value) // Should load placeholder data
-    return false
-  return user.value.memberType !== 'exco'
-})
 </script>
 
 <template>
@@ -24,14 +17,10 @@ const showForbidden = computed(() => {
       </f7NavTitle>
     </f7Navbar>
 
-    <LazyAdminHomeForbidden v-if="showForbidden" />
+    <AdminEventInformation v-if="typeIsEventWithAttendees(event)" :event="event" />
 
-    <template v-else>
-      <AdminEventInformation :event="event" />
+    <AdminEventUploadAttendees v-if="typeIsEventWithAttendees(event)" :event="event" />
 
-      <AdminEventUploadAttendees v-if="typeIsEventWithAttendees(event)" :event="event" />
-
-      <AdminEventCheckedinUsers v-if="typeIsEventWithAttendees(event)" :event="event" />
-    </template>
+    <AdminEventCheckedinUsers v-if="typeIsEventWithAttendees(event)" :event="event" />
   </f7Page>
 </template>
