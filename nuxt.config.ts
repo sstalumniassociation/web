@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   modules: [
     'nuxt-vuefire',
-    '@unocss/nuxt',
+    '@nuxt/ui',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
     '~/modules/build-info',

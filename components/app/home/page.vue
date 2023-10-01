@@ -4,7 +4,7 @@ import { f7List, f7Page } from 'framework7-vue'
 
 <template>
   <f7Page no-navbar>
-    <f7List inset class="space-y-8">
+    <f7List class="space-y-8">
       <div>
         <AppHomeMembershipCard />
       </div>
