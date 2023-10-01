@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
 
+  typescript: {
+    strict: true,
+  },
+
   vue: {
     defineModel: true,
   },
