@@ -9,8 +9,8 @@ const event = reactive({
   description: '',
   location: '',
   badgeImage: '',
-  startDateTime: '',
-  endDateTime: '',
+  startDateTime: 0,
+  endDateTime: 0,
 })
 
 const mutation = useMutation({
@@ -25,8 +25,8 @@ const mutation = useMutation({
 const newEventId = ref('')
 
 async function createEvent() {
-  event.startDateTime = (new Date(event.startDateTime).getTime() / 1000).toString()
-  event.endDateTime = (new Date(event.endDateTime).getTime() / 1000).toString()
+  event.startDateTime = new Date(event.startDateTime).getTime() / 1000
+  event.endDateTime = new Date(event.endDateTime).getTime() / 1000
   const res = await mutation.mutateAsync(event)
 
   newEventId.value = res.id

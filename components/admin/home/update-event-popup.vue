@@ -14,13 +14,13 @@ const updatedValues = reactive({
   description: props.event.description,
   location: props.event.location,
   badgeImage: props.event.badgeImage,
-  startDateTime: dayjs(Number.parseInt(props.event.startDateTime) * 1000).format('YYYY-MM-DDTHH:mm'),
-  endDateTime: dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm'),
+  startDateTime: dayjs(props.event.startDateTime).format('YYYY-MM-DDTHH:mm'),
+  endDateTime: dayjs(props.event.endDateTime).format('YYYY-MM-DDTHH:mm'),
 })
 
 watch(props, () => {
-  updatedValues.startDateTime = dayjs(Number.parseInt(props.event.startDateTime) * 1000).format('YYYY-MM-DDTHH:mm')
-  updatedValues.endDateTime = dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm')
+  updatedValues.startDateTime = dayjs(props.event.startDateTime).format('YYYY-MM-DDTHH:mm')
+  updatedValues.endDateTime = dayjs(props.event.endDateTime).format('YYYY-MM-DDTHH:mm')
 })
 
 const mutation = useMutation({
@@ -57,8 +57,8 @@ async function updateEvent() {
           <f7ListInput v-model:value="updatedValues.description" label="Event Description" :placeholder="props.event.description" />
           <f7ListInput v-model:value="updatedValues.location" label="Event Location" :placeholder="props.event.location" />
           <f7ListInput v-model:value="updatedValues.badgeImage" label="Image URL" :placeholder="props.event.badgeImage" type="url" />
-          <f7ListInput v-model:value="updatedValues.startDateTime" label="Start Date and Time" :placeholder="props.event.startDateTime" type="datetime-local" />
-          <f7ListInput v-model:value="updatedValues.endDateTime" label="End Date and Time" :placeholder="props.event.endDateTime" type="datetime-local" />
+          <f7ListInput v-model:value="updatedValues.startDateTime" label="Start Date and Time" :placeholder="props.event.startDateTime.toString()" type="datetime-local" />
+          <f7ListInput v-model:value="updatedValues.endDateTime" label="End Date and Time" :placeholder="props.event.endDateTime.toString()" type="datetime-local" />
 
           <f7List inset>
             <f7Button v-if="!mutation.isSuccess.value" fill type="submit" preloader :loading="mutation.isLoading.value" :disabled="mutation.isLoading.value">

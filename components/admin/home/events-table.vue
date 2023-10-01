@@ -12,8 +12,8 @@ const selectedEvent = ref<EventWithAttendees>({
   description: '',
   location: '',
   badgeImage: '',
-  startDateTime: '',
-  endDateTime: '',
+  startDateTime: 0,
+  endDateTime: 0,
   attendees: [],
 })
 
@@ -86,10 +86,10 @@ function showDetails(event: EventWithAttendees) {
                 {{ event.name }}
               </td>
               <td class="label-cell" @click="showDetails(event)">
-                {{ dayjs(parseInt(event.startDateTime) * 1000).format('DD-MM-YYYY HH:mm') }}
+                {{ dayjs(event.startDateTime).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="label-cell" @click="showDetails(event)">
-                {{ dayjs(parseInt(event.endDateTime) * 1000).format('DD-MM-YYYY HH:mm') }}
+                {{ dayjs(event.endDateTime).format('DD-MM-YYYY HH:mm') }}
               </td>
               <td class="numeric-cell" @click="showDetails(event)">
                 {{ event.attendees.length }}

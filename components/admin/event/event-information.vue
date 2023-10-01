@@ -6,8 +6,8 @@ const props = defineProps<{
   event: EventWithAttendees
 }>()
 
-function convertEpochToSGT(epochTime: string) {
-  const date = new Date(Number.parseInt(epochTime) * 1000)
+function convertEpochToSGT(epochTime: number) {
+  const date = new Date(epochTime * 1000)
 
   const formattedDate = date.toLocaleDateString('en-SG', {
     day: '2-digit',

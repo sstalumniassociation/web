@@ -36,7 +36,7 @@ function handleFileUpload(e: Event) {
       complete(results: ParseResult<Omit<User, 'firebaseId' | 'id'>>) {
         uploadedAttendees = results.data
 
-        if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(['name', 'memberId', 'email', 'graduationYear', 'memberType'].sort())) {
+        if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(['name', 'email', 'memberType'].sort())) {
           error.value.didError = true
           error.value.msg = 'CSV has missing fields! Please check the file and reupload it.'
           return
