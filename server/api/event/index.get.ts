@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export default defineProtectedEventHandler(async (event) => {
   const result = await event.context.database.query.events.findMany({
     with: {
@@ -25,9 +27,11 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   return result.map((item) => {
-    const { usersToEvents, ...data } = item
+    const { usersToEvents, startDateTime, endDateTime, ...data } = item
 
     return {
+      startDateTime: dayjs(startDateTime).unix(),
+      endDateTime: dayjs(endDateTime).unix(),
       ...data,
       attendees: usersToEvents.map(({ admissionKey, user }) => ({
         ...user,

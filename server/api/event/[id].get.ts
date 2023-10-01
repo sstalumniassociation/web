@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export default defineProtectedEventHandler(async (event) => {
   const eventId = event.context.params!.id
 
@@ -27,9 +29,11 @@ export default defineProtectedEventHandler(async (event) => {
     })
   }
 
-  const { usersToEvents, ...data } = result
+  const { usersToEvents, startDateTime, endDateTime, ...data } = result
 
   return {
+    startDateTime: dayjs(startDateTime).unix(),
+    endDateTime: dayjs(endDateTime).unix(),
     ...data,
     attendees: usersToEvents.map(({ admissionKey, user }) => ({
       ...user,
