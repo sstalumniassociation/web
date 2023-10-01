@@ -26,6 +26,8 @@
     "@tanstack/query-persist-client-core": "^4.35.3",
     "@tanstack/query-sync-storage-persister": "^4.35.3",
     "@tanstack/vue-query": "^4.35.3",
+    "@ts-rest/core": "^3.30.2",
+    "@ts-rest/vue-query": "^3.30.2",
     "@unocss/nuxt": "^0.56.0",
     "@vite-pwa/assets-generator": "^0.0.10",
     "@vite-pwa/nuxt": "^0.1.1",
@@ -46,6 +48,7 @@
     "nuxt-vuefire": "^0.3.0",
     "qrcode": "^1.5.3",
     "simple-git": "^3.20.0",
+    "vue-tsc": "^1.8.15",
     "vuefire": "^3.1.17",
     "web-auth-library": "^1.0.3",
     "zod": "^3.22.2"

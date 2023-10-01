@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7AccordionContent, f7App, f7Block, f7BlockTitle, f7Button, f7List, f7ListItem, f7Navbar, f7Page, f7PageContent, f7SkeletonBlock, f7View } from 'framework7-vue'
+import { f7AccordionContent, f7App, f7Block, f7BlockTitle, f7Button, f7List, f7ListItem, f7Navbar, f7Page, f7SkeletonBlock, f7View } from 'framework7-vue'
 import 'framework7/css/bundle'
 import 'framework7-icons/css/framework7-icons.css'
 import 'material-icons/iconfont/material-icons.css'
@@ -16,7 +16,7 @@ Framework7.use(Framework7Vue)
 
 const route = useRoute()
 const { data: admission, isLoading: admissionIsLoading, error } = useAdmission(route.params.admissionKey as string)
-const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
+const qrcode = useQRCode(() => admission.value?.body.admissionKey ?? '', {
   width: 500,
   color: {
     light: '#fefbff',
@@ -63,7 +63,7 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
               Event name
             </p>
             <p>
-              {{ admission?.event.name }}
+              {{ admission?.body.event.name }}
             </p>
           </f7Block>
 
@@ -73,7 +73,7 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
           <f7Block>
             <div class="w-full flex flex-col items-center">
               <img :src="qrcode" alt="QR Code" class="max-w-200px">
-              <span>{{ admission?.admissionKey }}</span>
+              <span>{{ admission?.body.admissionKey }}</span>
             </div>
           </f7Block>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FetchError } from 'ofetch'
-import { f7, f7Block, f7BlockTitle, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Icon, f7List, f7ListButton, f7ListGroup, f7ListInput, f7ListItem, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7PageContent, f7Sheet, f7SwipeoutButton } from 'framework7-vue'
+import { f7, f7Block, f7BlockTitle, f7Button, f7Icon, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7PageContent, f7Sheet } from 'framework7-vue'
 
 const sstaarsStore = useSstaarsStore()
 

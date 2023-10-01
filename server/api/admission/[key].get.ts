@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 // Must be public to support public pass pages
 export default defineCachedEventHandler(async (event) => {
   const admission = await event.context.database.query.usersToEvents.findFirst({
@@ -19,7 +21,16 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  return admission
+  const admissionInEpoch = {
+    ...admission,
+    event: {
+      ...admission.event,
+      startDateTime: dayjs(admission.event.startDateTime).unix(),
+      endDateTime: dayjs(admission.event.endDateTime).unix(),
+    },
+  }
+
+  return admissionInEpoch
 }, {
   maxAge: 60,
 })
