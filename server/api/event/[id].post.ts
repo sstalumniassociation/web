@@ -36,7 +36,7 @@ export default defineProtectedEventHandler(async (event) => {
     .where(eq(events.id, eventId))
     .returning()
 
-  if (updatedEvent.length > 1) {
+  if (updatedEvent.length !== 1) {
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error',
