@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7AccordionContent, f7App, f7Block, f7BlockTitle, f7Button, f7List, f7ListItem, f7Navbar, f7Page, f7SkeletonBlock, f7View } from 'framework7-vue'
+import { f7App, f7Navbar, f7Page, f7View } from 'framework7-vue'
 import 'framework7/css/bundle'
 import 'framework7-icons/css/framework7-icons.css'
 import 'material-icons/iconfont/material-icons.css'
