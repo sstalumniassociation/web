@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import dayjs from 'dayjs'
 import { f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
 import { useMutation } from '@tanstack/vue-query'
 import { ref } from 'vue'
@@ -9,8 +10,8 @@ const event = reactive({
   description: '',
   location: '',
   badgeImage: '',
-  startDateTime: 0,
-  endDateTime: 0,
+  startDateTime: '',
+  endDateTime: '',
 })
 
 const mutation = useMutation({
@@ -25,8 +26,9 @@ const mutation = useMutation({
 const newEventId = ref('')
 
 async function createEvent() {
-  event.startDateTime = new Date(event.startDateTime).getTime() / 1000
-  event.endDateTime = new Date(event.endDateTime).getTime() / 1000
+  event.startDateTime = dayjs(event.startDateTime).toISOString()
+  event.endDateTime = dayjs(event.endDateTime).toISOString()
+
   const res = await mutation.mutateAsync(event)
 
   newEventId.value = res.id

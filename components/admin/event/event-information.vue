@@ -1,27 +1,11 @@
 <script setup lang="ts">
+import dayjs from 'dayjs'
 import { f7Card, f7CardContent } from 'framework7-vue'
 import type { EventWithAttendees } from '~/shared/types'
 
 const props = defineProps<{
   event: EventWithAttendees
 }>()
-
-function convertEpochToSGT(epochTime: number) {
-  const date = new Date(epochTime * 1000)
-
-  const formattedDate = date.toLocaleDateString('en-SG', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  })
-
-  const formattedTime = date.toLocaleTimeString('en-SG', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-
-  return `${formattedDate} | ${formattedTime}`
-}
 </script>
 
 <template>
@@ -39,7 +23,7 @@ function convertEpochToSGT(epochTime: number) {
             </div>
           </div>
           <div class="text-lg flex flex-col">
-            <span><span class="font-bold">{{ convertEpochToSGT(props.event.startDateTime) }}</span> to <span class="font-bold">{{ convertEpochToSGT(props.event.endDateTime) }}</span></span>
+            <span><span class="font-bold">{{ `${dayjs(parseInt(event.startDateTime) * 1000).format("D MMM YYYY")} | ${dayjs(parseInt(event.startDateTime) * 1000).format("H:mm")}` }}</span> to <span class="font-bold">{{ `${dayjs(parseInt(event.endDateTime) * 1000).format("D MMM YYYY")} | ${dayjs(parseInt(event.endDateTime) * 1000).format("H:mm")}` }}</span></span>
             <span><span class="font-bold">Location:</span> {{ props.event.location }}</span>
           </div>
         </div>

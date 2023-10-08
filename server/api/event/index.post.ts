@@ -6,8 +6,8 @@ const createEventRequestBody = z.object({
   description: z.string(),
   location: z.string(),
   badgeImage: z.string().url(),
-  startDateTime: z.number(),
-  endDateTime: z.number(),
+  startDateTime: z.string().datetime(),
+  endDateTime: z.string().datetime(),
 })
 
 export default defineProtectedEventHandler(async (event) => {

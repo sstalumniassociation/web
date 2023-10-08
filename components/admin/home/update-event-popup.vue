@@ -3,13 +3,16 @@ import { useMutation } from '@tanstack/vue-query'
 import { watch } from 'vue'
 import dayjs from 'dayjs'
 import { f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListInput, f7NavRight, f7Navbar, f7Page, f7Popup } from 'framework7-vue'
-import type { EventWithAttendees } from '~/shared/types'
+import type { Event, EventWithAttendees } from '~/shared/types'
 
 const props = defineProps<{
   event: EventWithAttendees
 }>()
 
+const updatedEvent: Partial<Event> = {}
+
 const updatedValues = reactive({
+  id: props.event.id,
   name: props.event.name,
   description: props.event.description,
   location: props.event.location,
@@ -26,10 +29,17 @@ watch(props, () => {
 const mutation = useMutation({
   mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
     method: 'PUT',
+    body: updatedEvent,
   }),
 })
 
 async function updateEvent() {
+  // Check for updated values
+  for (const key in updatedValues) {
+    if (updatedValues[key as keyof Event] !== props.event[key as keyof Event])
+      updatedEvent[key as keyof Event] = updatedValues[key as keyof Event]
+  }
+
   mutation.mutate(props.event.id)
 }
 </script>

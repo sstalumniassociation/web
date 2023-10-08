@@ -106,7 +106,7 @@ async function uploadToDB() {
     <f7CardHeader>
       <div class="flex flex-col space-y-1">
         <span class="font-semibold text-2xl">Upload Attendees</span>
-        <span class="text-base">Upload a <i>.csv</i> file containing the <span class="font-bold">Name, Email, Graduation Year and Member Type</span> of the attendees attending this event. Do ensure that this file contains headers for <span class="font-bold">all</span> the columns.</span>
+        <span class="text-base">Upload a <i>.csv</i> file containing the <span class="font-bold">Name, Email and Graduation Year</span> of the attendees attending this event. Do ensure that this file contains headers for <span class="font-bold">all</span> the columns.</span>
       </div>
     </f7CardHeader>
     <f7CardContent>

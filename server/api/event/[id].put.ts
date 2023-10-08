@@ -7,8 +7,8 @@ const updateEventRequestBody = z.object({
   description: z.string().optional(),
   location: z.string().optional(),
   badgeImage: z.string().url().optional(),
-  startDateTime: z.number().optional(),
-  endDateTime: z.number().optional(),
+  startDateTime: z.string().datetime().optional(),
+  endDateTime: z.string().datetime().optional(),
 })
 
 export default defineProtectedEventHandler(async (event) => {

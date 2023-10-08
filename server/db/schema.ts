@@ -28,8 +28,8 @@ export const events = sqliteTable('events', {
   description: text('description').notNull(),
   location: text('location').notNull(),
   badgeImage: text('badge_image').notNull(),
-  startDateTime: integer('start_date_time').notNull(), // ISO formatted
-  endDateTime: integer('end_date_time').notNull(), // ISO formatted
+  startDateTime: text('start_date_time').notNull(), // ISO formatted
+  endDateTime: text('end_date_time').notNull(), // ISO formatted
 })
 
 export const usersToEvents = sqliteTable('users_events', {
