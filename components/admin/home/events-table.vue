@@ -1,70 +1,68 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
-import { f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7Chip } from 'framework7-vue'
-
+import dayjs from 'dayjs';
+import { typeIsEventWithAttendees } from '~/composables/event'
 const { data: events } = useEvents()
+
+interface EventRow {
+  id: string,
+  name: string,
+  startDateTime: string,
+  endDateTime: string,
+  participants: number,
+}
+
+let formattedEvents: EventRow[] = []
+
+if (events.value !== undefined) {
+  for (let i = 0; i < events.value?.length; i++) {
+    formattedEvents.push({
+      id: events.value[i].id,
+      name: events.value[i].name,
+      startDateTime: dayjs(parseInt(events.value[i].startDateTime) * 1000).format('DD-MM-YYYY HH:mm'),
+      endDateTime: dayjs(parseInt(events.value[i].endDateTime) * 1000).format('DD-MM-YYYY HH:mm'),
+      participants: events.value[i].attendees.length,
+    })
+  }
+}
+
+const columns = [{
+  key: 'name',
+  label: 'Name'
+}, {
+  key: 'startDateTime',
+  label: 'Start Date'
+}, {
+  key: 'endDateTime',
+  label: 'End Date'
+}, {
+  key: 'participants',
+  label: 'Participants'
+}, {
+  key: "actions"
+}]
+
+const editActions = (row: EventRow) => [
+  [{
+    label: 'Edit',
+    icon: 'i-heroicons-pencil-square-20-solid',
+    click: () => console.log('Edit', row.id)
+  }, {
+    label: 'Delete',
+    icon: 'i-heroicons-trash',
+    click: () => console.log("Delete", row.id)
+  }]
+]
+
 </script>
 
 <template>
-  <div>
-    <div class="md:hidden">
-      <f7Card v-for="event in events" :key="event.id">
-        <f7CardHeader>
-          <div class="flex flex-col items-start space-y-4">
-            <f7Chip outline :text="`0 / ${event.attendees.length}`" />
-            <span>
-              {{ event.name }}
-            </span>
-          </div>
-        </f7CardHeader>
-        <f7CardContent>
-          {{ event.description }}
-        </f7CardContent>
-        <f7CardFooter>
-          <f7Button tonal>
-            Open
-          </f7Button>
-        </f7CardFooter>
-      </f7Card>
-    </div>
-
-    <div class="hidden md:inline">
-      <div class="data-table data-table-init card">
-        <table>
-          <thead>
-            <tr>
-              <th class="label-cell">
-                Name
-              </th>
-              <th class="label-cell">
-                Start date
-              </th>
-              <th class="label-cell">
-                End date
-              </th>
-              <th class="numeric-label">
-                Participants
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="event in events" :key="event.id">
-              <td class="label-cell">
-                {{ event.name }}
-              </td>
-              <td class="label-cell">
-                {{ dayjs(event.startDateTime).format('DD-MM-YYYY HH:mm') }}
-              </td>
-              <td class="label-cell">
-                {{ dayjs(event.endDateTime).format('DD-MM-YYYY HH:mm') }}
-              </td>
-              <td class="numeric-cell">
-                {{ event.attendees.length }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="p-6">
+    <UTable :rows='formattedEvents' :columns="columns" :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No Events' }">
+      <template #actions-data="{ row }">
+        <UDropdown :items="editActions(row)">
+          <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+        </UDropdown>
+      </template>
+    </UTable>
   </div>
 </template>
