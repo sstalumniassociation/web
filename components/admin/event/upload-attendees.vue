@@ -35,7 +35,7 @@ function handleFileUpload(e: Event) {
       complete(results: ParseResult<Omit<User, 'firebaseId' | 'id'>>) {
         uploadedAttendees = results.data
 
-        if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(['name', 'email', 'memberType'].sort())) {
+        if (JSON.stringify(results.meta.fields?.sort()) !== JSON.stringify(['name', 'email', 'memberType', 'graduationYear'].sort())) {
           error.value.didError = true
           error.value.msg = 'CSV has missing fields! Please check the file and reupload it.'
           return
@@ -50,12 +50,14 @@ function handleFileUpload(e: Event) {
 async function uploadToDB() {
   // Upload to users database
   const createdUsers = []
+
   for (let i = 0; i < uploadedAttendees.length; i += 30) {
     let usersBatch = uploadedAttendees.slice(i, i + 29)
-
+    
     usersBatch = usersBatch.map(item => ({
-      ...item,
-      graduationYear: Number.parseInt(item.graduationYear.toString(), 10),
+        ...item,
+        graduationYear: Number.parseInt((item.graduationYear).toString(), 10),
+        memberId: createId()
     }))
 
     try {
@@ -105,7 +107,7 @@ async function uploadToDB() {
     <template #header>
       <div class="flex flex-col space-y-1">
         <span class="font-semibold text-2xl">Upload Attendees</span>
-        <span class="text-base">Upload a <i>.csv</i> file containing the <span class="font-bold">Name, Email and Graduation Year</span> of the attendees attending this event. Do ensure that this file contains headers for <span class="font-bold">all</span> the columns.</span>
+        <span class="text-base">Upload a <i>.csv</i> file containing the <span class="font-bold">Name, Email, Member Type and Graduation Year</span> of the attendees attending this event. Do ensure that this file contains headers for <span class="font-bold">all</span> the columns.</span>
       </div>
     </template>
 

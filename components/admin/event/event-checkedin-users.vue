@@ -11,11 +11,10 @@ const props = defineProps<{
     <template #header>
       <span class="font-semibold text-2xl">Attendees</span>
     </template>
-    <div v-for="attendee in props.event.attendees" v-if="props.event.attendees.length > 0" :key="attendee.id" class="space-y-3">
+    <div v-for="attendee in props.event.attendees" v-if="props.event.attendees.length > 0" :key="attendee.id" class="space-y-3 divide-y divide-slate-700">
       <div>
         <p>{{ attendee.name }}</p>
         <p><span class="font-bold">ID: </span>{{ attendee.id }}</p>
-        <hr class="rounded">
       </div>
     </div>
     <div v-if="props.event.attendees.length === 0" class="flex justify-center align-items-center">
