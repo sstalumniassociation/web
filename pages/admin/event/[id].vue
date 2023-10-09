@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import 'tailwindcss/src/css/preflight.css'
+import { typeIsEventWithAttendees } from '~/composables/event'
 
 const route = useRoute()
 
 const { data: event } = useEvent(route.params.id)
-console.log(event)
 </script>
 
 <template>
-  <div>
-    <h1>{{ event.name }}</h1>
+  <div class="w-full">
+    NavBar goes here
   </div>
+  <UContainer class="py-3 space-y-7">
+    <AdminEventInformation v-if="typeIsEventWithAttendees(event)" :event="event" />
+    <AdminEventUploadAttendees v-if="typeIsEventWithAttendees(event)" :event="event" />
+    <AdminEventCheckedinUsers v-if="typeIsEventWithAttendees(event)" :event="event" />
+  </UContainer>
 </template>

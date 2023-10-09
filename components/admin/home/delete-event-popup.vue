@@ -22,7 +22,7 @@ function validate(values: typeof state): FormError[] {
 }
 
 const mutation = useMutation({
-  mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
+  mutationFn: (id: string) => $api(`/api/event/${id}`, {
     method: 'DELETE',
   }),
 })
