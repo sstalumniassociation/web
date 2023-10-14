@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { FormError } from '@nuxt/ui/dist/runtime/types'
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { EventWithAttendees } from '~/shared/types'
 
 const props = defineProps<{
   event: EventWithAttendees
   showPopup: boolean
 }>()
+const queryClient = useQueryClient()
 
 const closePopup = defineEmits(['closePopup'])
 
@@ -31,6 +32,7 @@ const mutation = useMutation({
 async function handleSubmit() {
   mutation.mutate(props.event.id)
   state.deleteStatus = true
+  queryClient.invalidateQueries({ queryKey: ['events'] })
 }
 </script>
 

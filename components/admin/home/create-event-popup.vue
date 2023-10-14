@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { ref } from 'vue'
-import { useMutation } from '@tanstack/vue-query'
-import type { FormError } from '@nuxt/ui/dist/runtime/types'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Event } from '~/shared/types'
 
 const props = defineProps<{
   showPopup: boolean
 }>()
+const queryClient = useQueryClient()
 
 const closePopup = defineEmits(['closePopup'])
 const state = reactive({
@@ -28,70 +28,24 @@ const mutation = useMutation({
   }),
 })
 
-async function validate(state: any): Promise<FormError[]> {
-  const errors: FormError[] = []
-
-  const promise = new Promise((resolve, reject) => {
-    const xhttp = new XMLHttpRequest()
-    xhttp.open('HEAD', state.badgeImage)
-    xhttp.onreadystatechange = async function () {
-      if (this.readyState == this.DONE) {
-        try {
-          if (this.getResponseHeader('Content-Type') !== 'image/png')
-            errors.push({ path: 'imageurl', message: 'URL provided must be an image!' })
-        }
-        catch (e) {
-          errors.push({ path: 'imageurl', message: 'URL provided must be an image!' })
-        }
-        resolve(errors)
-      }
-    }
-    xhttp.send()
-  })
-
-  // Wait for the promise to resolve before returning
-  await promise
-
-  // Return the errors array
-  return errors
-}
-
-async function validateURL(url: string) {
-  let isError = false
-  return new Promise((resolve, reject) => {
-    const xhttp = new XMLHttpRequest()
-    xhttp.open('HEAD', url)
-    xhttp.onreadystatechange = async function () {
-      if (this.readyState == this.DONE) {
-        try {
-          if (this.getResponseHeader('Content-Type') !== 'image/png')
-            isError = true
-        }
-        catch (e) {
-          isError = true
-        }
-        resolve(isError)
-      }
-    }
-    xhttp.send()
-  })
-}
-
 async function handleSubmit() {
-  const urlValidationErr = await validateURL(state.badgeImage)
-  if (urlValidationErr) {
-    inputError.value = 'URL must be an Image!'
-    return
-  }
-
   inputError.value = ''
 
-  const newEvent = state
+  const newEvent = { ...state }
   newEvent.startDateTime = dayjs(state.startDateTime).toISOString()
   newEvent.endDateTime = dayjs(state.endDateTime).toISOString()
 
-  const res = await mutation.mutateAsync(newEvent)
-  newEventId.value = res.id
+  try {
+    const res = await mutation.mutateAsync(newEvent)
+
+    newEventId.value = res.id
+    queryClient.invalidateQueries({ queryKey: ['events'] })
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('Invalid Image URL')) {
+      inputError.value = "Invalid Image URL"
+
+    }
+  }
 }
 </script>
 

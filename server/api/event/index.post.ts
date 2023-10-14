@@ -20,6 +20,21 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   const { data } = result
+  
+  try {
+    const imageURL = await fetch(data.badgeImage)
+    if (imageURL.headers.get("Content-Type") !== "image/png") {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid Image URL',
+      })
+    }
+  } catch (err) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid Image URL',
+    })
+  }
 
   const createdEvent = await event.context.database.insert(events)
     .values({
@@ -40,6 +55,4 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   return createdEvent[0]
-}, {
-  restrictTo: ['exco'],
 })
