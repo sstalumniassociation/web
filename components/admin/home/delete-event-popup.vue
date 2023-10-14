@@ -12,6 +12,7 @@ const closePopup = defineEmits(['closePopup'])
 
 const state = reactive({
   verification: '',
+  deleteStatus: false,
 })
 
 function validate(values: typeof state): FormError[] {
@@ -29,6 +30,7 @@ const mutation = useMutation({
 
 async function handleSubmit() {
   mutation.mutate(props.event.id)
+  state.deleteStatus = true
 }
 </script>
 
@@ -57,8 +59,11 @@ async function handleSubmit() {
               <UInput v-model="state.verification" color="gray" variant="outline" :placeholder="props.event.name" />
             </UFormGroup>
 
-            <UButton type="submit">
+            <UButton v-if="!state.deleteStatus" type="submit">
               Delete Event
+            </UButton>
+            <UButton v-if="state.deleteStatus" color="green" @click="$emit('closePopup')">
+              Delete Successful! Close
             </UButton>
           </div>
         </UForm>

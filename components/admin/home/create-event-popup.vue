@@ -2,6 +2,7 @@
 import dayjs from 'dayjs'
 import { ref } from 'vue'
 import { useMutation } from '@tanstack/vue-query'
+import type { FormError } from '@nuxt/ui/dist/runtime/types'
 import type { Event } from '~/shared/types'
 
 const props = defineProps<{
@@ -18,6 +19,7 @@ const state = reactive({
   endDateTime: '',
 })
 const newEventId = ref('')
+const inputError = ref('')
 
 const mutation = useMutation({
   mutationFn: (newEvent: Omit<Event, 'id'>) => $api('/api/event', {
@@ -26,13 +28,69 @@ const mutation = useMutation({
   }),
 })
 
+async function validate(state: any): Promise<FormError[]> {
+  const errors: FormError[] = []
+
+  const promise = new Promise((resolve, reject) => {
+    const xhttp = new XMLHttpRequest()
+    xhttp.open('HEAD', state.badgeImage)
+    xhttp.onreadystatechange = async function () {
+      if (this.readyState == this.DONE) {
+        try {
+          if (this.getResponseHeader('Content-Type') !== 'image/png')
+            errors.push({ path: 'imageurl', message: 'URL provided must be an image!' })
+        }
+        catch (e) {
+          errors.push({ path: 'imageurl', message: 'URL provided must be an image!' })
+        }
+        resolve(errors)
+      }
+    }
+    xhttp.send()
+  })
+
+  // Wait for the promise to resolve before returning
+  await promise
+
+  // Return the errors array
+  return errors
+}
+
+async function validateURL(url: string) {
+  let isError = false
+  return new Promise((resolve, reject) => {
+    const xhttp = new XMLHttpRequest()
+    xhttp.open('HEAD', url)
+    xhttp.onreadystatechange = async function () {
+      if (this.readyState == this.DONE) {
+        try {
+          if (this.getResponseHeader('Content-Type') !== 'image/png')
+            isError = true
+        }
+        catch (e) {
+          isError = true
+        }
+        resolve(isError)
+      }
+    }
+    xhttp.send()
+  })
+}
+
 async function handleSubmit() {
+  const urlValidationErr = await validateURL(state.badgeImage)
+  if (urlValidationErr) {
+    inputError.value = 'URL must be an Image!'
+    return
+  }
+
+  inputError.value = ''
+
   const newEvent = state
   newEvent.startDateTime = dayjs(state.startDateTime).toISOString()
   newEvent.endDateTime = dayjs(state.endDateTime).toISOString()
 
   const res = await mutation.mutateAsync(newEvent)
-
   newEventId.value = res.id
 }
 </script>
@@ -66,8 +124,8 @@ async function handleSubmit() {
             <UFormGroup label="Location" description="Where is this event held at" required :error="!state.location && 'You must enter the Event Location!'">
               <UInput v-model="state.location" placeholder="School of Science and Technology, Singapore" color="gray" variant="outline" :disabled="newEventId !== ''" />
             </UFormGroup>
-            <UFormGroup label="Banner Image" description="The image shown to everyone viewing this event. Enter a valid Image URL." required :error="!state.badgeImage && 'You must enter a valid URL'">
-              <UInput v-model="state.badgeImage" type="url" placeholder="https://example.com" color="gray" variant="outline" :disabled="newEventId !== ''" />
+            <UFormGroup name="imageurl" label="Banner Image" description="The image shown to everyone viewing this event. Enter a valid Image URL." required :error="!state.badgeImage && 'You must enter a valid Image URL'">
+              <UInput v-model="state.badgeImage" name="imageurl" type="url" placeholder="https://example.com" color="gray" variant="outline" :disabled="newEventId !== ''" />
             </UFormGroup>
             <UFormGroup label="Start Date and Time" required :error="!state.startDateTime && 'You must enter the Start Date!'">
               <UInput v-model="state.startDateTime" type="datetime-local" color="gray" variant="outline" :disabled="newEventId !== ''" />
@@ -80,6 +138,9 @@ async function handleSubmit() {
           <UButton v-if="newEventId === ''" type="submit" color="green" :loading="mutation.isLoading.value">
             Create Event
           </UButton>
+          <p v-if="inputError !== ''">
+            {{ inputError }}
+          </p>
         </UForm>
         <div v-if="mutation.isSuccess.value" class="space-y-3 mt-4">
           <p>Created Event with an ID of <b>{{ newEventId }}</b>.</p>
