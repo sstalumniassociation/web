@@ -53,11 +53,11 @@ async function uploadToDB() {
 
   for (let i = 0; i < uploadedAttendees.length; i += 30) {
     let usersBatch = uploadedAttendees.slice(i, i + 29)
-    
+
     usersBatch = usersBatch.map(item => ({
-        ...item,
-        graduationYear: Number.parseInt((item.graduationYear).toString(), 10),
-        memberId: createId()
+      ...item,
+      graduationYear: Number.parseInt((item.graduationYear).toString(), 10),
+      memberId: createId(),
     }))
 
     try {

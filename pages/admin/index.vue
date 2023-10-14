@@ -54,6 +54,7 @@ watch([authLoaded, auth], (values) => {
 
 <template>
   <div class="p-6">
+    <CommonLogin v-model:opened="state.showLoginScreen" />
     <AdminHomeEventsTable />
   </div>
 </template>
