@@ -43,7 +43,6 @@ async function handleSubmit() {
   } catch (err) {
     if (err instanceof Error && err.message.includes('Invalid Image URL')) {
       inputError.value = "Invalid Image URL"
-
     }
   }
 }

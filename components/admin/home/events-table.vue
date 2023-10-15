@@ -91,5 +91,6 @@ function toggleEditPopup() {
   </div>
 
   <AdminHomeCreateEventPopup :show-popup="showCreatePopup" @close-popup="toggleCreatePopup" />
-  <AdminHomeDeleteEventPopup :event="selectedEvent as EventWithAttendees" :show-popup="showDeletePopup" @close-popup="toggleDeletePopup" />
+  <AdminHomeDeleteEventPopup :event="selectedEvent as EventWithAttendees" :show-popup="showDeletePopup" :key="selectedEvent.id" @close-popup="toggleDeletePopup" />
+  <AdminHomeUpdateEventPopup :show-popup="showEditPopup" :event="selectedEvent as EventWithAttendees" :key="selectedEvent.id" @close-popup="toggleEditPopup" />
 </template>
