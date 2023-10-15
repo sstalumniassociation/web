@@ -4,10 +4,12 @@ import { parse } from 'papaparse'
 import { ref } from 'vue'
 import { createId } from '@paralleldrive/cuid2'
 import type { EventWithAttendees, User } from '~/shared/types'
+import { useQueryClient } from '@tanstack/vue-query'
 
 const props = defineProps<{
   event: EventWithAttendees
 }>()
+const queryClient = useQueryClient()
 
 let uploadedAttendees: Omit<User, 'firebaseId' | 'id'>[]
 const pending = ref(false)
@@ -99,7 +101,8 @@ async function uploadToDB() {
   pending.value = false
   if (!error.value.didError)
     isUploaded.value = true
-}
+    queryClient.invalidateQueries({ queryKey: ['events'] })
+  }
 </script>
 
 <template>
