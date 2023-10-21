@@ -22,7 +22,6 @@ import 'tailwindcss/src/css/preflight.css'
           Open SSTAA Guard House Portal
         </UButton>
       </div>
-      <UNotifications />
     </div>
   </div>
 </template>

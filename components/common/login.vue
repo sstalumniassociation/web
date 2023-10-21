@@ -4,10 +4,7 @@ import { FetchError } from 'ofetch'
 import { useMutation } from '@tanstack/vue-query'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
-const props = defineProps<{
-  opened: boolean
-}>()
-
+const opened = defineModel<boolean>()
 const toast = useToast()
 
 const auth = useFirebaseAuth()
@@ -25,6 +22,7 @@ const state = reactive({
   accountLinked: null as boolean | null,
   accountId: '',
   pending: false,
+  formSubmitted: false,
 })
 
 watch(() => state.email, () => {
@@ -33,13 +31,15 @@ watch(() => state.email, () => {
 })
 
 async function login() {
+  state.formSubmitted = true
+
   state.pending = true
 
-  if (state.accountLinked === null)
+  if (state.accountLinked === null && state.email !== '')
     await validateEmail()
-  else if (state.accountLinked === true)
+  else if (state.accountLinked === true && state.email !== '' && state.password !== '')
     await firebaseLogin()
-  else if (state.accountLinked === false)
+  else if (state.accountLinked === false && state.email !== '' && state.password !== '' && state.confirmPassword !== '')
     await firebaseRegister()
   state.pending = false
 }
@@ -137,20 +137,20 @@ function handleFirebaseError(err: FirebaseError) {
 </script>
 
 <template>
-  <UModal v-model="props.opened" fullscreen>
+  <UModal v-model="opened" fullscreen>
     <div class="flex flex-col space-y-5 items-center mt-auto mb-auto">
       <h1 class="font-bold text-2xl">
         SSTAA Admin
       </h1>
-      <UForm :state="state" class="w-1/3" @submit.prevent="login">
-        <UFormGroup label="Email" required :error="!state.email && 'Enter an email address'">
+      <UForm :state="state" class="w-1/3" @submit="login">
+        <UFormGroup label="Email" name="email" required :error="(!state.email && state.formSubmitted) && 'Enter an email address!'">
           <UInput v-model="state.email" type="email" color="gray" variant="outline" placeholder="Your email address" />
         </UFormGroup>
         <template v-if="state.accountLinked !== null">
-          <UFormGroup label="Password" required :error="!state.email && 'Enter a password'">
+          <UFormGroup label="Password" name="password" required :error="(!state.password && state.formSubmitted) && 'Enter your password!'">
             <UInput v-model="state.password" type="password" color="gray" variant="outline" placeholder="Password" />
           </UFormGroup>
-          <UFormGroup v-if="state.accountLinked === false" label="Confirm Password" required :error="!state.email && 'Confirm your password'">
+          <UFormGroup v-if="state.accountLinked === false" label="Confirm Password" name="confirmPassword" required :error="(!state.confirmPassword && state.formSubmitted) && 'Confirm your password!'">
             <UInput v-model="state.confirmPassword" type="password" color="gray" variant="outline" placeholder="Confirm Password" />
           </UFormGroup>
         </template>
@@ -159,8 +159,6 @@ function handleFirebaseError(err: FirebaseError) {
           {{ !state.accountLinked ? 'Continue' : 'Login' }}
         </UButton>
       </UForm>
-
-      <UNotifications />
     </div>
   </UModal>
 </template>

@@ -20,16 +20,17 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   const { data } = result
-  
+
   try {
-    const imageURL = await fetch(data.badgeImage)
-    if (imageURL.headers.get("Content-Type") !== "image/png") {
+    const imageURL = await $fetch.raw(data.badgeImage)
+    if (imageURL.headers.get('Content-Type') !== 'image/png') {
       throw createError({
         statusCode: 400,
         statusMessage: 'Invalid Image URL',
       })
     }
-  } catch (err) {
+  }
+  catch (err) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid Image URL',

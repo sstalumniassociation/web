@@ -27,7 +27,3 @@ export function useEvent(id: MaybeRef<string>) {
     },
   })
 }
-
-export function typeIsEventWithAttendees(obj: EventWithAttendees | unknown): obj is EventWithAttendees {
-  return obj !== undefined
-}

@@ -2,10 +2,6 @@
 import 'tailwindcss/src/css/preflight.css'
 import { useIsCurrentUserLoaded } from 'vuefire'
 
-const { data: user } = useUser()
-
-const dark = useDark()
-
 useSeoMeta({
   description: 'The SST Alumni App',
 })
@@ -54,7 +50,7 @@ watch([authLoaded, auth], (values) => {
 
 <template>
   <div class="p-6">
-    <CommonLogin v-model:opened="state.showLoginScreen" />
+    <CommonLogin v-model="state.showLoginScreen" />
     <AdminHomeEventsTable />
   </div>
 </template>

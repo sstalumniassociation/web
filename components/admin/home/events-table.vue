@@ -34,30 +34,17 @@ function editActions(row: EventWithAttendees) {
       icon: 'i-heroicons-pencil-square-20-solid',
       click: () => {
         selectedEvent.value = row
-        toggleEditPopup()
+        showEditPopup.value = true
       },
     }, {
       label: 'Delete',
       icon: 'i-heroicons-trash',
       click: () => {
         selectedEvent.value = row
-        toggleDeletePopup()
+        showDeletePopup.value = true
       },
     }],
   ]
-}
-
-// Toggle Popups
-function toggleCreatePopup() {
-  showCreatePopup.value = !showCreatePopup.value
-}
-
-function toggleDeletePopup() {
-  showDeletePopup.value = !showDeletePopup.value
-}
-
-function toggleEditPopup() {
-  showEditPopup.value = !showEditPopup.value
 }
 </script>
 
@@ -67,7 +54,7 @@ function toggleEditPopup() {
       <h1 class="text-3xl font-bold">
         Events
       </h1>
-      <UButton icon="i-heroicons-plus-circle" label="Create" class="ml-auto px-4" color="blue" @click="toggleCreatePopup" />
+      <UButton icon="i-heroicons-plus-circle" label="Create" class="ml-auto px-4" color="blue" @click="() => showCreatePopup = true" />
     </div>
     <UTable class="" :rows="events" :columns="columns" :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No Events' }">
       <template #name-data="{ row }">
@@ -90,7 +77,7 @@ function toggleEditPopup() {
     </UTable>
   </div>
 
-  <AdminHomeCreateEventPopup :show-popup="showCreatePopup" @close-popup="toggleCreatePopup" />
-  <AdminHomeDeleteEventPopup :event="selectedEvent as EventWithAttendees" :show-popup="showDeletePopup" :key="selectedEvent.id" @close-popup="toggleDeletePopup" />
-  <AdminHomeUpdateEventPopup :show-popup="showEditPopup" :event="selectedEvent as EventWithAttendees" :key="selectedEvent.id" @close-popup="toggleEditPopup" />
+  <AdminHomeCreateEventPopup v-model="showCreatePopup" />
+  <AdminHomeDeleteEventPopup :key="selectedEvent.id" v-model="showDeletePopup" :event-id="selectedEvent.id as string" :event-name="selectedEvent.name as string" />
+  <AdminHomeUpdateEventPopup :key="selectedEvent.id" v-model="showEditPopup" :event="selectedEvent as EventWithAttendees" />
 </template>

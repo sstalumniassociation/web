@@ -43,7 +43,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'theme-color',
-          content: '#131525',
+          content: '#000000',
         },
       ],
     },

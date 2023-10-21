@@ -1,66 +1,66 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import type { EventWithAttendees, Event } from '~/shared/types'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { ref } from 'vue'
+import type { Event, EventWithAttendees } from '~/shared/types'
 
 const props = defineProps<{
   event: EventWithAttendees
-  showPopup: boolean
 }>()
+const visible = defineModel<boolean>()
 const queryClient = useQueryClient()
-
-const mutation = useMutation({
-    mutationFn: (id: string) => $api(`/api/event/${id}`, {
-        method: 'PUT',
-        body: changedEvent.value,
-    }),
-})
 const msg = ref('')
-
-const closePopup = defineEmits(['closePopup'])
 
 const state = reactive({
   ...props.event,
-  startDateTime: dayjs(parseInt(props.event.startDateTime) * 1000).format("YYYY-MM-DDTHH:mm"),
-  endDateTime: dayjs(parseInt(props.event.endDateTime) * 1000).format("YYYY-MM-DDTHH:mm"),
+  startDateTime: dayjs(Number.parseInt(props.event.startDateTime) * 1000).format('YYYY-MM-DDTHH:mm'),
+  endDateTime: dayjs(Number.parseInt(props.event.endDateTime) * 1000).format('YYYY-MM-DDTHH:mm'),
 })
 const changedEvent = ref<Partial<Event>>({})
 
-const handleSubmit = () => {
+const mutation = useMutation({
+  mutationFn: (id: string) => $api(`/api/event/${id}`, {
+    method: 'PUT',
+    body: changedEvent.value,
+  }),
+  onSuccess: () => {
+    msg.value = 'Update Successful!'
+    queryClient.invalidateQueries({ queryKey: ['events'] })
+  },
+})
+
+function handleSubmit() {
   // Check differences between original and edited
   for (const key in props.event) {
-    if (key === "startDateTime" || key === "endDateTime") {
-      if (parseInt(props.event[key as keyof Event]) !== dayjs(state[key as keyof Event]).unix()) {
+    if (key === 'startDateTime' || key === 'endDateTime') {
+      if (Number.parseInt(props.event[key as keyof Event]) !== dayjs(state[key as keyof Event]).unix())
         changedEvent.value[key as keyof Event] = state[key as keyof Event]
-      }
-    } else {
-      if (props.event[key as keyof Event] !== state[key as keyof Event]) {
+    }
+    else {
+      if (props.event[key as keyof Event] !== state[key as keyof Event])
         changedEvent.value[key as keyof Event] = state[key as keyof Event]
-      }
     }
   }
 
   // Config Data
-  if (changedEvent.value.startDateTime) changedEvent.value.startDateTime = dayjs(parseInt(changedEvent.value.startDateTime) * 1000).toISOString()
-  if (changedEvent.value.endDateTime) changedEvent.value.endDateTime = dayjs(parseInt(changedEvent.value.endDateTime) * 1000).toISOString()
+  if (changedEvent.value.startDateTime)
+    changedEvent.value.startDateTime = dayjs(Number.parseInt(changedEvent.value.startDateTime) * 1000).toISOString()
+  if (changedEvent.value.endDateTime)
+    changedEvent.value.endDateTime = dayjs(Number.parseInt(changedEvent.value.endDateTime) * 1000).toISOString()
 
   if (Object.keys(changedEvent.value).length === 0) {
-    msg.value = "Nothing to update!"
+    msg.value = 'Nothing to update!'
     return
   }
 
   // Send Data
   mutation.mutate(props.event.id)
-
-  msg.value = "Update Successful!"
-  queryClient.invalidateQueries({ queryKey: ['events'] })
 }
 </script>
 
 <template>
   <div>
-    <UModal v-model="props.showPopup">
+    <UModal v-model="visible">
       <UCard>
         <template #header>
           <div class="flex flex-row items-start">
@@ -72,7 +72,7 @@ const handleSubmit = () => {
                 Update information regarding {{ props.event.name }}. Note that Event ID cannot be changed.
               </p>
             </div>
-            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="ml-auto -my-1" @click="$emit('closePopup')" />
+            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="ml-auto -my-1" @click="() => visible = false" />
           </div>
         </template>
 
@@ -104,9 +104,11 @@ const handleSubmit = () => {
           <UButton v-if="!msg.includes('Successful')" type="submit" color="green">
             Update Event
           </UButton>
-          <p v-if="msg !== ''">{{ msg }}</p>
+          <p v-if="msg !== ''">
+            {{ msg }}
+          </p>
         </UForm>
-        <UButton v-if="msg.includes('Successful')" color="green" @click="$emit('closePopup')">
+        <UButton v-if="msg.includes('Successful')" color="green" @click="() => visible = false">
           Close
         </UButton>
       </UCard>
