@@ -47,7 +47,7 @@
     "jose": "^4.14.6",
     "lint-staged": "^14.0.1",
     "material-icons": "^1.13.11",
-    "nuxt": "^3.7.3",
+    "nuxt": "^3.8.0",
     "nuxt-vuefire": "^0.3.0",
     "qrcode": "^1.5.3",
     "simple-git": "^3.20.0",

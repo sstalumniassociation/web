@@ -1,4 +1,5 @@
 import { GrowthBook } from '@growthbook/growthbook'
+import { isDevelopment } from 'std-env'
 
 export default defineNuxtPlugin(async () => {
   const config = useRuntimeConfig()
@@ -6,7 +7,7 @@ export default defineNuxtPlugin(async () => {
   const growthbook = new GrowthBook({
     apiHost: 'https://cdn.growthbook.io',
     clientKey: config.public.growthbook.clientKey,
-    enableDevMode: true,
+    enableDevMode: isDevelopment,
     subscribeToChanges: true,
   })
 

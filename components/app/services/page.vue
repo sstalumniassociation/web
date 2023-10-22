@@ -19,9 +19,8 @@ async function click() {
     const data = await $api(`/api/event/${state.eventId}`)
     sstaarsStore.value.previousEvents[data.id] = data.name
     state.sheetOpened = false
-    await nextTick(() => {
-      f7.views.current.router.navigate(`/app/services/event/${data.id}`, { openIn: 'sheet' })
-    })
+
+    await openEvent(state.eventId)
   }
   catch (err) {
     if (err instanceof FetchError) {
@@ -34,6 +33,13 @@ async function click() {
   finally {
     state.pending = false
   }
+}
+
+async function openEvent(id: string) {
+  state.sheetOpened = false
+  await nextTick(() => {
+    f7.view.current.router.navigate(`/app/services/event/${id}`, { openIn: 'popup' })
+  })
 }
 </script>
 
@@ -63,7 +69,7 @@ async function click() {
       </f7ListButton>
     </f7List>
 
-    <f7Sheet v-model:opened="state.sheetOpened" style="height: auto" swipe-to-close backdrop push>
+    <f7Sheet v-model:opened="state.sheetOpened" style="height: auto" swipe-to-close>
       <f7PageContent>
         <f7BlockTitle large>
           SSTAARS
@@ -96,7 +102,8 @@ async function click() {
           <span v-if="Object.keys(sstaarsStore.previousEvents).length === 0" class="opacity-80">
             No previous events.
           </span>
-          <f7ListItem v-for="name, id in sstaarsStore.previousEvents" :key="id" :title="name" :link="`/app/services/event/${id}`" />
+
+          <f7ListItem v-for="name, id in sstaarsStore.previousEvents" :key="id" :title="name" @click="openEvent(id)" />
         </f7List>
       </f7PageContent>
     </f7Sheet>
