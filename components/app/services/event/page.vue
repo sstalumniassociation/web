@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7PageContent, f7Searchbar, f7SkeletonBlock, f7Subnavbar } from 'framework7-vue'
+import { f7BlockTitle, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7PageContent, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
 
 import type { VirtualList } from 'framework7/types'
 import type { UnwrapRef } from 'vue'
 
 import { useDatabaseList } from 'vuefire'
-import { ref as dbRef } from 'firebase/database'
+import { ref as dbRef, remove, set } from 'firebase/database'
 
 const props = defineProps<{
   id: string // Passed by f7router in URL param
@@ -41,10 +41,19 @@ function formattedDate(date: number) {
   if (formattedDateCache.has(date))
     return formattedDateCache.get(date)
 
-  const data = $dayjs(date * 1000).fromNow()
+  const data = $dayjs.unix(date).format('hh:mm A')
   formattedDateCache.set(date, data)
   return data
 }
+
+async function toggle(admissionKey: string) {
+  if (checkedInUsers.value[admissionKey])
+    await remove(dbRef(db, `${props.id}/${admissionKey}`))
+  else
+    await set(dbRef(db, `${props.id}/${admissionKey}`), $dayjs().unix())
+}
+
+// Virtualized list helpers
 
 function searchAll(query: string, items: UnwrapRef<typeof attendees>) {
   const found = []
@@ -105,22 +114,32 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
           items: attendees,
           searchAll,
           renderExternal,
-          height: 50,
+          height: 52,
         }"
       >
         <ul>
           <f7ListItem
-            v-for="attendee in attendeeVirtualListData.items" :key="attendee.admissionKey"
-            :style="`top: ${attendeeVirtualListData.topPosition}px`" :virtual-list-index="attendee.index" :title="attendee.name"
+            v-for="attendee in attendeeVirtualListData.items" :key="attendee.admissionKey" swipeout
+            :style="`top: ${attendeeVirtualListData.topPosition}px`" :virtual-list-index="attendee.index"
           >
-            <f7Chip v-if="checkedInUsers[attendee.admissionKey]" color="green">
-              <span class="text-xs!">
+            <f7SwipeoutActions right>
+              <f7SwipeoutButton confirm-text="Are you sure?" :color="checkedInUsers[attendee.admissionKey] ? 'red' : 'green'" @click="toggle(attendee.admissionKey)">
+                {{ checkedInUsers[attendee.admissionKey] ? 'Check out' : 'Check in' }}
+              </f7SwipeoutButton>
+            </f7SwipeoutActions>
+
+            <template #title>
+              {{ attendee.name }}
+            </template>
+
+            <template #after>
+              <f7Chip v-if="checkedInUsers[attendee.admissionKey]" color="green">
                 {{ formattedDate(checkedInUsers[attendee.admissionKey]) }}
-              </span>
-            </f7Chip>
-            <f7Chip v-else color="red">
-              Not checked in
-            </f7Chip>
+              </f7Chip>
+              <f7Chip v-else color="red">
+                Not checked in
+              </f7Chip>
+            </template>
           </f7ListItem>
         </ul>
       </f7List>
