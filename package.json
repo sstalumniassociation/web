@@ -20,6 +20,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "latest",
     "@cloudflare/workers-types": "^4.20230914.0",
+    "@growthbook/growthbook": "^0.29.0",
     "@libsql/client": "^0.3.4",
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^2.8.1",

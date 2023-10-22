@@ -126,5 +126,11 @@ export default defineNuxtConfig({
     firebase: {
       projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
     },
+
+    public: {
+      growthbook: {
+        clientKey: '' || process.env.GROWTHBOOK_CLIENT_KEY,
+      },
+    },
   },
 })

@@ -48,7 +48,7 @@ async function click() {
       </f7NavTitleLarge>
     </f7Navbar>
 
-    <f7List strong inset>
+    <f7List v-if="$growthbook.isOn('sstaars')" strong inset>
       <f7ListItem class="font-semibold">
         SSTAA Registration System (SSTAARS)
       </f7ListItem>
