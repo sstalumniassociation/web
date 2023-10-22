@@ -86,6 +86,9 @@ devDependencies:
   framework7-vue:
     specifier: ^8.3.0
     version: 8.3.0
+  html5-qrcode:
+    specifier: ^2.3.8
+    version: 2.3.8
   jose:
     specifier: ^4.15.4
     version: 4.15.4
@@ -8019,6 +8022,10 @@ packages:
   /html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /html5-qrcode@2.3.8:
+    resolution: {integrity: sha512-jsr4vafJhwoLVEDW3n1KvPnCCXWaQfRng0/EEYk1vNcQGcG/htAdhJX0be8YyqMoSz7+hZvOZSTAepsabiuhiQ==}
     dev: true
 
   /http-assert@1.5.0:

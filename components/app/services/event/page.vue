@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7PageContent, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
+import { f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7PageContent, f7Searchbar, f7Sheet, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
 
 import type { VirtualList } from 'framework7/types'
 import type { UnwrapRef } from 'vue'
@@ -10,6 +10,10 @@ import { ref as dbRef, remove, set } from 'firebase/database'
 const props = defineProps<{
   id: string // Passed by f7router in URL param
 }>()
+
+const state = ref({
+  scannerOpened: false,
+})
 
 const { $dayjs } = useNuxtApp()
 
@@ -106,6 +110,16 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
           </div>
         </template>
       </f7Card>
+
+      <f7List inset>
+        <f7Button tonal large @click="state.scannerOpened = !state.scannerOpened">
+          Open scanner
+        </f7Button>
+      </f7List>
+
+      <div v-if="state.scannerOpened">
+        <AppServicesEventScanner />
+      </div>
 
       <f7BlockTitle>Attendees</f7BlockTitle>
 

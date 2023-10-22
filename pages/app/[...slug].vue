@@ -11,7 +11,7 @@ import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
-import { AppHomePage, AppServicesEventPage } from '#components'
+import { AppHomePage, AppServicesEventPage, AppServicesEventScannerPage } from '#components'
 
 Framework7.use(Framework7Vue)
 
