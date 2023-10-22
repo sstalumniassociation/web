@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7PageContent, f7Searchbar, f7Sheet, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
+import { f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
 
 import type { VirtualList } from 'framework7/types'
 import type { UnwrapRef } from 'vue'
