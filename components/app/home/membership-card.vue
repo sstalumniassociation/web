@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Card, f7CardContent, f7CardFooter, f7SkeletonBlock } from 'framework7-vue'
+import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
 import type { User } from '~/shared/types'
 
 const { data: user, isLoading: userIsLoading } = useUser()
@@ -15,9 +15,9 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
 
 <template>
   <div>
-    <div v-if="userIsLoading" class="h-55">
+    <f7List v-if="userIsLoading" inset class="h-64">
       <f7SkeletonBlock class="rounded-md" effect="fade" height="100%" />
-    </div>
+    </f7List>
 
     <f7Card v-else-if="user" class="m-0!">
       <f7CardContent class="h-44 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
