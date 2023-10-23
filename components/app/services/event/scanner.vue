@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query'
-import { f7Button, f7List, f7ListInput, f7ListItem } from 'framework7-vue'
+import { f7List, f7ListItem } from 'framework7-vue'
 import { Html5Qrcode } from 'html5-qrcode'
 
 const emit = defineEmits(['scan'])
