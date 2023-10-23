@@ -30,19 +30,8 @@ const mutation = useMutation({
 })
 
 function handleSubmit() {
-  // Check differences between original and edited
-  for (const key in props.event) {
-    if (key === 'startDateTime' || key === 'endDateTime') {
-      if (Number.parseInt(props.event[key as keyof Event]) !== dayjs(state[key as keyof Event]).unix())
-        changedEvent.value[key as keyof Event] = state[key as keyof Event]
-    }
-    else {
-      if (props.event[key as keyof Event] !== state[key as keyof Event])
-        changedEvent.value[key as keyof Event] = state[key as keyof Event]
-    }
-  }
-
   // Config Data
+  changedEvent.value = { ...state }
   if (changedEvent.value.startDateTime)
     changedEvent.value.startDateTime = dayjs(Number.parseInt(changedEvent.value.startDateTime) * 1000).toISOString()
   if (changedEvent.value.endDateTime)
@@ -101,14 +90,14 @@ function handleSubmit() {
             </UFormGroup>
           </div>
 
-          <UButton v-if="!msg.includes('Successful')" type="submit" color="green">
+          <UButton v-if="!mutation.isSuccess.value" type="submit" color="green">
             Update Event
           </UButton>
           <p v-if="msg !== ''">
             {{ msg }}
           </p>
         </UForm>
-        <UButton v-if="msg.includes('Successful')" color="green" @click="() => visible = false">
+        <UButton v-if="mutation.isSuccess.value" color="green" @click="() => visible = false">
           Close
         </UButton>
       </UCard>

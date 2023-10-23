@@ -142,7 +142,7 @@ function handleFirebaseError(err: FirebaseError) {
       <h1 class="font-bold text-2xl">
         SSTAA Admin
       </h1>
-      <UForm :state="state" class="w-1/3" @submit="login">
+      <UForm :state="state" class="w-1/2" @submit="login">
         <UFormGroup label="Email" name="email" required :error="(!state.email && state.formSubmitted) && 'Enter an email address!'">
           <UInput v-model="state.email" type="email" color="gray" variant="outline" placeholder="Your email address" />
         </UFormGroup>
