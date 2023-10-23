@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
+import { f7, f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
 
 import type { VirtualList } from 'framework7/types'
 import type { UnwrapRef } from 'vue'
@@ -57,6 +57,27 @@ async function toggle(admissionKey: string) {
     await set(dbRef(db, `${props.id}/${admissionKey}`), $dayjs().unix())
 }
 
+async function onScan(admissionKey: string) {
+  const attendee = attendees.value.find(attendee => attendee.admissionKey === admissionKey)
+  if (!attendee) // Attendee is in master list from API
+    return
+
+  if (checkedInUsers.value[admissionKey]) { // Attendee is already checked in
+    f7.toast.show({
+      text: `${attendee.name} already checked in`,
+      closeTimeout: 3000,
+    })
+    return
+  }
+
+  await set(dbRef(db, `${props.id}/${admissionKey}`), $dayjs().unix())
+
+  f7.toast.show({
+    text: `Checked in ${attendee.name}`,
+    closeTimeout: 10000,
+  })
+}
+
 // Virtualized list helpers
 
 function searchAll(query: string, items: UnwrapRef<typeof attendees>) {
@@ -112,13 +133,13 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
       </f7Card>
 
       <f7List inset>
-        <f7Button tonal large @click="state.scannerOpened = !state.scannerOpened">
-          Open scanner
+        <f7Button tonal @click="state.scannerOpened = !state.scannerOpened">
+          {{ state.scannerOpened ? 'Close' : 'Open' }} scanner
         </f7Button>
       </f7List>
 
       <div v-if="state.scannerOpened">
-        <AppServicesEventScanner />
+        <AppServicesEventScanner @scan="onScan" />
       </div>
 
       <f7BlockTitle>Attendees</f7BlockTitle>
@@ -137,7 +158,10 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
             :style="`top: ${attendeeVirtualListData.topPosition}px`" :virtual-list-index="attendee.index"
           >
             <f7SwipeoutActions right>
-              <f7SwipeoutButton confirm-text="Are you sure?" :color="checkedInUsers[attendee.admissionKey] ? 'red' : 'green'" @click="toggle(attendee.admissionKey)">
+              <f7SwipeoutButton
+                confirm-text="Are you sure?"
+                :color="checkedInUsers[attendee.admissionKey] ? 'red' : 'green'" @click="toggle(attendee.admissionKey)"
+              >
                 {{ checkedInUsers[attendee.admissionKey] ? 'Check out' : 'Check in' }}
               </f7SwipeoutButton>
             </f7SwipeoutActions>

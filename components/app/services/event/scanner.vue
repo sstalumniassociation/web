@@ -1,57 +1,56 @@
 <script setup lang="ts">
-import { Html5QrcodeScanner } from 'html5-qrcode'
+import { useQuery } from '@tanstack/vue-query'
+import { f7Button, f7List, f7ListInput, f7ListItem } from 'framework7-vue'
+import { Html5Qrcode } from 'html5-qrcode'
+
+const emit = defineEmits(['scan'])
 
 const state = ref({
-  error: '',
+  selectedCameraId: '',
 })
 
-function onScanSuccess(decodedText, decodedResult) {
-  // Handle on success condition with the decoded text or result.
-  console.log(`Scan result: ${decodedText}`, decodedResult)
-}
+const { data: cameras } = useQuery({
+  queryKey: ['cameras'],
+  queryFn: () => Html5Qrcode.getCameras(),
+  refetchOnWindowFocus: false,
+})
 
-onMounted(() => {
-  const html5QrcodeScanner = new Html5QrcodeScanner(
-    'reader',
-    { fps: 10, qrbox: 300 },
-    false,
+watchEffect((onCleanup) => {
+  if (state.value.selectedCameraId.length === 0)
+    return
+
+  const html5Qrcode = new Html5Qrcode('reader')
+  onCleanup(async () => {
+    await html5Qrcode.stop()
+    html5Qrcode.clear()
+  })
+
+  html5Qrcode.start(
+    state.value.selectedCameraId,
+    {
+      fps: 10,
+      qrbox: 250,
+    },
+    (decodedText) => {
+      emit('scan', decodedText)
+    },
+    () => {}, // Ignore all errors, unlikely to happen
   )
-
-  html5QrcodeScanner.render(onScanSuccess, (err) => {
-    if (err)
-      state.value.error = err
-  })
-
-  document.querySelectorAll('#html5-qrcode-button-camera-permission').forEach((elm) => {
-    console.log(elm)
-    elm.className += ' button'
-  })
-
-  return async () => {
-    await html5QrcodeScanner.clear()
-  }
 })
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center">
-    <div id="reader" class="w-[90%]" style="border: none;" />
-    <div v-if="state.error">
-      {{ state.error }}
-    </div>
+  <div>
+    <f7List inset>
+      <f7ListItem v-if="cameras" title="Camera" smart-select :smart-select-params="{ openIn: 'popover' }">
+        <select v-model="state.selectedCameraId" name="camera">
+          <option v-for="{ id, label } in cameras" :key="id" :value="id">
+            {{ label }}
+          </option>
+        </select>
+      </f7ListItem>
+    </f7List>
+
+    <div id="reader" />
   </div>
 </template>
-
-<style scoped>
-:deep(#html5-qrcode-button-camera-stop) {
-  display: none !important;
-}
-
-:deep(#reader div:first-child img:nth-child(2)) {
-  display: none !important; /* Hide info button */
-}
-
-#reader {
-  border: none !important;
-}
-</style>
