@@ -25,6 +25,8 @@
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^2.9.0",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@simplewebauthn/browser": "^8.3.1",
+    "@simplewebauthn/server": "^8.3.2",
     "@tanstack/query-persist-client-core": "^5.0.0",
     "@tanstack/query-sync-storage-persister": "^5.0.0",
     "@tanstack/vue-query": "^5.0.4",
