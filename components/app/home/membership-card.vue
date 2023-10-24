@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
+import { f7Card, f7CardContent, f7CardFooter, f7List, f7PageContent, f7Sheet, f7SkeletonBlock } from 'framework7-vue'
 import type { User } from '~/shared/types'
 
 const { data: user, isLoading: userIsLoading } = useUser()
+
+const opened = ref(false)
 
 const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
   associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -19,8 +21,8 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
       <f7SkeletonBlock class="rounded-md" effect="fade" height="100%" />
     </f7List>
 
-    <f7Card v-else-if="user" class="m-0!">
-      <f7CardContent class="h-44 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
+    <f7Card v-else-if="user" class="m-0!" @click="opened = !opened">
+      <f7CardContent class="h-44 rounded-[16px]" :class="membershipGradient[user.memberType!]" valign="top">
         <div class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col flex-1">
             <span class="font-bold text-3xl">
@@ -49,5 +51,35 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
         </span>
       </f7CardFooter>
     </f7Card>
+
+    <f7Sheet v-model:opened="opened" style="height: auto" swipe-to-close push>
+      <f7PageContent>
+        <div class="h-[90vh]">
+          <f7Card class="m-0! h-[50%]">
+            <f7CardContent class="h-full rounded-[16px]" :class="membershipGradient[user.memberType!]" valign="top">
+              <div class="flex flex-col w-full h-full text-white dark:text-inherit">
+                <div class="flex flex-col flex-1">
+                  <span class="font-bold text-3xl">
+                    {{ user.name }}
+                  </span>
+                  <span class="font-mono">
+                    {{ user.memberId }}
+                  </span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-semibold">
+                    Class of {{ user.graduationYear }}
+                  </span>
+                  <span>
+                    {{ user.memberType?.[0].toLocaleUpperCase() }}{{ user.memberType?.slice(1, user.memberType?.length) }}
+                    member
+                  </span>
+                </div>
+              </div>
+            </f7CardContent>
+          </f7Card>
+        </div>
+      </f7PageContent>
+    </f7Sheet>
   </div>
 </template>
