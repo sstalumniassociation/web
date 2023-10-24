@@ -72,7 +72,7 @@ const qrcode = useQRCode(() => admission.value?.body.admissionKey ?? '', {
           </f7BlockTitle>
           <f7Block>
             <div class="w-full flex flex-col items-center">
-              <img :src="qrcode" alt="QR Code" class="max-w-200px">
+              <img :src="qrcode" alt="QR Code" class="max-w-[200px]">
               <span>{{ admission?.body.admissionKey }}</span>
             </div>
           </f7Block>

@@ -6,6 +6,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
 
+  experimental: {
+    // https://github.com/unjs/nitro/issues/1844
+    appManifest: false,
+  },
+
   typescript: {
     strict: true,
   },
@@ -125,6 +130,12 @@ export default defineNuxtConfig({
 
     firebase: {
       projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
+    },
+
+    public: {
+      growthbook: {
+        clientKey: '' || process.env.GROWTHBOOK_CLIENT_KEY,
+      },
     },
   },
 })

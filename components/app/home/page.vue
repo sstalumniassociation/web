@@ -10,7 +10,7 @@ import { f7List, f7Page } from 'framework7-vue'
       </div>
 
       <div>
-        <AppHomeNews />
+        <LazyAppHomeNews />
       </div>
     </f7List>
   </f7Page>

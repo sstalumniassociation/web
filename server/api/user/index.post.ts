@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { users } from '~/server/db/schema'
 
 const createUserRequestBody = z.object({
-  memberId: z.string().nonempty(),
-  name: z.string().nonempty(),
+  memberId: z.string().min(1),
+  name: z.string().min(1),
   email: z.string().email(),
   graduationYear: z.number().int().min(2011),
   memberType: z.enum([

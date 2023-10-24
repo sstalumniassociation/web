@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7BlockTitle, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7SkeletonBlock } from 'framework7-vue'
+import { f7BlockTitle, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7List, f7SkeletonBlock } from 'framework7-vue'
 
 const { data: news, isLoading: newsIsLoading } = useNewsArticles()
 </script>
@@ -11,9 +11,11 @@ const { data: news, isLoading: newsIsLoading } = useNewsArticles()
     </f7BlockTitle>
 
     <div class="space-y-3">
-      <template v-if="newsIsLoading">
-        <f7SkeletonBlock v-for="n in 3" :key="n" class="rounded-md" effect="fade" height="10rem" />
-      </template>
+      <f7List v-if="newsIsLoading" inset>
+        <div class="space-y-3">
+          <f7SkeletonBlock v-for="n in 3" :key="n" class="rounded-md" effect="fade" height="10rem" />
+        </div>
+      </f7List>
       <template v-else-if="news">
         <span v-if="news.length === 0" class="mt-4 opacity-80">
           Nothing exciting is happening right now.

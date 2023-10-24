@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { users } from '~/server/db/schema'
 
 const registerRequestBody = z.object({
-  firebaseId: z.string().nonempty(),
+  firebaseId: z.string().min(1),
 })
 
 export default defineProtectedEventHandler(async (event) => {
