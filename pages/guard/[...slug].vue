@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { f7App, f7Navbar, f7Page, f7View } from 'framework7-vue'
 import 'framework7/css/bundle'
 import 'framework7-icons/css/framework7-icons.css'
 import 'material-icons/iconfont/material-icons.css'
@@ -17,8 +16,8 @@ const route = useRoute()
 </script>
 
 <template>
-  <f7App name="SSTAA Guard House Check Point" theme="md" :dark-mode="dark">
-    <f7View
+  <F7App name="SSTAA Guard House Check Point" theme="md" :dark-mode="dark">
+    <F7View
       main
       class="safe-areas"
       :url="route.path"
@@ -26,9 +25,9 @@ const route = useRoute()
       ios-swipe-back
       preload-previous-page
     >
-      <f7Page>
-        <f7Navbar title="SSTAA Guard House Check Point" />
-      </f7Page>
-    </f7View>
-  </f7App>
+      <F7Page>
+        <F7Navbar title="SSTAA Guard House Check Point" />
+      </F7Page>
+    </F7View>
+  </F7App>
 </template>

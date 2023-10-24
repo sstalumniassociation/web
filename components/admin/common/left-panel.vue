@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { f7Icon, f7List, f7ListItem, f7Page, f7Panel } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 
 const props = defineProps<{
@@ -28,15 +27,15 @@ const menuLinks = [
 </script>
 
 <template>
-  <f7Panel left cover>
-    <f7Page>
-      <f7List menu-list strong-ios outline-ios>
-        <f7ListItem v-for="link in menuLinks" :key="link.path" :link="link.path" :selected="selectedPath === link.path" :title="link.title" @click="selectedPath = link.path">
+  <F7Panel left cover>
+    <F7Page>
+      <F7List menu-list strong-ios outline-ios>
+        <F7ListItem v-for="link in menuLinks" :key="link.path" :link="link.path" :selected="selectedPath === link.path" :title="link.title" @click="selectedPath = link.path">
           <template #media>
-            <f7Icon :md="link.icon" />
+            <F7Icon :md="link.icon" />
           </template>
-        </f7ListItem>
-      </f7List>
-    </f7Page>
-  </f7Panel>
+        </F7ListItem>
+      </F7List>
+    </F7Page>
+  </F7Panel>
 </template>

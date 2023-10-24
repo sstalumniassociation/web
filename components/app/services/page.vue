@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { FetchError } from 'ofetch'
-import { f7, f7Block, f7BlockTitle, f7Button, f7Icon, f7List, f7ListButton, f7ListInput, f7ListItem, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7PageContent, f7Sheet } from 'framework7-vue'
+import { f7 } from 'framework7-vue'
+import type { EventWithAttendees } from '~/shared/types'
 
 const sstaarsStore = useSstaarsStore()
 
@@ -16,7 +17,7 @@ async function click() {
 
   state.pending = true
   try {
-    const data = await $api(`/api/event/${state.eventId}`)
+    const data: EventWithAttendees = await $api(`/api/event/${state.eventId}`)
     sstaarsStore.value.previousEvents[data.id] = data.name
     state.sheetOpened = false
 
@@ -44,37 +45,37 @@ async function openEvent(id: string) {
 </script>
 
 <template>
-  <f7Page>
-    <f7Navbar large transparent :sliding="false">
-      <f7NavTitle sliding>
+  <F7Page>
+    <F7Navbar large transparent :sliding="false">
+      <F7NavTitle sliding>
         Alumni Services
-      </f7NavTitle>
-      <f7NavTitleLarge>
+      </F7NavTitle>
+      <F7NavTitleLarge>
         Alumni Services
-      </f7NavTitleLarge>
-    </f7Navbar>
+      </F7NavTitleLarge>
+    </F7Navbar>
 
-    <f7List v-if="$growthbook.isOn('sstaars')" strong inset>
-      <f7ListItem class="font-semibold">
+    <F7List v-if="$growthbook.isOn('sstaars')" strong inset>
+      <F7ListItem class="font-semibold">
         SSTAA Registration System (SSTAARS)
-      </f7ListItem>
-      <f7ListItem>
+      </F7ListItem>
+      <F7ListItem>
         Helping out with an SSTAA event? Access the Event Registration System here.
-      </f7ListItem>
-      <f7ListButton link="/halp" class="custom-card" @click="state.sheetOpened = true">
+      </F7ListItem>
+      <F7ListButton link="/halp" class="custom-card" @click="state.sheetOpened = true">
         <span>
           Open
         </span>
-        <f7Icon material="chevron_right" />
-      </f7ListButton>
-    </f7List>
+        <F7Icon material="chevron_right" />
+      </F7ListButton>
+    </F7List>
 
-    <f7Sheet v-model:opened="state.sheetOpened" style="height: auto" swipe-to-close>
-      <f7PageContent>
-        <f7BlockTitle large>
+    <F7Sheet v-model:opened="state.sheetOpened" style="height: auto" swipe-to-close>
+      <F7PageContent>
+        <F7BlockTitle large>
           SSTAARS
-        </f7BlockTitle>
-        <f7Block>
+        </F7BlockTitle>
+        <F7Block>
           <p>
             SSTAARS is intended for volunteers helping with SST Alumni Association Event Registration.
           </p>
@@ -84,30 +85,30 @@ async function openEvent(id: string) {
           <p>
             Please reach out to your SSTAA contact if they did not provide you with an access code.
           </p>
-        </f7Block>
+        </F7Block>
 
-        <f7List>
-          <f7ListInput v-model:value="state.eventId" placeholder="Access code" />
+        <F7List>
+          <F7ListInput v-model:value="state.eventId" placeholder="Access code" />
           <div class="m-4">
-            <f7Button large fill preloader :loading="state.pending" @click="click">
+            <F7Button large fill preloader :loading="state.pending" @click="click">
               Continue
-            </f7Button>
+            </F7Button>
           </div>
-        </f7List>
+        </F7List>
 
-        <f7BlockTitle>
+        <F7BlockTitle>
           My events
-        </f7BlockTitle>
-        <f7List inset strong>
+        </F7BlockTitle>
+        <F7List inset strong>
           <span v-if="Object.keys(sstaarsStore.previousEvents).length === 0" class="opacity-80">
             No previous events.
           </span>
 
-          <f7ListItem v-for="name, id in sstaarsStore.previousEvents" :key="id" :title="name" @click="openEvent(id)" />
-        </f7List>
-      </f7PageContent>
-    </f7Sheet>
-  </f7Page>
+          <F7ListItem v-for="name, id in sstaarsStore.previousEvents" :key="id" :title="name" @click="openEvent(id)" />
+        </F7List>
+      </F7PageContent>
+    </F7Sheet>
+  </F7Page>
 </template>
 
 <style scoped>

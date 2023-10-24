@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { f7Link, f7NavLeft, f7NavTitle, f7Navbar, f7Page } from 'framework7-vue'
 import type { Router } from 'framework7/types'
 
 const props = defineProps<{
@@ -16,15 +15,15 @@ const showForbidden = computed(() => {
 </script>
 
 <template>
-  <f7Page>
-    <f7Navbar>
-      <f7NavLeft v-if="!showForbidden">
-        <f7Link panel-open="left" icon-ios="f7:menu" icon-md="material:menu" />
-      </f7NavLeft>
-      <f7NavTitle>
+  <F7Page>
+    <F7Navbar>
+      <F7NavLeft v-if="!showForbidden">
+        <F7Link panel-open="left" icon-ios="f7:menu" icon-md="material:menu" />
+      </F7NavLeft>
+      <F7NavTitle>
         SSTAA Admin
-      </f7NavTitle>
-    </f7Navbar>
+      </F7NavTitle>
+    </F7Navbar>
 
     <LazyAdminHomeForbidden v-if="showForbidden" />
 
@@ -32,5 +31,5 @@ const showForbidden = computed(() => {
       <AdminCommonLeftPanel :route="props.f7route" />
       <AdminHomeEventsTable />
     </template>
-  </f7Page>
+  </F7Page>
 </template>

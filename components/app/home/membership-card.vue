@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
 import type { User } from '~/shared/types'
 
 const { data: user, isLoading: userIsLoading } = useUser()
@@ -15,12 +14,12 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
 
 <template>
   <div>
-    <f7List v-if="userIsLoading" inset class="h-64">
-      <f7SkeletonBlock class="rounded-md" effect="fade" height="100%" />
-    </f7List>
+    <F7List v-if="userIsLoading" inset class="h-64">
+      <F7SkeletonBlock class="rounded-md" effect="fade" height="100%" />
+    </F7List>
 
-    <f7Card v-else-if="user" class="m-0!">
-      <f7CardContent class="h-44 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
+    <F7Card v-else-if="user" class="m-0!">
+      <F7CardContent class="h-44 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
         <div class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col flex-1">
             <span class="font-bold text-3xl">
@@ -40,14 +39,14 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
             </span>
           </div>
         </div>
-      </f7CardContent>
-      <f7CardFooter>
+      </F7CardContent>
+      <F7CardFooter>
         <span>
           <strong>Coming back?</strong>
           <br>
           <span>Tap on this card and present it to the security at the front gate.</span>
         </span>
-      </f7CardFooter>
-    </f7Card>
+      </F7CardFooter>
+    </F7Card>
   </div>
 </template>

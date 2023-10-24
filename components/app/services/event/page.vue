@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7, f7BlockTitle, f7Button, f7Card, f7Chip, f7Link, f7List, f7ListItem, f7NavRight, f7NavTitle, f7Navbar, f7Page, f7Searchbar, f7SkeletonBlock, f7Subnavbar, f7SwipeoutActions, f7SwipeoutButton } from 'framework7-vue'
+import { f7 } from 'framework7-vue'
 
 import type { VirtualList } from 'framework7/types'
 import type { UnwrapRef } from 'vue'
@@ -95,31 +95,31 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
 </script>
 
 <template>
-  <f7Page>
-    <f7Navbar>
-      <f7NavTitle>SSTAARS</f7NavTitle>
-      <f7NavRight>
-        <f7Link popup-close>
+  <F7Page>
+    <F7Navbar>
+      <F7NavTitle>SSTAARS</F7NavTitle>
+      <F7NavRight>
+        <F7Link popup-close>
           Close
-        </f7Link>
-      </f7NavRight>
-      <f7Subnavbar :inner="false">
-        <f7Searchbar search-container=".virtual-list" search-item="li" search-in=".item-title" />
-      </f7Subnavbar>
-    </f7Navbar>
+        </F7Link>
+      </F7NavRight>
+      <F7Subnavbar :inner="false">
+        <F7Searchbar search-container=".virtual-list" search-item="li" search-in=".item-title" />
+      </F7Subnavbar>
+    </F7Navbar>
 
-    <f7List v-if="eventIsLoading || checkedInUsersListPending" inset>
+    <F7List v-if="eventIsLoading || checkedInUsersListPending" inset>
       <div class="space-y-2">
-        <f7SkeletonBlock v-for="n in 2" :key="n" :height="`${n * 100}px`" class="rounded-md" effect="fade" />
+        <F7SkeletonBlock v-for="n in 2" :key="n" :height="`${n * 100}px`" class="rounded-md" effect="fade" />
       </div>
-    </f7List>
+    </F7List>
 
     <template v-else-if="event">
-      <f7BlockTitle large>
+      <F7BlockTitle large>
         {{ event.name }}
-      </f7BlockTitle>
+      </F7BlockTitle>
 
-      <f7Card>
+      <F7Card>
         <template #header>
           <div class="flex justify-between w-full">
             <div>
@@ -130,21 +130,21 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
             </div>
           </div>
         </template>
-      </f7Card>
+      </F7Card>
 
-      <f7List inset>
-        <f7Button tonal @click="state.scannerOpened = !state.scannerOpened">
+      <F7List inset>
+        <F7Button tonal @click="state.scannerOpened = !state.scannerOpened">
           {{ state.scannerOpened ? 'Close' : 'Open' }} scanner
-        </f7Button>
-      </f7List>
+        </F7Button>
+      </F7List>
 
       <div v-if="state.scannerOpened">
         <AppServicesEventScanner @scan="onScan" />
       </div>
 
-      <f7BlockTitle>Attendees</f7BlockTitle>
+      <F7BlockTitle>Attendees</F7BlockTitle>
 
-      <f7List
+      <F7List
         strong inset virtual-list :virtual-list-params="{
           items: attendees,
           searchAll,
@@ -153,34 +153,34 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
         }"
       >
         <ul>
-          <f7ListItem
+          <F7ListItem
             v-for="attendee in attendeeVirtualListData.items" :key="attendee.admissionKey" swipeout
             :style="`top: ${attendeeVirtualListData.topPosition}px`" :virtual-list-index="attendee.index"
           >
-            <f7SwipeoutActions right>
-              <f7SwipeoutButton
+            <F7SwipeoutActions right>
+              <F7SwipeoutButton
                 confirm-text="Are you sure?"
                 :color="checkedInUsers[attendee.admissionKey] ? 'red' : 'green'" @click="toggle(attendee.admissionKey)"
               >
                 {{ checkedInUsers[attendee.admissionKey] ? 'Check out' : 'Check in' }}
-              </f7SwipeoutButton>
-            </f7SwipeoutActions>
+              </F7SwipeoutButton>
+            </F7SwipeoutActions>
 
             <template #title>
               {{ attendee.name }}
             </template>
 
             <template #after>
-              <f7Chip v-if="checkedInUsers[attendee.admissionKey]" color="green">
+              <F7Chip v-if="checkedInUsers[attendee.admissionKey]" color="green">
                 {{ formattedDate(checkedInUsers[attendee.admissionKey]) }}
-              </f7Chip>
-              <f7Chip v-else color="red">
+              </F7Chip>
+              <F7Chip v-else color="red">
                 Not checked in
-              </f7Chip>
+              </F7Chip>
             </template>
-          </f7ListItem>
+          </F7ListItem>
         </ul>
-      </f7List>
+      </F7List>
     </template>
-  </f7Page>
+  </F7Page>
 </template>

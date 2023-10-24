@@ -8,7 +8,6 @@ import Framework7 from 'framework7/lite-bundle'
 
 // @ts-expect-error Missing types
 import Framework7Vue from 'framework7-vue/bundle'
-import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
 import { AppHomePage, AppServicesEventPage } from '#components'
@@ -79,8 +78,8 @@ watch([authLoaded, auth], (values) => {
 
 <template>
   <VitePwaManifest />
-  <f7App name="SSTAA" theme="md" :dark-mode="dark" :routes="appRoutes">
-    <f7Views
+  <F7App name="SSTAA" theme="md" :dark-mode="dark" :routes="appRoutes">
+    <F7Views
       tabs
       class="safe-areas"
       :url="route.path"
@@ -90,45 +89,45 @@ watch([authLoaded, auth], (values) => {
     >
       <CommonLoginScreen v-model:opened="state.showLoginScreen" />
 
-      <f7Toolbar position="bottom" tabbar icons>
-        <f7Link
+      <F7Toolbar position="bottom" tabbar icons>
+        <F7Link
           tab-link="#home"
           tab-link-active
           text="Home"
           icon-md="material:home"
         />
-        <f7Link
+        <F7Link
           tab-link="#services"
           text="Services"
           icon-md="material:sparkle"
         />
-        <f7Link
+        <F7Link
           tab-link="#events"
           text="Events"
           icon-md="material:events"
         />
-        <f7Link
+        <F7Link
           tab-link="#profile"
           text="Profile"
           icon-md="material:account_circle"
         />
-      </f7Toolbar>
+      </F7Toolbar>
 
-      <f7View id="home" tab tab-active>
+      <F7View id="home" tab tab-active>
         <AppHomePage />
-      </f7View>
+      </F7View>
 
-      <f7View id="services" tab>
+      <F7View id="services" tab>
         <AppServicesPage />
-      </f7View>
+      </F7View>
 
-      <f7View id="events" tab>
+      <F7View id="events" tab>
         <AppEventsPage />
-      </f7View>
+      </F7View>
 
-      <f7View id="profile" tab>
+      <F7View id="profile" tab>
         <AppProfilePage />
-      </f7View>
-    </f7Views>
-  </f7App>
+      </F7View>
+    </F7Views>
+  </F7App>
 </template>

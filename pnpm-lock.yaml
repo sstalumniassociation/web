@@ -50,6 +50,9 @@ devDependencies:
   '@ts-rest/vue-query':
     specifier: ^3.30.4
     version: 3.30.4(@tanstack/vue-query@5.0.4)(@ts-rest/core@3.30.4)(vue@3.3.4)(zod@3.22.4)
+  '@types/papaparse':
+    specifier: ^5.3.10
+    version: 5.3.10
   '@vite-pwa/assets-generator':
     specifier: ^0.0.10
     version: 0.0.10
@@ -4248,6 +4251,12 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+    dev: true
+
+  /@types/papaparse@5.3.10:
+    resolution: {integrity: sha512-mS1Fta/xJ9EDYmAvpeWzcV9Gr0cOl1ClpW7di9+wSUNDIDO55tBtyXg97O7K+Syrd9rDEmuejM2iqmJIJ1SO5g==}
+    dependencies:
+      '@types/node': 20.6.3
     dev: true
 
   /@types/parse-json@4.0.0:
