@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7Card, f7CardContent, f7CardFooter, f7List, f7PageContent, f7Sheet, f7SkeletonBlock } from 'framework7-vue'
+import { f7Button, f7Card, f7CardContent, f7CardFooter, f7List, f7PageContent, f7Sheet, f7SkeletonBlock } from 'framework7-vue'
 import type { User } from '~/shared/types'
 
 const { data: user, isLoading: userIsLoading } = useUser()
@@ -54,7 +54,7 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
 
     <f7Sheet v-model:opened="opened" style="height: auto" swipe-to-close push>
       <f7PageContent>
-        <div class="h-[90vh]">
+        <div v-if="user" class="h-[90vh]">
           <f7Card class="m-0! h-[50%]">
             <f7CardContent class="h-full rounded-[16px]" :class="membershipGradient[user.memberType!]" valign="top">
               <div class="flex flex-col w-full h-full text-white dark:text-inherit">

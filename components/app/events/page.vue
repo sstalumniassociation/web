@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page } from 'framework7-vue'
+import { f7Block, f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page, f7PageContent } from 'framework7-vue'
 </script>
 
 <template>
@@ -12,5 +12,9 @@ import { f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page } from 'framework7-vue'
         Events & Bookings
       </f7NavTitleLarge>
     </f7Navbar>
+
+    <f7Block class="text-xl opacity-75">
+      Nothing here yet, check back soon for more!
+    </f7Block>
   </f7Page>
 </template>
