@@ -19,12 +19,7 @@ const state = reactive({
 const newEventId = ref('')
 const inputError = ref('')
 
-const mutation = useMutation({
-  mutationFn: (newEvent: Omit<Event, 'id'>) => $api('/api/event', {
-    method: 'POST',
-    body: newEvent,
-  }),
-})
+const { mutate: createEventMutate, isPending: createEventIsPending } = useCreateEventMutation()
 
 async function handleSubmit() {
   state.formSubmitted = true
@@ -87,13 +82,14 @@ async function handleSubmit() {
             </UFormGroup>
           </div>
 
-          <UButton v-if="!newEventId" type="submit" color="green" :loading="mutation.isLoading.value">
+          <UButton v-if="!newEventId" type="submit" color="green" :loading="createEventIsPending">
             Create Event
           </UButton>
           <p v-if="!inputError">
             {{ inputError }}
           </p>
         </UForm>
+
         <div v-if="mutation.isSuccess.value" class="space-y-3 mt-4">
           <p>Created Event with an ID of <b>{{ newEventId }}</b>.</p>
           <UButton color="blue" @click="() => visible = false">

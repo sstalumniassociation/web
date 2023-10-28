@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { EventWithAttendees } from '~/shared/types'
 
 const queryKeyFactory = {
@@ -25,5 +25,11 @@ export function useEvent(id: MaybeRef<string>) {
     placeholderData() {
       return queryClient.getQueryData<EventWithAttendees[]>(queryKeyFactory.events)?.find(event => event.id === id)
     },
+  })
+}
+
+export function useCreateEventMutation() {
+  return useMutation({
+    mutationFn: (body: Omit<Event, 'id'>) => $api('/api/event', { method: 'POST', body }),
   })
 }
