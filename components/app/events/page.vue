@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import { f7NavTitle, f7NavTitleLarge, f7Navbar, f7Page } from 'framework7-vue'
 </script>
 
 <template>
-  <F7Page>
-    <F7Navbar large transparent :sliding="false">
-      <F7NavTitle sliding>
+  <f7Page>
+    <f7Navbar large transparent :sliding="false">
+      <f7NavTitle sliding>
         Events & Bookings
-      </F7NavTitle>
-      <F7NavTitleLarge>
+      </f7NavTitle>
+      <f7NavTitleLarge>
         Events & Bookings
-      </F7NavTitleLarge>
-    </F7Navbar>
-  </F7Page>
+      </f7NavTitleLarge>
+    </f7Navbar>
+  </f7Page>
 </template>

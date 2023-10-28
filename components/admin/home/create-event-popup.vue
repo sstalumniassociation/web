@@ -87,7 +87,7 @@ async function handleSubmit() {
             </UFormGroup>
           </div>
 
-          <UButton v-if="!newEventId" type="submit" color="green" :loading="mutation.isPending.value">
+          <UButton v-if="!newEventId" type="submit" color="green" :loading="mutation.isLoading.value">
             Create Event
           </UButton>
           <p v-if="!inputError">

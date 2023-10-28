@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { f7List, f7Page } from 'framework7-vue'
 </script>
 
 <template>
-  <F7Page no-navbar>
-    <F7List class="space-y-8">
+  <f7Page no-navbar>
+    <f7List class="space-y-8">
       <div>
         <AppHomeMembershipCard />
       </div>
@@ -11,6 +12,6 @@
       <div>
         <LazyAppHomeNews />
       </div>
-    </F7List>
-  </F7Page>
+    </f7List>
+  </f7Page>
 </template>

@@ -8,6 +8,7 @@ import Framework7 from 'framework7/lite-bundle'
 
 // @ts-expect-error Missing types
 import Framework7Vue from 'framework7-vue/bundle'
+import { f7App, f7View } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
 import { AdminHomePage, AdminMembersPage } from '#components'
@@ -71,8 +72,8 @@ watch([authLoaded, auth], (values) => {
 
 <template>
   <VitePwaManifest />
-  <F7App name="SSTAA" theme="md" dark-mode :routes="appRoutes">
-    <F7View
+  <f7App name="SSTAA" theme="md" dark-mode :routes="appRoutes">
+    <f7View
       main
       class="safe-areas"
       :url="route.path"
@@ -81,6 +82,6 @@ watch([authLoaded, auth], (values) => {
       preload-previous-page
     >
       <CommonLoginScreen v-model:opened="state.showLoginScreen" />
-    </F7View>
-  </F7App>
+    </f7View>
+  </f7App>
 </template>

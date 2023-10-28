@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query'
+import { f7List, f7ListItem } from 'framework7-vue'
 import { Html5Qrcode } from 'html5-qrcode'
 
 const emit = defineEmits(['scan'])
@@ -40,15 +41,15 @@ watchEffect((onCleanup) => {
 
 <template>
   <div>
-    <F7List inset>
-      <F7ListItem v-if="cameras" title="Camera" smart-select :smart-select-params="{ openIn: 'popover' }">
+    <f7List inset>
+      <f7ListItem v-if="cameras" title="Camera" smart-select :smart-select-params="{ openIn: 'popover' }">
         <select v-model="state.selectedCameraId" name="camera">
           <option v-for="{ id, label } in cameras" :key="id" :value="id">
             {{ label }}
           </option>
         </select>
-      </F7ListItem>
-    </F7List>
+      </f7ListItem>
+    </f7List>
 
     <div id="reader" />
   </div>

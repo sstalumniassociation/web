@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { f7Page } from 'framework7-vue'
 </script>
 
 <template>
-  <F7Page>
+  <f7Page>
     event
-  </F7Page>
+  </f7Page>
 </template>

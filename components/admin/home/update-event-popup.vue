@@ -19,7 +19,7 @@ const state = reactive({
 const changedEvent = ref<Partial<Event>>({})
 
 const mutation = useMutation({
-  mutationFn: (id: string) => $api(`/api/event/${id}` as '/api/event/:id', {
+  mutationFn: (id: string) => $api(`/api/event/${id}`, {
     method: 'PUT',
     body: changedEvent.value,
   }),
