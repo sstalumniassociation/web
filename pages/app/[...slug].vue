@@ -8,7 +8,7 @@ import Framework7 from 'framework7/lite-bundle'
 
 // @ts-expect-error Missing types
 import Framework7Vue from 'framework7-vue/bundle'
-import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
+import { f7App, f7Link, f7LoginScreen, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
 import { AppHomePage, AppServicesEventPage } from '#components'
@@ -88,7 +88,7 @@ watch([authLoaded, auth], (values) => {
       ios-swipe-back
       preload-previous-page
     >
-      <CommonLoginScreen v-model:opened="state.showLoginScreen" />
+      <AppLoginScreen v-model:opened="state.showLoginScreen" />
 
       <f7Toolbar position="bottom" tabbar icons>
         <f7Link

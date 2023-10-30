@@ -1,16 +1,30 @@
 import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
-const createEventRequestBody = z.object({
-  name: z.string(),
-  description: z.string(),
-  location: z.string(),
-  badgeImage: z.string().url(),
-  startDateTime: z.string().datetime(),
-  endDateTime: z.string().datetime(),
-})
-
 export default defineProtectedEventHandler(async (event) => {
+  const createEventRequestBody = z.object({
+    name: z.string()
+      .min(1),
+    description: z.string(),
+    location: z.string(),
+    badgeImage: z.string()
+      .url()
+      .refine(async (val) => {
+        const res = await $fetch.raw(val, { method: 'GET' })
+        return res.headers.get('content-type')?.includes('image')
+      }, 'URL provided not a valid image'),
+    startDateTime: z.string()
+      .refine(val => dayjs(val).isValid(), 'Date provided not valid')
+      .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future'),
+    endDateTime: z.string()
+      .refine(val => dayjs(val).isValid()),
+  }).refine((val) => {
+    return dayjs(val.startDateTime).isBefore(val.endDateTime)
+  }, {
+    message: 'Event must end after it starts',
+    path: ['endDateTime'],
+  })
+
   const result = await createEventRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
@@ -20,22 +34,6 @@ export default defineProtectedEventHandler(async (event) => {
   }
 
   const { data } = result
-
-  try {
-    const imageURL = await $fetch.raw(data.badgeImage)
-    if (imageURL.headers.get('Content-Type') !== 'image/png') {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Invalid Image URL',
-      })
-    }
-  }
-  catch (err) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Invalid Image URL',
-    })
-  }
 
   const createdEvent = await event.context.database.insert(events)
     .values({

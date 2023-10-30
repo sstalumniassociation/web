@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { EventWithAttendees } from '~/shared/types'
+import type { Event, EventWithAttendees } from '~/shared/types'
 
 const queryKeyFactory = {
   events: ['events'],
@@ -29,7 +29,13 @@ export function useEvent(id: MaybeRef<string>) {
 }
 
 export function useCreateEventMutation() {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (body: Omit<Event, 'id'>) => $api('/api/event', { method: 'POST', body }),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: queryKeyFactory.events,
+      })
+    },
   })
 }
