@@ -10,9 +10,9 @@ CREATE TABLE `bookings` (
 CREATE TABLE `events` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
-	`description` text NOT NULL,
-	`location` text NOT NULL,
-	`badge_image` text NOT NULL,
+	`description` text,
+	`location` text,
+	`badge_image` text,
 	`start_date_time` text NOT NULL,
 	`end_date_time` text NOT NULL
 );
@@ -40,9 +40,9 @@ CREATE TABLE `slots` (
 --> statement-breakpoint
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
-	`name` text NOT NULL,
-	`member_id` text NOT NULL,
-	`graduation_year` integer NOT NULL,
+	`name` text,
+	`member_id` text,
+	`graduation_year` integer,
 	`member_type` text
 );
 --> statement-breakpoint

@@ -4,6 +4,7 @@ import { z } from 'zod'
 
 const visible = defineModel<boolean>('visible')
 const { $dayjs } = useNuxtApp()
+const toast = useToast()
 
 const schema = z.object({
   name: z.string()
@@ -46,8 +47,10 @@ function createEvent({ data }: FormSubmitEvent<Schema>) {
     onSuccess() {
       visible.value = false
     },
-    onError() {
-    // TODO handle error
+    onError(err) {
+      toast.add({
+        title: err.message,
+      })
     },
   })
 }
