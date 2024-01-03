@@ -18,7 +18,7 @@ const columns = [
   },
 ]
 
-const { data: events, isLoading: eventsIsLoading, error: eventsError } = useEvents()
+const { data: events } = useEvents()
 
 const state = reactive({
   createPopupVisible: false,

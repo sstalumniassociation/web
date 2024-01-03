@@ -12,11 +12,7 @@ const schema = z.object({
   description: z.string(),
   location: z.string(),
   badgeImage: z.string()
-    .url('Please enter a URL')
-    .refine(async (val) => {
-      const res = await $fetch.raw(val, { method: 'GET' })
-      return res.headers.get('content-type')?.includes('image')
-    }, 'URL provided not a valid image'),
+    .url('Please enter a URL'),
   startDateTime: z.string()
     .transform(d => $dayjs(d).toISOString())
     .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future'),
