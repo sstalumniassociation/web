@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import 'tailwindcss/src/css/preflight.css'
 import dayjs from 'dayjs'
 import type { ParseResult } from 'papaparse'
 import { parse } from 'papaparse'
