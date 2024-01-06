@@ -6,7 +6,7 @@ export type UserRestricted = Pick<User, 'id' | 'name'>
 export type UserRestrictedWithAdmissionKey = UserRestricted & { admissionKey: string }
 
 export type Event = InferSelectModel<typeof events>
-export type EventWithAttendees = Omit<Event, 'startDateTime' | 'endDateTime'> & { startDateTime: number; endDateTime: number; attendees: UserRestrictedWithAdmissionKey[] }
+export type EventWithAttendees = Omit<Event, 'startDateTime' | 'endDateTime'> & { startDateTime: number, endDateTime: number, attendees: UserRestrictedWithAdmissionKey[] }
 
 export type Article = InferSelectModel<typeof articles>
 
