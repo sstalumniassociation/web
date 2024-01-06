@@ -51,3 +51,16 @@ export function useUpdateEventMutation(id: string) {
     },
   })
 }
+
+export function useUpdateEventUsersMutation(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    // TODO @qin-guan
+    mutationFn: (body: Pick<Event, 'id'>) => $api(`/api/event/${id}/users`, { method: 'PUT', body }),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: queryKeyFactory.events,
+      })
+    },
+  })
+}

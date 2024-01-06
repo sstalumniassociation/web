@@ -31,13 +31,13 @@ export default defineProtectedEventHandler(async (event) => {
   const createdUsers = await event.context.database.insert(users)
     .values(
       data.map(user => ({
-        memberId: user.memberId,
         name: user.name,
         email: user.email,
         graduationYear: user.graduationYear,
         memberType: user.memberType,
       })),
     )
+    .onConflictDoNothing()
     .returning()
 
   if (createdUsers.length !== data.length) {

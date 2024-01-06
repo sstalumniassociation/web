@@ -1,3 +1,4 @@
+import { createId } from '@paralleldrive/cuid2'
 import { z } from 'zod'
 import { usersToEvents } from '~/server/db/schema'
 
@@ -5,7 +6,6 @@ const bulkCreateEventUserRequestBody = z.array(
   z.object({
     userId: z.string().nonempty(),
     eventId: z.string().nonempty(),
-    admissionKey: z.string().nonempty(),
   }),
 )
 
@@ -25,7 +25,7 @@ export default defineProtectedEventHandler(async (event) => {
       data.map(user => ({
         userId: user.userId,
         eventId: user.eventId,
-        admissionKey: user.admissionKey,
+        admissionKey: createId(),
       })),
     )
     .returning()

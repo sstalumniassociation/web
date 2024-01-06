@@ -24,3 +24,9 @@ export function useUserSignOutMutation() {
     },
   })
 }
+
+export function useBulkCreateUserMutation() {
+  return useMutation({
+    mutationFn: (body: Partial<User>) => $api('/api/user/bulk', { method: 'post', body }),
+  })
+}

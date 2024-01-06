@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import type { User } from '~/shared/types'
+
 const route = useRoute()
+const toast = useToast()
 const { data: event, isPending: eventIsPending } = useEvent(route.params.id as string)
 
 const links = computed(() => [
@@ -11,6 +14,58 @@ const links = computed(() => [
     label: `${event.value?.name}`,
   },
 ])
+
+type CsvRow = Pick<User, 'name' | 'email' | 'memberType' | 'graduationYear'>
+
+const userUploadPreview = ref<CsvRow[]>([])
+
+async function parseCsvFile(event: Event) {
+  const target = event.target as HTMLInputElement
+  if (!target.files || target.files.length < 1) {
+    return toast.add({
+      title: 'No file selected',
+    })
+  }
+
+  const { parse } = await import('papaparse')
+  const users: CsvRow[] = []
+
+  parse<{ name: string, email: string, memberType: string, graduationYear: string }>(target.files[0], {
+    header: true,
+    step(results) {
+      if (
+        !results.data.email
+        || !results.data.name
+        || !results.data.memberType
+        || !results.data.graduationYear
+      ) {
+        console.error('Invalid row', results)
+        throw new Error('Invalid row')
+      }
+
+      users.push({
+        name: results.data.name,
+        email: results.data.email,
+        memberType: results.data.memberType as User['memberType'],
+        graduationYear: Number.parseInt(results.data.graduationYear),
+      })
+    },
+    error(error) {
+      console.error(error)
+      toast.add({
+        title: 'Error parsing CSV file',
+        description: error.message,
+      })
+    },
+    complete() {
+      userUploadPreview.value = users.slice(0, 5)
+    },
+  })
+}
+
+function uploadUsers() {
+
+}
 </script>
 
 <template>
@@ -41,12 +96,17 @@ const links = computed(() => [
       <section class="space-y-4">
         <div class="space-y-4">
           <h2 class="text-lg font-semibold">
-            Upload users
+            Attendees
           </h2>
 
-          <UCard>
-            <UButton>Upload</UButton>
-          </UCard>
+          <input as="input" type="file" @change="parseCsvFile">
+
+          <template v-if="userUploadPreview.length > 0">
+            <UTable :rows="userUploadPreview" />
+            <UButton @click="uploadUsers">
+              Save
+            </UButton>
+          </template>
         </div>
       </section>
     </div>
