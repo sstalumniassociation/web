@@ -3,6 +3,8 @@ import { QueryClient, VueQueryPlugin, type VueQueryPluginOptions } from '@tansta
 import { experimental_createPersister } from '@tanstack/query-persist-client-core'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const appConfig = useAppConfig()
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -13,6 +15,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             setItem: (key: string, value: string) => set(key, value),
             removeItem: (key: string) => del(key),
           },
+          buster: appConfig.buildInfo.version,
         }),
       },
     },
