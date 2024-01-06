@@ -2,10 +2,17 @@
 import type { User } from '~/shared/types'
 
 const route = useRoute()
+const router = useRouter()
 const toast = useToast()
+
+const state = ref({
+  showDeleteConfirmation: false,
+})
+
 const { data: event, isPending: eventIsPending } = useEvent(route.params.id as string)
 const { mutate: createUsersMutate, isPending: createUsersIsPending } = useBulkCreateUserMutation()
 const { mutate: addEventUsersMutate, isPending: addEventUsersIsPending } = useAddEventUsersMutation(route.params.id as string)
+const { mutate: deleteEventMutate, isPending: deleteEventIsPending } = useDeleteEventMutation(route.params.id as string)
 
 const showPending = computed(() => createUsersIsPending.value || addEventUsersIsPending.value)
 
@@ -103,11 +110,50 @@ function uploadUsers() {
     },
   })
 }
+
+function deleteEvent() {
+  deleteEventMutate(undefined, {
+    onSuccess() {
+      router.push('/admin/events')
+    },
+  })
+}
 </script>
 
 <template>
   <div class="p-4">
-    <UBreadcrumb :links="links" />
+    <div class="flex justify-between items-center">
+      <div>
+        <UBreadcrumb :links="links" />
+      </div>
+
+      <UButton variant="soft" @click="state.showDeleteConfirmation = true">
+        Delete
+      </UButton>
+
+      <UModal v-model="state.showDeleteConfirmation">
+        <UCard>
+          <template #header>
+            <span class="font-semibold">
+              Are you sure?
+            </span>
+          </template>
+
+          This action is irreversible. All event data will be deleted. All users will no longer be associated to this event.
+
+          <template #footer>
+            <div class="space-x-4">
+              <UButton :pending="deleteEventIsPending" @click="deleteEvent">
+                Delete
+              </UButton>
+              <UButton variant="ghost" class="bg-transparent" @click="state.showDeleteConfirmation = false">
+                Cancel
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+      </UModal>
+    </div>
 
     <div class="py-8 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="space-y-4">

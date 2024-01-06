@@ -13,15 +13,15 @@ const props = defineProps<{
 }>()
 
 const toast = useToast()
-const { $dayjs } = useNuxtApp()
+const dayjs = useDayjs()
 
 const state = reactive({
   name: props.name,
   description: props.description ?? '',
   location: props.location ?? '',
   badgeImage: props.badgeImage ?? '',
-  startDateTime: $dayjs.unix(props.startDateTime).toISOString(),
-  endDateTime: $dayjs.unix(props.endDateTime).toISOString(),
+  startDateTime: dayjs.unix(props.startDateTime).toISOString(),
+  endDateTime: dayjs.unix(props.endDateTime).toISOString(),
 })
 
 const schema = z.object({
@@ -32,12 +32,12 @@ const schema = z.object({
   badgeImage: z.string()
     .url('Please enter a URL'),
   startDateTime: z.string()
-    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future')
-    .transform(d => $dayjs(d).unix().toString()),
+    .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future')
+    .transform(d => dayjs(d).unix().toString()),
   endDateTime: z.string()
-    .transform(d => $dayjs(d).unix().toString()),
+    .transform(d => dayjs(d).unix().toString()),
 }).refine((val) => {
-  return $dayjs(val.startDateTime).isBefore(val.endDateTime)
+  return dayjs(val.startDateTime).isBefore(val.endDateTime)
 }, {
   message: 'Event must end after it starts',
   path: ['endDateTime'],

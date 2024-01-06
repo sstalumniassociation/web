@@ -15,7 +15,7 @@ const state = ref({
   scannerOpened: false,
 })
 
-const { $dayjs } = useNuxtApp()
+const dayjs = useDayjs()
 
 const db = useDatabase()
 const { data: checkedInUsersList, pending: checkedInUsersListPending } = useDatabaseList<{ $value: number }>(dbRef(db, props.id))
@@ -45,7 +45,7 @@ function formattedDate(date: number) {
   if (formattedDateCache.has(date))
     return formattedDateCache.get(date)
 
-  const data = $dayjs.unix(date).format('hh:mm A')
+  const data = dayjs.unix(date).format('hh:mm A')
   formattedDateCache.set(date, data)
   return data
 }
@@ -54,7 +54,7 @@ async function toggle(admissionKey: string) {
   if (checkedInUsers.value[admissionKey])
     await remove(dbRef(db, `${props.id}/${admissionKey}`))
   else
-    await set(dbRef(db, `${props.id}/${admissionKey}`), $dayjs().unix())
+    await set(dbRef(db, `${props.id}/${admissionKey}`), dayjs().unix())
 }
 
 async function onScan(admissionKey: string) {
@@ -70,7 +70,7 @@ async function onScan(admissionKey: string) {
     return
   }
 
-  await set(dbRef(db, `${props.id}/${admissionKey}`), $dayjs().unix())
+  await set(dbRef(db, `${props.id}/${admissionKey}`), dayjs().unix())
 
   f7.toast.show({
     text: `Checked in ${attendee.name}`,

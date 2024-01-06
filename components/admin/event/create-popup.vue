@@ -3,7 +3,7 @@ import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { z } from 'zod'
 
 const visible = defineModel<boolean>('visible')
-const { $dayjs } = useNuxtApp()
+const dayjs = useDayjs()
 const toast = useToast()
 
 const schema = z.object({
@@ -14,10 +14,10 @@ const schema = z.object({
   badgeImage: z.string()
     .url('Please enter a URL'),
   startDateTime: z.string()
-    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future')
-    .transform(d => $dayjs(d).unix().toString()),
+    .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future')
+    .transform(d => dayjs(d).unix().toString()),
   endDateTime: z.string()
-    .transform(d => $dayjs(d).unix().toString()),
+    .transform(d => dayjs(d).unix().toString()),
 }).refine((val) => {
   return Number.parseInt(val.startDateTime) < Number.parseInt(val.endDateTime)
 }, {

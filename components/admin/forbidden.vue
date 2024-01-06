@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <UContainer>
     <h1 class="text-3xl">

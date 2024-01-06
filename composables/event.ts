@@ -31,7 +31,7 @@ export function useEvent(id: MaybeRef<string>) {
 export function useCreateEventMutation() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (body: Omit<Event, 'id'>) => $api('/api/event', { method: 'POST', body }),
+    mutationFn: (body: Omit<Event, 'id'>) => $api('/api/event', { method: 'post', body }),
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -43,7 +43,7 @@ export function useCreateEventMutation() {
 export function useUpdateEventMutation(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (body: Omit<Event, 'id'>) => $api(`/api/event/${id}`, { method: 'PUT', body }),
+    mutationFn: (body: Omit<Event, 'id'>) => $api(`/api/event/${id}`, { method: 'put', body }),
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -58,7 +58,22 @@ export function useAddEventUsersMutation(id: string) {
     mutationFn: (body: { userId: string }[]) => $api(`/api/event/${id}/attendees`, { method: 'post', body }),
     onSuccess() {
       queryClient.invalidateQueries({
+        queryKey: queryKeyFactory.event(id),
+      })
+    },
+  })
+}
+
+export function useDeleteEventMutation(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => $api(`/api/event/${id}`, { method: 'delete' }),
+    onSuccess() {
+      queryClient.refetchQueries({
         queryKey: queryKeyFactory.events,
+      })
+      queryClient.removeQueries({
+        queryKey: queryKeyFactory.event(id),
       })
     },
   })

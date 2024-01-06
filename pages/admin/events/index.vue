@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const dayjs = useDayjs()
+
 const columns = [
   {
     key: 'name',
@@ -53,10 +55,10 @@ const state = reactive({
         </NuxtLink>
       </template>
       <template #startDateTime-data="{ row }">
-        {{ $dayjs.unix(row.startDateTime).format('DD MMM YYYY') }}
+        {{ dayjs.unix(row.startDateTime).format('DD MMM YYYY') }}
       </template>
       <template #endDateTime-data="{ row }">
-        {{ $dayjs.unix(row.endDateTime).format('DD MMM YYYY') }}
+        {{ dayjs.unix(row.endDateTime).format('DD MMM YYYY') }}
       </template>
       <template #participants-data="{ row }">
         <UBadge>
