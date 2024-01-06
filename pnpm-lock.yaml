@@ -51,8 +51,8 @@ devDependencies:
     specifier: ^0.58.3
     version: 0.58.3
   '@vite-pwa/assets-generator':
-    specifier: ^0.0.10
-    version: 0.0.10
+    specifier: ^0.2.0
+    version: 0.2.2
   '@vite-pwa/nuxt':
     specifier: ^0.1.2
     version: 0.1.2(@nuxt/kit@3.9.1)(vite-plugin-pwa@0.17.4)
@@ -4371,8 +4371,8 @@ packages:
       - supports-color
     dev: true
 
-  /@vite-pwa/assets-generator@0.0.10:
-    resolution: {integrity: sha512-Ya3iE0EWIV+0g0XFXIjqSU8ZnhpJeLi9/xx+VfbSyXThKjk168GUYqd1z+SOuRO03bSRFDeK8wGixtwWuedjqg==}
+  /@vite-pwa/assets-generator@0.2.2:
+    resolution: {integrity: sha512-Trk0ryNl33te5iSmMIQmGMSaEpcSSmgQwhN45DMVm1cSAueUFCj1WnEfEBOQrWH2NPpTcRKuD3pWrSYgSlorUA==}
     engines: {node: '>=16.14.0'}
     hasBin: true
     dependencies:
