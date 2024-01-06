@@ -1,12 +1,8 @@
 import dayjs from 'dayjs'
 import RelativeTime from 'dayjs/plugin/relativeTime'
 
-export default defineNuxtPlugin(() => {
+export const useDayjs = createSharedComposable(() => {
   dayjs.extend(RelativeTime)
 
-  return {
-    provide: {
-      dayjs,
-    },
-  }
+  return dayjs
 })

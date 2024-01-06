@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/vue-query'
 import { useStorage } from '@vueuse/core'
 
 const queryKeyFactory = {
@@ -9,13 +10,8 @@ export const useSstaarsStore = createGlobalState(() => {
 })
 
 export function useAdmission(key: string) {
-  const app = useNuxtApp()
-  return app.$apiQuery.getAdmission.useQuery(
-    queryKeyFactory.admission(key),
-    () => ({
-      params: {
-        key,
-      },
-    }),
-  )
+  return useQuery({
+    queryKey: queryKeyFactory.admission(key),
+    queryFn: () => $api(`/api/admission/${key}`),
+  })
 }

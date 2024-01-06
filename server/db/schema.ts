@@ -6,11 +6,11 @@ import { createId } from '@paralleldrive/cuid2'
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
-  memberId: text('member_id').notNull().unique(), // Member ID for tracking by SSTAA Admin
+  memberId: text('member_id').unique(), // Member ID for tracking by SSTAA Admin
   firebaseId: text('firebase_id').unique(), // Use Firebase Auth provided ID as SSOT
-  name: text('name').notNull(), // Ignore Firebase Auth provided values and force user to provide their own
-  email: text('email').notNull().unique(),
-  graduationYear: integer('graduation_year').notNull(),
+  name: text('name'), // Ignore Firebase Auth provided values and force user to provide their own
+  email: text('email').unique(),
+  graduationYear: integer('graduation_year'),
   memberType: text('member_type', {
     enum: [
       'exco',
@@ -25,9 +25,9 @@ export const users = sqliteTable('users', {
 export const events = sqliteTable('events', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
   name: text('name').notNull(),
-  description: text('description').notNull(),
-  location: text('location').notNull(),
-  badgeImage: text('badge_image').notNull(),
+  description: text('description'),
+  location: text('location'),
+  badgeImage: text('badge_image'),
   startDateTime: text('start_date_time').notNull(), // ISO formatted
   endDateTime: text('end_date_time').notNull(), // ISO formatted
 })
@@ -35,7 +35,7 @@ export const events = sqliteTable('events', {
 export const usersToEvents = sqliteTable('users_events', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   eventId: text('event_id').notNull().references(() => events.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-  admissionKey: text('admission_key').notNull(),
+  admissionKey: text('admission_key').notNull().$defaultFn(() => createId()),
 }, t => ({
   pk: primaryKey(t.userId, t.eventId),
 }))
@@ -83,14 +83,14 @@ export const bookings = sqliteTable('bookings', {
   }),
 })
 
-export const news = sqliteTable('news', {
+export const articles = sqliteTable('articles', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
   title: text('title').notNull(),
-  description: text('description').notNull(),
-  heroImageAlt: text('hero_image_alt').notNull(),
-  heroImageUrl: text('hero_image_url').notNull(),
-  ctaTitle: text('cta_title').notNull(),
-  ctaUrl: text('cta_url').notNull(),
+  description: text('description'),
+  heroImageAlt: text('hero_image_alt'),
+  heroImageUrl: text('hero_image_url'),
+  ctaTitle: text('cta_title'),
+  ctaUrl: text('cta_url'),
 })
 
 // Relations

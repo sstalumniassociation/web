@@ -1,9 +1,67 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "d6add0a2-ccee-4671-9a3f-8de2784a7b89",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "82bc3dfa-f79b-4cbd-a697-20b593ee9c3f",
+  "prevId": "fea5e090-394d-41fd-9cc6-201a3a3a13a4",
   "tables": {
+    "articles": {
+      "name": "articles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hero_image_alt": {
+          "name": "hero_image_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hero_image_url": {
+          "name": "hero_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cta_title": {
+          "name": "cta_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cta_url": {
+          "name": "cta_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "bookings": {
       "name": "bookings",
       "columns": {
@@ -261,6 +319,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "member_id": {
+          "name": "member_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "firebase_id": {
+          "name": "firebase_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "name": {
           "name": "name",
           "type": "text",
@@ -268,8 +340,8 @@
           "notNull": false,
           "autoincrement": false
         },
-        "member_id": {
-          "name": "member_id",
+        "email": {
+          "name": "email",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -297,6 +369,20 @@
             "member_id"
           ],
           "isUnique": true
+        },
+        "users_firebase_id_unique": {
+          "name": "users_firebase_id_unique",
+          "columns": [
+            "firebase_id"
+          ],
+          "isUnique": true
+        },
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
         }
       },
       "foreignKeys": {},
@@ -315,6 +401,13 @@
         },
         "event_id": {
           "name": "event_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "admission_key": {
+          "name": "admission_key",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -364,7 +457,9 @@
   "enums": {},
   "_meta": {
     "schemas": {},
-    "tables": {},
+    "tables": {
+      "\"news\"": "\"articles\""
+    },
     "columns": {}
   }
 }

@@ -1,36 +1,28 @@
-import { initQueryClient } from '@ts-rest/vue-query'
-import { VueQueryPlugin, type VueQueryPluginOptions } from '@tanstack/vue-query'
-import { persistQueryClient } from '@tanstack/query-persist-client-core'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { contract } from '~/shared/contracts'
+import { del, get, set } from 'idb-keyval'
+import { QueryClient, VueQueryPlugin, type VueQueryPluginOptions } from '@tanstack/vue-query'
+import { experimental_createPersister } from '@tanstack/query-persist-client-core'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const vueQueryOptions: VueQueryPluginOptions = {
-    queryClientConfig: {
-      defaultOptions: {
-        queries: {
-          staleTime: 1000 * 60,
-        },
+  const appConfig = useAppConfig()
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: 1000 * 60,
+        persister: experimental_createPersister({
+          storage: {
+            getItem: (key: string) => get(key),
+            setItem: (key: string, value: string) => set(key, value),
+            removeItem: (key: string) => del(key),
+          },
+          buster: appConfig.buildInfo.version,
+        }),
       },
     },
-    clientPersister: (queryClient) => {
-      return persistQueryClient({
-        queryClient,
-        persister: createSyncStoragePersister({ storage: localStorage }),
-      })
-    },
+  })
+  const vueQueryOptions: VueQueryPluginOptions = {
+    queryClient,
   }
 
   nuxtApp.vueApp.use(VueQueryPlugin, vueQueryOptions)
-
-  const query = initQueryClient(contract, {
-    baseUrl: '',
-    baseHeaders: {},
-  })
-
-  return {
-    provide: {
-      apiQuery: query,
-    },
-  }
 })

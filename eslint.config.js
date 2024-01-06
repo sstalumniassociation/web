@@ -8,6 +8,7 @@ export default antfu({
   yaml: true,
 }, {
   rules: {
+    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     // https://github.com/antfu/eslint-config/pull/214
     'node/prefer-global/process': [
       'off',

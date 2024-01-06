@@ -3,12 +3,26 @@ import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
 const updateEventRequestBody = z.object({
-  name: z.string(),
+  name: z.string()
+    .min(1),
   description: z.string(),
   location: z.string(),
-  badgeImage: z.string().url(),
-  startDateTime: z.string().datetime(),
-  endDateTime: z.string().datetime(),
+  badgeImage: z.string()
+    .url()
+    .refine(async (val) => {
+      const res = await $fetch.raw(val, { method: 'GET' })
+      return res.headers.get('content-type')?.includes('image')
+    }, 'URL provided not a valid image'),
+  startDateTime: z.string()
+    .refine(val => dayjs(val).isValid(), 'Date provided not valid')
+    .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future'),
+  endDateTime: z.string()
+    .refine(val => dayjs(val).isValid()),
+}).refine((val) => {
+  return dayjs(val.startDateTime).isBefore(val.endDateTime)
+}, {
+  message: 'Event must end after it starts',
+  path: ['endDateTime'],
 })
 
 export default defineProtectedEventHandler(async (event) => {
@@ -42,7 +56,6 @@ export default defineProtectedEventHandler(async (event) => {
       statusMessage: 'Internal server error',
     })
   }
-
   return updatedEvent[0]
 }, {
   restrictTo: ['exco'],

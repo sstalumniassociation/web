@@ -43,6 +43,13 @@
       "when": 1695474910735,
       "tag": "0005_married_paladin",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1698943109629,
+      "tag": "0006_gorgeous_stryfe",
+      "breakpoints": true
     }
   ]
 }

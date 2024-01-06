@@ -88,7 +88,7 @@ watch([authLoaded, auth], (values) => {
       ios-swipe-back
       preload-previous-page
     >
-      <CommonLoginScreen v-model:opened="state.showLoginScreen" />
+      <AppLoginScreen v-model:opened="state.showLoginScreen" />
 
       <f7Toolbar position="bottom" tabbar icons>
         <f7Link
