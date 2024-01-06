@@ -35,7 +35,7 @@ export const events = sqliteTable('events', {
 export const usersToEvents = sqliteTable('users_events', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
   eventId: text('event_id').notNull().references(() => events.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-  admissionKey: text('admission_key').notNull(),
+  admissionKey: text('admission_key').notNull().$defaultFn(() => createId()),
 }, t => ({
   pk: primaryKey(t.userId, t.eventId),
 }))

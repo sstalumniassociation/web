@@ -19,7 +19,7 @@ const schema = z.object({
   endDateTime: z.string()
     .transform(d => $dayjs(d).unix().toString()),
 }).refine((val) => {
-  return $dayjs(val.startDateTime).isBefore(val.endDateTime)
+  return Number.parseInt(val.startDateTime) < Number.parseInt(val.endDateTime)
 }, {
   message: 'Event must end after it starts',
   path: ['endDateTime'],

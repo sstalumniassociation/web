@@ -1,11 +1,9 @@
-import { createId } from '@paralleldrive/cuid2'
 import { z } from 'zod'
 import { usersToEvents } from '~/server/db/schema'
 
 const bulkCreateEventUserRequestBody = z.array(
   z.object({
-    userId: z.string().nonempty(),
-    eventId: z.string().nonempty(),
+    userId: z.string().cuid2(),
   }),
 )
 
@@ -24,18 +22,11 @@ export default defineProtectedEventHandler(async (event) => {
     .values(
       data.map(user => ({
         userId: user.userId,
-        eventId: user.eventId,
-        admissionKey: createId(),
+        eventId: event.context.params!.id,
       })),
     )
+    .onConflictDoNothing()
     .returning()
-
-  if (createdUsers.length !== data.length) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Internal server error',
-    })
-  }
 
   return createdUsers
 }, {

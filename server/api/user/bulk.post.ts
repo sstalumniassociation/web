@@ -1,9 +1,9 @@
+import { eq, or } from 'drizzle-orm'
 import { z } from 'zod'
 import { users } from '~/server/db/schema'
 
 const bulkCreateUserRequestBody = z.array(
   z.object({
-    memberId: z.string().min(1),
     name: z.string().min(1),
     email: z.string().email(),
     graduationYear: z.number().int().min(2011),
@@ -28,7 +28,7 @@ export default defineProtectedEventHandler(async (event) => {
 
   const { data } = result
 
-  const createdUsers = await event.context.database.insert(users)
+  await event.context.database.insert(users)
     .values(
       data.map(user => ({
         name: user.name,
@@ -40,14 +40,9 @@ export default defineProtectedEventHandler(async (event) => {
     .onConflictDoNothing()
     .returning()
 
-  if (createdUsers.length !== data.length) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Internal server error',
-    })
-  }
+  const query = or(...data.map(u => eq(users.email, u.email)))
 
-  return createdUsers
+  return await event.context.database.select().from(users).where(query)
 }, {
   restrictTo: ['exco'],
 })

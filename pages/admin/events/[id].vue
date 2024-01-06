@@ -4,6 +4,10 @@ import type { User } from '~/shared/types'
 const route = useRoute()
 const toast = useToast()
 const { data: event, isPending: eventIsPending } = useEvent(route.params.id as string)
+const { mutate: createUsersMutate, isPending: createUsersIsPending } = useBulkCreateUserMutation()
+const { mutate: addEventUsersMutate, isPending: addEventUsersIsPending } = useAddEventUsersMutation(route.params.id as string)
+
+const showPending = computed(() => createUsersIsPending.value || addEventUsersIsPending.value)
 
 const links = computed(() => [
   {
@@ -18,8 +22,11 @@ const links = computed(() => [
 type CsvRow = Pick<User, 'name' | 'email' | 'memberType' | 'graduationYear'>
 
 const userUploadPreview = ref<CsvRow[]>([])
+let users: CsvRow[] = []
 
 async function parseCsvFile(event: Event) {
+  users = []
+
   const target = event.target as HTMLInputElement
   if (!target.files || target.files.length < 1) {
     return toast.add({
@@ -28,7 +35,6 @@ async function parseCsvFile(event: Event) {
   }
 
   const { parse } = await import('papaparse')
-  const users: CsvRow[] = []
 
   parse<{ name: string, email: string, memberType: string, graduationYear: string }>(target.files[0], {
     header: true,
@@ -64,7 +70,38 @@ async function parseCsvFile(event: Event) {
 }
 
 function uploadUsers() {
-
+  createUsersMutate(users, {
+    onSuccess(r) {
+      addEventUsersMutate(
+        r.map(u => ({
+          userId: u.id,
+        })),
+        {
+          onSuccess() {
+            toast.add({
+              color: 'green',
+              title: 'Users added',
+              description: 'Users have been added to the event',
+            })
+          },
+          onError(error) {
+            console.error(error)
+            toast.add({
+              title: 'Error adding users to event',
+              description: error.message,
+            })
+          },
+        },
+      )
+    },
+    onError(error) {
+      console.error(error)
+      toast.add({
+        title: 'Error adding users to event',
+        description: error.message,
+      })
+    },
+  })
 }
 </script>
 
@@ -94,20 +131,30 @@ function uploadUsers() {
       </div>
 
       <section class="space-y-4">
-        <div class="space-y-4">
-          <h2 class="text-lg font-semibold">
-            Attendees
-          </h2>
+        <h2 class="text-lg font-semibold">
+          Attendees
+        </h2>
 
+        <UFormGroup label="Add attendees">
           <input as="input" type="file" @change="parseCsvFile">
+        </UFormGroup>
 
-          <template v-if="userUploadPreview.length > 0">
-            <UTable :rows="userUploadPreview" />
-            <UButton @click="uploadUsers">
-              Save
-            </UButton>
-          </template>
+        <div v-if="userUploadPreview.length > 0" class="space-y-4">
+          <span class="font-semibold">CSV preview</span>
+
+          <UTable :rows="userUploadPreview" />
+
+          <UAlert
+            variant="subtle" color="yellow" title="Info"
+            description="If a user with the specified email already exists, a new user will not be created. The existing user will be added to the event."
+          />
+
+          <UButton :pending="showPending" @click="uploadUsers">
+            Add users
+          </UButton>
         </div>
+
+        <UTable v-else-if="event?.attendees" :rows="event.attendees" />
       </section>
     </div>
   </div>
