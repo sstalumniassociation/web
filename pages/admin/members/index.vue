@@ -1,5 +1,13 @@
+<script setup lang="ts">
+const { data: users } = useUsers()
+</script>
+
 <template>
-  <span>
-    Imagine something here!
-  </span>
+  <div class="p-4">
+    <h1 class="font-semibold text-lg">
+      Members
+    </h1>
+
+    <UTable :rows="users" />
+  </div>
 </template>
