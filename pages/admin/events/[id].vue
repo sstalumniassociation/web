@@ -31,7 +31,11 @@ const links = computed(() => [
           </div>
         </div>
 
-        <AdminEventUpdateForm v-if="!eventIsPending" v-bind="event" />
+        <template v-if="eventIsPending">
+          <USkeleton v-for="idx in 5" :key="idx" class="w-full h-8" />
+        </template>
+
+        <AdminEventUpdateForm v-else-if="event" v-bind="event" />
       </div>
 
       <section class="space-y-4">

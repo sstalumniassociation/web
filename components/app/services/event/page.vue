@@ -83,7 +83,7 @@ async function onScan(admissionKey: string) {
 function searchAll(query: string, items: UnwrapRef<typeof attendees>) {
   const found = []
   for (const idx in items) {
-    if (items[idx].name.toLowerCase().includes(query.toLowerCase()) || query.trim() === '')
+    if (items[idx].name?.toLowerCase().includes(query.toLowerCase()) || query.trim() === '')
       found.push(idx)
   }
   return found

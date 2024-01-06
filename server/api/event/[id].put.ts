@@ -3,12 +3,26 @@ import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
 const updateEventRequestBody = z.object({
-  name: z.string().optional(),
-  description: z.string().optional(),
-  location: z.string().optional(),
-  badgeImage: z.string().url().optional(),
-  startDateTime: z.string().datetime().optional(),
-  endDateTime: z.string().datetime().optional(),
+  name: z.string()
+    .min(1),
+  description: z.string(),
+  location: z.string(),
+  badgeImage: z.string()
+    .url()
+    .refine(async (val) => {
+      const res = await $fetch.raw(val, { method: 'GET' })
+      return res.headers.get('content-type')?.includes('image')
+    }, 'URL provided not a valid image'),
+  startDateTime: z.string()
+    .refine(val => dayjs(val).isValid(), 'Date provided not valid')
+    .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future'),
+  endDateTime: z.string()
+    .refine(val => dayjs(val).isValid()),
+}).refine((val) => {
+  return dayjs(val.startDateTime).isBefore(val.endDateTime)
+}, {
+  message: 'Event must end after it starts',
+  path: ['endDateTime'],
 })
 
 export default defineProtectedEventHandler(async (event) => {
@@ -25,7 +39,14 @@ export default defineProtectedEventHandler(async (event) => {
   const { data } = result
 
   const updatedEvent = await event.context.database.update(events)
-    .set(data)
+    .set({
+      name: data.name,
+      description: data.description,
+      location: data.location,
+      badgeImage: data.badgeImage,
+      startDateTime: data.startDateTime,
+      endDateTime: data.endDateTime,
+    })
     .where(eq(events.id, eventId))
     .returning()
 

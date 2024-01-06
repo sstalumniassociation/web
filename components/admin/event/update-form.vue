@@ -1,24 +1,27 @@
 <script setup lang="ts">
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { z } from 'zod'
 
 const props = defineProps<{
+  id: string
   name: string
-  description: string | null
-  location: string | null
-  badgeImage: string | null
-  startDateTime: string
-  endDateTime: string
+  description?: string | null
+  location?: string | null
+  badgeImage?: string | null
+  startDateTime: number
+  endDateTime: number
 }>()
 
+const toast = useToast()
 const { $dayjs } = useNuxtApp()
 
 const state = reactive({
   name: props.name,
-  description: props.description,
-  location: props.location,
-  badgeImage: props.badgeImage,
-  startDateTime: props.startDateTime,
-  endDateTime: props.endDateTime,
+  description: props.description ?? '',
+  location: props.location ?? '',
+  badgeImage: props.badgeImage ?? '',
+  startDateTime: $dayjs.unix(props.startDateTime).toISOString(),
+  endDateTime: $dayjs.unix(props.endDateTime).toISOString(),
 })
 
 const schema = z.object({
@@ -29,20 +32,34 @@ const schema = z.object({
   badgeImage: z.string()
     .url('Please enter a URL'),
   startDateTime: z.string()
-    .transform(d => $dayjs(d).toISOString())
-    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future'),
+    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future')
+    .transform(d => $dayjs(d).unix().toString()),
   endDateTime: z.string()
-    .transform(d => $dayjs(d).toISOString()),
+    .transform(d => $dayjs(d).unix().toString()),
 }).refine((val) => {
   return $dayjs(val.startDateTime).isBefore(val.endDateTime)
 }, {
   message: 'Event must end after it starts',
   path: ['endDateTime'],
 })
+
+type Schema = z.output<typeof schema>
+
+const { mutate: updateEventMutate, isPending: updateEventIsPending } = useUpdateEventMutation(props.id)
+
+function updateEvent({ data }: FormSubmitEvent<Schema>) {
+  updateEventMutate(data, {
+    onError(err) {
+      toast.add({
+        title: err.message,
+      })
+    },
+  })
+}
 </script>
 
 <template>
-  <UForm :state="state" :schema="schema" class="space-y-7">
+  <UForm :state="state" :schema="schema" class="space-y-7" @submit="updateEvent">
     <div class="space-y-5">
       <UFormGroup label="Name" name="name">
         <UInput v-model="state.name" placeholder="SST Homecoming" />
@@ -67,7 +84,7 @@ const schema = z.object({
       </UFormGroup>
     </div>
 
-    <UButton type="submit">
+    <UButton type="submit" :loading="updateEventIsPending">
       Update
     </UButton>
   </UForm>

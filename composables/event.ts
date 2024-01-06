@@ -39,3 +39,15 @@ export function useCreateEventMutation() {
     },
   })
 }
+
+export function useUpdateEventMutation(id: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (body: Omit<Event, 'id'>) => $api(`/api/event/${id}`, { method: 'PUT', body }),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: queryKeyFactory.events,
+      })
+    },
+  })
+}

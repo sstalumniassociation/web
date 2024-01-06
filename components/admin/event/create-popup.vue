@@ -14,10 +14,10 @@ const schema = z.object({
   badgeImage: z.string()
     .url('Please enter a URL'),
   startDateTime: z.string()
-    .transform(d => $dayjs(d).toISOString())
-    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future'),
+    .refine(val => $dayjs(val).isAfter($dayjs()), 'Start date must be in the future')
+    .transform(d => $dayjs(d).unix().toString()),
   endDateTime: z.string()
-    .transform(d => $dayjs(d).toISOString()),
+    .transform(d => $dayjs(d).unix().toString()),
 }).refine((val) => {
   return $dayjs(val.startDateTime).isBefore(val.endDateTime)
 }, {
