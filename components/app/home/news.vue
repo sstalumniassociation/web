@@ -17,11 +17,13 @@ const { data: news, isLoading: newsIsLoading } = useNewsArticles()
         </div>
       </f7List>
       <template v-else-if="news">
-        <span v-if="news.length === 0" class="mt-4 opacity-80">
-          Nothing exciting is happening right now.
-          <br>
-          Check back later!
-        </span>
+        <f7List inset>
+          <span v-if="news.length === 0" class="mt-4 opacity-80">
+            Nothing exciting is happening right now.
+            <br>
+            Check back later!
+          </span>
+        </f7List>
         <f7Card v-for="article in news" :key="article.id" class="m-0!">
           <f7CardHeader class="h-44 rounded-[16px]! overflow-hidden bg-center bg-cover relative" valign="bottom" :style="`background-image: url(${article.heroImageUrl})`">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent dark:to-black/70 to-white/70" />
