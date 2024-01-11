@@ -15,8 +15,8 @@ devDependencies:
     specifier: ^4.20231218.0
     version: 4.20231218.0
   '@growthbook/growthbook':
-    specifier: ^0.31.0
-    version: 0.31.0
+    specifier: ^0.32.0
+    version: 0.32.0
   '@libsql/client':
     specifier: ^0.3.6
     version: 0.3.6
@@ -2533,8 +2533,8 @@ packages:
     resolution: {integrity: sha512-eSkJsnhBWv5kCTSU1tSUVl9mpFu+5NXXunZc83le8GMjMlsWwQArSc7cJJ4yl+aDFY0NGLi0AjZWMn1axOrkRg==}
     dev: true
 
-  /@growthbook/growthbook@0.31.0:
-    resolution: {integrity: sha512-VtI5IibZHhvtrlZhfopGYhVXZ++FewgY0BtQQyEqFSrhCYFvEEtq+GkuSm4GcC0JxNuHiYJr9/R3GpffJV/T4Q==}
+  /@growthbook/growthbook@0.32.0:
+    resolution: {integrity: sha512-sdtZMjMmlaTqSc26CRyPYMFUQ/N0P827geRMRtD/KQTpmfnF/KpZrQMnkdk1HxKA0x+JzDxn4PO3G2jX5eVsfg==}
     engines: {node: '>=10'}
     dependencies:
       dom-mutator: 0.6.0
