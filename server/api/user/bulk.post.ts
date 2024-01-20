@@ -23,6 +23,7 @@ export default defineProtectedEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Bad request',
+      message: result.error.message,
     })
   }
 
