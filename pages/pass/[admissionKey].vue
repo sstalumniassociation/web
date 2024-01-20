@@ -120,6 +120,18 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
                 </f7Block>
               </f7AccordionContent>
             </f7ListItem>
+
+            <f7ListItem accordion-item title="Something is broken, help!">
+              <f7AccordionContent>
+                <f7Block>
+                  <p>
+                    Don't panic! Please contact the SSTAA volunteers for assistance.
+
+                    Alternatively, contact us on Telegram at <a href="https://t.me/qin_guan">@qin_guan</a>.
+                  </p>
+                </f7Block>
+              </f7AccordionContent>
+            </f7ListItem>
           </f7List>
         </div>
       </f7Page>
