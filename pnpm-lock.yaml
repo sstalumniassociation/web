@@ -81,8 +81,8 @@ devDependencies:
     specifier: ^0.19.13
     version: 0.19.13
   drizzle-orm:
-    specifier: ^0.28.6
-    version: 0.28.6(@cloudflare/workers-types@4.20240117.0)(@libsql/client@0.3.6)(better-sqlite3@9.3.0)
+    specifier: ^0.29.0
+    version: 0.29.3(@cloudflare/workers-types@4.20240117.0)(@libsql/client@0.3.6)(better-sqlite3@9.3.0)
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -6092,8 +6092,8 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.28.6(@cloudflare/workers-types@4.20240117.0)(@libsql/client@0.3.6)(better-sqlite3@9.3.0):
-    resolution: {integrity: sha512-yBe+F9htrlYER7uXgDJUQsTHFoIrI5yMm5A0bg0GiZ/kY5jNXTWoEy4KQtg35cE27sw1VbgzoMWHAgCckUUUww==}
+  /drizzle-orm@0.29.3(@cloudflare/workers-types@4.20240117.0)(@libsql/client@0.3.6)(better-sqlite3@9.3.0):
+    resolution: {integrity: sha512-uSE027csliGSGYD0pqtM+SAQATMREb3eSM/U8s6r+Y0RFwTKwftnwwSkqx3oS65UBgqDOM0gMTl5UGNpt6lW0A==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
@@ -6103,15 +6103,18 @@ packages:
       '@planetscale/database': '>=1'
       '@types/better-sqlite3': '*'
       '@types/pg': '*'
+      '@types/react': '>=18'
       '@types/sql.js': '*'
       '@vercel/postgres': '*'
       better-sqlite3: '>=7'
       bun-types: '*'
+      expo-sqlite: '>=13.2.0'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
       pg: '>=8'
       postgres: '>=3'
+      react: '>=18'
       sql.js: '>=1'
       sqlite3: '>=5'
     peerDependenciesMeta:
@@ -6131,6 +6134,8 @@ packages:
         optional: true
       '@types/pg':
         optional: true
+      '@types/react':
+        optional: true
       '@types/sql.js':
         optional: true
       '@vercel/postgres':
@@ -6138,6 +6143,8 @@ packages:
       better-sqlite3:
         optional: true
       bun-types:
+        optional: true
+      expo-sqlite:
         optional: true
       knex:
         optional: true
@@ -6148,6 +6155,8 @@ packages:
       pg:
         optional: true
       postgres:
+        optional: true
+      react:
         optional: true
       sql.js:
         optional: true
