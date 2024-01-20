@@ -12,6 +12,7 @@ export function useUser() {
     queryKey: queryKeyFactory.currentUser,
     queryFn: () => $api<User>(`/api/user/${firebaseCurrentUser.value?.uid}`),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
+    retry: false,
   })
 }
 
