@@ -15,7 +15,8 @@
     "pwa:generate-assets": "pwa-assets-generator --preset minimal public/logo.png",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "release": "bumpp -r --no-push"
   },
   "devDependencies": {
     "@antfu/eslint-config": "latest",
@@ -38,6 +39,7 @@
     "@vueuse/integrations": "^10.7.1",
     "@vueuse/nuxt": "^10.7.1",
     "better-sqlite3": "^9.2.2",
+    "bumpp": "^9.3.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "drizzle-kit": "^0.19.13",
@@ -52,7 +54,7 @@
     "jose": "^5.2.0",
     "lint-staged": "^15.2.0",
     "material-icons": "^1.13.12",
-    "nuxt": "^3.8.0",
+    "nuxt": "^3.9.3",
     "nuxt-vuefire": "^0.4.1",
     "papaparse": "^5.4.1",
     "qrcode": "^1.5.3",
@@ -65,7 +67,7 @@
   },
   "pnpm": {
     "overrides": {
-      "h3": "1.8.2"
+      "untyped": "1.4.0"
     }
   },
   "simple-git-hooks": {
