@@ -32,7 +32,7 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
         <f7Navbar title="SST Alumni Association Passes" />
 
         <div v-if="admissionIsLoading">
-          <f7List inset class="flex flex-gap-4 flex-col">
+          <f7List inset class="flex gap-4 flex-col">
             <f7SkeletonBlock height="100px" class="rounded-md!" />
             <f7SkeletonBlock height="200px" class="rounded-md!" />
             <f7SkeletonBlock height="300px" class="rounded-md!" />
@@ -65,6 +65,27 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
             </p>
             <p>
               {{ admission?.event.name }}
+            </p>
+
+            <p class="font-semibold">
+              Event description
+            </p>
+            <p>
+              {{ admission?.event.description }}
+            </p>
+
+            <p class="font-semibold">
+              Event location
+            </p>
+            <p>
+              {{ admission?.event.location }}
+            </p>
+
+            <p class="font-semibold">
+              Your name
+            </p>
+            <p>
+              {{ admission?.user.name }}
             </p>
           </f7Block>
 

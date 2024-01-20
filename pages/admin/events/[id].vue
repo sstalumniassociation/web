@@ -26,6 +26,17 @@ const links = computed(() => [
   },
 ])
 
+const dropdownItems = [
+  [
+    {
+      label: 'Delete',
+      click() {
+        state.value.showDeleteConfirmation = true
+      },
+    },
+  ],
+]
+
 type CsvRow = Pick<User, 'name' | 'email' | 'memberType' | 'graduationYear'>
 
 const userUploadPreview = ref<CsvRow[]>([])
@@ -118,6 +129,25 @@ function deleteEvent() {
     },
   })
 }
+
+async function downloadRollCall() {
+  const { unparse } = await import('papaparse')
+  const transformedData = event.value?.attendees.map(({ id, name, admissionKey }) => ({
+    id,
+    name,
+    link: `https://app.sstaa.org/pass/${admissionKey}`,
+  })) ?? []
+  const file = unparse(transformedData)
+
+  const element = document.createElement('a')
+  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(file)}`)
+  element.setAttribute('download', `${event.value?.name ?? 'Untitled event'}.csv`)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+}
 </script>
 
 <template>
@@ -127,9 +157,15 @@ function deleteEvent() {
         <UBreadcrumb :links="links" />
       </div>
 
-      <UButton variant="soft" @click="state.showDeleteConfirmation = true">
-        Delete
-      </UButton>
+      <div class="flex gap-3 items-center">
+        <UButton @click="downloadRollCall">
+          Download roll call
+        </UButton>
+
+        <UDropdown :items="dropdownItems">
+          <UButton color="white" label="More" trailing-icon="i-heroicons-chevron-down-20-solid" />
+        </UDropdown>
+      </div>
 
       <UModal v-model="state.showDeleteConfirmation">
         <UCard>

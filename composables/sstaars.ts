@@ -13,5 +13,6 @@ export function useAdmission(key: string) {
   return useQuery({
     queryKey: queryKeyFactory.admission(key),
     queryFn: () => $api(`/api/admission/${key}`),
+    retry: false,
   })
 }
