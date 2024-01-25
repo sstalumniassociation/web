@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7AccordionContent, f7App, f7Block, f7BlockTitle, f7Button, f7List, f7ListItem, f7Navbar, f7Page, f7SkeletonBlock, f7View } from 'framework7-vue'
+import { f7AccordionContent, f7App, f7Block, f7BlockTitle, f7Button, f7Link, f7List, f7ListItem, f7Navbar, f7Page, f7SkeletonBlock, f7View } from 'framework7-vue'
 
 import 'framework7/css/bundle'
 import 'framework7-icons/css/framework7-icons.css'
@@ -127,7 +127,10 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
                   <p>
                     Don't panic! Please contact the SSTAA volunteers for assistance.
 
-                    Alternatively, contact us on Telegram at <a href="https://t.me/qin_guan">@qin_guan</a>.
+                    Alternatively, contact the app team on Telegram at
+                    <f7Link href="https://t.me/qin_guan" external>
+                      @qin_guan
+                    </f7Link>.
                   </p>
                 </f7Block>
               </f7AccordionContent>
