@@ -12,6 +12,7 @@ export default defineProtectedEventHandler(async (event) => {
             columns: {
               id: true,
               name: true,
+              email: true,
             },
           },
         },

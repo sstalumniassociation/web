@@ -132,9 +132,10 @@ function deleteEvent() {
 
 async function downloadRollCall() {
   const { unparse } = await import('papaparse')
-  const transformedData = event.value?.attendees.map(({ id, name, admissionKey }) => ({
+  const transformedData = event.value?.attendees.map(({ id, name, admissionKey, email }) => ({
     id,
     name,
+    email,
     link: `https://app.sstaa.org/pass/${admissionKey}`,
   })) ?? []
   const file = unparse(transformedData)
