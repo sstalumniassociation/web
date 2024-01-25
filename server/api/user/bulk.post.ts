@@ -6,7 +6,7 @@ const bulkCreateUserRequestBody = z.array(
   z.object({
     name: z.string().min(1),
     email: z.string().email(),
-    graduationYear: z.number().int().min(2011),
+    graduationYear: z.number().int(),
     memberType: z.enum([
       'exco',
       'associate',
