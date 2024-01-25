@@ -73,6 +73,9 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: '/',
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
+      navigateFallbackDenylist: [
+        /^\/pass/, // No caching on passes
+      ],
     },
     devOptions: {
       enabled: process.env.VITE_DEV_PWA === 'true',
