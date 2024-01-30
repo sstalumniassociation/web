@@ -151,6 +151,7 @@ export default defineNuxtConfig({
       },
 
       newRelic: {
+        agentId: '' || process.env.NUXT_PUBLIC_NEW_RELIC_AGENT_ID,
         applicationId: '' || process.env.NUXT_PUBLIC_NEW_RELIC_APPLICATION_ID,
       },
     },
