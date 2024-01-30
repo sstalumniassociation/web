@@ -56,7 +56,7 @@
     "lint-staged": "^15.2.0",
     "material-icons": "^1.13.12",
     "nuxt": "^3.9.3",
-    "nuxt-vuefire": "^0.4.1",
+    "nuxt-vuefire": "^1.0.1",
     "papaparse": "^5.4.1",
     "qrcode": "^1.5.3",
     "simple-git": "^3.22.0",
