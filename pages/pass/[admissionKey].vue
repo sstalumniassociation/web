@@ -23,6 +23,10 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
     light: '#fefbff',
   },
 })
+
+useSeoMeta({
+  title: admission.value?.event.name ?? 'SSTAA Pass',
+})
 </script>
 
 <template>
@@ -128,7 +132,7 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
                     Don't panic! Please contact the SSTAA volunteers for assistance.
 
                     Alternatively, contact the app team on Telegram at
-                    <f7Link href="https://t.me/qin_guan" external>
+                    <f7Link href="https://t.me/qin_guan" external target="_blank">
                       @qin_guan
                     </f7Link>.
                   </p>
@@ -136,6 +140,14 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
               </f7AccordionContent>
             </f7ListItem>
           </f7List>
+
+          <f7Block>
+            <p>
+              Built by the SSTAA App Team and open sourced on <f7Link external href="//github.com/sstalumniassociation/web" target="_blank">
+                GitHub
+              </f7Link>.
+            </p>
+          </f7Block>
         </div>
       </f7Page>
     </f7View>
