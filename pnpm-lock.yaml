@@ -120,8 +120,8 @@ devDependencies:
     specifier: ^3.9.3
     version: 3.9.3(eslint@8.56.0)(idb-keyval@6.2.1)(rollup@2.79.1)(typescript@5.3.3)(vite@5.0.12)(vue-tsc@1.8.27)
   nuxt-vuefire:
-    specifier: ^0.4.1
-    version: 0.4.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22)
+    specifier: ^1.0.1
+    version: 1.0.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22)
   papaparse:
     specifier: ^5.4.1
     version: 5.4.1
@@ -9429,14 +9429,14 @@ packages:
       - vue
     dev: true
 
-  /nuxt-vuefire@0.4.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22):
-    resolution: {integrity: sha512-EKy0InKAPdvsH7M5Uqzk+k3oz6q/ZA230h7G3e+l8XEq1xMVfTXT8beJWTWA/7uC7phH0Sf78PAh0BecDyJ+kA==}
+  /nuxt-vuefire@1.0.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22):
+    resolution: {integrity: sha512-CGHe+sOfcD5T73YfRLTdzyjJRW0wHc7DW6Pef0/6lqGDAGzLr28N8XbXwFkOXgVZVHz/f5czQ3aDAQsS1a8z8w==}
     peerDependencies:
       '@firebase/app-types': '>=0.8.1'
       firebase: ^9.0.0 || ^10.0.0
       firebase-admin: ^11.3.0
       firebase-functions: ^4.1.0
-      vuefire: '>=3.1.18'
+      vuefire: '>=3.1.20'
     peerDependenciesMeta:
       '@firebase/app-types':
         optional: true
