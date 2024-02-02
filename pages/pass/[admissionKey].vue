@@ -103,12 +103,12 @@ useSeoMeta({
               <img :src="qrcode" alt="QR Code" class="max-w-[200px]">
               <span>{{ admission?.admissionKey }}</span>
               <br>
-              <a :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank">
+              <f7Link :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank">
                 <img
                   v-if="admissionPkPass" role="button" src="~/assets/pass/add-to-apple-wallet.svg"
                   alt="Add to Apple Wallet" class="cursor-pointer"
                 >
-              </a>
+              </f7Link>
             </div>
           </f7Block>
 
