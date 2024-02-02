@@ -17,6 +17,8 @@ Framework7.use(Framework7Vue)
 
 const route = useRoute()
 const { data: admission, isLoading: admissionIsLoading, error } = useAdmission(route.params.admissionKey as string)
+useAdmissionPkPass(route.params.admissionKey as string)
+
 const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
   width: 500,
   color: {
