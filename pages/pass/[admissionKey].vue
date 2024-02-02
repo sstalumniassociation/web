@@ -17,6 +17,8 @@ Framework7.use(Framework7Vue)
 
 const route = useRoute()
 const { data: admission, isLoading: admissionIsLoading, error } = useAdmission(route.params.admissionKey as string)
+const { data: admissionPkPass } = useAdmissionPkPass(route.params.admissionKey as string)
+
 const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
   width: 500,
   color: {
@@ -100,6 +102,15 @@ useSeoMeta({
             <div class="w-full flex flex-col items-center">
               <img :src="qrcode" alt="QR Code" class="max-w-[200px]">
               <span>{{ admission?.admissionKey }}</span>
+
+              <br>
+
+              <a v-if="admissionPkPass" :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank" class="external cursor-pointer">
+                <img
+                  src="~/assets/pass/add-to-apple-wallet.svg"
+                  alt="Add to Apple Wallet"
+                >
+              </a>
             </div>
           </f7Block>
 
@@ -143,7 +154,10 @@ useSeoMeta({
 
           <f7Block>
             <p>
-              Built by the SSTAA App Team and open sourced on <f7Link external href="//github.com/sstalumniassociation/web" target="_blank">
+              Built by the SSTAA App Team and open sourced on <f7Link
+                external
+                href="//github.com/sstalumniassociation/web" target="_blank"
+              >
                 GitHub
               </f7Link>.
             </p>
