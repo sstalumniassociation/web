@@ -24,7 +24,8 @@ export function useAdmissionPkPass(key: string) {
     queryKey: queryKeyFactory.admissionPkPass(key),
     queryFn: () => $fetch<Blob>(`/cdn/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),
     // queryFn: () => $fetch<Blob>(`https://sstaa-cdn.qinguan.me/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),
-    enabled: computed(() => !!admission.value?.admissionKey),
+    // @ts-expect-error Apple Pay Session browser global https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/checking_for_apple_pay_availability
+    enabled: computed(() => !!admission.value?.admissionKey && !!window.ApplePaySession),
     retry: false,
   })
 }
