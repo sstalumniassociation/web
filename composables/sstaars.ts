@@ -22,7 +22,9 @@ export function useAdmissionPkPass(key: string) {
   const { data: admission } = useAdmission(key)
   return useQuery({
     queryKey: queryKeyFactory.admissionPkPass(key),
-    queryFn: () => $fetch(`/cdn/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),
+    // queryFn: () => $fetch(`/cdn/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),
+    queryFn: () => $fetch<Blob>(`https://sstaa-cdn.qinguan.me/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),
     enabled: computed(() => !!admission.value?.admissionKey),
+    retry: false,
   })
 }

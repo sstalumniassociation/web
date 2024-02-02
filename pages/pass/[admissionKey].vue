@@ -17,7 +17,7 @@ Framework7.use(Framework7Vue)
 
 const route = useRoute()
 const { data: admission, isLoading: admissionIsLoading, error } = useAdmission(route.params.admissionKey as string)
-useAdmissionPkPass(route.params.admissionKey as string)
+const { data: admissionPkPass } = useAdmissionPkPass(route.params.admissionKey as string)
 
 const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
   width: 500,
@@ -29,6 +29,16 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
 useSeoMeta({
   title: admission.value?.event.name ?? 'SSTAA Pass',
 })
+
+function downloadPkPass() {
+  if (!admissionPkPass.value)
+    return
+
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(admissionPkPass.value)
+  link.download = `${route.params.admissionKey}.pkpass`
+  link.click()
+}
 </script>
 
 <template>
@@ -102,6 +112,8 @@ useSeoMeta({
             <div class="w-full flex flex-col items-center">
               <img :src="qrcode" alt="QR Code" class="max-w-[200px]">
               <span>{{ admission?.admissionKey }}</span>
+              <br>
+              <img v-if="admissionPkPass" role="button" src="~/assets/pass/add-to-apple-wallet.svg" alt="Add to Apple Wallet" class="cursor-pointer" @click="downloadPkPass">
             </div>
           </f7Block>
 
