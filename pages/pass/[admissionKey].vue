@@ -34,10 +34,7 @@ function downloadPkPass() {
   if (!admissionPkPass.value)
     return
 
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(admissionPkPass.value)
-  link.download = `${route.params.admissionKey}.pkpass`
-  link.click()
+  window.location.href = `/cdn/apple-wallet/${admission.value?.eventId}/${route.params.admissionKey}.pkpass`
 }
 </script>
 
