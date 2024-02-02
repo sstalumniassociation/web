@@ -29,13 +29,6 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
 useSeoMeta({
   title: admission.value?.event.name ?? 'SSTAA Pass',
 })
-
-function downloadPkPass() {
-  if (!admissionPkPass.value)
-    return
-
-  window.location.href = `/cdn/apple-wallet/${admission.value?.eventId}/${route.params.admissionKey}.pkpass`
-}
 </script>
 
 <template>
@@ -110,7 +103,12 @@ function downloadPkPass() {
               <img :src="qrcode" alt="QR Code" class="max-w-[200px]">
               <span>{{ admission?.admissionKey }}</span>
               <br>
-              <img v-if="admissionPkPass" role="button" src="~/assets/pass/add-to-apple-wallet.svg" alt="Add to Apple Wallet" class="cursor-pointer" @click="downloadPkPass">
+              <a :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank">
+                <img
+                  v-if="admissionPkPass" role="button" src="~/assets/pass/add-to-apple-wallet.svg"
+                  alt="Add to Apple Wallet" class="cursor-pointer"
+                >
+              </a>
             </div>
           </f7Block>
 
@@ -154,7 +152,10 @@ function downloadPkPass() {
 
           <f7Block>
             <p>
-              Built by the SSTAA App Team and open sourced on <f7Link external href="//github.com/sstalumniassociation/web" target="_blank">
+              Built by the SSTAA App Team and open sourced on <f7Link
+                external
+                href="//github.com/sstalumniassociation/web" target="_blank"
+              >
                 GitHub
               </f7Link>.
             </p>
