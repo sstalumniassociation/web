@@ -4,6 +4,7 @@ import { isDevelopment } from 'std-env'
 export default defineNuxtConfig({
   ssr: false, // Firebase
   devtools: { enabled: true },
+  sourcemap: { client: true, server: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
 
   experimental: {
