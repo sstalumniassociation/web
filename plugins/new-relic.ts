@@ -11,7 +11,7 @@ export default defineNuxtPlugin(() => {
   }
 
   const newrelic = new BrowserAgent(options)
-  newrelic.setApplicationVersion(`${appConfig.buildInfo.version}-${appConfig.buildInfo.commit}`)
+  newrelic.setApplicationVersion(`${appConfig.buildInfo.version}-${appConfig.buildInfo.shortCommit}`)
 
   return {
     provide: {
