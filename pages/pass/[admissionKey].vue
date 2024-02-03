@@ -15,6 +15,7 @@ import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 Framework7.use(Framework7Vue)
 
+const app = useNuxtApp()
 const route = useRoute()
 const { data: admission, isLoading: admissionIsLoading, error } = useAdmission(route.params.admissionKey as string)
 const { data: admissionPkPass } = useAdmissionPkPass(route.params.admissionKey as string)
@@ -29,6 +30,13 @@ const qrcode = useQRCode(() => admission.value?.admissionKey ?? '', {
 useSeoMeta({
   title: admission.value?.event.name ?? 'SSTAA Pass',
 })
+
+function reportEvent() {
+  app.$newrelic.addPageAction('add-to-apple-wallet-clicked', {
+    eventId: admission.value?.eventId,
+    admissionKey: admission.value?.admissionKey,
+  })
+}
 </script>
 
 <template>
@@ -105,7 +113,7 @@ useSeoMeta({
 
               <br>
 
-              <a v-if="admissionPkPass" :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank" class="external cursor-pointer">
+              <a v-if="admissionPkPass" :href="`/cdn/apple-wallet/${admission.eventId}/${route.params.admissionKey}.pkpass`" target="_blank" class="external cursor-pointer" @click="reportEvent">
                 <img
                   src="~/assets/pass/add-to-apple-wallet.svg"
                   alt="Add to Apple Wallet"

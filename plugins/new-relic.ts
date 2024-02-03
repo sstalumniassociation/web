@@ -9,5 +9,11 @@ export default defineNuxtPlugin(() => {
     loader_config: { accountID: '4337277', trustKey: '4337277', agentID: config.newRelic.agentId, licenseKey: 'NRJS-1b1f41c1d6baafe183c', applicationID: config.newRelic.applicationId },
   }
 
-  const _ = new BrowserAgent(options)
+  const newrelic = new BrowserAgent(options)
+
+  return {
+    provide: {
+      newrelic,
+    },
+  }
 })
