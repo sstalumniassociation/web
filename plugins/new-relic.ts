@@ -1,6 +1,7 @@
 import { BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent'
 
 export default defineNuxtPlugin(() => {
+  const appConfig = useAppConfig()
   const { public: config } = useRuntimeConfig()
 
   const options = {
@@ -10,6 +11,7 @@ export default defineNuxtPlugin(() => {
   }
 
   const newrelic = new BrowserAgent(options)
+  newrelic.setApplicationVersion(`${appConfig.buildInfo.version}-${appConfig.buildInfo.commit}`)
 
   return {
     provide: {
