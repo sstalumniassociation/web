@@ -45,18 +45,29 @@ async function validateEmail() {
     state.accountId = account.id
   }
   catch (err) {
-    if (err instanceof FetchError && err.statusCode === 404) {
-      toast.add({
-        title: 'Please register with SSTAA',
-        timeout: 10000,
+    if (!(err instanceof FetchError)) {
+      return toast.add({
+        severity: 'error',
+        summary: 'An error occurred',
+        detail: (err as Error).message,
+        life: 10000,
       })
     }
-    else {
-      toast.add({
-        title: (err as Error).message,
-        timeout: 10000,
+
+    if (err.statusCode === 404) {
+      return toast.add({
+        severity: 'error',
+        summary: 'Please register with SSTAA',
+        life: 10000,
       })
     }
+
+    toast.add({
+      severity: 'error',
+      summary: 'An error occurred',
+      detail: err.data,
+      life: 10000,
+    })
   }
 }
 
@@ -70,8 +81,8 @@ async function firebaseLogin() {
     }
     else {
       toast.add({
-        title: (err as Error).message,
-        timeout: 10000,
+        summary: (err as Error).message,
+        life: 10000,
       })
     }
   }
@@ -80,8 +91,8 @@ async function firebaseLogin() {
 async function firebaseRegister() {
   if (state.password !== state.confirmPassword) {
     toast.add({
-      title: 'Your passwords do not match',
-      timeout: 10000,
+      summary: 'Your passwords do not match',
+      life: 10000,
     })
     return
   }
@@ -101,8 +112,8 @@ async function firebaseRegister() {
     }
     else {
       toast.add({
-        title: (err as Error).message,
-        timeout: 10000,
+        summary: (err as Error).message,
+        life: 10000,
       })
     }
   }
@@ -110,46 +121,44 @@ async function firebaseRegister() {
 
 function handleFirebaseError(err: FirebaseError) {
   toast.add({
-    title: FIREBASE_ERROR_MESSAGES[err.code] ?? 'An unknown error occurred',
-    timeout: 10000,
+    summary: FIREBASE_ERROR_MESSAGES[err.code] ?? 'An unknown error occurred',
+    life: 10000,
   })
 }
 </script>
 
 <template>
-  <UModal v-model="opened">
-    <form @submit.prevent="login">
-      <UCard>
-        <template #header>
-          <h1 class="font-semibold">
-            Sign in to SSTAA
-          </h1>
-        </template>
+  <Dialog v-model:visible="opened" modal header="Sign in to SSTAA" :closable="false">
+    <form class="flex items-start flex-col gap-4" @submit.prevent="login">
+      <div class="flex flex-col gap-2">
+        <label for="email">
+          Email
+        </label>
+        <InputText id="email" v-model="state.email" autofocus type="email" placeholder="Your email address" required />
+      </div>
 
-        <div class="space-y-4">
-          <UFormGroup label="Email">
-            <UInput v-model="state.email" type="email" placeholder="Your email address" required />
-          </UFormGroup>
-
-          <template v-if="state.accountLinked !== null">
-            <UFormGroup label="Password">
-              <UInput v-model="state.password" type="password" placeholder="Your password" required />
-            </UFormGroup>
-            <UFormGroup v-if="state.accountLinked === false" label="Confirm password">
-              <UInput
-                v-model="state.confirmPassword" type="password"
-                placeholder="Confirm password" required
-              />
-            </UFormGroup>
-          </template>
+      <template v-if="state.accountLinked !== null">
+        <div class="flex flex-col gap-2">
+          <label for="password">
+            Password
+          </label>
+          <InputText id="password" v-model="state.password" type="password" placeholder="Your password" required />
         </div>
 
-        <template #footer>
-          <UButton type="submit" preloader :loading="state.pending">
-            {{ !state.accountLinked ? 'Continue' : 'Login' }}
-          </UButton>
-        </template>
-      </UCard>
+        <div v-if="state.accountLinked === false" class="flex flex-col gap-2">
+          <label for="confirm-password">
+            Confirm password
+          </label>
+          <InputText
+            id="confirm-password" v-model="state.confirmPassword" type="password" placeholder="Confirm password"
+            required
+          />
+        </div>
+      </template>
+
+      <Button type="submit" :loading="state.pending" class="ml-auto" @click="login">
+        {{ !state.accountLinked ? 'Continue' : 'Login' }}
+      </Button>
     </form>
-  </UModal>
+  </Dialog>
 </template>

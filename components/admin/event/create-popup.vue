@@ -53,51 +53,49 @@ function createEvent({ data }: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UModal v-model="visible">
-    <UCard>
-      <template #header>
-        <div class="flex justify-between items-start">
-          <div>
-            <h1 class="text-xl font-semibold">
-              Create event
-            </h1>
-            <p class="text-sm opacity-80">
-              Add a new event hosted by SSTAA!
-            </p>
-          </div>
-          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" @click="visible = false" />
+  <Dialog v-model:visible="visible" modal>
+    <template #header>
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-xl font-semibold">
+            Create event
+          </h1>
+          <p class="text-sm opacity-80">
+            Add a new event hosted by SSTAA!
+          </p>
         </div>
-      </template>
+        <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" @click="visible = false" />
+      </div>
+    </template>
 
-      <UForm :state="state" :schema="schema" class="space-y-7" @submit="createEvent">
-        <div class="space-y-5">
-          <UFormGroup label="Name" name="name">
-            <UInput v-model="state.name" placeholder="SST Homecoming" />
-          </UFormGroup>
-          <UFormGroup label="Description" name="description">
-            <UTextarea
-              v-model="state.description"
-              placeholder="Come back to 1 Technology Drive for our inaugural homecoming!"
-            />
-          </UFormGroup>
-          <UFormGroup label="Location" name="location">
-            <UInput v-model="state.location" placeholder="1 Technology Drive, Singapore" />
-          </UFormGroup>
-          <UFormGroup label="Badge image" name="badgeImage">
-            <UInput v-model="state.badgeImage" type="url" placeholder="https://app.sstaa.org/cdn/logo.png" />
-          </UFormGroup>
-          <UFormGroup label="Start" name="startDateTime">
-            <UInput v-model="state.startDateTime" after="" type="datetime-local" />
-          </UFormGroup>
-          <UFormGroup label="End" name="endDateTime">
-            <UInput v-model="state.endDateTime" type="datetime-local" />
-          </UFormGroup>
-        </div>
+    <form :state="state" :schema="schema" class="space-y-7" @submit="createEvent">
+      <div class="space-y-5">
+        <UFormGroup label="Name" name="name">
+          <UInput v-model="state.name" placeholder="SST Homecoming" />
+        </UFormGroup>
+        <UFormGroup label="Description" name="description">
+          <UTextarea
+            v-model="state.description"
+            placeholder="Come back to 1 Technology Drive for our inaugural homecoming!"
+          />
+        </UFormGroup>
+        <UFormGroup label="Location" name="location">
+          <UInput v-model="state.location" placeholder="1 Technology Drive, Singapore" />
+        </UFormGroup>
+        <UFormGroup label="Badge image" name="badgeImage">
+          <UInput v-model="state.badgeImage" type="url" placeholder="https://app.sstaa.org/cdn/logo.png" />
+        </UFormGroup>
+        <UFormGroup label="Start" name="startDateTime">
+          <UInput v-model="state.startDateTime" after="" type="datetime-local" />
+        </UFormGroup>
+        <UFormGroup label="End" name="endDateTime">
+          <UInput v-model="state.endDateTime" type="datetime-local" />
+        </UFormGroup>
+      </div>
 
-        <UButton type="submit" :loading="createEventIsPending">
-          Create event
-        </UButton>
-      </UForm>
-    </UCard>
-  </UModal>
+      <UButton type="submit" :loading="createEventIsPending">
+        Create event
+      </UButton>
+    </form>
+  </Dialog>
 </template>

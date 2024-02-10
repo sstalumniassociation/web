@@ -1,13 +1,46 @@
 <script setup lang="ts">
-const { data: users } = useUsers()
+import { FilterMatchMode } from 'primevue/api'
+
+const { data: users, isPending: usersPending } = useUsers()
+
+const sizeOptions: { label: string, value: 'small' | 'large' | undefined }[] = [
+  { label: 'Small', value: 'small' },
+  { label: 'Normal', value: undefined },
+  { label: 'Large', value: 'large' },
+]
+
+const size = ref(sizeOptions[1])
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+})
 </script>
 
 <template>
-  <div class="p-4">
-    <h1 class="font-semibold text-lg">
-      Members
-    </h1>
+  <div class="p-4 space-y-4">
+    <div class="flex md:justify-between md:items-center flex-col md:flex-row flex-gap-3">
+      <span class="text-2xl font-semibold">
+        Members
+      </span>
 
-    <UTable :rows="users" />
+      <div class="flex flex-col md:flex-row items-start flex-gap-3">
+        <SelectButton v-model="size" :options="sizeOptions" option-label="label" data-key="label" />
+        <InputText v-model="filters.global.value" placeholder="Keyword Search" />
+      </div>
+    </div>
+
+    <DataTable
+      v-model:filters="filters" paginator data-key="id" :rows="40" :value="users" :size="size.value"
+      :loading="usersPending" :global-filter-fields="['name', 'email']"
+    >
+      <template #empty>
+        No members found.
+      </template>
+
+      <Column field="id" header="ID" />
+      <Column field="name" header="Name" sortable />
+      <Column field="email" header="Email" sortable />
+      <Column field="graduationYear" header="Graduation Year" sortable />
+    </DataTable>
   </div>
 </template>

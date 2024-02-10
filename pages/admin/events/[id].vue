@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import { useDatabase } from 'vuefire'
+import { ref as dbRef } from 'firebase/database'
 import type { User } from '~/shared/types'
 
 const route = useRoute()
 const router = useRouter()
 const toast = useToast()
+const dayjs = useDayjs()
 
 const state = ref({
   showDeleteConfirmation: false,
 })
 
+const db = useDatabase()
+const { data: checkedInUsersList } = useDatabaseList<{ $value: number }>(dbRef(db, route.params.id as string))
 const { data: event, isPending: eventIsPending } = useEvent(route.params.id as string)
 const { mutate: createUsersMutate, isPending: createUsersIsPending } = useBulkCreateUserMutation()
 const { mutate: addEventUsersMutate, isPending: addEventUsersIsPending } = useAddEventUsersMutation(route.params.id as string)
@@ -28,6 +33,12 @@ const links = computed(() => [
 
 const dropdownItems = [
   [
+    {
+      label: 'Download analytics',
+      async click() {
+        await downloadAnalytics()
+      },
+    },
     {
       label: 'Delete',
       click() {
@@ -139,6 +150,29 @@ async function downloadRollCall() {
     link: `https://app.sstaa.org/pass/${admissionKey}`,
   })) ?? []
   const file = unparse(transformedData)
+
+  const element = document.createElement('a')
+  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(file)}`)
+  element.setAttribute('download', `${event.value?.name ?? 'Untitled event'}.csv`)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+}
+
+async function downloadAnalytics() {
+  const checkedInAttendees = event.value?.attendees.map((attendee) => {
+    const checkedIn = checkedInUsersList.value.find(a => a.id === attendee.admissionKey)
+
+    return {
+      email: attendee.email,
+      checkedInAt: checkedIn ? dayjs.unix(checkedIn.$value).toISOString() : 'NA',
+    }
+  }) ?? []
+
+  const { unparse } = await import('papaparse')
+  const file = unparse(checkedInAttendees)
 
   const element = document.createElement('a')
   element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(file)}`)

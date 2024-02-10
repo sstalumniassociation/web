@@ -11,6 +11,8 @@ import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 
 import { useIsCurrentUserLoaded } from 'vuefire'
+import { useQueryClient } from '@tanstack/vue-query'
+
 import { AppHomePage, AppServicesEventPage } from '#components'
 
 Framework7.use(Framework7Vue)
@@ -63,6 +65,7 @@ useHeadSafe({
 
 const route = useRoute()
 
+const queryClient = useQueryClient()
 const auth = useCurrentUser()
 const authLoaded = useIsCurrentUserLoaded()
 
@@ -70,10 +73,17 @@ const state = reactive({
   showLoginScreen: false,
 })
 
-watch([authLoaded, auth], (values) => {
-  setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
-    state.showLoginScreen = values[0] && !values[1]
+watch([authLoaded, auth], (values, _, onCleanup) => {
+  const loggedOut = values[0] && !values[1]
+
+  const timeout = setTimeout(() => {
+    state.showLoginScreen = loggedOut
   }, 1000)
+
+  if (!loggedOut)
+    queryClient.invalidateQueries()
+
+  onCleanup(() => clearTimeout(timeout))
 })
 </script>
 

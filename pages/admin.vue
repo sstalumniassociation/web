@@ -1,9 +1,23 @@
 <script setup lang="ts">
-import '@unocss/reset/tailwind-compat.css'
+import { useQueryClient } from '@tanstack/vue-query'
 import { useIsCurrentUserLoaded } from 'vuefire'
 
+import dark from '~/assets/themes/aura-dark-pink/theme.css?url'
+import light from '~/assets/themes/aura-light-pink/theme.css?url'
+
+const isDark = useDark()
+
+useHead({
+  link: [
+    {
+      href: computed(() => isDark.value ? dark : light),
+      rel: 'stylesheet',
+    },
+  ],
+})
+
 useSeoMeta({
-  description: 'The SST Alumni App',
+  description: 'The SST Alumni App Admin Panel',
 })
 
 useHeadSafe({
@@ -34,6 +48,7 @@ useHeadSafe({
   ],
 })
 
+const queryClient = useQueryClient()
 const auth = useCurrentUser()
 const authLoaded = useIsCurrentUserLoaded()
 
@@ -41,34 +56,53 @@ const state = reactive({
   showLoginScreen: false,
 })
 
-watch([authLoaded, auth], (values) => {
-  setTimeout(() => { // This shows too fast, so it's better to lag for 1 second to prevent jarring layout changes
-    state.showLoginScreen = values[0] && !values[1]
+watch([authLoaded, auth], (values, _, onCleanup) => {
+  const loggedOut = values[0] && !values[1]
+
+  const timeout = setTimeout(() => {
+    state.showLoginScreen = loggedOut
   }, 1000)
+
+  if (!loggedOut)
+    queryClient.invalidateQueries()
+
+  onCleanup(() => clearTimeout(timeout))
 })
 </script>
 
 <template>
   <div>
-    <header class="border-b-[1px] border-solid border-b-white/10">
-      <div class="py-2 px-4 flex justify-between items-center">
+    <Toast position="bottom-center" />
+
+    <header class="border-b border-b-solid border-b-gray-200 dark:border-b-gray-800 px-4 py-3">
+      <div class="flex justify-between items-center">
         <span class="font-semibold">
           SSTAA Admin
         </span>
 
         <div class="flex items-center space-x-2">
-          <UButton variant="link" to="/admin/members">
-            Members
-          </UButton>
-          <UButton variant="link" to="/admin/events">
-            Events
-          </UButton>
+          <NuxtLink to="/admin/members">
+            <Button link label="Members" />
+          </NuxtLink>
+          <NuxtLink to="/admin/events">
+            <Button link label="Events" />
+          </NuxtLink>
         </div>
       </div>
     </header>
 
-    <AdminLoginScreen v-model="state.showLoginScreen" />
+    <AdminLoginScreen v-model:opened="state.showLoginScreen" />
 
     <NuxtPage />
   </div>
 </template>
+
+<style>
+html {
+  font-size: 14px;
+}
+
+body {
+  margin: 0;
+}
+</style>

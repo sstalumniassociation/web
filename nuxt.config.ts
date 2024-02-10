@@ -22,7 +22,8 @@ export default defineNuxtConfig({
 
   modules: [
     'nuxt-vuefire',
-    '@nuxt/ui',
+    'nuxt-primevue',
+    '@unocss/nuxt',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
     '~/modules/build-info',
@@ -30,6 +31,16 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
+  },
+
+  primevue: {
+    options: {
+      ripple: false,
+    },
+  },
+
+  unocss: {
+    icons: true,
   },
 
   app: {

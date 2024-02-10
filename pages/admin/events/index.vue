@@ -1,29 +1,16 @@
 <script setup lang="ts">
+import { FilterMatchMode } from 'primevue/api'
+
 const dayjs = useDayjs()
 
-const columns = [
-  {
-    key: 'name',
-    label: 'Name',
-  },
-  {
-    key: 'startDateTime',
-    label: 'Start',
-  },
-  {
-    key: 'endDateTime',
-    label: 'End',
-  },
-  {
-    key: 'participants',
-    label: 'Participants',
-  },
-]
-
-const { data: events } = useEvents()
+const { data: events, isPending: eventsPending } = useEvents()
 
 const state = reactive({
   createPopupVisible: false,
+})
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 })
 </script>
 
@@ -38,33 +25,49 @@ const state = reactive({
           These are the events going on!
         </span>
       </div>
-      <UButton icon="i-heroicons-plus-circle" @click="state.createPopupVisible = true">
-        Create
-      </UButton>
+      <Button label="Create" @click="state.createPopupVisible = true">
+        <template #icon>
+          <span class="i-heroicons-plus-circle mr-2" />
+        </template>
+      </Button>
     </div>
 
     <AdminEventCreatePopup v-model:visible="state.createPopupVisible" />
 
-    <UTable
-      :rows="events" :columns="columns"
-      :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'No Events' }"
+    <div class="flex flex-gap-3 flex-col md:flex-row md:items-center">
+      <InputText v-model="filters.global.value" placeholder="Keyword Search" />
+    </div>
+
+    <DataTable
+      v-model:filters="filters" :value="events" paginator data-key="id" :rows="40"
+      :loading="eventsPending" :global-filter-fields="['name']"
     >
-      <template #name-data="{ row }">
-        <NuxtLink class="font-semibold hover:underline" variant="link" :to="`/admin/events/${row.id}`">
-          {{ row.name }}
-        </NuxtLink>
-      </template>
-      <template #startDateTime-data="{ row }">
-        {{ dayjs.unix(row.startDateTime).format('DD MMM YYYY') }}
-      </template>
-      <template #endDateTime-data="{ row }">
-        {{ dayjs.unix(row.endDateTime).format('DD MMM YYYY') }}
-      </template>
-      <template #participants-data="{ row }">
-        <UBadge>
-          {{ row.attendees.length }}
-        </UBadge>
-      </template>
-    </UTable>
+      <Column field="name" header="Name">
+        <template #body="{ data }">
+          {{ data.name }}
+        </template>
+      </Column>
+
+      <Column field="dateTime" header="Date">
+        <template #body="{ data }">
+          <Badge>
+            {{ dayjs.unix(data.startDateTime).format('lll') }}
+          </Badge>
+          -
+          <Badge>
+            {{ dayjs.unix(data.endDateTime).format('lll') }}
+          </Badge>
+        </template>
+      </Column>
+
+      <Column field="attendees" header="attendees">
+        <template #body="{ data }">
+          {{ data.attendees.length }}
+        </template>
+      </Column>
+
+      <!-- <NuxtLink class="font-semibold hover:underline" variant="link" :to="`/admin/events/${data}`">
+          </NuxtLink> -->
+    </DataTable>
   </div>
 </template>
