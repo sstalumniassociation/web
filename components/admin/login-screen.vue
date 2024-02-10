@@ -128,9 +128,9 @@ function handleFirebaseError(err: FirebaseError) {
 </script>
 
 <template>
-  <Dialog v-model:visible="opened" modal header="Sign in to SSTAA" :closable="false">
+  <Dialog v-model:visible="opened" modal header="Sign in to SSTAA" :closable="false" class="w-full md:w-md mx-4">
     <form class="flex items-start flex-col gap-4" @submit.prevent="login">
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 w-full">
         <label for="email">
           Email
         </label>
@@ -138,14 +138,14 @@ function handleFirebaseError(err: FirebaseError) {
       </div>
 
       <template v-if="state.accountLinked !== null">
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 w-full">
           <label for="password">
             Password
           </label>
           <InputText id="password" v-model="state.password" type="password" placeholder="Your password" required />
         </div>
 
-        <div v-if="state.accountLinked === false" class="flex flex-col gap-2">
+        <div v-if="state.accountLinked === false" class="flex flex-col gap-2 w-full">
           <label for="confirm-password">
             Confirm password
           </label>

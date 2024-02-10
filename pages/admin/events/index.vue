@@ -16,9 +16,9 @@ const filters = ref({
 
 <template>
   <div class="px-4 pt-6 space-y-6">
-    <div class="flex items-center justify-between">
+    <div class="flex items-start justify-between">
       <div>
-        <h1 class="text-2xl font-semibold">
+        <h1 class="text-2xl font-semibold mt-0 mb-2">
           Events
         </h1>
         <span class="opacity-80">
@@ -34,21 +34,23 @@ const filters = ref({
 
     <AdminEventCreatePopup v-model:visible="state.createPopupVisible" />
 
-    <div class="flex flex-gap-3 flex-col md:flex-row md:items-center">
-      <InputText v-model="filters.global.value" placeholder="Keyword Search" />
+    <div class="ml-auto">
+      <InputText v-model="filters.global.value" placeholder="Search" />
     </div>
 
     <DataTable
       v-model:filters="filters" :value="events" paginator data-key="id" :rows="40"
       :loading="eventsPending" :global-filter-fields="['name']"
     >
-      <Column field="name" header="Name">
+      <Column field="name" header="Name" class="min-w-sm">
         <template #body="{ data }">
-          {{ data.name }}
+          <NuxtLink :to="`/admin/events/${data.id}`">
+            <Button link :label="data.name" class="text-left font-semibold p-0" />
+          </NuxtLink>
         </template>
       </Column>
 
-      <Column field="dateTime" header="Date">
+      <Column field="dateTime" header="Date" class="min-w-sm">
         <template #body="{ data }">
           <Badge>
             {{ dayjs.unix(data.startDateTime).format('lll') }}
@@ -60,14 +62,11 @@ const filters = ref({
         </template>
       </Column>
 
-      <Column field="attendees" header="attendees">
+      <Column field="attendees" header="Attendees">
         <template #body="{ data }">
           {{ data.attendees.length }}
         </template>
       </Column>
-
-      <!-- <NuxtLink class="font-semibold hover:underline" variant="link" :to="`/admin/events/${data}`">
-          </NuxtLink> -->
     </DataTable>
   </div>
 </template>
