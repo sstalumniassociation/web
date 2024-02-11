@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
     'nuxt-primevue',
     '@unocss/nuxt',
+    // '@nuxtjs/tailwindcss',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
     '~/modules/build-info',
@@ -40,7 +41,14 @@ export default defineNuxtConfig({
   },
 
   unocss: {
-    icons: true,
+    icons: {
+      scale: 1.2,
+      extraProperties: {
+        'color': 'inherit',
+        // Avoid crushing of icons in crowded situations
+        'min-width': '1.2em',
+      },
+    },
   },
 
   app: {

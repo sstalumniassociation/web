@@ -17,6 +17,9 @@ devDependencies:
   '@growthbook/growthbook':
     specifier: ^0.32.0
     version: 0.32.0
+  '@iconify-json/lucide':
+    specifier: ^1.1.163
+    version: 1.1.163
   '@libsql/client':
     specifier: ^0.4.2
     version: 0.4.2
@@ -29,6 +32,9 @@ devDependencies:
   '@nuxt/ui':
     specifier: ^2.12.3
     version: 2.12.3(idb-keyval@6.2.1)(nuxt@3.9.3)(qrcode@1.5.3)(rollup@2.79.1)(vite@5.0.12)(vue@3.4.15)
+  '@nuxtjs/tailwindcss':
+    specifier: ^6.11.4
+    version: 6.11.4(rollup@2.79.1)
   '@paralleldrive/cuid2':
     specifier: ^2.2.2
     version: 2.2.2
@@ -2649,6 +2655,12 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
+  /@iconify-json/lucide@1.1.163:
+    resolution: {integrity: sha512-zZWM3FJfsUk6RQOrh3rd9DEek4QLCndiFGHyC6sRTMZQgCQ3muI3q20OQJ5QlvX2Md87OKcxPLgFiY2+Z/wA0w==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/collections@1.0.383:
     resolution: {integrity: sha512-ktPmaLdRBMveRXisZW/hxjb/X7sHTVDJn+vR4bXVNSy+iXGkODbODudctB6Wczx0iHstxuwn5TZpjRsCGvo8pw==}
     dependencies:
@@ -3213,7 +3225,7 @@ packages:
       '@iconify-json/heroicons': 1.1.19
       '@nuxt/kit': 3.9.3(rollup@2.79.1)
       '@nuxtjs/color-mode': 3.3.2(rollup@2.79.1)
-      '@nuxtjs/tailwindcss': 6.11.3(rollup@2.79.1)
+      '@nuxtjs/tailwindcss': 6.11.4(rollup@2.79.1)
       '@popperjs/core': 2.11.8
       '@tailwindcss/aspect-ratio': 0.4.2(tailwindcss@3.4.1)
       '@tailwindcss/container-queries': 0.1.1(tailwindcss@3.4.1)
@@ -3322,14 +3334,13 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxtjs/tailwindcss@6.11.3(rollup@2.79.1):
-    resolution: {integrity: sha512-l2iww/zOiHMuNERo6XB9MTJ8MEcq3NHFW/TPWmwPLGdOobV9zYUZ75otqi+mTK+/vgzQTtNXpIe2V0DLuTeb4A==}
+  /@nuxtjs/tailwindcss@6.11.4(rollup@2.79.1):
+    resolution: {integrity: sha512-09cksgZD4seQj054Z/BeiwFg1bzQTol8KPulLDLGnmMTkEi21vj/z+WlXQRpVbN1GS9+oU9tcSsu2ufXCM3DBg==}
     dependencies:
       '@nuxt/kit': 3.9.3(rollup@2.79.1)
       autoprefixer: 10.4.17(postcss@8.4.33)
       chokidar: 3.5.3
       clear-module: 4.1.2
-      colorette: 2.0.20
       consola: 3.2.3
       defu: 6.1.4
       h3: 1.10.0

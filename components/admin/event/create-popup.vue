@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { z } from 'zod'
 
 const visible = defineModel<boolean>('visible')
 const dayjs = useDayjs()
 const toast = useToast()
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const schema = z.object({
   name: z.string()
     .min(1, 'Please enter a name'),
@@ -25,8 +25,6 @@ const schema = z.object({
   path: ['endDateTime'],
 })
 
-type Schema = z.output<typeof schema>
-
 const state = reactive({
   name: '',
   description: '',
@@ -38,14 +36,15 @@ const state = reactive({
 
 const { mutate: createEventMutate, isPending: createEventIsPending } = useCreateEventMutation()
 
-function createEvent({ data }: FormSubmitEvent<Schema>) {
-  createEventMutate(data, {
+function createEvent() {
+  createEventMutate(state, {
     onSuccess() {
       visible.value = false
     },
     onError(err) {
       toast.add({
-        title: err.message,
+        summary: err.message,
+        severity: 'error',
       })
     },
   })
@@ -53,49 +52,55 @@ function createEvent({ data }: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" modal>
+  <Dialog v-model:visible="visible" modal class="w-full mx-4 md:w-auto md:min-w-xl">
     <template #header>
-      <div class="flex justify-between items-start">
-        <div>
-          <h1 class="text-xl font-semibold">
-            Create event
-          </h1>
-          <p class="text-sm opacity-80">
-            Add a new event hosted by SSTAA!
-          </p>
-        </div>
-        <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" @click="visible = false" />
+      <div class="flex flex-col flex-gap-2">
+        <span class="text-xl font-semibold">
+          Create event
+        </span>
+        <span class="text-sm opacity-80">
+          Add a new event hosted by SSTAA!
+        </span>
       </div>
     </template>
 
-    <form :state="state" :schema="schema" class="space-y-7" @submit="createEvent">
-      <div class="space-y-5">
-        <UFormGroup label="Name" name="name">
-          <UInput v-model="state.name" placeholder="SST Homecoming" />
-        </UFormGroup>
-        <UFormGroup label="Description" name="description">
-          <UTextarea
-            v-model="state.description"
-            placeholder="Come back to 1 Technology Drive for our inaugural homecoming!"
-          />
-        </UFormGroup>
-        <UFormGroup label="Location" name="location">
-          <UInput v-model="state.location" placeholder="1 Technology Drive, Singapore" />
-        </UFormGroup>
-        <UFormGroup label="Badge image" name="badgeImage">
-          <UInput v-model="state.badgeImage" type="url" placeholder="https://app.sstaa.org/cdn/logo.png" />
-        </UFormGroup>
-        <UFormGroup label="Start" name="startDateTime">
-          <UInput v-model="state.startDateTime" after="" type="datetime-local" />
-        </UFormGroup>
-        <UFormGroup label="End" name="endDateTime">
-          <UInput v-model="state.endDateTime" type="datetime-local" />
-        </UFormGroup>
+    <form class="flex flex-col space-y-3 mt-2" @submit.prevent="createEvent">
+      <InputText v-model="state.name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" />
+
+      <Textarea
+        v-model="state.description" rows="5"
+        placeholder="Description (example: Come back to 1 Technology Drive for our inaugural homecoming!)"
+        class="w-full resize-y"
+      />
+
+      <span class="font-semibold pt-2">Event start</span>
+
+      <div class="flex flex-gap-3">
+        <Calendar v-model="state.startDateTime" class="w-3/4" placeholder="Date" />
+        <Calendar v-model="state.startDateTime" time-only show-time hour-format="12" placeholder="Time" />
       </div>
 
-      <UButton type="submit" :loading="createEventIsPending">
-        Create event
-      </UButton>
+      <span class="font-semibold pt-2">Event end</span>
+
+      <div class="flex flex-gap-3">
+        <Calendar v-model="state.endDateTime" class="w-3/4" placeholder="End date" />
+        <Calendar v-model="state.endDateTime" time-only show-time hour-format="12" placeholder="End time" />
+      </div>
+
+      <span class="font-semibold pt-2">Miscellaneous</span>
+
+      <InputText
+        v-model="state.location" placeholder="Location (example: 1 Technology Drive, Singapore)"
+        class="w-full"
+      />
+      <InputText
+        v-model="state.badgeImage" type="url"
+        placeholder="Badge URL (example: https://app.sstaa.org/cdn/logo.png)" class="w-full"
+      />
+
+      <div class="ml-auto pt-4">
+        <Button type="submit" :loading="createEventIsPending" label="Create event" />
+      </div>
     </form>
   </Dialog>
 </template>

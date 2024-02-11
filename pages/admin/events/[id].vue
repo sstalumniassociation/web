@@ -31,21 +31,21 @@ const links = computed(() => [
   },
 ])
 
+const dropdownMenu = ref()
+
 const dropdownItems = [
-  [
-    {
-      label: 'Download analytics',
-      async click() {
-        await downloadAnalytics()
-      },
+  {
+    label: 'Download analytics',
+    async click() {
+      await downloadAnalytics()
     },
-    {
-      label: 'Delete',
-      click() {
-        state.value.showDeleteConfirmation = true
-      },
+  },
+  {
+    label: 'Delete',
+    command() {
+      state.value.showDeleteConfirmation = true
     },
-  ],
+  },
 ]
 
 type CsvRow = Pick<User, 'name' | 'email' | 'memberType' | 'graduationYear'>
@@ -59,7 +59,7 @@ async function parseCsvFile(event: Event) {
   const target = event.target as HTMLInputElement
   if (!target.files || target.files.length < 1) {
     return toast.add({
-      title: 'No file selected',
+      summary: 'No file selected',
     })
   }
 
@@ -88,8 +88,8 @@ async function parseCsvFile(event: Event) {
     error(error) {
       console.error(error)
       toast.add({
-        title: 'Error parsing CSV file',
-        description: error.message,
+        summary: 'Error parsing CSV file',
+        detail: error.message,
       })
     },
     complete() {
@@ -108,16 +108,16 @@ function uploadUsers() {
         {
           onSuccess() {
             toast.add({
-              color: 'green',
-              title: 'Users added',
-              description: 'Users have been added to the event',
+              severity: 'success',
+              summary: 'Users added',
+              detail: 'Users have been added to the event',
             })
           },
           onError(error) {
             console.error(error)
             toast.add({
-              title: 'Error adding users to event',
-              description: error.message,
+              summary: 'Error adding users to event',
+              detail: error.message,
             })
           },
         },
@@ -126,8 +126,8 @@ function uploadUsers() {
     onError(error) {
       console.error(error)
       toast.add({
-        title: 'Error adding users to event',
-        description: error.message,
+        summary: 'Error adding users to event',
+        detail: error.message,
       })
     },
   })
@@ -183,47 +183,60 @@ async function downloadAnalytics() {
   element.click()
   document.body.removeChild(element)
 }
+
+function toggleDropdown(event: Event) {
+  dropdownMenu.value.toggle(event)
+}
 </script>
 
 <template>
   <div class="p-4">
     <div class="flex justify-between items-center">
       <div>
-        <UBreadcrumb :links="links" />
+        <Breadcrumb :model="links" />
       </div>
 
       <div class="flex gap-3 items-center">
-        <UButton @click="downloadRollCall">
-          Download roll call
-        </UButton>
+        <Button label="Download roll call" @click="downloadRollCall" />
 
-        <UDropdown :items="dropdownItems">
-          <UButton color="white" label="More" trailing-icon="i-heroicons-chevron-down-20-solid" />
-        </UDropdown>
+        <Button type="button" aria-haspopup="true" aria-controls="overlay_menu" icon="true" @click="toggleDropdown">
+          <template #icon>
+            <div class="i-lucide-more-horizontal mx-2" />
+          </template>
+        </Button>
+
+        <Menu id="overlay_menu" ref="dropdownMenu" :model="dropdownItems" popup />
+        <!--
+        <Dropdown :items="dropdownItems">
+          <Button color="white" label="More" trailing-icon="i-heroicons-chevron-down-20-solid" />
+        </Dropdown> -->
       </div>
 
-      <UModal v-model="state.showDeleteConfirmation">
-        <UCard>
-          <template #header>
-            <span class="font-semibold">
-              Are you sure?
-            </span>
-          </template>
+      <Dialog v-model:visible="state.showDeleteConfirmation" modal header="Are you sure?" class="mx-4">
+        <div class="flex flex-col space-y-6">
+          <span>
+            This action is irreversible. All event data will be deleted. All users will no longer be associated to this
+            event.
+          </span>
 
-          This action is irreversible. All event data will be deleted. All users will no longer be associated to this event.
+          <Message severity="warn" :closable="false">
+            Enter the event name below to confirm deletion.
+          </Message>
 
-          <template #footer>
-            <div class="space-x-4">
-              <UButton :pending="deleteEventIsPending" @click="deleteEvent">
-                Delete
-              </UButton>
-              <UButton variant="ghost" class="bg-transparent" @click="state.showDeleteConfirmation = false">
-                Cancel
-              </UButton>
-            </div>
-          </template>
-        </UCard>
-      </UModal>
+          <InputText :placeholder="event?.name" />
+        </div>
+
+        <template #footer>
+          <div class="space-x-4">
+            <Button :pending="deleteEventIsPending" severity="danger" @click="deleteEvent">
+              Delete
+            </Button>
+            <Button variant="ghost" text @click="state.showDeleteConfirmation = false">
+              Cancel
+            </Button>
+          </div>
+        </template>
+      </Dialog>
     </div>
 
     <div class="py-8 grid grid-cols-1 md:grid-cols-2 gap-4">

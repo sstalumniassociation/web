@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import dark from '~/assets/themes/aura-dark-pink/theme.css?url'
-import light from '~/assets/themes/aura-light-pink/theme.css?url'
+import dark from 'primevue/resources/themes/aura-dark-purple/theme.css?url'
+import light from 'primevue/resources/themes/aura-light-purple/theme.css?url'
 
 const isDark = useDark()
 
@@ -41,5 +41,10 @@ useHead({
 <style>
 html{
   font-size: 14px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--surface-0);
 }
 </style>
