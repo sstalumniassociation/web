@@ -59,33 +59,44 @@ function updateEvent({ data }: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :state="state" :schema="schema" class="space-y-7" @submit="updateEvent">
-    <div class="space-y-5">
-      <UFormGroup label="Name" name="name">
-        <UInput v-model="state.name" placeholder="SST Homecoming" />
-      </UFormGroup>
-      <UFormGroup label="Description" name="description">
-        <UTextarea
-          v-model="state.description"
-          placeholder="Come back to 1 Technology Drive for our inaugural homecoming!"
-        />
-      </UFormGroup>
-      <UFormGroup label="Location" name="location">
-        <UInput v-model="state.location" placeholder="1 Technology Drive, Singapore" />
-      </UFormGroup>
-      <UFormGroup label="Badge image" name="badgeImage">
-        <UInput v-model="state.badgeImage" type="url" placeholder="https://app.sstaa.org/cdn/logo.png" />
-      </UFormGroup>
-      <UFormGroup label="Start" name="startDateTime">
-        <UInput v-model="state.startDateTime" after="" type="datetime-local" />
-      </UFormGroup>
-      <UFormGroup label="End" name="endDateTime">
-        <UInput v-model="state.endDateTime" type="datetime-local" />
-      </UFormGroup>
+  <form class="flex flex-col space-y-3" @submit.prevent="updateEvent">
+    <InputText v-model="state.name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" />
+
+    <Textarea
+      v-model="state.description" rows="5"
+      placeholder="Description (example: Come back to 1 Technology Drive for our inaugural homecoming!)"
+      class="w-full resize-y"
+    />
+
+    <span class="font-semibold pt-2">Event start</span>
+
+    <div class="flex flex-gap-3">
+      <Calendar v-model="state.startDateTime" class="w-3/4" placeholder="Date" />
+      <Calendar v-model="state.startDateTime" time-only show-time hour-format="12" placeholder="Time" />
     </div>
 
-    <UButton type="submit" :loading="updateEventIsPending">
-      Update
-    </UButton>
-  </UForm>
+    <span class="font-semibold pt-2">Event end</span>
+
+    <div class="flex flex-gap-3">
+      <Calendar v-model="state.endDateTime" class="w-3/4" placeholder="End date" />
+      <Calendar v-model="state.endDateTime" time-only show-time hour-format="12" placeholder="End time" />
+    </div>
+
+    <span class="font-semibold pt-2">Miscellaneous</span>
+
+    <InputText
+      v-model="state.location" placeholder="Location (example: 1 Technology Drive, Singapore)"
+      class="w-full"
+    />
+    <InputText
+      v-model="state.badgeImage" type="url"
+      placeholder="Badge URL (example: https://app.sstaa.org/cdn/logo.png)" class="w-full"
+    />
+
+    <div>
+      <Button type="submit" :loading="updateEventIsPending" class="mt-3">
+        Update
+      </Button>
+    </div>
+  </form>
 </template>

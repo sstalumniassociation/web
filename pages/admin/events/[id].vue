@@ -24,7 +24,7 @@ const showPending = computed(() => createUsersIsPending.value || addEventUsersIs
 const links = computed(() => [
   {
     label: 'Events',
-    to: '/admin/events',
+    route: '/admin/events',
   },
   {
     label: `${event.value?.name}`,
@@ -133,6 +133,7 @@ function uploadUsers() {
   })
 }
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 function deleteEvent() {
   deleteEventMutate(undefined, {
     onSuccess() {
@@ -191,10 +192,17 @@ function toggleDropdown(event: Event) {
 
 <template>
   <div class="p-4">
-    <div class="flex justify-between items-center">
-      <div>
-        <Breadcrumb :model="links" />
-      </div>
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+      <Breadcrumb :model="links" class="px-0">
+        <template #item="{ item }">
+          <NuxtLink v-if="item.route" :to="item.route">
+            <Button link :label="(item.label as string)" class="px-0" />
+          </NuxtLink>
+          <span v-else>
+            {{ item.label }}
+          </span>
+        </template>
+      </Breadcrumb>
 
       <div class="flex gap-3 items-center">
         <Button label="Download roll call" @click="downloadRollCall" />
@@ -206,10 +214,6 @@ function toggleDropdown(event: Event) {
         </Button>
 
         <Menu id="overlay_menu" ref="dropdownMenu" :model="dropdownItems" popup />
-        <!--
-        <Dropdown :items="dropdownItems">
-          <Button color="white" label="More" trailing-icon="i-heroicons-chevron-down-20-solid" />
-        </Dropdown> -->
       </div>
 
       <Dialog v-model:visible="state.showDeleteConfirmation" modal header="Are you sure?" class="mx-4">
@@ -228,7 +232,7 @@ function toggleDropdown(event: Event) {
 
         <template #footer>
           <div class="space-x-4">
-            <Button :pending="deleteEventIsPending" severity="danger" @click="deleteEvent">
+            <Button :pending="deleteEventIsPending" severity="danger">
               Delete
             </Button>
             <Button variant="ghost" text @click="state.showDeleteConfirmation = false">
@@ -265,14 +269,14 @@ function toggleDropdown(event: Event) {
           Attendees
         </h2>
 
-        <UFormGroup label="Add attendees">
-          <input as="input" type="file" @change="parseCsvFile">
-        </UFormGroup>
+        <input as="input" type="file" @change="parseCsvFile">
 
         <div v-if="userUploadPreview.length > 0" class="space-y-4">
           <span class="font-semibold">CSV preview</span>
 
-          <UTable :rows="userUploadPreview" />
+          <DataTable :value="userUploadPreview">
+            <Column field="name" header="Name" />
+          </DataTable>
 
           <UAlert
             variant="subtle" color="yellow" title="Info"
@@ -284,7 +288,12 @@ function toggleDropdown(event: Event) {
           </UButton>
         </div>
 
-        <UTable v-else-if="event?.attendees" :rows="event.attendees" />
+        <DataTable v-else-if="event?.attendees" :value="event.attendees">
+          <Column field="admissionKey" header="Admission Key" />
+          <Column field="name" header="Name" />
+          <Column field="email" header="Email" />
+          <Column field="id" header="ID" />
+        </DataTable>
       </section>
     </div>
   </div>

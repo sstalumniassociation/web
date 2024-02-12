@@ -56,8 +56,16 @@ const state = reactive({
   showLoginScreen: false,
 })
 
+onMounted(() => {
+  const loggedOut = authLoaded.value && !auth.value?.uid
+
+  setTimeout(() => {
+    state.showLoginScreen = loggedOut
+  }, 1000)
+})
+
 watch([authLoaded, auth], (values, _, onCleanup) => {
-  const loggedOut = values[0] && !values[1]
+  const loggedOut = values[0] && !values[1]?.uid
 
   const timeout = setTimeout(() => {
     state.showLoginScreen = loggedOut
