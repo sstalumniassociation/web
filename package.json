@@ -27,6 +27,7 @@
     "@newrelic/browser-agent": "^1.251.1",
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^2.12.3",
+    "@nuxtjs/critters": "^0.6.0",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@paralleldrive/cuid2": "^2.2.2",
     "@simplewebauthn/browser": "^8.3.7",

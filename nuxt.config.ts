@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
     'nuxt-primevue',
     '@unocss/nuxt',
-    // '@nuxtjs/tailwindcss',
+    '@nuxtjs/critters',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
     '~/modules/build-info',
@@ -94,6 +94,7 @@ export default defineNuxtConfig({
       navigateFallback: '/',
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       navigateFallbackDenylist: [
+        /^\/admin/, // No caching on admin
         /^\/pass/, // No caching on passes
         /^\/cdn/, // No caching on CDN
       ],
