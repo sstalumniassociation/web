@@ -5,7 +5,6 @@ const visible = defineModel<boolean>('visible')
 const dayjs = useDayjs()
 const toast = useToast()
 
-// eslint-disable-next-line unused-imports/no-unused-vars
 const schema = z.object({
   name: z.string()
     .min(1, 'Please enter a name'),
@@ -32,11 +31,18 @@ const state = reactive({
   badgeImage: '',
   startDateTime: '',
   endDateTime: '',
+  errors: {},
 })
 
 const { mutate: createEventMutate, isPending: createEventIsPending } = useCreateEventMutation()
 
-function createEvent() {
+async function createEvent() {
+  const result = await schema.safeParseAsync(state)
+  if (!result.success) {
+    state.errors = result.error.formErrors.fieldErrors
+    return
+  }
+
   createEventMutate(state, {
     onSuccess() {
       visible.value = false
@@ -65,10 +71,11 @@ function createEvent() {
     </template>
 
     <form class="flex flex-col space-y-3 mt-2" @submit.prevent="createEvent">
-      <InputText v-model="state.name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" />
+      <InputText v-model="state.name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" :invalid="state.errors.name" />
 
       <Textarea
-        v-model="state.description" rows="5"
+        v-model="state.description"
+        rows="5"
         placeholder="Description (example: Come back to 1 Technology Drive for our inaugural homecoming!)"
         class="w-full resize-y"
       />

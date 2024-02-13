@@ -129,17 +129,14 @@ devDependencies:
     specifier: ^3.9.3
     version: 3.9.3(eslint@8.56.0)(idb-keyval@6.2.1)(rollup@2.79.1)(typescript@5.3.3)(vite@5.0.12)(vue-tsc@1.8.27)
   nuxt-primevue:
-    specifier: ^0.2.2
-    version: 0.2.2(rollup@2.79.1)(vue@3.4.15)
+    specifier: ^0.3.0
+    version: 0.3.0(rollup@2.79.1)(vue@3.4.15)
   nuxt-vuefire:
     specifier: ^1.0.1
     version: 1.0.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22)
   papaparse:
     specifier: ^5.4.1
     version: 5.4.1
-  primevue:
-    specifier: ^3.47.2
-    version: 3.47.2(vue@3.4.15)
   qrcode:
     specifier: ^1.5.3
     version: 1.5.3
@@ -10011,11 +10008,11 @@ packages:
       - vue
     dev: true
 
-  /nuxt-primevue@0.2.2(rollup@2.79.1)(vue@3.4.15):
-    resolution: {integrity: sha512-OfXDe5V0WovXt9b2GOjYV1kyVXmcFfj+6DqVs1pbeP4EyF2H0SbIMoUTT8Ax+sXT/tQ+mXr3qTFD9Y6IL+Y9og==}
+  /nuxt-primevue@0.3.0(rollup@2.79.1)(vue@3.4.15):
+    resolution: {integrity: sha512-sx5JZjqQ7H96FH5nWsL4Ypk4amkUz5nHsoxAiyc7oI3sSP54wfXPo5rjB4GKI50Ky7HPdE2CIWs137jRl6RkMw==}
     dependencies:
       '@nuxt/kit': 3.9.3(rollup@2.79.1)
-      primevue: 3.47.2(vue@3.4.15)
+      primevue: 3.48.1(vue@3.4.15)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -10955,8 +10952,8 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     dev: true
 
-  /primevue@3.47.2(vue@3.4.15):
-    resolution: {integrity: sha512-/vgIhc2vxNW8amBGBJX/NMBgWi/THOwT0DIPgy/aswJ86x+uwLwGtjNz22c/uSE5UkHu4E5rpktWOJtFvTbRPg==}
+  /primevue@3.48.1(vue@3.4.15):
+    resolution: {integrity: sha512-lyJ+E0ZCv2pR9jIpdPLBysU8zB2hOKrN7q78orloWelPx05zSYoMVKAWaqKTHNpunD52xffjaqovt1y6B/9XoQ==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
