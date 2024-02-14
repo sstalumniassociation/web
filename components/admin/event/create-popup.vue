@@ -1,49 +1,46 @@
 <script setup lang="ts">
 import { z } from 'zod'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
 
 const visible = defineModel<boolean>('visible')
 const dayjs = useDayjs()
 const toast = useToast()
 
-const schema = z.object({
+const schema = toTypedSchema(z.object({
   name: z.string()
     .min(1, 'Please enter a name'),
   description: z.string(),
   location: z.string(),
   badgeImage: z.string()
     .url('Please enter a URL'),
-  startDateTime: z.string()
+  startDateTime: z.date()
     .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future')
-    .transform(d => dayjs(d).unix().toString()),
-  endDateTime: z.string()
-    .transform(d => dayjs(d).unix().toString()),
+    .transform(d => dayjs(d).unix()),
+  endDateTime: z.date()
+    .transform(d => dayjs(d).unix()),
 }).refine((val) => {
-  return Number.parseInt(val.startDateTime) < Number.parseInt(val.endDateTime)
+  return val.startDateTime < val.endDateTime
 }, {
   message: 'Event must end after it starts',
   path: ['endDateTime'],
+}))
+
+const { defineField, handleSubmit, errors } = useForm({
+  validationSchema: schema,
 })
 
-const state = reactive({
-  name: '',
-  description: '',
-  location: '',
-  badgeImage: '',
-  startDateTime: '',
-  endDateTime: '',
-  errors: {},
-})
+const [name, nameProps] = defineField('name')
+const [description, descriptionProps] = defineField('description')
+const [location, locationProps] = defineField('location')
+const [badgeImage, badgeImageProps] = defineField('badgeImage')
+const [startDateTime] = defineField('startDateTime')
+const [endDateTime] = defineField('endDateTime')
 
 const { mutate: createEventMutate, isPending: createEventIsPending } = useCreateEventMutation()
 
-async function createEvent() {
-  const result = await schema.safeParseAsync(state)
-  if (!result.success) {
-    state.errors = result.error.formErrors.fieldErrors
-    return
-  }
-
-  createEventMutate(state, {
+const createEvent = handleSubmit((values) => {
+  createEventMutate(values, {
     onSuccess() {
       visible.value = false
     },
@@ -54,7 +51,7 @@ async function createEvent() {
       })
     },
   })
-}
+})
 </script>
 
 <template>
@@ -70,43 +67,57 @@ async function createEvent() {
       </div>
     </template>
 
-    <form class="flex flex-col space-y-3 mt-2" @submit.prevent="createEvent">
-      <InputText v-model="state.name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" :invalid="state.errors.name" />
+    <form class="flex flex-col space-y-3 mt-2" @submit="createEvent">
+      <InputText v-model="name" autofocus placeholder="Name (example: SST Homecoming)" class="w-full" v-bind="nameProps" :invalid="!!errors.name" />
+      <small class="p-error">{{ errors.name }}</small>
 
       <Textarea
-        v-model="state.description"
+        v-model="description"
+        v-bind="descriptionProps"
         rows="5"
         placeholder="Description (example: Come back to 1 Technology Drive for our inaugural homecoming!)"
         class="w-full resize-y"
+        :invalid="!!errors.description"
       />
+      <small class="p-error">{{ errors.description }}</small>
 
       <span class="font-semibold pt-2">Event start</span>
 
       <div class="flex flex-gap-3">
-        <Calendar v-model="state.startDateTime" class="w-3/4" placeholder="Date" />
-        <Calendar v-model="state.startDateTime" time-only show-time hour-format="12" placeholder="Time" />
+        <Calendar v-model="startDateTime" class="w-3/4" placeholder="Date" :invalid="!!errors.startDateTime" />
+        <Calendar v-model="startDateTime" time-only show-time hour-format="12" placeholder="Time" :invalid="!!errors.startDateTime" />
       </div>
+      <small class="p-error">{{ errors.startDateTime }}</small>
 
       <span class="font-semibold pt-2">Event end</span>
 
       <div class="flex flex-gap-3">
-        <Calendar v-model="state.endDateTime" class="w-3/4" placeholder="End date" />
-        <Calendar v-model="state.endDateTime" time-only show-time hour-format="12" placeholder="End time" />
+        <Calendar v-model="endDateTime" class="w-3/4" placeholder="End date" :invalid="!!errors.endDateTime" />
+        <Calendar v-model="endDateTime" time-only show-time hour-format="12" placeholder="End time" :invalid="!!errors.endDateTime" />
       </div>
+      <small class="p-error">{{ errors.endDateTime }}</small>
 
       <span class="font-semibold pt-2">Miscellaneous</span>
 
       <InputText
-        v-model="state.location" placeholder="Location (example: 1 Technology Drive, Singapore)"
+        v-bind="locationProps"
+        v-model="location" placeholder="Location (example: 1 Technology Drive, Singapore)"
         class="w-full"
+        :invalid="!!errors.location"
       />
+      <small class="p-error">{{ errors.location }}</small>
+
       <InputText
-        v-model="state.badgeImage" type="url"
+        v-bind="badgeImageProps"
+        v-model="badgeImage" type="url"
+        :invalid="!!errors.badgeImage"
         placeholder="Badge URL (example: https://app.sstaa.org/cdn/logo.png)" class="w-full"
       />
+      <small class="p-error">{{ errors.badgeImage }}</small>
 
       <div class="ml-auto pt-4">
         <Button type="submit" :loading="createEventIsPending" label="Create event" />
+        <Button type="reset" label="Reset" outlined />
       </div>
     </form>
   </Dialog>

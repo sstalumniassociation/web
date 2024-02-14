@@ -1,3 +1,4 @@
+import { validatePassword } from 'firebase/auth'
 import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
@@ -13,11 +14,13 @@ export default defineProtectedEventHandler(async (event) => {
         const res = await $fetch.raw(val, { method: 'GET' })
         return res.headers.get('content-type')?.includes('image')
       }, 'URL provided not a valid image'),
-    startDateTime: z.string()
-      .refine(val => dayjs(val).isValid(), 'Date provided not valid')
-      .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future'),
-    endDateTime: z.string()
-      .refine(val => dayjs(val).isValid()),
+    startDateTime: z.number()
+      .refine(val => dayjs.unix(val).isValid(), 'Date provided not valid')
+      .refine(val => dayjs.unix(val).isAfter(dayjs()), 'Start date must be in the future')
+      .transform(val => dayjs.unix(val).toISOString()),
+    endDateTime: z.number()
+      .refine(val => dayjs.unix(val).isValid())
+      .transform(val => dayjs.unix(val).toISOString()),
   }).refine((val) => {
     return dayjs(val.startDateTime).isBefore(val.endDateTime)
   }, {
