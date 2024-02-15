@@ -22,7 +22,9 @@ export default defineNuxtConfig({
 
   modules: [
     'nuxt-vuefire',
-    '@nuxt/ui',
+    'nuxt-primevue',
+    '@unocss/nuxt',
+    '@nuxtjs/critters',
     '@vite-pwa/nuxt',
     '@vueuse/nuxt',
     '~/modules/build-info',
@@ -30,6 +32,23 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
+  },
+
+  primevue: {
+    options: {
+      ripple: false,
+    },
+  },
+
+  unocss: {
+    icons: {
+      scale: 1.2,
+      extraProperties: {
+        'color': 'inherit',
+        // Avoid crushing of icons in crowded situations
+        'min-width': '1.2em',
+      },
+    },
   },
 
   app: {
@@ -75,6 +94,7 @@ export default defineNuxtConfig({
       navigateFallback: '/',
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       navigateFallbackDenylist: [
+        /^\/admin/, // No caching on admin
         /^\/pass/, // No caching on passes
         /^\/cdn/, // No caching on CDN
       ],

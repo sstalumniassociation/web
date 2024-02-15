@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { useIsCurrentUserLoaded } from 'vuefire'
+
+const user = useCurrentUser()
+const authLoaded = useIsCurrentUserLoaded()
 </script>
 
 <template>
-  <div class="mx-auto container p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-    Imagine something here
+  <div class="mx-auto container p-4">
+    User debug:
+    <br>
+    <pre>{{ JSON.stringify({ user, authLoaded }, null, 2) }}</pre>
   </div>
 </template>

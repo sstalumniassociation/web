@@ -17,9 +17,11 @@ export function useUser() {
 }
 
 export function useUsers() {
+  const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.users,
     queryFn: () => $api(`/api/user`),
+    enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
