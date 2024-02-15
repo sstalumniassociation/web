@@ -1,4 +1,3 @@
-import { validatePassword } from 'firebase/auth'
 import { z } from 'zod'
 import { events } from '~/server/db/schema'
 
