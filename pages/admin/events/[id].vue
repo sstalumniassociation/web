@@ -36,7 +36,7 @@ const dropdownMenu = ref()
 const dropdownItems = [
   {
     label: 'Download analytics',
-    async click() {
+    async command() {
       await downloadAnalytics()
     },
   },
@@ -258,7 +258,7 @@ function toggleDropdown(event: Event) {
         </div>
 
         <template v-if="eventIsPending">
-          <USkeleton v-for="idx in 5" :key="idx" class="w-full h-8" />
+          <Skeleton v-for="idx in 5" :key="idx" class="w-full" height="2rem" />
         </template>
 
         <AdminEventUpdateForm v-else-if="event" v-bind="event" />
@@ -275,23 +275,28 @@ function toggleDropdown(event: Event) {
           <span class="font-semibold">CSV preview</span>
 
           <DataTable :value="userUploadPreview">
-            <Column field="name" header="Name" />
+            <Column field="name" header="Name" class="min-w-xs" />
+            <Column field="email" header="Email" class="min-w-xs" />
+            <Column field="graduationYear" header="Graduation Year" />
+            <Column field="memberType" header="Member Type" />
           </DataTable>
 
-          <UAlert
-            variant="subtle" color="yellow" title="Info"
-            description="If a user with the specified email already exists, a new user will not be created. The existing user will be added to the event."
-          />
+          <Message
+            severity="warn"
+            :closable="false"
+          >
+            If a user with the specified email already exists, a new user will not be created. The existing user will be added to the event.
+          </Message>
 
-          <UButton :pending="showPending" @click="uploadUsers">
+          <Button :pending="showPending" @click="uploadUsers">
             Add users
-          </UButton>
+          </Button>
         </div>
 
         <DataTable v-else-if="event?.attendees" :value="event.attendees">
-          <Column field="admissionKey" header="Admission Key" />
-          <Column field="name" header="Name" />
-          <Column field="email" header="Email" />
+          <Column field="admissionKey" header="Admission Key" class="min-w-xs" />
+          <Column field="name" header="Name" class="min-w-xs" />
+          <Column field="email" header="Email" class="min-w-xs" />
           <Column field="id" header="ID" />
         </DataTable>
       </section>

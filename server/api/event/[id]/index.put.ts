@@ -14,8 +14,7 @@ const updateEventRequestBody = z.object({
       return res.headers.get('content-type')?.includes('image')
     }, 'URL provided not a valid image'),
   startDateTime: z.string()
-    .refine(val => dayjs(val).isValid(), 'Date provided not valid')
-    .refine(val => dayjs(val).isAfter(dayjs()), 'Start date must be in the future'),
+    .refine(val => dayjs(val).isValid(), 'Date provided not valid'),
   endDateTime: z.string()
     .refine(val => dayjs(val).isValid()),
 }).refine((val) => {
@@ -31,6 +30,7 @@ export default defineProtectedEventHandler(async (event) => {
   const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
+      message: result.error,
       statusCode: 400,
       statusMessage: 'Bad request',
     })

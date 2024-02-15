@@ -115,7 +115,7 @@ const createEvent = handleSubmit((values) => {
       />
       <small class="p-error">{{ errors.badgeImage }}</small>
 
-      <div class="ml-auto pt-4">
+      <div class="ml-auto pt-4 space-x-2">
         <Button type="submit" :loading="createEventIsPending" label="Create event" />
         <Button type="reset" label="Reset" outlined />
       </div>

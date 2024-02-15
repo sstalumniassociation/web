@@ -41,7 +41,7 @@ useHeadSafe({
   },
   meta: [
     {
-      name: 'color-scheme',
+      formName: 'color-scheme',
       content: 'dark',
     },
   ],

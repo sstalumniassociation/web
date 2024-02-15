@@ -26,7 +26,6 @@
     "@libsql/client": "^0.4.2",
     "@newrelic/browser-agent": "^1.251.1",
     "@nuxt/devtools": "latest",
-    "@nuxt/ui": "^2.12.3",
     "@nuxtjs/critters": "^0.6.0",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@paralleldrive/cuid2": "^2.2.2",
