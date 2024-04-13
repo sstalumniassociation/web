@@ -39,8 +39,8 @@ devDependencies:
     specifier: ^2.2.2
     version: 2.2.2
   '@simplewebauthn/browser':
-    specifier: ^8.3.7
-    version: 8.3.7
+    specifier: ^10.0.0
+    version: 10.0.0
   '@simplewebauthn/server':
     specifier: ^8.3.7
     version: 8.3.7
@@ -3931,10 +3931,10 @@ packages:
       '@sigstore/protobuf-specs': 0.2.1
     dev: true
 
-  /@simplewebauthn/browser@8.3.7:
-    resolution: {integrity: sha512-ZtRf+pUEgOCvjrYsbMsJfiHOdKcrSZt2zrAnIIpfmA06r0FxBovFYq0rJ171soZbe13KmWzAoLKjSxVW7KxCdQ==}
+  /@simplewebauthn/browser@10.0.0:
+    resolution: {integrity: sha512-hG0JMZD+LiLUbpQcAjS4d+t4gbprE/dLYop/CkE01ugU/9sKXflxV5s0DRjdz3uNMFecatRfb4ZLG3XvF8m5zg==}
     dependencies:
-      '@simplewebauthn/typescript-types': 8.3.4
+      '@simplewebauthn/types': 10.0.0
     dev: true
 
   /@simplewebauthn/server@8.3.7:
@@ -3952,6 +3952,10 @@ packages:
       cross-fetch: 4.0.0
     transitivePeerDependencies:
       - encoding
+    dev: true
+
+  /@simplewebauthn/types@10.0.0:
+    resolution: {integrity: sha512-SFXke7xkgPRowY2E+8djKbdEznTVnD5R6GO7GPTthpHrokLvNKw8C3lFZypTxLI7KkCfGPfhtqB3d7OVGGa9jQ==}
     dev: true
 
   /@simplewebauthn/typescript-types@8.3.4:
