@@ -30,7 +30,7 @@
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@paralleldrive/cuid2": "^2.2.2",
     "@simplewebauthn/browser": "^8.3.7",
-    "@simplewebauthn/server": "^8.3.7",
+    "@simplewebauthn/server": "^10.0.0",
     "@tanstack/query-core": "^5.17.19",
     "@tanstack/query-persist-client-core": "^5.17.19",
     "@tanstack/vue-query": "^5.17.19",
