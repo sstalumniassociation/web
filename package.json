@@ -42,7 +42,7 @@
     "@vueuse/core": "^10.7.2",
     "@vueuse/integrations": "^10.7.2",
     "@vueuse/nuxt": "^10.7.2",
-    "better-sqlite3": "^9.3.0",
+    "better-sqlite3": "^10.0.0",
     "bumpp": "^9.3.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.1",
