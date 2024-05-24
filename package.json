@@ -59,7 +59,7 @@
     "lint-staged": "^15.2.0",
     "material-icons": "^1.13.12",
     "nuxt": "^3.9.3",
-    "nuxt-primevue": "^0.3.0",
+    "nuxt-primevue": "^3.0.0",
     "nuxt-vuefire": "^1.0.1",
     "papaparse": "^5.4.1",
     "qrcode": "^1.5.3",

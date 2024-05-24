@@ -129,8 +129,8 @@ devDependencies:
     specifier: ^3.9.3
     version: 3.9.3(eslint@8.56.0)(idb-keyval@6.2.1)(rollup@2.79.1)(typescript@5.3.3)(vite@5.0.12)(vue-tsc@2.0.6)
   nuxt-primevue:
-    specifier: ^0.3.0
-    version: 0.3.0(rollup@2.79.1)(vue@3.4.15)
+    specifier: ^3.0.0
+    version: 3.0.0(rollup@2.79.1)(vue@3.4.15)
   nuxt-vuefire:
     specifier: ^1.0.1
     version: 1.0.1(@firebase/app-types@0.9.0)(firebase@10.7.2)(rollup@2.79.1)(vuefire@3.1.22)
@@ -9795,11 +9795,12 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /nuxt-primevue@0.3.0(rollup@2.79.1)(vue@3.4.15):
-    resolution: {integrity: sha512-sx5JZjqQ7H96FH5nWsL4Ypk4amkUz5nHsoxAiyc7oI3sSP54wfXPo5rjB4GKI50Ky7HPdE2CIWs137jRl6RkMw==}
+  /nuxt-primevue@3.0.0(rollup@2.79.1)(vue@3.4.15):
+    resolution: {integrity: sha512-MC3ubLTF0hzUEsQ2gYzzlzaW1gXN9/wrpbWnS9xwK47TWw1gcfim8idu5mcOx+l66CPAtTLOR1QJahkDc4m9XA==}
     dependencies:
       '@nuxt/kit': 3.9.3(rollup@2.79.1)
-      primevue: 3.48.1(vue@3.4.15)
+      pathe: 1.1.2
+      primevue: 3.52.0(vue@3.4.15)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -10731,8 +10732,8 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     dev: true
 
-  /primevue@3.48.1(vue@3.4.15):
-    resolution: {integrity: sha512-lyJ+E0ZCv2pR9jIpdPLBysU8zB2hOKrN7q78orloWelPx05zSYoMVKAWaqKTHNpunD52xffjaqovt1y6B/9XoQ==}
+  /primevue@3.52.0(vue@3.4.15):
+    resolution: {integrity: sha512-HLOVP5YI0ArFKUhIyfZsWmTNMaBYNCBWC/3DYvdd/Po4LY5/WXf7yIYvArE2q/3OuwSXJXvjlR8UNQeJYRSQog==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
