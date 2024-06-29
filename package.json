@@ -1,8 +1,8 @@
 {
   "name": "@sstalumniassociation/monorepo",
+  "type": "module",
   "version": "0.1.6",
   "packageManager": "pnpm@9.4.0",
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "dotnet run --project ./SSTAlumniAssociation.AppHost/",
