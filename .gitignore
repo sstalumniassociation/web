@@ -25,3 +25,7 @@ logs
 
 # ESLint
 .eslintcache
+
+# .NET
+bin
+obj
