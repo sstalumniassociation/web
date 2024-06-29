@@ -16,13 +16,9 @@ export default defineNuxtConfig({
     strict: true,
   },
 
-  vue: {
-    defineModel: true,
-  },
-
   modules: [
     'nuxt-vuefire',
-    'nuxt-primevue',
+    '@primevue/nuxt-module',
     '@unocss/nuxt',
     '@nuxtjs/critters',
     '@vite-pwa/nuxt',
@@ -35,9 +31,7 @@ export default defineNuxtConfig({
   },
 
   primevue: {
-    options: {
-      ripple: false,
-    },
+    importTheme: { from: '@/themes/aura.js' },
   },
 
   unocss: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FilterMatchMode } from 'primevue/api'
+import { FilterMatchMode } from '@primevue/core/api'
 
 const dayjs = useDayjs()
 
@@ -27,7 +27,7 @@ const filters = ref({
       </div>
       <Button label="Create" @click="state.createPopupVisible = true">
         <template #icon>
-          <span class="i-heroicons-plus-circle mr-2" />
+          <span class="i-lucide-circle-plus mr-2" />
         </template>
       </Button>
     </div>

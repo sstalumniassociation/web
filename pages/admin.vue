@@ -2,19 +2,7 @@
 import { useQueryClient } from '@tanstack/vue-query'
 import { useIsCurrentUserLoaded } from 'vuefire'
 
-import dark from 'primevue/resources//themes/aura-dark-purple/theme.css?url'
-import light from 'primevue/resources/themes/aura-light-purple/theme.css?url'
-
-const isDark = useDark()
-
-useHead({
-  link: [
-    {
-      href: computed(() => isDark.value ? dark : light),
-      rel: 'stylesheet',
-    },
-  ],
-})
+useDark()
 
 useSeoMeta({
   description: 'The SST Alumni App Admin Panel',
@@ -24,12 +12,6 @@ useHeadSafe({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - SSTAA` : 'SSTAA'
   },
-  meta: [
-    {
-      formName: 'color-scheme',
-      content: 'dark',
-    },
-  ],
   link: [
     {
       rel: 'icon',
@@ -90,10 +72,10 @@ watch([authLoaded, auth], (values, _, onCleanup) => {
 
         <div class="flex items-center space-x-2">
           <NuxtLink to="/admin/members">
-            <Button link label="Members" />
+            <Button link label="Members" size="small" />
           </NuxtLink>
           <NuxtLink to="/admin/events">
-            <Button link label="Events" />
+            <Button link label="Events" size="small" />
           </NuxtLink>
         </div>
       </div>
@@ -107,11 +89,10 @@ watch([authLoaded, auth], (values, _, onCleanup) => {
 
 <style>
 html {
-  font-size: 14px;
+  font-family: sans-serif;
 }
 
 body {
   margin: 0;
-  background-color: var(--surface-0);
 }
 </style>

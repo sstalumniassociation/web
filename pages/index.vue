@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import dark from 'primevue/resources/themes/aura-dark-purple/theme.css?url'
-import light from 'primevue/resources/themes/aura-light-purple/theme.css?url'
-
-const isDark = useDark()
-
-useHead({
-  link: [
-    {
-      href: computed(() => isDark.value ? dark : light),
-      rel: 'stylesheet',
-    },
-  ],
-})
+useDark()
 </script>
 
 <template>
@@ -25,13 +13,13 @@ useHead({
     <div class="p-3">
       <div class="container mx-auto flex flex-col gap-3">
         <NuxtLink to="/app" no-prefetch>
-          <Button label="Open SSTAA App" class="w-full text-left" />
+          <Button label="Open SSTAA App" class="w-full justify-start" />
         </NuxtLink>
         <NuxtLink to="/admin" no-prefetch>
-          <Button label="Open SSTAA Admin Portal" class="w-full text-left" />
+          <Button label="Open SSTAA Admin Portal" class="w-full justify-start" />
         </NuxtLink>
         <NuxtLink to="/guard" no-prefetch>
-          <Button label="Open SSTAA Guard House Portal" class="w-full text-left" />
+          <Button label="Open SSTAA Guard House Portal" class="w-full justify-start" />
         </NuxtLink>
       </div>
     </div>
@@ -39,12 +27,11 @@ useHead({
 </template>
 
 <style>
-html{
-  font-size: 14px;
+html {
+  font-family: sans-serif;
 }
 
 body {
   margin: 0;
-  background-color: var(--surface-0);
 }
 </style>
