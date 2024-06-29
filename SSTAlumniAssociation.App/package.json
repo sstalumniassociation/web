@@ -9,7 +9,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "simple-git-hooks && nuxt prepare",
+    "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate:sqlite",
     "db:push": "drizzle-kit push:sqlite",
     "db:drop": "drizzle-kit drop",
@@ -51,7 +51,6 @@
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.22.7",
     "drizzle-orm": "^0.31.2",
-    "primevue": "4.0.0-rc.2",
     "eslint": "^9.5.0",
     "firebase": "^10.12.2",
     "framework7": "^8.3.3",
@@ -60,26 +59,17 @@
     "html5-qrcode": "^2.3.8",
     "idb-keyval": "^6.2.1",
     "jose": "^5.4.1",
-    "lint-staged": "^15.2.7",
     "material-icons": "^1.13.12",
     "nuxt": "^3.12.2",
     "nuxt-vuefire": "^1.0.2",
     "papaparse": "^5.4.1",
+    "primevue": "4.0.0-rc.2",
     "qrcode": "^1.5.3",
     "simple-git": "^3.25.0",
-    "simple-git-hooks": "^2.11.1",
     "vee-validate": "^4.13.1",
     "vue-tsc": "^2.0.22",
     "vuefire": "^3.1.23",
     "web-auth-library": "^1.0.3",
     "zod": "^3.23.8"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx,vue,md}": [
-      "eslint --cache --fix"
-    ]
   }
 }

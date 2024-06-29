@@ -24,13 +24,17 @@ jobs:
           cache: pnpm
 
       - name: 📦 Install dependencies
+        working-directory: SSTAlumniAssociation.App
         run: pnpm install --frozen-lockfile
 
       - name: 🚧 Set up project
+        working-directory: SSTAlumniAssociation.App
         run: pnpm nuxi prepare
 
       - name: 📝 Lint
+        working-directory: SSTAlumniAssociation.App
         run: pnpm lint
 
       - name: 💪 Type check
+        working-directory: SSTAlumniAssociation.App
         run: pnpm typecheck
