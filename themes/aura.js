@@ -23,5 +23,8 @@ export default {
   preset: MyPreset,
   options: {
     darkModeSelector: '.dark',
+    cssLayer: {
+      name: 'primevue',
+    },
   },
 }
