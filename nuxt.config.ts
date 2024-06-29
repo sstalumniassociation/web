@@ -88,6 +88,7 @@ export default defineNuxtConfig({
       navigateFallback: '/',
       globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
       navigateFallbackDenylist: [
+        /^\/$/, // No caching on root page
         /^\/admin/, // No caching on admin
         /^\/pass/, // No caching on passes
         /^\/cdn/, // No caching on CDN
