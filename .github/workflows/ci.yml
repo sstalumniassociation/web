@@ -24,7 +24,6 @@ jobs:
           cache: pnpm
 
       - name: 📦 Install dependencies
-        working-directory: SSTAlumniAssociation.WebApp
         run: pnpm install --frozen-lockfile
 
       - name: 🚧 Set up project
