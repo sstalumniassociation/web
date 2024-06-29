@@ -2,10 +2,13 @@
   "name": "@sstalumniassociation/monorepo",
   "version": "0.1.6",
   "packageManager": "pnpm@9.4.0",
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "dotnet run --project ./SSTAlumniAssociation.AppHost/",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "simple-git-hooks",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --cache --fix ."
   },
   "devDependencies": {
     "lint-staged": "^15.2.7",

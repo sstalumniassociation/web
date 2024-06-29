@@ -3,7 +3,9 @@
 This repository contains the following for the SST Alumni App Platform (SSTAAP):
 
 * Web PWA
-* Admin Dashboard
+  * SSTAA app
+  * Admin dashboard
+  * Guardhouse app
 * API
 
 ## Getting Started
