@@ -1,4 +1,4 @@
-@SSTAlumniAssociation.WebApi_HostAddress = http://localhost:5066
+@SSTAlumniAssociation.WebApi_HostAddress = http://localhost:5156
 
 GET {{SSTAlumniAssociation.WebApi_HostAddress}}/weatherforecast/
 Accept: application/json
