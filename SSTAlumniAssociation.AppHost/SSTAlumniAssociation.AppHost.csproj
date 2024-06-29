@@ -14,4 +14,8 @@
         <PackageReference Include="Aspire.Hosting.NodeJs" Version="8.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SSTAlumniAssociation.WebApi\SSTAlumniAssociation.WebApi.csproj" />
+    </ItemGroup>
+
 </Project>

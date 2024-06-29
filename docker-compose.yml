@@ -1,0 +1,6 @@
+﻿services:
+  sstalumniassociation.webapi:
+    image: sstalumniassociation.webapi
+    build:
+      context: .
+      dockerfile: SSTAlumniAssociation.WebApi/Dockerfile

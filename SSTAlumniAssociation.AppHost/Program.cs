@@ -1,5 +1,9 @@
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddNpmApp("web-app", "../SSTAlumniAssociation.WebApp", "dev");
+var api = builder.AddProject<SSTAlumniAssociation_WebApi>("web-api");
+builder.AddNpmApp("web-app", "../SSTAlumniAssociation.WebApp", "dev")
+    .WithReference(api);
 
 builder.Build().Run();
