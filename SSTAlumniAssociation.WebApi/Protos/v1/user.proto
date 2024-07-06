@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/empty.proto";
+import "Protos/google/api/annotations.proto";
+
+package protos.user.v1;
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string firebase_id = 4;
+
+  oneof user_type {
+    Member member = 100;
+    Employee employee = 101;
+    ServiceAccount service_account = 102;
+    SystemAdmin system_admin = 103;
+  }
+}
+
+enum Membership {
+  Exco = 0;
+  Associate = 1;
+  Affiliate = 2;
+  Ordinary = 3;
+  Revoked = 4;
+}
+
+message Member {
+  Membership membership = 1;
+  string member_id = 2;
+
+  oneof member_type {
+    AlumniMember alumni_member = 3;
+    EmployeeMember employee_member = 4;
+  }
+}
+
+message AlumniMember {
+  // If a member is an associate and have never graduated from SST, this field will be empty.
+  optional int32 graduation_year = 1;
+}
+
+message EmployeeMember {
+  // If a member was an ex-student of SST, this field will contain their graduation year.
+  optional int32 graduation_year = 1;
+}
+
+enum ServiceAccountType {
+  GuardHouse = 0;
+}
+
+message ServiceAccount {
+  ServiceAccountType service_account_type = 1;
+}
+
+message SystemAdmin {
+}
+
+message Employee {
+}
+
+// User service
+service UserService {
+  // List all users, restricted to EXCO
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+  };
+
+  // Get user information, restricted to authenticated users
+  rpc GetUser (GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}"
+    };
+  };
+
+  // Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the different 
+  // permission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (where
+  // only the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists for
+  // this specific use case. This route should be called by end-users only (not admins) as it will bind the user ID 
+  // provided to the current authenticated user.
+  rpc BindUser (BindUserRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/users/{id}/bind"
+    };
+  };
+
+  // Create users
+  rpc CreateUser (CreateUserRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/users"
+      body: "*"
+    };
+  }
+
+  // Batch create users
+  rpc BatchCreateUsers (BatchCreateUsersRequest) returns (BatchCreateUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1/users:batchCreate"
+      body: "*"
+    };
+  }
+
+  // Update user
+  rpc UpdateUser (UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      patch: "/v1/users/{user.id}"
+      body: "user"
+    };
+  }
+
+  // Delete user
+  rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/users/{id}"
+    };
+  }
+}
+
+message ListUsersRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message BindUserRequest {
+  string id = 1;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message BatchCreateUsersRequest {
+  repeated CreateUserRequest requests = 1;
+}
+
+message BatchCreateUsersResponse {
+  repeated User users = 1;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}

@@ -1,11 +1,63 @@
+using Calzolari.Grpc.AspNetCore.Validation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
+using SSTAlumniAssociation.ServiceDefaults;
+using SSTAlumniAssociation.WebApi.Services.V1.User;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
+builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
+
+builder.Services.AddValidator<CreateUserRequestValidator>();
+builder.Services.AddGrpcValidation();
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association API" });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.AddServer(new OpenApiServer { Description = "Development", Url = "https://localhost:7066" });
+    }
+
+    options.AddServer(new OpenApiServer { Description = "Production", Url = "https://api.sstaa.org" });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Firebase ID Token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = JwtBearerDefaults.AuthenticationScheme
+    });
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        }
+    );
+
+    var filePath = Path.Combine(AppContext.BaseDirectory, "SSTAlumniAssociation.WebApi.xml");
+    options.IncludeXmlComments(filePath);
+    options.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
+});
 
 var app = builder.Build();
 
@@ -18,29 +70,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

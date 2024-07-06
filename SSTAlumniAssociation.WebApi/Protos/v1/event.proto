@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "Protos/google/api/annotations.proto";
+
+import "Protos/v1/user.proto";
+
+package protos.event.v1;
+
+message Event {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string location = 4;
+  string badgeImage = 5;
+  google.protobuf.Timestamp start_date_time = 6;
+  google.protobuf.Timestamp end_date_time = 7;
+  repeated EventUser attendees = 8;
+}
+
+message EventUser {
+  string admission_key = 1;
+  user.v1.User user = 2;
+}
+
+// Event service
+service EventService {
+  rpc ListEvents (ListEventsRequest) returns (ListEventsResponse) {
+    option (google.api.http) = {
+      get: "/v1/events"
+    };
+  }
+  
+  rpc GetEvent (GetEventRequest) returns (Event) {
+    option (google.api.http) = {
+      get: "/v1/events/{id}"
+    };
+  }
+  
+  // Get an event by an admission ID
+  rpc GetAdmission (GetAdmissionRequest) returns (Event) {
+    option (google.api.http) = {
+      get: "/v1/admissions/{id}"
+    };
+  }
+  
+  rpc CreateEvent (CreateEventRequest) returns (Event) {
+    option (google.api.http) = {
+      post: "/v1/events"
+      body: "event"
+    };
+  }
+  
+  rpc UpdateEvent (UpdateEventRequest) returns (Event) {
+    option (google.api.http) = {
+      patch: "/v1/events/{event.id}"
+      body: "event"
+    };
+  }
+
+  rpc DeleteEvent (DeleteEventRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/events/{id}"
+    };
+  }
+  
+  rpc AddAttendee (AddAttendeeRequest) returns (Event) {
+    option (google.api.http) = {
+      post: "/v1/events/{id}/attendees"
+    };
+  }
+  
+  rpc BatchAddAttendees (BatchAddAttendeesRequest) returns (Event) {
+    option (google.api.http) = {
+      post: "/v1/events/{id}/attendees:batchAdd"
+    };
+  }
+}
+
+message ListEventsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListEventsResponse {
+  repeated Event events = 1;
+}
+
+message GetEventRequest {
+  string id = 1;
+}
+
+message GetAdmissionRequest {
+  string id = 1;
+}
+
+message CreateEventRequest {
+  Event event = 1;
+}
+
+message UpdateEventRequest {
+  Event event = 1;
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message DeleteEventRequest {
+  string id = 1;
+}
+
+message AddAttendeeRequest {
+  string id = 1;
+  // ID of the user
+  string user = 2;
+}
+
+message BatchAddAttendeesRequest {
+  string id = 1;
+  // ID of the users
+  repeated string users = 2;
+}

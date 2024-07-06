@@ -10,6 +10,13 @@ This repository contains the following for the SST Alumni App Platform (SSTAAP):
 
 ## Getting Started
 
+`SSTAlumniAssociation.AppHost` uses the latest `dotnet8` NuGet feed. To add the feed, run the following command:
+
+```shell
+dotnet nuget add source --name dotnet8 https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json
+dotnet workload update --skip-sign-check --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json
+```
+
 Please get access or set up the following services:
 
 * Turso
