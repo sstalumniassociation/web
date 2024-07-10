@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { FilterMatchMode } from '@primevue/core/api'
+import { FilterMatchMode } from '@primevue/core'
 
-const { data: users, isPending: usersPending } = useUsers()
+const { data, isPending: usersPending } = useUsers()
 
 const sizeOptions: { label: string, value: 'small' | 'large' | undefined }[] = [
   { label: 'Small', value: 'small' },
@@ -31,17 +31,16 @@ const filters = ref({
 
     <DataTable
       v-model:filters="filters"
-      removable-sort paginator data-key="id" :rows="40" :value="users" :size="size.value"
+      removable-sort paginator data-key="id" :rows="40" :value="data?.users" :size="size.value"
       :loading="usersPending" :global-filter-fields="['name', 'email']"
     >
       <template #empty>
         No members found.
       </template>
 
-      <Column field="id" header="ID" class="min-w-xs w-[10%]" />
-      <Column field="name" header="Name" sortable class="min-w-sm w-[40%]" />
+      <Column field="id" header="ID" class="min-w-xs w-[30%]" />
+      <Column field="name" header="Name" sortable class="min-w-sm w-[30%]" />
       <Column field="email" header="Email" sortable class="min-w-smw-[40%]" />
-      <Column field="graduationYear" header="Graduation Year" sortable class="min-w-xs w-[10%]" />
     </DataTable>
   </div>
 </template>

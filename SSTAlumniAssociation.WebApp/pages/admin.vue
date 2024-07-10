@@ -90,6 +90,7 @@ watch([authLoaded, auth], (values, _, onCleanup) => {
 <style>
 html {
   font-family: sans-serif;
+  font-size: 15px;
 }
 
 body {

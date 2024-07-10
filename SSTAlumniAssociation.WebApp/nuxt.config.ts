@@ -1,4 +1,8 @@
 import { isDevelopment } from 'std-env'
+import { $ } from 'execa'
+import { logger } from '@nuxt/kit'
+
+const API_URL = process.env.services__webapi__https__0 || process.env.services__webapi__http__0 || process.env.NUXT_PUBLIC_API_URL
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -6,6 +10,21 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   sourcemap: { client: true, server: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
+
+  hooks: {
+    'nitro:build:before': async () => {
+      const log = logger.create({
+        defaults: {
+          tag: 'build:before:kiota-codegen',
+        },
+      })
+
+      log.log(`Generating Kiota code with endpoint ${API_URL}`)
+      const { stderr, stdout } = await $({ lines: true })`kiota generate -l typescript -d ${`${API_URL}/swagger/v1/swagger.json`} -c ApiClient -o ./api`
+      stderr.forEach(i => log.error(i))
+      stdout.forEach(i => log.info(i))
+    },
+  },
 
   experimental: {
     // https://github.com/unjs/nitro/issues/1844
@@ -163,6 +182,10 @@ export default defineNuxtConfig({
     },
 
     public: {
+      api: {
+        url: '' || API_URL,
+      },
+
       growthbook: {
         clientKey: '' || process.env.NUXT_PUBLIC_GROWTHBOOK_CLIENT_KEY,
       },

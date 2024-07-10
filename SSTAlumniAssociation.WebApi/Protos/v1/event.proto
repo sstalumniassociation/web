@@ -55,8 +55,8 @@ service EventService {
   
   rpc UpdateEvent (UpdateEventRequest) returns (Event) {
     option (google.api.http) = {
-      patch: "/v1/events/{event.id}"
-      body: "event"
+      patch: "/v1/events/{id}"
+      body: "*"
     };
   }
 
@@ -101,8 +101,9 @@ message CreateEventRequest {
 }
 
 message UpdateEventRequest {
-  Event event = 1;
-  google.protobuf.FieldMask update_mask = 2;
+  string id = 1;
+  Event event = 2;
+  google.protobuf.FieldMask update_mask = 3;
 }
 
 message DeleteEventRequest {

@@ -6,11 +6,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "dotnet run --project ./SSTAlumniAssociation.AppHost/",
+    "dev:watch": "dotnet watch --project ./SSTAlumniAssociation.AppHost/",
     "postinstall": "simple-git-hooks",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix ."
   },
   "devDependencies": {
+    "@antfu/eslint-config": "latest",
+    "eslint": "^9.6.0",
     "lint-staged": "^15.2.7",
     "simple-git-hooks": "^2.11.1"
   },

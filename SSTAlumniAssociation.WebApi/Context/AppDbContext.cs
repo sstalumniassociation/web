@@ -65,30 +65,26 @@ public partial class AppDbContext : DbContext
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>().UseTptMappingStrategy();
+        // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
+        
         // Store enum value as string to reduce risk of breaking changes vs storing as an int.
         modelBuilder
             .Entity<Member>()
             .Property(u => u.Membership)
             .HasConversion<string>();
 
-        modelBuilder
-            .Entity<AlumniMember>()
-            .Property(a => a.GraduationYear)
-            .HasColumnName("GraduationYear");
-
-        modelBuilder
-            .Entity<EmployeeMember>()
-            .Property(e => e.GraduationYear)
-            .HasColumnName("GraduationYear");
-
-        modelBuilder.Entity<SystemAdmin>()
+        modelBuilder.Entity<AlumniMember>()
             .HasData(
-                new SystemAdmin
+                new AlumniMember
                 {
                     Id = Guid.Parse("df90f5ea-a236-413f-a6c1-ca9197427631"),
                     Name = "Qin Guan",
                     FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
                     Email = "qinguan20040914@gmail.com",
+                    GraduationYear = 2000,
+                    Membership = Membership.Exco,
+                    MemberId = "EXCO-1",
                     Events = [],
                     UserEvents = []
                 }

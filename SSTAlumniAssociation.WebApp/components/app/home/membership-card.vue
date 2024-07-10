@@ -1,16 +1,29 @@
 <script setup lang="ts">
 import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
-import type { User } from '~/shared/types'
+import type { Membership } from '~/api/models'
 
 const { data: user, isLoading: userIsLoading } = useUser()
 
-const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
-  associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
-  affiliate: 'bg-gradient-to-br from-purple-500 to-purple-600',
-  exco: 'bg-gradient-to-br from-red-500 to-red-600',
-  ordinary: 'bg-gradient-to-br from-yellow-500 to-yellow-600',
-  revoked: 'bg-gradient-to-br from-gray-500 to-gray-600',
+const membershipGradient: Record<Membership, string> = {
+  Associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
+  Affiliate: 'bg-gradient-to-br from-purple-500 to-purple-600',
+  Exco: 'bg-gradient-to-br from-red-500 to-red-600',
+  Ordinary: 'bg-gradient-to-br from-yellow-500 to-yellow-600',
+  Revoked: 'bg-gradient-to-br from-gray-500 to-gray-600',
 }
+
+const resolvedGradientClass = computed(() => {
+  if (user.value?.systemAdmin) {
+    return 'bg-gradient-to-br from-indigo-500 to-indigo-600'
+  }
+  if (user.value?.serviceAccount) {
+    return 'bg-gradient-to-br from-slate-500 from-slate-600'
+  }
+  if (user.value?.member && user.value?.member?.membership) {
+    return membershipGradient[user.value?.member?.membership]
+  }
+  throw new Error('Could not accurately determine user type.')
+})
 </script>
 
 <template>
@@ -20,22 +33,22 @@ const membershipGradient: Record<Exclude<User['memberType'], null>, string> = {
     </f7List>
 
     <f7Card v-else-if="user">
-      <f7CardContent class="h-44 rounded-[16px]" valign="top" :class="membershipGradient[user.memberType!]">
+      <f7CardContent class="h-60 rounded-[16px]" valign="top" :class="resolvedGradientClass">
         <div class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col flex-1">
             <span class="font-bold text-3xl">
               {{ user.name }}
             </span>
-            <span class="font-mono">
-              {{ user.memberId }}
+            <span v-if="user.member" class="font-mono">
+              {{ user.member.memberId }}
             </span>
           </div>
-          <div class="flex flex-col">
+          <div v-if="user.member" class="flex flex-col">
             <span class="font-semibold">
-              Class of {{ user.graduationYear }}
+              Class of {{ user.member?.alumniMember?.graduationYear ?? user.member?.employeeMember?.graduationYear }}
             </span>
             <span>
-              {{ user.memberType?.[0].toLocaleUpperCase() }}{{ user.memberType?.slice(1, user.memberType?.length) }}
+              {{ user.member.membership }}
               member
             </span>
           </div>

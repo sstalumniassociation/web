@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "Protos/google/api/annotations.proto";
+import "Protos/v1/user.proto";
 
 package protos.auth.v1;
 
@@ -14,7 +15,7 @@ service AuthService {
     };
   };
   
-  rpc WhoAmI (WhoAmIRequest) returns (WhoAmIResponse) {
+  rpc WhoAmI (WhoAmIRequest) returns (protos.user.v1.User) {
     option (google.api.http) = {
       get: "/v1/auth/whoami"
     };

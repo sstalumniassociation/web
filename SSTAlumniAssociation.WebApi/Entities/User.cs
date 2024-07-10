@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Riok.Mapperly.Abstractions;
 
 namespace SSTAlumniAssociation.WebApi.Entities;
 

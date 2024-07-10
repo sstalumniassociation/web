@@ -30,7 +30,7 @@ public class UserServiceV1(
         {
             Users =
             {
-                dbContext.Users.Select(u => u.ToGrpcUser())
+                dbContext.Users.Select(u => u.ToGrpc())
             }
         });
     }
@@ -57,7 +57,7 @@ public class UserServiceV1(
             throw new RpcException(new Status(StatusCode.NotFound, "User does not exist."));
         }
 
-        return user.ToGrpcUser();
+        return user.ToGrpc();
     }
 
     /// <inheritdoc />
@@ -95,7 +95,7 @@ public class UserServiceV1(
 
         await dbContext.SaveChangesAsync();
 
-        return user.ToGrpcUser();
+        return user.ToGrpc();
     }
 
     /// <inheritdoc />
@@ -105,7 +105,7 @@ public class UserServiceV1(
         var user = await TransformAndAddUserAsync(request.User);
         await dbContext.SaveChangesAsync();
 
-        return user.ToGrpcUser();
+        return user.ToGrpc();
     }
 
     /// <inheritdoc />
@@ -125,7 +125,7 @@ public class UserServiceV1(
 
         return new BatchCreateUsersResponse
         {
-            Users = { users.ToGrpcUsers() }
+            Users = { users.ToGrpc() }
         };
     }
 
@@ -138,7 +138,7 @@ public class UserServiceV1(
         {
             throw new RpcException(new Status(StatusCode.NotFound, "User disappeared into the abyss."));
         }
-
+        
         var diff = new Protos.User.V1.User();
         request.UpdateMask.Merge(request.User, diff);
 
@@ -159,7 +159,7 @@ public class UserServiceV1(
 
         await dbContext.SaveChangesAsync();
 
-        return user.ToGrpcUser();
+        return user.ToGrpc();
     }
 
     /// <inheritdoc />

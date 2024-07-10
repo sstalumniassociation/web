@@ -7,7 +7,7 @@ const appConfig = useAppConfig()
 
 const { data: user } = useUser()
 const graduationYear = computed(() => {
-  return `Class of ${user.value?.graduationYear}`
+  return `Class of ${user.value?.member?.alumniMember?.graduationYear ?? user.value?.member?.employeeMember?.graduationYear}`
 })
 
 const dependencies = Object.keys(devDependencies)

@@ -5,7 +5,7 @@ export default defineLazyEventHandler(() => eventHandler(async (event) => {
     await event.context.database.run(sql`SELECT 1;`)
     return { ok: true, now: new Date() }
   }
-  catch (err) {
+  catch {
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',

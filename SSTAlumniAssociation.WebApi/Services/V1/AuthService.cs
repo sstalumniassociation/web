@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Protos.Auth.V1;
 using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Extensions;
+using SSTAlumniAssociation.WebApi.Mappers;
 
 namespace SSTAlumniAssociation.WebApi.Services.V1;
 
@@ -29,7 +30,7 @@ public class AuthServiceV1(AppDbContext dbContext) : AuthService.AuthServiceBase
     }
 
     /// <inheritdoc />
-    public override async Task<WhoAmIResponse> WhoAmI(WhoAmIRequest request, ServerCallContext context)
+    public override async Task<Protos.User.V1.User> WhoAmI(WhoAmIRequest request, ServerCallContext context)
     {
         var id = context.GetHttpContext().User.Claims.GetNameIdentifierGuid();
 
@@ -38,10 +39,7 @@ public class AuthServiceV1(AppDbContext dbContext) : AuthService.AuthServiceBase
         {
             throw new RpcException(new Status(StatusCode.NotFound, "User does not exist."));
         }
-
-        return new WhoAmIResponse
-        {
-            Id = user.Id.ToString()
-        };
+        
+        return user.ToGrpc();
     }
 }

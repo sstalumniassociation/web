@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { User } from '~/shared/types'
 
 const queryKeyFactory = {
   currentUser: ['current-user'],
@@ -10,7 +9,7 @@ export function useUser() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.currentUser,
-    queryFn: () => $api<User>(`/api/user/${firebaseCurrentUser.value?.uid}`),
+    queryFn: () => $apiClient.v1.auth.whoami.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
     retry: false,
   })
@@ -20,7 +19,7 @@ export function useUsers() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.users,
-    queryFn: () => $api(`/api/user`),
+    queryFn: () => $apiClient.v1.users.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
@@ -38,6 +37,6 @@ export function useUserSignOutMutation() {
 
 export function useBulkCreateUserMutation() {
   return useMutation({
-    mutationFn: (body: Partial<User>[]) => $api('/api/user/bulk', { method: 'post', body }),
+    mutationFn: $apiClient.v1.usersBatchCreate.post,
   })
 }

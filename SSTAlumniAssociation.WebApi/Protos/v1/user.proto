@@ -108,8 +108,8 @@ service UserService {
   // Update user
   rpc UpdateUser (UpdateUserRequest) returns (User) {
     option (google.api.http) = {
-      patch: "/v1/users/{user.id}"
-      body: "user"
+      patch: "/v1/users/{id}"
+      body: "*"
     };
   }
 
@@ -151,8 +151,9 @@ message BatchCreateUsersResponse {
 }
 
 message UpdateUserRequest {
-  User user = 1;
-  google.protobuf.FieldMask update_mask = 2;
+  string id = 1;
+  User user = 2;
+  google.protobuf.FieldMask update_mask = 3;
 }
 
 message DeleteUserRequest {
