@@ -152,7 +152,7 @@ public class UserServiceV1(
             user.Email = diff.Email;
         }
 
-        if (request.UpdateMask.Paths.Contains("firebaseId"))
+        if (request.UpdateMask.Paths.Contains("firebase_id"))
         {
             user.FirebaseId = diff.FirebaseId;
         }

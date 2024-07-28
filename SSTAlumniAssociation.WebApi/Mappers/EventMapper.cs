@@ -21,7 +21,9 @@ public static partial class EventMapper
     #region Entity mappings
 
     [MapperIgnoreSource(nameof(Protos.Event.V1.Event.Attendees))]
-    public static partial Entities.Event ToEvent(this Protos.Event.V1.Event @event);
+    public static partial Entities.Event ToEntity(this Protos.Event.V1.Event @event);
+    
+    public static partial Entities.Event ToEntity(this Protos.Event.V1.EventSimple @event);
 
     #endregion
 }

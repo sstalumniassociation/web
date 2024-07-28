@@ -11,11 +11,8 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
     {
         RuleFor(u => u.User).NotEmpty();
 
-        When(u => u.User != null, () =>
+        When(u => u.User is not null, () =>
         {
-            RuleFor(u => u.User.Id)
-                .Must(id => Guid.TryParse(id, out _))
-                .WithMessage("Invalid ID provided for User.");
             RuleFor(u => u.User.Name).MinimumLength(1);
             RuleFor(u => u.User.Email).EmailAddress();
 

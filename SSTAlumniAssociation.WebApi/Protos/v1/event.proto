@@ -60,21 +60,14 @@ service EventService {
     };
   }
 
-  // Get an event by an admission ID
-  rpc GetAdmission (GetAdmissionRequest) returns (Event) {
-    option (google.api.http) = {
-      get: "/v1/admissions/{id}"
-    };
-  }
-
-  rpc CreateEvent (CreateEventRequest) returns (Event) {
+  rpc CreateEvent (CreateEventRequest) returns (EventSimple) {
     option (google.api.http) = {
       post: "/v1/events"
       body: "event"
     };
   }
 
-  rpc UpdateEvent (UpdateEventRequest) returns (Event) {
+  rpc UpdateEvent (UpdateEventRequest) returns (EventSimple) {
     option (google.api.http) = {
       patch: "/v1/events/{id}"
       body: "*"
@@ -118,12 +111,12 @@ message GetAdmissionRequest {
 }
 
 message CreateEventRequest {
-  Event event = 1;
+  EventSimple event = 1;
 }
 
 message UpdateEventRequest {
   string id = 1;
-  Event event = 2;
+  EventSimple event = 2;
   google.protobuf.FieldMask update_mask = 3;
 }
 

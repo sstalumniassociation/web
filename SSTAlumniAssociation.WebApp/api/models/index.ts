@@ -532,7 +532,7 @@ export function deserializeIntoSystemAdmin(systemAdmin: Partial<SystemAdmin> | u
  */
 export function deserializeIntoUpdateEventRequest(updateEventRequest: Partial<UpdateEventRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "event": n => { updateEventRequest.event = n.getObjectValue<Event>(createEventFromDiscriminatorValue); },
+        "event": n => { updateEventRequest.event = n.getObjectValue<EventSimple>(createEventSimpleFromDiscriminatorValue); },
         "id": n => { updateEventRequest.id = n.getStringValue(); },
         "updateMask": n => { updateEventRequest.updateMask = n.getStringValue(); },
     }
@@ -894,7 +894,7 @@ export function serializeSystemAdmin(writer: SerializationWriter, systemAdmin: P
  * @param writer Serialization writer to use to serialize this model
  */
 export function serializeUpdateEventRequest(writer: SerializationWriter, updateEventRequest: Partial<UpdateEventRequest> | undefined = {}) : void {
-    writer.writeObjectValue<Event>("event", updateEventRequest.event, serializeEvent);
+    writer.writeObjectValue<EventSimple>("event", updateEventRequest.event, serializeEventSimple);
     writer.writeStringValue("id", updateEventRequest.id);
     writer.writeStringValue("updateMask", updateEventRequest.updateMask);
 }
@@ -963,7 +963,7 @@ export interface UpdateEventRequest extends Parsable {
     /**
      * The event property
      */
-    event?: Event;
+    event?: EventSimple;
     /**
      * The id property
      */

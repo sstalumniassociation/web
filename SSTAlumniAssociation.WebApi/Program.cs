@@ -12,6 +12,7 @@ using SSTAlumniAssociation.WebApi.Authorization.Member;
 using SSTAlumniAssociation.WebApi.Authorization.OwnerOrAdmin;
 using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Services.V1;
+using SSTAlumniAssociation.WebApi.Services.V1.Event;
 using SSTAlumniAssociation.WebApi.Services.V1.User;
 
 var builder = WebApplication.CreateBuilder(args);
