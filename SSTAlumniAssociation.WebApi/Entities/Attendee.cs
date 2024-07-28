@@ -1,6 +1,6 @@
 namespace SSTAlumniAssociation.WebApi.Entities;
 
-public class UserEvent
+public class Attendee
 {
     public Guid Id { get; set; }
 
@@ -8,11 +8,15 @@ public class UserEvent
     /// The admission key is the same as the ID generated
     /// </summary>
     public Guid AdmissionKey => Id;
-    
+
+    public DateTime? AdmittedAt { get; set; }
+
     // Navigations
 
     public Guid UserId { get; set; }
-    public required User User { get; set; }
+    public User User { get; set; }
     public Guid EventId { get; set; }
-    public required Event Event { get; set; }
+    public Event Event { get; set; }
+    
+    public ServiceAccount? AdmittedBy { get; set; }
 }

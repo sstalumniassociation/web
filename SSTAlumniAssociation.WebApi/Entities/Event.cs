@@ -10,9 +10,9 @@ public class Event
     public required string BadgeImage { get; set; }
     public required DateTime StartDateTime { get; set; }
     public required DateTime EndDateTime { get; set; }
+    public required bool Active { get; set; }
 
     // Navigations 
-    
-    public List<User> Attendees { get; set; }
-    public List<UserEvent> UserEvents { get; set; }
+
+    public ICollection<Attendee> Attendees { get; } = [];
 }

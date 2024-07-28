@@ -24,6 +24,6 @@ public class User
 
     // Navigations
     
-    public List<Event> Events { get; set; }
-    public List<UserEvent> UserEvents { get; set; }
+    public ICollection<Event> Events { get; } = [];
+    public ICollection<Attendee> UserEvents { get; } = [];
 }

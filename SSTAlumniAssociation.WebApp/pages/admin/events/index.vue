@@ -39,9 +39,13 @@ const filters = ref({
     </div>
 
     <DataTable
-      v-model:filters="filters" :value="events" paginator data-key="id" :rows="40"
-      :loading="eventsPending" :global-filter-fields="['name']"
+      v-model:filters="filters" :value="events?.events" paginator data-key="id" :rows="40" :loading="eventsPending"
+      :global-filter-fields="['name']"
     >
+      <template #empty>
+        No events found.
+      </template>
+
       <Column field="name" header="Name" class="min-w-sm">
         <template #body="{ data }">
           <NuxtLink :to="`/admin/events/${data.id}`">
@@ -53,18 +57,12 @@ const filters = ref({
       <Column field="dateTime" header="Date" class="min-w-sm">
         <template #body="{ data }">
           <Badge>
-            {{ dayjs.unix(data.startDateTime).format('lll') }}
+            {{ dayjs(data.startDateTime).format('lll') }}
           </Badge>
           -
           <Badge>
-            {{ dayjs.unix(data.endDateTime).format('lll') }}
+            {{ dayjs(data.endDateTime).format('lll') }}
           </Badge>
-        </template>
-      </Column>
-
-      <Column field="attendees" header="Attendees">
-        <template #body="{ data }">
-          {{ data.attendees.length }}
         </template>
       </Column>
     </DataTable>

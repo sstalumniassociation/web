@@ -50,6 +50,38 @@ export interface Article extends Parsable {
      */
     title?: string;
 }
+export interface Attendee extends Parsable {
+    /**
+     * The admissionKey property
+     */
+    admissionKey?: string;
+    /**
+     * The event property
+     */
+    event?: EventSimple;
+    /**
+     * The id property
+     */
+    id?: string;
+    /**
+     * The user property
+     */
+    user?: User;
+}
+export interface AttendeeSimple extends Parsable {
+    /**
+     * The admissionKey property
+     */
+    admissionKey?: string;
+    /**
+     * The id property
+     */
+    id?: string;
+    /**
+     * The user property
+     */
+    user?: User;
+}
 export interface BatchCreateUsersRequest extends Parsable {
     /**
      * The requests property
@@ -85,6 +117,22 @@ export function createAnyFromDiscriminatorValue(parseNode: ParseNode | undefined
  */
 export function createArticleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoArticle;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {Attendee}
+ */
+export function createAttendeeFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoAttendee;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {AttendeeSimple}
+ */
+export function createAttendeeSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoAttendeeSimple;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -145,10 +193,10 @@ export function createEventFromDiscriminatorValue(parseNode: ParseNode | undefin
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {EventUser}
+ * @returns {EventSimple}
  */
-export function createEventUserFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEventUser;
+export function createEventSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoEventSimple;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -297,6 +345,29 @@ export function deserializeIntoArticle(article: Partial<Article> | undefined = {
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
+export function deserializeIntoAttendee(attendee: Partial<Attendee> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "admissionKey": n => { attendee.admissionKey = n.getStringValue(); },
+        "event": n => { attendee.event = n.getObjectValue<EventSimple>(createEventSimpleFromDiscriminatorValue); },
+        "id": n => { attendee.id = n.getStringValue(); },
+        "user": n => { attendee.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+export function deserializeIntoAttendeeSimple(attendeeSimple: Partial<AttendeeSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "admissionKey": n => { attendeeSimple.admissionKey = n.getStringValue(); },
+        "id": n => { attendeeSimple.id = n.getStringValue(); },
+        "user": n => { attendeeSimple.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
 export function deserializeIntoBatchCreateUsersRequest(batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "requests": n => { batchCreateUsersRequest.requests = n.getCollectionOfObjectValues<CreateUserRequest>(createCreateUserRequestFromDiscriminatorValue); },
@@ -351,7 +422,8 @@ export function deserializeIntoEmpty(empty: Partial<Empty> | undefined = {}) : R
  */
 export function deserializeIntoEvent(event: Partial<Event> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "attendees": n => { event.attendees = n.getCollectionOfObjectValues<EventUser>(createEventUserFromDiscriminatorValue); },
+        "active": n => { event.active = n.getBooleanValue(); },
+        "attendees": n => { event.attendees = n.getCollectionOfObjectValues<AttendeeSimple>(createAttendeeSimpleFromDiscriminatorValue); },
         "badgeImage": n => { event.badgeImage = n.getStringValue(); },
         "description": n => { event.description = n.getStringValue(); },
         "endDateTime": n => { event.endDateTime = n.getStringValue(); },
@@ -365,10 +437,16 @@ export function deserializeIntoEvent(event: Partial<Event> | undefined = {}) : R
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-export function deserializeIntoEventUser(eventUser: Partial<EventUser> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+export function deserializeIntoEventSimple(eventSimple: Partial<EventSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "admissionKey": n => { eventUser.admissionKey = n.getStringValue(); },
-        "user": n => { eventUser.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
+        "active": n => { eventSimple.active = n.getBooleanValue(); },
+        "badgeImage": n => { eventSimple.badgeImage = n.getStringValue(); },
+        "description": n => { eventSimple.description = n.getStringValue(); },
+        "endDateTime": n => { eventSimple.endDateTime = n.getStringValue(); },
+        "id": n => { eventSimple.id = n.getStringValue(); },
+        "location": n => { eventSimple.location = n.getStringValue(); },
+        "name": n => { eventSimple.name = n.getStringValue(); },
+        "startDateTime": n => { eventSimple.startDateTime = n.getStringValue(); },
     }
 }
 /**
@@ -396,7 +474,7 @@ export function deserializeIntoListArticlesResponse(listArticlesResponse: Partia
  */
 export function deserializeIntoListEventsResponse(listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "events": n => { listEventsResponse.events = n.getCollectionOfObjectValues<Event>(createEventFromDiscriminatorValue); },
+        "events": n => { listEventsResponse.events = n.getCollectionOfObjectValues<EventSimple>(createEventSimpleFromDiscriminatorValue); },
     }
 }
 /**
@@ -517,9 +595,13 @@ export interface Empty extends Parsable {
 }
 export interface Event extends Parsable {
     /**
+     * The active property
+     */
+    active?: boolean;
+    /**
      * The attendees property
      */
-    attendees?: EventUser[];
+    attendees?: AttendeeSimple[];
     /**
      * The badgeImage property
      */
@@ -549,15 +631,39 @@ export interface Event extends Parsable {
      */
     startDateTime?: string;
 }
-export interface EventUser extends Parsable {
+export interface EventSimple extends Parsable {
     /**
-     * The admissionKey property
+     * The active property
      */
-    admissionKey?: string;
+    active?: boolean;
     /**
-     * The user property
+     * The badgeImage property
      */
-    user?: User;
+    badgeImage?: string;
+    /**
+     * The description property
+     */
+    description?: string;
+    /**
+     * The endDateTime property
+     */
+    endDateTime?: string;
+    /**
+     * The id property
+     */
+    id?: string;
+    /**
+     * The location property
+     */
+    location?: string;
+    /**
+     * The name property
+     */
+    name?: string;
+    /**
+     * The startDateTime property
+     */
+    startDateTime?: string;
 }
 export interface ListArticlesRequest extends Parsable {
     /**
@@ -579,7 +685,7 @@ export interface ListEventsResponse extends Parsable {
     /**
      * The events property
      */
-    events?: Event[];
+    events?: EventSimple[];
 }
 export interface ListUsersResponse extends Parsable {
     /**
@@ -638,6 +744,25 @@ export function serializeArticle(writer: SerializationWriter, article: Partial<A
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
+export function serializeAttendee(writer: SerializationWriter, attendee: Partial<Attendee> | undefined = {}) : void {
+    writer.writeStringValue("admissionKey", attendee.admissionKey);
+    writer.writeObjectValue<EventSimple>("event", attendee.event, serializeEventSimple);
+    writer.writeStringValue("id", attendee.id);
+    writer.writeObjectValue<User>("user", attendee.user, serializeUser);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+export function serializeAttendeeSimple(writer: SerializationWriter, attendeeSimple: Partial<AttendeeSimple> | undefined = {}) : void {
+    writer.writeStringValue("admissionKey", attendeeSimple.admissionKey);
+    writer.writeStringValue("id", attendeeSimple.id);
+    writer.writeObjectValue<User>("user", attendeeSimple.user, serializeUser);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
 export function serializeBatchCreateUsersRequest(writer: SerializationWriter, batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined = {}) : void {
     writer.writeCollectionOfObjectValues<CreateUserRequest>("requests", batchCreateUsersRequest.requests, serializeCreateUserRequest);
 }
@@ -679,7 +804,8 @@ export function serializeEmpty(writer: SerializationWriter, empty: Partial<Empty
  * @param writer Serialization writer to use to serialize this model
  */
 export function serializeEvent(writer: SerializationWriter, event: Partial<Event> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<EventUser>("attendees", event.attendees, serializeEventUser);
+    writer.writeBooleanValue("active", event.active);
+    writer.writeCollectionOfObjectValues<AttendeeSimple>("attendees", event.attendees, serializeAttendeeSimple);
     writer.writeStringValue("badgeImage", event.badgeImage);
     writer.writeStringValue("description", event.description);
     writer.writeStringValue("endDateTime", event.endDateTime);
@@ -692,9 +818,15 @@ export function serializeEvent(writer: SerializationWriter, event: Partial<Event
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-export function serializeEventUser(writer: SerializationWriter, eventUser: Partial<EventUser> | undefined = {}) : void {
-    writer.writeStringValue("admissionKey", eventUser.admissionKey);
-    writer.writeObjectValue<User>("user", eventUser.user, serializeUser);
+export function serializeEventSimple(writer: SerializationWriter, eventSimple: Partial<EventSimple> | undefined = {}) : void {
+    writer.writeBooleanValue("active", eventSimple.active);
+    writer.writeStringValue("badgeImage", eventSimple.badgeImage);
+    writer.writeStringValue("description", eventSimple.description);
+    writer.writeStringValue("endDateTime", eventSimple.endDateTime);
+    writer.writeStringValue("id", eventSimple.id);
+    writer.writeStringValue("location", eventSimple.location);
+    writer.writeStringValue("name", eventSimple.name);
+    writer.writeStringValue("startDateTime", eventSimple.startDateTime);
 }
 /**
  * Serializes information the current object
@@ -716,7 +848,7 @@ export function serializeListArticlesResponse(writer: SerializationWriter, listA
  * @param writer Serialization writer to use to serialize this model
  */
 export function serializeListEventsResponse(writer: SerializationWriter, listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<Event>("events", listEventsResponse.events, serializeEvent);
+    writer.writeCollectionOfObjectValues<EventSimple>("events", listEventsResponse.events, serializeEventSimple);
 }
 /**
  * Serializes information the current object

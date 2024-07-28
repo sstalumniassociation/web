@@ -1,4 +1,5 @@
 using Calzolari.Grpc.AspNetCore.Validation;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,14 @@ builder.AddServiceDefaults();
 #region Database
 
 builder.Services.AddNpgsql<AppDbContext>(
-    builder.Configuration.GetConnectionString("Postgres")
+    builder.Configuration.GetConnectionString("Postgres"),
+    optionsAction: options =>
+    {
+        if (!builder.Environment.IsDevelopment()) return;
+
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
 );
 
 #endregion
@@ -92,7 +100,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association API", Version = "v1"  });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association API", Version = "v1" });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -130,17 +138,19 @@ builder.Services.AddGrpcSwagger();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.EnsureDeletedAsync();
+    await db.Database.EnsureCreatedAsync();
+}
+
 app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-if (app.Environment.IsDevelopment())
-{
-    await using var scope = app.Services.CreateAsyncScope();
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.EnsureCreatedAsync();
-}
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -150,6 +160,7 @@ app.MapGrpcService<ArticleServiceV1>();
 app.MapGrpcService<UserServiceV1>();
 app.MapGrpcService<EventServiceV1>();
 app.MapGrpcService<AuthServiceV1>();
+app.MapGrpcService<AttendeeServiceV1>();
 
 app.UseHttpsRedirection();
 

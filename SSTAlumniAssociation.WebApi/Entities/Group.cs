@@ -11,5 +11,5 @@ public class Group
     
     // Navigations
     
-    public List<Member> Members { get; set; }
+    public ICollection<Member> Members { get; } = [];
 }

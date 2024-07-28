@@ -4,33 +4,37 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
 const props = defineProps<{
-  id: string
-  name: string
-  description?: string | null
-  location?: string | null
-  badgeImage?: string | null
-  startDateTime: number
-  endDateTime: number
+  id?: string
+  name?: string
+  description?: string
+  location?: string
+  badgeImage?: string
+  startDateTime?: string
+  endDateTime?: string
 }>()
+
+if (!props.id) {
+  throw new Error('Event ID is required')
+}
 
 const toast = useToast()
 const dayjs = useDayjs()
 
-const schema = toTypedSchema(z.object({
-  name: z.string()
-    .min(1, 'Please enter a name'),
-  description: z.string(),
-  location: z.string(),
-  badgeImage: z.string()
-    .url('Please enter a URL'),
-  startDateTime: z.date(),
-  endDateTime: z.date(),
-}).refine((val) => {
-  return dayjs(val.startDateTime).isBefore(val.endDateTime)
-}, {
-  message: 'Event must end after it starts',
-  path: ['endDateTime'],
-}))
+const schema = toTypedSchema(
+  z.object({
+    name: z.string().min(1, 'Please enter a name'),
+    description: z.string(),
+    location: z.string(),
+    badgeImage: z.string().url('Please enter a URL'),
+    startDateTime: z.date(),
+    endDateTime: z.date(),
+  }).refine((val) => {
+    return dayjs(val.startDateTime).isBefore(val.endDateTime)
+  }, {
+    message: 'Event must end after it starts',
+    path: ['endDateTime'],
+  }),
+)
 
 const { defineField, handleSubmit, errors, resetForm } = useForm({
   validationSchema: schema,
@@ -39,8 +43,8 @@ const { defineField, handleSubmit, errors, resetForm } = useForm({
     description: props.description ?? '',
     location: props.location ?? '',
     badgeImage: props.badgeImage ?? '',
-    startDateTime: dayjs.unix(props.startDateTime).toDate(),
-    endDateTime: dayjs.unix(props.endDateTime).toDate(),
+    startDateTime: dayjs(props.startDateTime).toDate(),
+    endDateTime: dayjs(props.endDateTime).toDate(),
   },
 })
 
@@ -54,7 +58,15 @@ const [formEndDateTime] = defineField('endDateTime')
 const { mutate: updateEventMutate, isPending: updateEventIsPending } = useUpdateEventMutation(props.id)
 
 const updateEvent = handleSubmit((values) => {
-  updateEventMutate(values, {
+  const data = {
+    event: {
+      ...values,
+      startDateTime: values.startDateTime.toString(),
+      endDateTime: values.startDateTime.toString(),
+    },
+  }
+
+  updateEventMutate(data, {
     onError(err) {
       toast.add({
         summary: err.message,

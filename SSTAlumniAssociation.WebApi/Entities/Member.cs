@@ -9,9 +9,14 @@ public abstract class Member : User
     /// Internal member ID used for tracking by SSTAA admin.
     /// </summary>
     public required string MemberId { get; set; }
+
     public required Membership Membership { get; set; }
-    
+
+    public MembershipSubscription? ActiveSubscription => Subscriptions.SingleOrDefault(s =>
+        s.StartDateTime <= DateTime.Now && s.EndDateTime >= DateTime.Now && s.PaymentIntentState == "success");
+
     // Navigations
 
-    public List<Group> Groups { get; set; }
+    public ICollection<Group> Groups { get; } = [];
+    public ICollection<MembershipSubscription> Subscriptions { get; } = [];
 }

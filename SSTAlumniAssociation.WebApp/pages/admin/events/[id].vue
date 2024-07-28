@@ -243,7 +243,7 @@ function toggleDropdown(event: Event) {
       </Dialog>
     </div>
 
-    <div class="py-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="py-8 grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="space-y-4">
         <div
           class="rounded-xl min-h-[200px] bg-center bg-cover bg-no-repeat relative" :style="{
@@ -264,7 +264,7 @@ function toggleDropdown(event: Event) {
         <AdminEventUpdateForm v-else-if="event" v-bind="event" />
       </div>
 
-      <section class="space-y-4">
+      <section class="space-y-4 col-span-2">
         <h2 class="text-lg font-semibold">
           Attendees
         </h2>
@@ -281,11 +281,9 @@ function toggleDropdown(event: Event) {
             <Column field="memberType" header="Member Type" />
           </DataTable>
 
-          <Message
-            severity="warn"
-            :closable="false"
-          >
-            If a user with the specified email already exists, a new user will not be created. The existing user will be added to the event.
+          <Message severity="warn" :closable="false">
+            If a user with the specified email already exists, a new user will not be created. The existing user will be
+            added to the event.
           </Message>
 
           <Button :pending="showPending" @click="uploadUsers">
@@ -294,10 +292,15 @@ function toggleDropdown(event: Event) {
         </div>
 
         <DataTable v-else-if="event?.attendees" :value="event.attendees">
-          <Column field="admissionKey" header="Admission Key" class="min-w-xs" />
-          <Column field="name" header="Name" class="min-w-xs" />
-          <Column field="email" header="Email" class="min-w-xs" />
-          <Column field="id" header="ID" />
+          <Column field="admissionKey" header="Admission Key" class="min-w-xs">
+            <template #body="{ data }">
+              <code class="text-sm">
+                {{ data.admissionKey }}
+              </code>
+            </template>
+          </Column>
+          <Column field="user.name" header="Name" class="min-w-xs" />
+          <Column field="user.email" header="Email" class="min-w-xs" />
         </DataTable>
       </section>
     </div>
