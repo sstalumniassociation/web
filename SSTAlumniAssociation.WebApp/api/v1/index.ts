@@ -6,6 +6,8 @@ import { AdmissionsRequestBuilderNavigationMetadata, type AdmissionsRequestBuild
 // @ts-ignore
 import { ArticlesRequestBuilderRequestsMetadata, type ArticlesRequestBuilder } from './articles/index.js';
 // @ts-ignore
+import { AttendeesRequestBuilderNavigationMetadata, type AttendeesRequestBuilder } from './attendees/index.js';
+// @ts-ignore
 import { AuthRequestBuilderNavigationMetadata, type AuthRequestBuilder } from './auth/index.js';
 // @ts-ignore
 import { EventsRequestBuilderNavigationMetadata, EventsRequestBuilderRequestsMetadata, type EventsRequestBuilder } from './events/index.js';
@@ -28,6 +30,10 @@ export interface V1RequestBuilder extends BaseRequestBuilder<V1RequestBuilder> {
      * The articles property
      */
     get articles(): ArticlesRequestBuilder;
+    /**
+     * The attendees property
+     */
+    get attendees(): AttendeesRequestBuilder;
     /**
      * The auth property
      */
@@ -58,6 +64,9 @@ export const V1RequestBuilderNavigationMetadata: Record<Exclude<keyof V1RequestB
     },
     articles: {
         requestsMetadata: ArticlesRequestBuilderRequestsMetadata,
+    },
+    attendees: {
+        navigationMetadata: AttendeesRequestBuilderNavigationMetadata,
     },
     auth: {
         navigationMetadata: AuthRequestBuilderNavigationMetadata,

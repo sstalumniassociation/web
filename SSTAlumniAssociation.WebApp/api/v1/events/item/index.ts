@@ -29,6 +29,7 @@ export interface EventsItemRequestBuilder extends BaseRequestBuilder<EventsItemR
      */
      delete(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<Empty | undefined>;
     /**
+     * Get an event.If the user is an admin, then this will include the attendees of the event.It will also return the details of events marked as not active.If the user is not an admin, then this will not include the attendees of the event.It will also return 404 if the event is marked as not active.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<Event>}
      * @throws {Status} error when the service returns a 4XX or 5XX status code
@@ -47,6 +48,7 @@ export interface EventsItemRequestBuilder extends BaseRequestBuilder<EventsItemR
      */
      toDeleteRequestInformation(requestConfiguration?: RequestConfiguration<object> | undefined) : RequestInformation;
     /**
+     * Get an event.If the user is an admin, then this will include the attendees of the event.It will also return the details of events marked as not active.If the user is not an admin, then this will not include the attendees of the event.It will also return 404 if the event is marked as not active.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
