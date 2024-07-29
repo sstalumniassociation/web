@@ -94,6 +94,41 @@ export interface BatchCreateUsersResponse extends Parsable {
      */
     users?: User[];
 }
+export interface CheckIn extends Parsable {
+    /**
+     * The checkInDateTime property
+     */
+    checkInDateTime?: string;
+    /**
+     * The checkOutDateTime property
+     */
+    checkOutDateTime?: string;
+    /**
+     * The guest property
+     */
+    guest?: GuestCheckIn;
+    /**
+     * The id property
+     */
+    id?: string;
+    /**
+     * The user property
+     */
+    user?: User;
+}
+/**
+ * CheckIn with no navigations
+ */
+export interface CheckInSimple extends Parsable {
+    /**
+     * The guest property
+     */
+    guest?: GuestCheckIn;
+    /**
+     * The user property
+     */
+    user?: string;
+}
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
@@ -153,6 +188,36 @@ export function createBatchCreateUsersResponseFromDiscriminatorValue(parseNode: 
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {CheckIn}
+ */
+export function createCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoCheckIn;
+}
+export interface CreateCheckInRequest extends Parsable {
+    /**
+     * CheckIn with no navigations
+     */
+    checkIn?: CheckInSimple;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {CheckInSimple}
+ */
+export function createCheckInSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoCheckInSimple;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {CreateCheckInRequest}
+ */
+export function createCreateCheckInRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoCreateCheckInRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {CreateUserRequest}
  */
 export function createCreateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
@@ -201,6 +266,14 @@ export function createEventSimpleFromDiscriminatorValue(parseNode: ParseNode | u
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GuestCheckIn}
+ */
+export function createGuestCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGuestCheckIn;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ListArticlesRequest}
  */
 export function createListArticlesRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
@@ -213,6 +286,14 @@ export function createListArticlesRequestFromDiscriminatorValue(parseNode: Parse
  */
 export function createListArticlesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoListArticlesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ListCheckInsResponse}
+ */
+export function createListCheckInsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoListCheckInsResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -386,6 +467,38 @@ export function deserializeIntoBatchCreateUsersResponse(batchCreateUsersResponse
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
+export function deserializeIntoCheckIn(checkIn: Partial<CheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "checkInDateTime": n => { checkIn.checkInDateTime = n.getStringValue(); },
+        "checkOutDateTime": n => { checkIn.checkOutDateTime = n.getStringValue(); },
+        "guest": n => { checkIn.guest = n.getObjectValue<GuestCheckIn>(createGuestCheckInFromDiscriminatorValue); },
+        "id": n => { checkIn.id = n.getStringValue(); },
+        "user": n => { checkIn.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+export function deserializeIntoCheckInSimple(checkInSimple: Partial<CheckInSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "guest": n => { checkInSimple.guest = n.getObjectValue<GuestCheckIn>(createGuestCheckInFromDiscriminatorValue); },
+        "user": n => { checkInSimple.user = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+export function deserializeIntoCreateCheckInRequest(createCheckInRequest: Partial<CreateCheckInRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "checkIn": n => { createCheckInRequest.checkIn = n.getObjectValue<CheckInSimple>(createCheckInSimpleFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
 export function deserializeIntoCreateUserRequest(createUserRequest: Partial<CreateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "user": n => { createUserRequest.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
@@ -453,6 +566,18 @@ export function deserializeIntoEventSimple(eventSimple: Partial<EventSimple> | u
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
+export function deserializeIntoGuestCheckIn(guestCheckIn: Partial<GuestCheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "name": n => { guestCheckIn.name = n.getStringValue(); },
+        "nric": n => { guestCheckIn.nric = n.getStringValue(); },
+        "phone": n => { guestCheckIn.phone = n.getStringValue(); },
+        "reason": n => { guestCheckIn.reason = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
 export function deserializeIntoListArticlesRequest(listArticlesRequest: Partial<ListArticlesRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "pageSize": n => { listArticlesRequest.pageSize = n.getNumberValue(); },
@@ -466,6 +591,15 @@ export function deserializeIntoListArticlesRequest(listArticlesRequest: Partial<
 export function deserializeIntoListArticlesResponse(listArticlesResponse: Partial<ListArticlesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "articles": n => { listArticlesResponse.articles = n.getCollectionOfObjectValues<Article>(createArticleFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+export function deserializeIntoListCheckInsResponse(listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "checkIns": n => { listCheckInsResponse.checkIns = n.getCollectionOfObjectValues<CheckIn>(createCheckInFromDiscriminatorValue); },
     }
 }
 /**
@@ -665,6 +799,24 @@ export interface EventSimple extends Parsable {
      */
     startDateTime?: string;
 }
+export interface GuestCheckIn extends Parsable {
+    /**
+     * The name property
+     */
+    name?: string;
+    /**
+     * The nric property
+     */
+    nric?: string;
+    /**
+     * The phone property
+     */
+    phone?: string;
+    /**
+     * The reason property
+     */
+    reason?: string;
+}
 export interface ListArticlesRequest extends Parsable {
     /**
      * The pageSize property
@@ -680,6 +832,12 @@ export interface ListArticlesResponse extends Parsable {
      * The articles property
      */
     articles?: Article[];
+}
+export interface ListCheckInsResponse extends Parsable {
+    /**
+     * The checkIns property
+     */
+    checkIns?: CheckIn[];
 }
 export interface ListEventsResponse extends Parsable {
     /**
@@ -777,6 +935,32 @@ export function serializeBatchCreateUsersResponse(writer: SerializationWriter, b
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
+export function serializeCheckIn(writer: SerializationWriter, checkIn: Partial<CheckIn> | undefined = {}) : void {
+    writer.writeStringValue("checkInDateTime", checkIn.checkInDateTime);
+    writer.writeStringValue("checkOutDateTime", checkIn.checkOutDateTime);
+    writer.writeObjectValue<GuestCheckIn>("guest", checkIn.guest, serializeGuestCheckIn);
+    writer.writeStringValue("id", checkIn.id);
+    writer.writeObjectValue<User>("user", checkIn.user, serializeUser);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+export function serializeCheckInSimple(writer: SerializationWriter, checkInSimple: Partial<CheckInSimple> | undefined = {}) : void {
+    writer.writeObjectValue<GuestCheckIn>("guest", checkInSimple.guest, serializeGuestCheckIn);
+    writer.writeStringValue("user", checkInSimple.user);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+export function serializeCreateCheckInRequest(writer: SerializationWriter, createCheckInRequest: Partial<CreateCheckInRequest> | undefined = {}) : void {
+    writer.writeObjectValue<CheckInSimple>("checkIn", createCheckInRequest.checkIn, serializeCheckInSimple);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
 export function serializeCreateUserRequest(writer: SerializationWriter, createUserRequest: Partial<CreateUserRequest> | undefined = {}) : void {
     writer.writeObjectValue<User>("user", createUserRequest.user, serializeUser);
 }
@@ -832,6 +1016,16 @@ export function serializeEventSimple(writer: SerializationWriter, eventSimple: P
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
+export function serializeGuestCheckIn(writer: SerializationWriter, guestCheckIn: Partial<GuestCheckIn> | undefined = {}) : void {
+    writer.writeStringValue("name", guestCheckIn.name);
+    writer.writeStringValue("nric", guestCheckIn.nric);
+    writer.writeStringValue("phone", guestCheckIn.phone);
+    writer.writeStringValue("reason", guestCheckIn.reason);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
 export function serializeListArticlesRequest(writer: SerializationWriter, listArticlesRequest: Partial<ListArticlesRequest> | undefined = {}) : void {
     writer.writeNumberValue("pageSize", listArticlesRequest.pageSize);
     writer.writeStringValue("pageToken", listArticlesRequest.pageToken);
@@ -842,6 +1036,13 @@ export function serializeListArticlesRequest(writer: SerializationWriter, listAr
  */
 export function serializeListArticlesResponse(writer: SerializationWriter, listArticlesResponse: Partial<ListArticlesResponse> | undefined = {}) : void {
     writer.writeCollectionOfObjectValues<Article>("articles", listArticlesResponse.articles, serializeArticle);
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+export function serializeListCheckInsResponse(writer: SerializationWriter, listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : void {
+    writer.writeCollectionOfObjectValues<CheckIn>("checkIns", listCheckInsResponse.checkIns, serializeCheckIn);
 }
 /**
  * Serializes information the current object

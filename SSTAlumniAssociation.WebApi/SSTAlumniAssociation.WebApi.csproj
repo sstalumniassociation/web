@@ -21,13 +21,14 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4"/>
         <PackageReference Include="Riok.Mapperly" Version="3.6.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
-        <PackageReference Include="System.Text.Json" Version="8.0.4" />
+        <PackageReference Include="System.Text.Json" Version="8.0.4"/>
     </ItemGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\v1\attendee.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\article.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\auth.proto" GrpcServices="Server"/>
+        <Protobuf Include="Protos\v1\check_in.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\event.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\user.proto" GrpcServices="Server"/>
     </ItemGroup>

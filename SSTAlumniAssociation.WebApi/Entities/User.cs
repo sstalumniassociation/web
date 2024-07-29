@@ -26,4 +26,5 @@ public class User
     
     public ICollection<Event> Events { get; } = [];
     public ICollection<Attendee> UserEvents { get; } = [];
+    public ICollection<UserCheckIn> CheckIns { get; } = [];
 }

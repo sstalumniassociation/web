@@ -1,6 +1,5 @@
 using FluentValidation;
 using Protos.Event.V1;
-using Protos.User.V1;
 
 namespace SSTAlumniAssociation.WebApi.Services.V1.Event;
 

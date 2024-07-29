@@ -91,12 +91,18 @@ public partial class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().UseTptMappingStrategy();
+        modelBuilder.Entity<CheckIn>().UseTptMappingStrategy();
         // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
 
         // Store enum value as string to reduce risk of breaking changes vs storing as an int.
         modelBuilder
             .Entity<Member>()
             .Property(u => u.Membership)
+            .HasConversion<string>();
+        
+        modelBuilder
+            .Entity<ServiceAccount>()
+            .Property(u => u.ServiceAccountType)
             .HasConversion<string>();
 
         var qinGuan = new AlumniMember

@@ -8,6 +8,8 @@ import { AttendeesRequestBuilderNavigationMetadata, type AttendeesRequestBuilder
 // @ts-ignore
 import { AuthRequestBuilderNavigationMetadata, type AuthRequestBuilder } from './auth/index.js';
 // @ts-ignore
+import { CheckInRequestBuilderNavigationMetadata, CheckInRequestBuilderRequestsMetadata, type CheckInRequestBuilder } from './checkIn/index.js';
+// @ts-ignore
 import { EventsRequestBuilderNavigationMetadata, EventsRequestBuilderRequestsMetadata, type EventsRequestBuilder } from './events/index.js';
 // @ts-ignore
 import { type UsersRequestBuilder, UsersRequestBuilderNavigationMetadata, UsersRequestBuilderRequestsMetadata } from './users/index.js';
@@ -32,6 +34,10 @@ export interface V1RequestBuilder extends BaseRequestBuilder<V1RequestBuilder> {
      * The auth property
      */
     get auth(): AuthRequestBuilder;
+    /**
+     * The checkIn property
+     */
+    get checkIn(): CheckInRequestBuilder;
     /**
      * The events property
      */
@@ -61,6 +67,10 @@ export const V1RequestBuilderNavigationMetadata: Record<Exclude<keyof V1RequestB
     },
     auth: {
         navigationMetadata: AuthRequestBuilderNavigationMetadata,
+    },
+    checkIn: {
+        requestsMetadata: CheckInRequestBuilderRequestsMetadata,
+        navigationMetadata: CheckInRequestBuilderNavigationMetadata,
     },
     events: {
         requestsMetadata: EventsRequestBuilderRequestsMetadata,

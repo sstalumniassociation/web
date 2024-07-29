@@ -1,5 +1,4 @@
 using Calzolari.Grpc.AspNetCore.Validation;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +11,7 @@ using SSTAlumniAssociation.WebApi.Authorization.Member;
 using SSTAlumniAssociation.WebApi.Authorization.OwnerOrAdmin;
 using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Services.V1;
+using SSTAlumniAssociation.WebApi.Services.V1.CheckIn;
 using SSTAlumniAssociation.WebApi.Services.V1.Event;
 using SSTAlumniAssociation.WebApi.Services.V1.User;
 
@@ -75,6 +75,8 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
 
 builder.Services.AddValidator<CreateUserRequestValidator>();
+builder.Services.AddValidator<CreateEventRequestValidator>();
+builder.Services.AddValidator<CreateCheckInRequestValidator>();
 builder.Services.AddGrpcValidation();
 
 #endregion
@@ -143,7 +145,7 @@ if (app.Environment.IsDevelopment())
 {
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.EnsureDeletedAsync();
+    // await db.Database.EnsureDeletedAsync();
     await db.Database.EnsureCreatedAsync();
 }
 
@@ -151,7 +153,6 @@ app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -162,6 +163,7 @@ app.MapGrpcService<UserServiceV1>();
 app.MapGrpcService<EventServiceV1>();
 app.MapGrpcService<AuthServiceV1>();
 app.MapGrpcService<AttendeeServiceV1>();
+app.MapGrpcService<CheckInServiceV1>();
 
 app.UseHttpsRedirection();
 

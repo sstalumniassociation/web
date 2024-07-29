@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+import "Protos/google/api/annotations.proto";
+import "Protos/v1/user.proto";
+
+package protos.check_in.v1;
+
+message CheckIn {
+  string id = 1;
+  google.protobuf.Timestamp check_in_date_time = 2;
+  google.protobuf.Timestamp check_out_date_time = 4;
+
+  oneof check_in_type {
+    GuestCheckIn guest = 100;
+    protos.user.v1.User user = 101;
+  }
+}
+
+// CheckIn with no navigations
+message CheckInSimple {
+  oneof check_in_type {
+    GuestCheckIn guest = 100;
+    string user = 101;
+  }
+}
+
+message GuestCheckIn {
+  string name = 1;
+  string nric = 2;
+  string phone = 3;
+  string reason = 4;
+}
+
+// Check in service
+service CheckInService {
+  // List all check ins
+  rpc ListCheckIns (ListCheckInsRequest) returns (ListCheckInsResponse) {
+    option (google.api.http) = {
+      get: "/v1/check-in"
+    };
+  };
+
+  // Create check in
+  rpc CreateCheckIn (CreateCheckInRequest) returns (CheckIn) {
+    option (google.api.http) = {
+      post: "/v1/check-in"
+      body: "*"
+    };
+  }
+
+  // Check out
+  rpc CheckOut (CheckOutRequest) returns (CheckIn) {
+    option (google.api.http) = {
+      post: "/v1/check-in/{id}/check-out"
+    };
+  }
+
+}
+
+message ListCheckInsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  google.protobuf.Timestamp check_in_date = 3;
+  google.protobuf.Timestamp check_out_date = 4;
+  google.protobuf.StringValue service_account = 5;
+  google.protobuf.BoolValue checked_out = 6;
+}
+
+message ListCheckInsResponse {
+  repeated CheckIn check_ins = 1;
+}
+
+message CreateCheckInRequest {
+  CheckInSimple check_in = 1;
+}
+
+message CheckOutRequest {
+  string id = 1;
+}

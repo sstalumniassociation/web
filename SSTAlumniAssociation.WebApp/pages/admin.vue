@@ -74,6 +74,9 @@ watch([authLoaded, auth], (values, _, onCleanup) => {
           <NuxtLink to="/admin/members">
             <Button link label="Members" size="small" />
           </NuxtLink>
+          <NuxtLink to="/admin/check-ins">
+            <Button link label="Check ins" size="small" />
+          </NuxtLink>
           <NuxtLink to="/admin/events">
             <Button link label="Events" size="small" />
           </NuxtLink>
