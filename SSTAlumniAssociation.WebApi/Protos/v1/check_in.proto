@@ -59,16 +59,22 @@ service CheckInService {
       post: "/v1/check-in/{id}/check-out"
     };
   }
-
 }
 
 message ListCheckInsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  google.protobuf.Timestamp check_in_date = 3;
-  google.protobuf.Timestamp check_out_date = 4;
-  google.protobuf.StringValue service_account = 5;
-  google.protobuf.BoolValue checked_out = 6;
+  
+  // Either "admin" or "app". If no value is provided, value defaults to "app"
+  // - "admin" will assume the request is sent from admin portal
+  // - "app" will assume request is sent from app
+  string scope = 3;
+  
+  // Filters
+  google.protobuf.Timestamp check_in_date = 4;
+  google.protobuf.Timestamp check_out_date = 5;
+  google.protobuf.StringValue service_account = 6;
+  google.protobuf.BoolValue checked_out = 7;
 }
 
 message ListCheckInsResponse {

@@ -15,6 +15,7 @@ async function click() {
     return
 
   state.pending = true
+
   try {
     const data = await $api(`/api/event/${state.eventId}`)
     sstaarsStore.value.previousEvents[data.id] = data.name

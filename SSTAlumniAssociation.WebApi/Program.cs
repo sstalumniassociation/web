@@ -88,7 +88,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
-        policy.WithHeaders("Authorization");
+        policy.WithHeaders("Authorization", "Content-Type");
         policy.WithOrigins(
             "https://app.sstaa.org",
             "http://localhost:3000"
@@ -145,7 +145,7 @@ if (app.Environment.IsDevelopment())
 {
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // await db.Database.EnsureDeletedAsync();
+    await db.Database.EnsureDeletedAsync();
     await db.Database.EnsureCreatedAsync();
 }
 

@@ -1,8 +1,51 @@
 <script setup lang="ts">
 import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 import type { Membership } from '~/api/models'
 
-const { data: user, isLoading: userIsLoading } = useUser()
+const dayjs = useDayjs()
+const { width } = useWindowSize()
+
+const { data: user, isLoading: userIsLoading } = useWhoAmI()
+const { data: checkIns, refetch } = useCheckInsWithAppScope()
+
+const counter = useInterval(10000)
+const { pause, resume } = useIntervalFn(refetch, 500, { immediate: false })
+
+const latestCheckIn = computed(() => {
+  return checkIns.value?.checkIns?.findLast(checkIn => checkIn.checkOutDateTime === undefined)
+})
+
+const latestCheckInDuration = computed(() => {
+  if (!latestCheckIn.value)
+    return null
+  const _ = counter.value
+  return dayjs().to(dayjs(latestCheckIn.value?.checkInDateTime), true)
+})
+
+const cardOpenedInner = ref(false)
+const cardOpened = computed({
+  get() {
+    return !!latestCheckIn.value || cardOpenedInner.value
+  },
+  set(value) {
+    if (latestCheckIn.value)
+      return // If user has a check in, prevent them from closing the card to encourage check out
+    cardOpenedInner.value = value
+  },
+})
+
+watch(cardOpened, (value) => {
+  if (value)
+    resume()
+  else
+    pause()
+}, { immediate: true })
+
+watch(latestCheckIn, (value, oldValue) => {
+  if (value && !oldValue)
+    cardOpened.value = false
+})
 
 const membershipGradient: Record<Membership, string> = {
   Associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -13,6 +56,9 @@ const membershipGradient: Record<Membership, string> = {
 }
 
 const resolvedGradientClass = computed(() => {
+  if (userIsLoading.value) {
+    return null
+  }
   if (user.value?.systemAdmin) {
     return 'bg-gradient-to-br from-indigo-500 to-indigo-600'
   }
@@ -24,6 +70,18 @@ const resolvedGradientClass = computed(() => {
   }
   throw new Error('Could not accurately determine user type.')
 })
+
+const qrCode = useQRCode(() => latestCheckIn.value?.id ?? JSON.stringify({ user: user.value?.id ?? '' }), {
+  width: 0.6 * width.value > 300 ? 300 : 0.6 * width.value,
+  color: {
+    light: '#0000',
+    dark: '#fff',
+  },
+})
+
+function cardClicked() {
+  cardOpened.value = !cardOpened.value
+}
 </script>
 
 <template>
@@ -32,10 +90,14 @@ const resolvedGradientClass = computed(() => {
       <f7SkeletonBlock class="rounded-md" effect="fade" height="100%" />
     </f7List>
 
-    <f7Card v-else-if="user">
-      <f7CardContent class="h-60 rounded-[16px]" valign="top" :class="resolvedGradientClass">
+    <f7Card v-else-if="user" @click="cardClicked">
+      <f7CardContent
+        :style="[cardOpened && { height: 'calc(70vh - calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom)))' }]"
+        class="rounded-[16px] transition-all duration-350 ease-out"
+        :class="[{ 'h-50': !cardOpened, 'min-h-[400px]': cardOpened }, resolvedGradientClass]" valign="top"
+      >
         <div class="flex flex-col w-full h-full text-white dark:text-inherit">
-          <div class="flex flex-col flex-1">
+          <div class="flex flex-col">
             <span class="font-bold text-3xl">
               {{ user.name }}
             </span>
@@ -43,7 +105,11 @@ const resolvedGradientClass = computed(() => {
               {{ user.member.memberId }}
             </span>
           </div>
-          <div v-if="user.member" class="flex flex-col">
+          <div class="flex-1 flex items-center justify-center">
+            <img v-if="cardOpened" :src="qrCode" alt="QR Code">
+          </div>
+
+          <div v-if="user.member && !cardOpened" class="flex flex-col">
             <span class="font-semibold">
               Class of {{ user.member?.alumniMember?.graduationYear ?? user.member?.employeeMember?.graduationYear }}
             </span>
@@ -52,9 +118,23 @@ const resolvedGradientClass = computed(() => {
               member
             </span>
           </div>
+
+          <div v-else-if="cardOpened && latestCheckIn" class="flex flex-col">
+            <span class="font-semibold">
+              You're checked into SST!
+            </span>
+            <span>
+              Remember to check out by scanning this QR code at the Guard House!
+            </span>
+            <br>
+            <span>
+              You've been in SST for {{ latestCheckInDuration }}.
+            </span>
+          </div>
         </div>
       </f7CardContent>
-      <f7CardFooter>
+
+      <f7CardFooter v-if="!latestCheckIn">
         <span>
           <strong>Coming back?</strong>
           <br>

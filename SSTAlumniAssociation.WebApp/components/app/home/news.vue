@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { f7BlockTitle, f7Button, f7Card, f7CardContent, f7CardFooter, f7CardHeader, f7List, f7SkeletonBlock } from 'framework7-vue'
 
-const { data: news, isLoading: newsIsLoading } = useNewsArticles()
+// const { data: news, isLoading: newsIsLoading } = useNewsArticles()
+// TODO : Placeholder data
+const news = ref([])
+const newsIsLoading = ref(true)
 </script>
 
 <template>

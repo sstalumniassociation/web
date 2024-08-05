@@ -5,16 +5,6 @@ const queryKeyFactory = {
   users: ['users'],
 }
 
-export function useUser() {
-  const firebaseCurrentUser = useCurrentUser()
-  return useQuery({
-    queryKey: queryKeyFactory.currentUser,
-    queryFn: () => $apiClient.v1.auth.whoami.get(),
-    enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
-    retry: false,
-  })
-}
-
 export function useUsers() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({

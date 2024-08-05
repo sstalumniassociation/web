@@ -3,10 +3,8 @@ import 'framework7/css/bundle'
 import 'framework7-icons/css/framework7-icons.css'
 import 'material-icons/iconfont/material-icons.css'
 
-// @ts-expect-error Missing types
 import Framework7 from 'framework7/lite-bundle'
 
-// @ts-expect-error Missing types
 import Framework7Vue from 'framework7-vue/bundle'
 import { f7App, f7Link, f7Toolbar, f7View, f7Views } from 'framework7-vue'
 

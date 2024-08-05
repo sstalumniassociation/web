@@ -99,7 +99,7 @@ public partial class AppDbContext : DbContext
             .Entity<Member>()
             .Property(u => u.Membership)
             .HasConversion<string>();
-        
+
         modelBuilder
             .Entity<ServiceAccount>()
             .Property(u => u.ServiceAccountType)
@@ -119,18 +119,29 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<AlumniMember>()
             .HasData(qinGuan);
 
+        var guardHouse = new ServiceAccount
+        {
+            Id = Guid.Parse("a78a112f-3355-499e-aafd-824c14858b34"),
+            Name = "Guard House Laptop",
+            Email = "guardhouse+laptop@sstaa.org",
+            FirebaseId = "EGjzDDZgHxXd80aGUYkeoP5fNnC2"
+        };
+
+        modelBuilder.Entity<ServiceAccount>()
+            .HasData(guardHouse);
+
+        var zhengJie = new AlumniMember
+        {
+            Id = Guid.Parse("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
+            Name = "Tan Zheng Jie",
+            FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
+            Email = "tan_zheng_jie@sstaa.org",
+            Membership = Membership.Exco,
+            MemberId = "EXCO-2"
+        };
+
         modelBuilder.Entity<AlumniMember>()
-            .HasData(
-                new AlumniMember
-                {
-                    Id = Guid.Parse("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
-                    Name = "Tan Zheng Jie",
-                    FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
-                    Email = "tan_zheng_jie@sstaa.org",
-                    Membership = Membership.Exco,
-                    MemberId = "EXCO-2"
-                }
-            );
+            .HasData(zhengJie);
 
         var homecoming = new Event
         {
@@ -179,6 +190,42 @@ public partial class AppDbContext : DbContext
                     Id = Guid.NewGuid(),
                     UserId = qinGuan.Id,
                     EventId = trial.Id
+                }
+            );
+
+        modelBuilder.Entity<UserCheckIn>()
+            .HasData(
+                new UserCheckIn
+                {
+                    Id = Guid.NewGuid(),
+                    CheckInDateTime = DateTime.UtcNow,
+                    ServiceAccountId = guardHouse.Id,
+                    UserId = qinGuan.Id
+                }
+            );
+
+        modelBuilder.Entity<UserCheckIn>()
+            .HasData(
+                new UserCheckIn
+                {
+                    Id = Guid.NewGuid(),
+                    CheckInDateTime = DateTime.UtcNow,
+                    ServiceAccountId = guardHouse.Id,
+                    UserId = zhengJie.Id
+                }
+            );
+
+        modelBuilder.Entity<GuestCheckIn>()
+            .HasData(
+                new GuestCheckIn
+                {
+                    Id = Guid.NewGuid(),
+                    CheckInDateTime = DateTime.UtcNow,
+                    ServiceAccountId = guardHouse.Id,
+                    Name = "Alex",
+                    Nric = "999B",
+                    Phone = "9999 9999",
+                    Reason = "Alex is bored"
                 }
             );
 

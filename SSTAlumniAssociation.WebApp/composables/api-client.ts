@@ -2,7 +2,7 @@ import type { AccessTokenProvider } from '@microsoft/kiota-abstractions'
 import { AllowedHostsValidator, BaseBearerTokenAuthenticationProvider } from '@microsoft/kiota-abstractions'
 import { FetchRequestAdapter } from '@microsoft/kiota-http-fetchlibrary'
 import { getAuth } from 'firebase/auth'
-import { createPostsClient } from '~/api/postsClient'
+import { createApiClient } from '~/api/apiClient'
 
 const config = useRuntimeConfig()
 
@@ -21,4 +21,4 @@ const authProvider = new BaseBearerTokenAuthenticationProvider(new FirebaseAcces
 const adapter = new FetchRequestAdapter(authProvider)
 adapter.baseUrl = config.public.api.url
 
-export const $apiClient = createPostsClient(adapter)
+export const $apiClient = createApiClient(adapter)

@@ -5,7 +5,7 @@ import { devDependencies } from '~/package.json'
 
 const appConfig = useAppConfig()
 
-const { data: user } = useUser()
+const { data: user } = useWhoAmI()
 const graduationYear = computed(() => {
   return `Class of ${user.value?.member?.alumniMember?.graduationYear ?? user.value?.member?.employeeMember?.graduationYear}`
 })

@@ -6,7 +6,9 @@ const API_URL = process.env.services__webapi__https__0 || process.env.services__
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false, // Firebase
+  // Firebase
+  ssr: false,
+
   devtools: { enabled: true },
   sourcemap: { client: true, server: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
@@ -196,4 +198,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-08-05',
 })

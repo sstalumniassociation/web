@@ -12,16 +12,33 @@ public static partial class CheckInMapper
     [MapDerivedType<Entities.GuestCheckIn, Protos.CheckIn.V1.CheckIn>]
     [MapDerivedType<Entities.UserCheckIn, Protos.CheckIn.V1.CheckIn>]
     public static partial Protos.CheckIn.V1.CheckIn ToGrpc(this Entities.CheckIn checkIn);
+
+    public static partial Protos.CheckIn.V1.CheckIn ToGrpcBase(this Entities.CheckIn checkIn);
+
+    // TODO : rename methods
+    public static partial Protos.CheckIn.V1.GuestCheckIn ToGrpcBaseGuest(this Entities.GuestCheckIn checkIn);
+
+    private static Protos.CheckIn.V1.CheckIn ToGrpc(Entities.GuestCheckIn checkIn)
+    {
+        var c = checkIn.ToGrpcBase();
+        c.Guest = checkIn.ToGrpcBaseGuest();
+        return c;
+    }
+
     public static partial IEnumerable<Protos.CheckIn.V1.CheckIn> ToGrpc(this IQueryable<Entities.CheckIn> checkIn);
 
     #endregion
 
-    [MapNestedProperties(nameof(Protos.CheckIn.V1.CheckIn.Guest))]
+    #region Entity mappings
+    
+    [MapNestedProperties(nameof(Protos.CheckIn.V1.CheckInSimple.Guest))]
     public static partial Entities.GuestCheckIn ToGuestCheckIn(this Protos.CheckIn.V1.CheckInSimple checkIn);
 
-    [MapperIgnoreSource(nameof(Protos.CheckIn.V1.CheckIn.User))]
-    public static partial Entities.UserCheckIn ToUserCheckIn(this Protos.CheckIn.V1.CheckInSimple checkIn);
     
+    [MapperIgnoreSource(nameof(Protos.CheckIn.V1.CheckIn.User))]
+    [MapProperty(nameof(Protos.CheckIn.V1.CheckInSimple.User), nameof(Entities.UserCheckIn.UserId))]
+    public static partial Entities.UserCheckIn ToUserCheckIn(this Protos.CheckIn.V1.CheckInSimple checkIn);
+
     [ObjectFactory]
     private static Entities.GuestCheckIn CreateGuestCheckIn()
     {
@@ -34,7 +51,7 @@ public static partial class CheckInMapper
             Reason = string.Empty
         };
     }
-    
+
     [ObjectFactory]
     private static Entities.UserCheckIn CreateUserCheckIn()
     {
@@ -43,4 +60,6 @@ public static partial class CheckInMapper
             CheckInDateTime = DateTime.UtcNow
         };
     }
+
+    #endregion
 }

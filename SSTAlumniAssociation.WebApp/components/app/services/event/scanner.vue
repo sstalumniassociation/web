@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query'
 import { f7List, f7ListItem } from 'framework7-vue'
 import { Html5Qrcode } from 'html5-qrcode'
 
@@ -9,11 +8,7 @@ const state = ref({
   selectedCameraId: '',
 })
 
-const { data: cameras } = useQuery({
-  queryKey: ['cameras'],
-  queryFn: () => Html5Qrcode.getCameras(),
-  refetchOnWindowFocus: false,
-})
+const { data: cameras } = useCameras()
 
 watchEffect((onCleanup) => {
   if (state.value.selectedCameraId.length === 0)
