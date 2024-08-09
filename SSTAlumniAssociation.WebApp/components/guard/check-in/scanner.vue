@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { f7List, f7ListItem, f7SkeletonBlock } from 'framework7-vue'
+import { f7Block, f7Link, f7List, f7ListItem, f7NavRight, f7Navbar, f7Page, f7PageContent, f7Popup, f7Sheet, f7SkeletonBlock } from 'framework7-vue'
 import { Html5Qrcode } from 'html5-qrcode'
 
 const { data: cameras, isLoading } = useCameras()
@@ -20,15 +20,27 @@ const cameraId = computed({
   },
 })
 
+let html5Qrcode: Html5Qrcode | null = null
+const scannerData = ref<string | object | null>(null)
+const confirmationModalOpened = computed({
+  get() {
+    return !!scannerData.value
+  },
+  set(value) {
+    if (!value)
+      scannerData.value = null
+  },
+})
+
 watch(cameraId, async (value, _, onCleanup) => {
   if (!value)
     return
 
   await nextTick(() => {
-    const html5Qrcode = new Html5Qrcode('reader')
+    html5Qrcode = new Html5Qrcode('reader')
     onCleanup(async () => {
-      await html5Qrcode.stop()
-      html5Qrcode.clear()
+      await html5Qrcode?.stop()
+      html5Qrcode?.clear()
     })
 
     html5Qrcode.start(
@@ -38,19 +50,27 @@ watch(cameraId, async (value, _, onCleanup) => {
         qrbox: 250,
       },
       (decodedText) => {
+        html5Qrcode?.pause()
         if (decodedText[0] === '{') {
-          mutateCheckIn({
-            checkIn: JSON.parse(decodedText),
-          })
+          scannerData.value = JSON.parse(decodedText)
+          // mutateCheckIn({
+          //   checkIn: JSON.parse(decodedText),
+          // })
         }
         else {
-          mutateCheckOut(decodedText)
+          scannerData.value = decodedText
+          // mutateCheckOut(decodedText)
         }
       },
       () => { }, // Ignore all errors, unlikely to happen
     )
   })
 }, { immediate: true })
+
+function resumeScanner() {
+  html5Qrcode?.resume()
+  scannerData.value = null
+}
 </script>
 
 <template>
@@ -66,6 +86,22 @@ watch(cameraId, async (value, _, onCleanup) => {
         </option>
       </select>
     </f7ListItem>
+
+    <f7Popup v-model:opened="confirmationModalOpened" push @popup:close="resumeScanner">
+      <f7Page>
+        <f7Navbar title="Confirm this entry?">
+          <f7NavRight>
+            <f7Link popup-close>
+              Close
+            </f7Link>
+          </f7NavRight>
+        </f7Navbar>
+
+        <f7PageContent>
+          <f7Block>Nice</f7Block>
+        </f7PageContent>
+      </f7Page>
+    </f7Popup>
 
     <div id="reader" />
   </f7List>

@@ -38,6 +38,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@formkit/auto-animate/nuxt',
     'nuxt-vuefire',
     '@primevue/nuxt-module',
     '@unocss/nuxt',

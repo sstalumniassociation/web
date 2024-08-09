@@ -6,9 +6,10 @@ const queryKeyFactory = {
 
 export function useWhoAmI() {
   const firebaseCurrentUser = useCurrentUser()
+
   return useQuery({
     queryKey: computed(() => queryKeyFactory.whoAmI(firebaseCurrentUser.value?.uid ?? '')),
-    queryFn: () => $apiClient.v1.auth.whoami.get(),
+    queryFn: async () => await $apiClient.v1.auth.whoami.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
     retry: false,
   })

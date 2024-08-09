@@ -73,7 +73,7 @@ public class CheckInServiceV1(
         }
     }
 
-    // TODO : permission checking
+    [AuthorizeServiceAccount]
     public override async Task<Protos.CheckIn.V1.CheckIn> CreateCheckIn(
         CreateCheckInRequest request,
         ServerCallContext context
@@ -124,7 +124,7 @@ public class CheckInServiceV1(
         }
     }
 
-    // TODO : permission checking
+    [AuthorizeServiceAccount]
     public override async Task<Protos.CheckIn.V1.CheckIn> CheckOut(CheckOutRequest request, ServerCallContext context)
     {
         var record = await dbContext.CheckIns
@@ -134,6 +134,11 @@ public class CheckInServiceV1(
         if (record is null)
         {
             throw new RpcException(new Status(StatusCode.NotFound, "Not found."));
+        }
+
+        if (record.CheckOutDateTime is not null)
+        {
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, "User has already checked out."));
         }
 
         record.CheckOutDateTime = DateTime.UtcNow;

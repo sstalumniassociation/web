@@ -19,4 +19,9 @@ public class Policies
     /// Resource owner or admins
     /// </summary>
     public const string OwnerOrAdmin = "OwnerOrAdmin";
+
+    /// <summary>
+    /// Service accounts
+    /// </summary>
+    public const string ServiceAccount = "ServiceAccount";
 }

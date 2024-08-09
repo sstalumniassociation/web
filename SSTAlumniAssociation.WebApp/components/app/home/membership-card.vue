@@ -19,6 +19,7 @@ const latestCheckIn = computed(() => {
 const latestCheckInDuration = computed(() => {
   if (!latestCheckIn.value)
     return null
+
   const _ = counter.value
   return dayjs().to(dayjs(latestCheckIn.value?.checkInDateTime), true)
 })
@@ -73,10 +74,6 @@ const resolvedGradientClass = computed(() => {
 
 const qrCode = useQRCode(() => latestCheckIn.value?.id ?? JSON.stringify({ user: user.value?.id ?? '' }), {
   width: 0.6 * width.value > 300 ? 300 : 0.6 * width.value,
-  color: {
-    light: '#0000',
-    dark: '#fff',
-  },
 })
 
 function cardClicked() {
@@ -94,7 +91,7 @@ function cardClicked() {
       <f7CardContent
         :style="[cardOpened && { height: 'calc(70vh - calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom)))' }]"
         class="rounded-[16px] transition-all duration-350 ease-out"
-        :class="[{ 'h-50': !cardOpened, 'min-h-[400px]': cardOpened }, resolvedGradientClass]" valign="top"
+        :class="[{ 'h-50': !cardOpened, 'min-h-[300px]': cardOpened }, resolvedGradientClass]" valign="top"
       >
         <div class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col">
@@ -105,8 +102,11 @@ function cardClicked() {
               {{ user.member.memberId }}
             </span>
           </div>
-          <div class="flex-1 flex items-center justify-center">
-            <img v-if="cardOpened" :src="qrCode" alt="QR Code">
+
+          <div v-auto-animate="{ easing: 'ease-out', duration: 200 }" class="flex-1 flex">
+            <div v-if="cardOpened" class="flex-1 flex items-center justify-center bg-white rounded-2xl my-4">
+              <img :src="qrCode" alt="QR Code">
+            </div>
           </div>
 
           <div v-if="user.member && !cardOpened" class="flex flex-col">

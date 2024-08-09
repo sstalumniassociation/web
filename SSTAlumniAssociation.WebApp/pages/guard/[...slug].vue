@@ -33,8 +33,8 @@ watch([authLoaded, auth, userIsLoading, user], (values, _, onCleanup) => {
     state.showLoginScreen = loggedOut || !isGuardHouse
   }, 1000)
 
-  if (!loggedOut)
-    queryClient.invalidateQueries()
+  // if (!loggedOut)
+  //   queryClient.invalidateQueries()
 
   onCleanup(() => clearTimeout(timeout))
 }, { immediate: true })

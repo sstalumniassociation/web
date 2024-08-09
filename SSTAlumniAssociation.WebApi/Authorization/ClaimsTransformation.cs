@@ -40,7 +40,7 @@ public class ClaimsTransformation(AppDbContext dbContext) : IClaimsTransformatio
             case Entities.Member m:
                 identity.AddClaim(new Claim(ClaimTypes.Role, m.Membership.ToString()));
                 break;
-            case ServiceAccount:
+            case Entities.ServiceAccount:
                 identity.AddClaim(new Claim(ClaimTypes.Role, nameof(ServiceAccount)));
                 break;
             case Employee:
