@@ -93,7 +93,7 @@ function cardClicked() {
         class="rounded-[16px] transition-all duration-350 ease-out"
         :class="[{ 'h-50': !cardOpened, 'min-h-[300px]': cardOpened }, resolvedGradientClass]" valign="top"
       >
-        <div class="flex flex-col w-full h-full text-white dark:text-inherit">
+        <div v-auto-animate class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col">
             <span class="font-bold text-3xl">
               {{ user.name }}
@@ -103,9 +103,20 @@ function cardClicked() {
             </span>
           </div>
 
-          <div v-auto-animate="{ easing: 'ease-out', duration: 200 }" class="flex-1 flex">
-            <div v-if="cardOpened" class="flex-1 flex items-center justify-center bg-white rounded-2xl my-4">
+          <div v-auto-animate="{ easing: 'ease-out', duration: 100 }" class="flex-1 flex">
+            <div v-if="cardOpened" class="flex-1 flex flex-col items-center justify-center bg-white rounded-2xl my-4">
               <img :src="qrCode" alt="QR Code">
+              <br>
+              <div class="text-gray-800">
+                <span class="font-semibold">
+                  Class of {{ user.member?.alumniMember?.graduationYear ?? user.member?.employeeMember?.graduationYear }}
+                </span>
+                <br>
+                <span>
+                  {{ user?.member?.membership }}
+                  member
+                </span>
+              </div>
             </div>
           </div>
 

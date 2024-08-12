@@ -8,6 +8,11 @@ public class MembershipPlan
     /// Name of the plan
     /// </summary>
     public required string Name { get; set; }
+    
+    /// <summary>
+    /// Built in plan that cannot be modified
+    /// </summary>
+    public required bool BuiltIn { get; set; }
 
     /// <summary>
     /// Description of the plan
@@ -22,5 +27,5 @@ public class MembershipPlan
     /// <summary>
     /// Price per duration of the plan
     /// </summary>
-    public required double Price { get; set; }
+    public required decimal Price { get; set; }
 }

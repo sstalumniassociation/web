@@ -94,11 +94,50 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<CheckIn>().UseTptMappingStrategy();
         // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
 
-        // Store enum value as string to reduce risk of breaking changes vs storing as an int.
-        modelBuilder
-            .Entity<Member>()
-            .Property(u => u.Membership)
-            .HasConversion<string>();
+        var exco =
+            new MembershipPlan
+            {
+                Id = Guid.NewGuid(),
+                Name = "EXCO",
+                BuiltIn = true,
+                Description = "SSTAA EXCO",
+                Duration = TimeSpan.FromDays(365),
+                Price = 0
+            };
+
+        var associate = new MembershipPlan
+        {
+            Id = Guid.NewGuid(),
+            Name = "Associate",
+            BuiltIn = true,
+            Description =
+                "All past/present staff and students who completed at least 1 year of study in SST but did not graduate",
+            Duration = TimeSpan.FromDays(365),
+            Price = 0
+        };
+
+        var affiliate = new MembershipPlan
+        {
+            Id = Guid.NewGuid(),
+            Name = "Affiliate",
+            BuiltIn = true,
+            Description = "All graduated alumni who are under 21",
+            Duration = TimeSpan.FromDays(365),
+            Price = 0
+        };
+
+        var ordinary = new MembershipPlan
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ordinary",
+            BuiltIn = true,
+            Description = "Ordinary",
+            Duration = TimeSpan.FromDays(365),
+            Price = 0
+        };
+        
+        modelBuilder.Entity<MembershipPlan>()
+            .HasData([exco, associate, affiliate, ordinary]);
 
         modelBuilder
             .Entity<ServiceAccount>()
@@ -112,12 +151,23 @@ public partial class AppDbContext : DbContext
             FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
             Email = "qinguan20040914@gmail.com",
             GraduationYear = 2000,
-            Membership = Membership.Exco,
-            MemberId = "EXCO-1"
+            MemberId = "EXCO-1",
+        };
+
+        var qinGuanExco = new MembershipSubscription
+        {
+            Id = Guid.NewGuid(),
+            StartDateTime = DateTime.UtcNow,
+            EndDateTime = DateTime.UtcNow.AddDays(365),
+            Member = qinGuan,
+            MembershipPlan = exco
         };
 
         modelBuilder.Entity<AlumniMember>()
             .HasData(qinGuan);
+
+        modelBuilder.Entity<MembershipSubscription>()
+            .HasData(qinGuanExco);
 
         var guardHouse = new ServiceAccount
         {
@@ -136,12 +186,23 @@ public partial class AppDbContext : DbContext
             Name = "Tan Zheng Jie",
             FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
             Email = "tan_zheng_jie@sstaa.org",
-            Membership = Membership.Exco,
             MemberId = "EXCO-2"
+        };
+        
+        var zhengJieExco = new MembershipSubscription
+        {
+            Id = Guid.NewGuid(),
+            StartDateTime = DateTime.UtcNow,
+            EndDateTime = DateTime.UtcNow.AddDays(365),
+            Member = zhengJie,
+            MembershipPlan = exco
         };
 
         modelBuilder.Entity<AlumniMember>()
             .HasData(zhengJie);
+
+        modelBuilder.Entity<MembershipSubscription>()
+            .HasData(zhengJieExco);
 
         var homecoming = new Event
         {

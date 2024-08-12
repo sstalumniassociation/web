@@ -46,5 +46,7 @@ public class MembershipSubscription
     /// </summary>
     public MembershipPlan MembershipPlan { get; set; }
 
+    public ICollection<MembershipSubscriptionPayment> Payments { get; } = [];
+
     #endregion
 }

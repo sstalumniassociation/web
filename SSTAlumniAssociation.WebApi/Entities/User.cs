@@ -21,10 +21,12 @@ public class User
     /// Use Firebase Auth provided ID as SSOT.
     /// </summary>
     public required string FirebaseId { get; set; }
-
-    // Navigations
+    
+    #region Navigations
     
     public ICollection<Event> Events { get; } = [];
     public ICollection<Attendee> UserEvents { get; } = [];
     public ICollection<UserCheckIn> CheckIns { get; } = [];
+    
+    #endregion
 }
