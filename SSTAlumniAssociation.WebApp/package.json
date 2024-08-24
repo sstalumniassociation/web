@@ -48,7 +48,7 @@
     "@vite-pwa/assets-generator": "^0.2.4",
     "@vite-pwa/nuxt": "^0.9.1",
     "@vueuse/core": "^10.11.0",
-    "@vueuse/integrations": "^10.11.0",
+    "@vueuse/integrations": "^11.0.3",
     "@vueuse/nuxt": "^10.11.0",
     "better-sqlite3": "^11.1.2",
     "bumpp": "^9.4.2",
