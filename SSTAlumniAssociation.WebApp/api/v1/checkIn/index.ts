@@ -51,10 +51,10 @@ export interface CheckInRequestBuilder extends BaseRequestBuilder<CheckInRequest
  * List all check ins
  */
 export interface CheckInRequestBuilderGetQueryParameters {
-    checkedOut?: boolean;
+    checkedOut?: string;
     checkInDate?: string;
     checkOutDate?: string;
-    pageSize?: number;
+    pageSize?: string;
     pageToken?: string;
     scope?: string;
     serviceAccount?: string;

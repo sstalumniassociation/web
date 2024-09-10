@@ -23,7 +23,7 @@ export interface AttendeesBatchAddRequestBuilder extends BaseRequestBuilder<Atte
      toPostRequestInformation(requestConfiguration?: RequestConfiguration<AttendeesBatchAddRequestBuilderPostQueryParameters> | undefined) : RequestInformation;
 }
 export interface AttendeesBatchAddRequestBuilderPostQueryParameters {
-    users?: string[];
+    users?: string;
 }
 /**
  * Uri template for the request builder.

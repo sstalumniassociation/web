@@ -1,8 +1,8 @@
 {
-  "descriptionHash": "0A0F4154454E7D67D3319485CB81568CB4C6EF32FE63C633D4065CC7655DBE6E0367FB96D6461561B0744B083A04CB78F64CA800498AC35D4EE3C6A03CF832D4",
-  "descriptionLocation": "https://localhost:7066/swagger/v1/swagger.json",
+  "descriptionHash": "40A2021AA02497068E3B8E999051E02AD15A2FE0C1D76051B6C2EA527182D28891B161AF106570B5FF5FF14D74AD354733DF5E660A4A8DD72251DF54EA6054EF",
+  "descriptionLocation": "http://localhost:5156/swagger/v1/swagger.json",
   "lockFileVersion": "1.0.0",
-  "kiotaVersion": "1.16.0",
+  "kiotaVersion": "1.18.0",
   "clientClassName": "ApiClient",
   "clientNamespaceName": "ApiSdk",
   "language": "TypeScript",

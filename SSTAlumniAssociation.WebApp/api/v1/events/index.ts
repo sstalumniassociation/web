@@ -44,7 +44,7 @@ export interface EventsRequestBuilder extends BaseRequestBuilder<EventsRequestBu
      toPostRequestInformation(body: EventSimple, requestConfiguration?: RequestConfiguration<object> | undefined) : RequestInformation;
 }
 export interface EventsRequestBuilderGetQueryParameters {
-    pageSize?: number;
+    pageSize?: string;
     pageToken?: string;
 }
 /**

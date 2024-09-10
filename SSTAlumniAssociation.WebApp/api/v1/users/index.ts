@@ -44,7 +44,7 @@ export interface UsersRequestBuilder extends BaseRequestBuilder<UsersRequestBuil
      toPostRequestInformation(body: CreateUserRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : RequestInformation;
 }
 export interface UsersRequestBuilderGetQueryParameters {
-    pageSize?: number;
+    pageSize?: string;
     pageToken?: string;
 }
 /**
