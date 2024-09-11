@@ -18,9 +18,9 @@ pgAdmin = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
     ? pgAdmin.WithContainerRuntimeArgs("--net=host")
     : pgAdmin.WithEndpoint(8080, 8080);
 
-var api = builder.AddProject<SSTAlumniAssociation_WebApi>("webapi");
+var memberWebApi = builder.AddProject<SSTAlumniAssociation_MemberWebApi>("member-web-api");
 
 builder.AddNpmApp("webapp", "../SSTAlumniAssociation.WebApp", "dev")
-    .WithReference(api);
+    .WithReference(memberWebApi);
 
 builder.Build().Run();
