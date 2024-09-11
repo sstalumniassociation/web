@@ -4,9 +4,9 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Protos.User.V1;
+using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.WebApi.Authorization;
 using SSTAlumniAssociation.WebApi.Authorization.OwnerOrAdmin;
-using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Mappers;
 using SSTAlumniAssociation.WebApi.Services.V1.User;
 
@@ -116,7 +116,7 @@ public class ServiceAccountUserServiceV1(
         ServerCallContext context
     )
     {
-        var users = new List<Entities.User>();
+        var users = new List<Core.Entities.User>();
         foreach (var user in request.Requests)
         {
             users.Add(await TransformAndAddUserAsync(user.User));
@@ -170,7 +170,7 @@ public class ServiceAccountUserServiceV1(
         throw new RpcException(new Status(StatusCode.Unimplemented, "Users cannot be deleted."));
     }
 
-    private async Task<Entities.User> TransformAndAddUserAsync(Protos.User.V1.User user)
+    private async Task<Core.Entities.User> TransformAndAddUserAsync(Protos.User.V1.User user)
     {
         switch (user.UserTypeCase)
         {

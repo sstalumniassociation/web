@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.ServiceDefaults;
 using SSTAlumniAssociation.WebApi.Authorization;
 using SSTAlumniAssociation.WebApi.Authorization.Admin;
 using SSTAlumniAssociation.WebApi.Authorization.Member;
 using SSTAlumniAssociation.WebApi.Authorization.OwnerOrAdmin;
-using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Services.V1;
 using SSTAlumniAssociation.WebApi.Services.V1.CheckIn;
 using SSTAlumniAssociation.WebApi.Services.V1.Event;
@@ -26,9 +26,13 @@ builder.Services.AddNpgsql<AppDbContext>(
     optionsAction: options =>
     {
         if (!builder.Environment.IsDevelopment()) return;
-
+        
         options.EnableSensitiveDataLogging();
         options.EnableDetailedErrors();
+    },
+    npgsqlOptionsAction: options =>
+    {
+        options.MigrationsAssembly("SSTAlumniAssociation.Migrations");
     }
 );
 

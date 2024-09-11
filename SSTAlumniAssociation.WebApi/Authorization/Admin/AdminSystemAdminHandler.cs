@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using SSTAlumniAssociation.WebApi.Entities;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.WebApi.Authorization.Admin;
 

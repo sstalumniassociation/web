@@ -11,7 +11,7 @@ public class ServiceAccountHandler: AuthorizationHandler<ServiceAccountRequireme
     {
         var role = context.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Role);
 
-        if (role is not null && role.Value != nameof(Entities.ServiceAccount))
+        if (role is not null && role.Value != nameof(Core.Entities.ServiceAccount))
         {
             context.Succeed(requirement);
         }

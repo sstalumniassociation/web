@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.WebApi.Extensions;
 
@@ -8,7 +9,7 @@ namespace SSTAlumniAssociation.WebApi.Extensions;
 public static class ClaimsExtensions
 {
     /// <summary>
-    /// Retrieves the name identifier (represents <see cref="Entities.User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
+    /// Retrieves the name identifier (represents <see cref="User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
     /// </summary>
     /// <param name="claims"></param>
     /// <returns>ID of user</returns>
@@ -18,7 +19,7 @@ public static class ClaimsExtensions
     }
 
     /// <summary>
-    /// Retrieves the name identifier (represents <see cref="Entities.User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
+    /// Retrieves the name identifier (represents <see cref="User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
     /// </summary>
     /// <param name="claims"></param>
     /// <returns>ID of user</returns>

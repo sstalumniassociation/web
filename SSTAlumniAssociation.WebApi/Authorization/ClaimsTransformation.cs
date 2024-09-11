@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.WebApi.Context;
-using SSTAlumniAssociation.WebApi.Entities;
+using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.WebApi.Authorization;
 
@@ -37,10 +37,10 @@ public class ClaimsTransformation(AppDbContext dbContext) : IClaimsTransformatio
 
         switch (user)
         {
-            case Entities.Member m:
+            case Core.Entities.Member m:
                 identity.AddClaim(new Claim(ClaimTypes.Role, m.Membership.ToString()));
                 break;
-            case Entities.ServiceAccount:
+            case Core.Entities.ServiceAccount:
                 identity.AddClaim(new Claim(ClaimTypes.Role, nameof(ServiceAccount)));
                 break;
             case Employee:

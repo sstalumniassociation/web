@@ -1,4 +1,5 @@
 using Riok.Mapperly.Abstractions;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.WebApi.Mappers;
 
@@ -10,7 +11,7 @@ public static partial class AttendeeMapper
 {
     #region gRPC mappings
 
-    public static partial Protos.Attendee.V1.Attendee ToGrpc(this Entities.Attendee attendee);
+    public static partial Protos.Attendee.V1.Attendee ToGrpc(this Attendee attendee);
 
     #endregion
 }

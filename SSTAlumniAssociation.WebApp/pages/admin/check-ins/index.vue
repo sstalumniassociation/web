@@ -2,7 +2,7 @@
 import { FilterMatchMode } from '@primevue/core'
 
 const dayjs = useDayjs()
-const { data, isPending: checkInsPending } = useCheckIns()
+const { data, isPending: checkInsPending } = useCheckInsWithAdminScope()
 
 const sizeOptions: { label: string, value: 'small' | 'large' | undefined }[] = [
   { label: 'Small', value: 'small' },
@@ -32,11 +32,17 @@ const filters = ref({
 
     <DataTable
       v-model:filters="filters" removable-sort paginator data-key="id" :rows="40" :value="data?.checkIns"
-      :size="size.value" :loading="checkInsPending"
+      :global-filter-fields="['user.name', 'user.phone', 'guest.name', 'guest.phone']" :size="size.value" :loading="checkInsPending"
     >
       <template #empty>
         No check ins found.
       </template>
+
+      <Column header="Check In">
+        <template #body="{ data }">
+          {{ dayjs(data.checkInDateTime).format("DD/MM/YYYY HH:mm") }}
+        </template>
+      </Column>
 
       <Column header="Type">
         <template #body="{ data }">
@@ -44,28 +50,26 @@ const filters = ref({
           <Tag v-else-if="data.guest" value="Guest" />
         </template>
       </Column>
-      <Column header="Check In">
-        <template #body="{ data }">
-          {{ dayjs(data.checkInDateTime).format("DD/MM/YYYY HH:mm") }}
-        </template>
-      </Column>
-      <Column header="Check Out">
+
+      <Column header="Checked out">
         <template #body="{ data }">
           <template v-if="data.checkOutDateTime">
             {{ dayjs(data.checkOutDateTime).format("DD/MM/YYYY HH:mm") }}
           </template>
-          <Tag v-else value="Missing" severity="warn" />
+          <Tag v-else value="No" severity="warn" />
         </template>
       </Column>
+
       <Column header="Name" sortable>
         <template #body="{ data }">
           <span v-if="data.user">{{ data.user.name }}</span>
           <span v-else-if="data.guest">{{ data.guest.name }}</span>
         </template>
       </Column>
+
       <Column header="Phone" sortable>
         <template #body="{ data }">
-          <Tag v-if="data.user" value="Missing" />
+          <Tag v-if="data.user" value="N/A" />
           <span v-else-if="data.guest">{{ data.guest.phone }}</span>
         </template>
       </Column>

@@ -3,8 +3,8 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Protos.Event.V1;
+using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.WebApi.Authorization;
-using SSTAlumniAssociation.WebApi.Context;
 using SSTAlumniAssociation.WebApi.Mappers;
 
 namespace SSTAlumniAssociation.WebApi.Services.V1.Event;

@@ -2,9 +2,9 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Protos.CheckIn.V1;
+using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.WebApi.Authorization;
-using SSTAlumniAssociation.WebApi.Context;
-using SSTAlumniAssociation.WebApi.Entities;
 using SSTAlumniAssociation.WebApi.Extensions;
 using SSTAlumniAssociation.WebApi.Mappers;
 

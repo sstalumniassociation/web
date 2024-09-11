@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.WebApi.Authorization.Member;
 
@@ -11,7 +12,7 @@ public class MemberNonRevokedHandler : AuthorizationHandler<MemberRequirement>
     {
         var role = context.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Role);
 
-        if (role is not null && role.Value != Entities.Membership.Revoked.ToString())
+        if (role is not null && role.Value != Membership.Revoked.ToString())
         {
             context.Succeed(requirement);
         }

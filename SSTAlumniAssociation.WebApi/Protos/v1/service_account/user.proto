@@ -20,7 +20,6 @@ service ServiceAccountUserService {
       get: "/v1/service-account/user/{id}"
     };
   };
-
 }
 
 message GetUserRequest {
