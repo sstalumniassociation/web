@@ -1,4 +1,4 @@
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 /// <summary>
 /// If the member is a current staff, or ex-staff of SST, they are considered a staff member.

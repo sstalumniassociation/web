@@ -1,4 +1,4 @@
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 /// <summary>
 /// The role that the member has within SSTAA.

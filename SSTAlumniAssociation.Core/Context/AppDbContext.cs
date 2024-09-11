@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.WebApi.Entities;
+using SSTAlumniAssociation.Core.Entities;
 
-namespace SSTAlumniAssociation.WebApi.Context;
+namespace SSTAlumniAssociation.Core.Context;
 
 /// <inheritdoc />
 public partial class AppDbContext : DbContext

@@ -1,4 +1,4 @@
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 /// <summary>
 /// Guest check in where the information is input by the guard house

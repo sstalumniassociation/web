@@ -1,4 +1,4 @@
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 public abstract class CheckIn
 {

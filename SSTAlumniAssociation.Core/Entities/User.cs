@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 /// <summary>
 /// Base user class

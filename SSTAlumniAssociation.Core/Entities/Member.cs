@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace SSTAlumniAssociation.WebApi.Entities;
+namespace SSTAlumniAssociation.Core.Entities;
 
 [Index(nameof(MemberId), IsUnique = true)]
 public abstract class Member : User
