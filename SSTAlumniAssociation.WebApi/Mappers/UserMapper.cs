@@ -110,9 +110,6 @@ public static partial class UserMapper
     public static partial Employee ToEmployee(this Protos.User.V1.User user);
 
     [MapEnum(EnumMappingStrategy.ByName)]
-    private static partial Membership ToMembership(this Protos.User.V1.Membership membership);
-
-    [MapEnum(EnumMappingStrategy.ByName)]
     private static partial ServiceAccountType ToServiceAccountType(
         this Protos.User.V1.ServiceAccountType serviceAccountType);
 

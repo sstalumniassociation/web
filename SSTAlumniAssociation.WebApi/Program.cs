@@ -2,6 +2,7 @@ using Calzolari.Grpc.AspNetCore.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SSTAlumniAssociation.Core.Context;
@@ -40,7 +41,6 @@ builder.Services.AddNpgsql<AppDbContext>(
 
 #region Services
 
-builder.Services.AddTransient<IClaimsTransformation, ClaimsTransformation>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminSystemAdminHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminExcoHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, MemberNonRevokedHandler>();
@@ -149,8 +149,7 @@ if (app.Environment.IsDevelopment())
 {
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.EnsureDeletedAsync();
-    await db.Database.EnsureCreatedAsync();
+    await db.Database.MigrateAsync();
 }
 
 app.UseCors();

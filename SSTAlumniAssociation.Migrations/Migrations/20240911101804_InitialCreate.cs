@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace SSTAlumniAssociation.WebApi.Migrations
+namespace SSTAlumniAssociation.Migrations.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -49,9 +49,10 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    BuiltIn = table.Column<bool>(type: "boolean", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    Price = table.Column<double>(type: "double precision", nullable: false)
+                    Price = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,8 +119,7 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    MemberId = table.Column<string>(type: "text", nullable: false),
-                    Membership = table.Column<string>(type: "text", nullable: false)
+                    MemberId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -309,6 +309,27 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MembershipSubscriptionPayment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Processor = table.Column<int>(type: "integer", nullable: false),
+                    IntentId = table.Column<string>(type: "text", nullable: false),
+                    IntentState = table.Column<string>(type: "text", nullable: false),
+                    MembershipSubscriptionId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MembershipSubscriptionPayment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MembershipSubscriptionPayment_MembershipSubscriptions_Membe~",
+                        column: x => x.MembershipSubscriptionId,
+                        principalTable: "MembershipSubscriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GuestCheckIns",
                 columns: table => new
                 {
@@ -358,8 +379,19 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 columns: new[] { "Id", "Active", "BadgeImage", "Description", "EndDateTime", "Location", "Name", "StartDateTime", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("1710e6a9-f8e5-4456-b5a4-3c7d8055159f"), false, "https://picsum.photos/200", "A very warm homecoming.", new DateTime(2024, 9, 21, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9940), "SST Multi-Purpose Hall", "Trial", new DateTime(2024, 9, 11, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9940), null },
-                    { new Guid("bc7016f8-2f9d-4057-a3ae-58828d66522c"), true, "https://picsum.photos/200", "A very warm homecoming.", new DateTime(2024, 9, 21, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9920), "SST Multi-Purpose Hall", "Homecoming 2024", new DateTime(2024, 9, 11, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9920), null }
+                    { new Guid("535bb727-f3eb-4cb3-adcf-aef04f14e82a"), true, "https://picsum.photos/200", "A very warm homecoming.", new DateTime(2024, 1, 13, 15, 0, 0, 0, DateTimeKind.Utc), "SST Multi-Purpose Hall", "Homecoming 2024", new DateTime(2024, 1, 13, 9, 0, 0, 0, DateTimeKind.Utc), null },
+                    { new Guid("f2c84690-0311-4563-9635-ad0982cc1229"), false, "https://picsum.photos/200", "Class of 2014 Reunion", new DateTime(2024, 8, 17, 16, 0, 0, 0, DateTimeKind.Utc), "HIGHfive @ 40 Sam Leong Road", "Class of 2014 Reunion", new DateTime(2024, 8, 17, 10, 0, 0, 0, DateTimeKind.Utc), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MembershipPlans",
+                columns: new[] { "Id", "BuiltIn", "Description", "Duration", "Name", "Price" },
+                values: new object[,]
+                {
+                    { new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), true, "SSTAA EXCO", new TimeSpan(365, 0, 0, 0, 0), "EXCO", 0m },
+                    { new Guid("c1869b12-56a9-4ed8-96d2-ef962c39799e"), true, "Ordinary", new TimeSpan(365, 0, 0, 0, 0), "Ordinary", 0m },
+                    { new Guid("c28780c6-d687-4bb8-b9ce-5fbca1e347c2"), true, "All past/present staff and students who completed at least 1 year of study in SST but did not graduate", new TimeSpan(365, 0, 0, 0, 0), "Associate", 0m },
+                    { new Guid("d258488b-c5a3-4f96-add7-366be4934900"), true, "All graduated alumni who are under 21", new TimeSpan(365, 0, 0, 0, 0), "Affiliate", 0m }
                 });
 
             migrationBuilder.InsertData(
@@ -377,17 +409,17 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 columns: new[] { "Id", "AdmittedAt", "AdmittedById", "EventId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("105d9b12-a084-4417-bf68-742e33bab9d9"), null, null, new Guid("bc7016f8-2f9d-4057-a3ae-58828d66522c"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") },
-                    { new Guid("66cd9cb6-2ed1-480d-bb1d-f4d1680177f5"), null, null, new Guid("1710e6a9-f8e5-4456-b5a4-3c7d8055159f"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") }
+                    { new Guid("21ace349-7df6-49af-a204-9581c6cf017b"), null, null, new Guid("f2c84690-0311-4563-9635-ad0982cc1229"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") },
+                    { new Guid("66e832ab-e00e-48aa-ba66-cb62f5dab6c0"), null, null, new Guid("535bb727-f3eb-4cb3-adcf-aef04f14e82a"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Members",
-                columns: new[] { "Id", "MemberId", "Membership" },
+                columns: new[] { "Id", "MemberId" },
                 values: new object[,]
                 {
-                    { new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), "EXCO-2", "Exco" },
-                    { new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), "EXCO-1", "Exco" }
+                    { new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), "EXCO-2" },
+                    { new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), "EXCO-1" }
                 });
 
             migrationBuilder.InsertData(
@@ -409,23 +441,32 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 columns: new[] { "Id", "CheckInDateTime", "CheckOutDateTime", "ServiceAccountId" },
                 values: new object[,]
                 {
-                    { new Guid("3dc67aff-20d5-4299-a251-f413f0a8f4d0"), new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(60), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") },
-                    { new Guid("696b775b-effa-46fd-880e-5a9c34d0966c"), new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(80), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") },
-                    { new Guid("732faab7-22e4-406b-9339-915d223ac2f2"), new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(40), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") }
+                    { new Guid("4f770e07-4f69-402d-9b1a-5e26e7f822f2"), new DateTime(2024, 8, 17, 10, 20, 0, 0, DateTimeKind.Utc), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") },
+                    { new Guid("d96a21d0-81dc-4d65-aa7a-020af478a849"), new DateTime(2024, 8, 17, 10, 15, 0, 0, DateTimeKind.Utc), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") },
+                    { new Guid("e15ae42b-b986-4fc6-b116-e7db6b213339"), new DateTime(2024, 8, 17, 10, 30, 0, 0, DateTimeKind.Utc), null, new Guid("a78a112f-3355-499e-aafd-824c14858b34") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MembershipSubscriptions",
+                columns: new[] { "Id", "EndDateTime", "MemberId", "MembershipPlanId", "PaymentIntentId", "PaymentIntentState", "StartDateTime" },
+                values: new object[,]
+                {
+                    { new Guid("58352738-955f-41b5-ae42-57c2e01d7452"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, null, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) },
+                    { new Guid("d44eba3b-5556-4978-8188-7440762b1288"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, null, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) }
                 });
 
             migrationBuilder.InsertData(
                 table: "GuestCheckIns",
                 columns: new[] { "Id", "Name", "Nric", "Phone", "Reason" },
-                values: new object[] { new Guid("696b775b-effa-46fd-880e-5a9c34d0966c"), "Alex", "999B", "9999 9999", "Alex is bored" });
+                values: new object[] { new Guid("e15ae42b-b986-4fc6-b116-e7db6b213339"), "Alex", "999B", "9999 9999", "Alex is bored" });
 
             migrationBuilder.InsertData(
                 table: "UserCheckIns",
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("3dc67aff-20d5-4299-a251-f413f0a8f4d0"), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f") },
-                    { new Guid("732faab7-22e4-406b-9339-915d223ac2f2"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") }
+                    { new Guid("4f770e07-4f69-402d-9b1a-5e26e7f822f2"), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f") },
+                    { new Guid("d96a21d0-81dc-4d65-aa7a-020af478a849"), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -463,6 +504,11 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 table: "Members",
                 column: "MemberId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MembershipSubscriptionPayment_MembershipSubscriptionId",
+                table: "MembershipSubscriptionPayment",
+                column: "MembershipSubscriptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MembershipSubscriptions_MemberId",
@@ -511,7 +557,7 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 name: "GuestCheckIns");
 
             migrationBuilder.DropTable(
-                name: "MembershipSubscriptions");
+                name: "MembershipSubscriptionPayment");
 
             migrationBuilder.DropTable(
                 name: "SystemAdmins");
@@ -526,13 +572,16 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                 name: "Group");
 
             migrationBuilder.DropTable(
+                name: "MembershipSubscriptions");
+
+            migrationBuilder.DropTable(
+                name: "CheckIns");
+
+            migrationBuilder.DropTable(
                 name: "Members");
 
             migrationBuilder.DropTable(
                 name: "MembershipPlans");
-
-            migrationBuilder.DropTable(
-                name: "CheckIns");
 
             migrationBuilder.DropTable(
                 name: "ServiceAccounts");

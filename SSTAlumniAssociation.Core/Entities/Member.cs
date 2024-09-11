@@ -10,13 +10,13 @@ public abstract class Member : User
     /// </summary>
     public required string MemberId { get; set; }
 
-    public required Membership Membership { get; set; }
-
     public MembershipSubscription? ActiveSubscription => Subscriptions.SingleOrDefault(s =>
         s.StartDateTime <= DateTime.Now && s.EndDateTime >= DateTime.Now && s.PaymentIntentState == "success");
 
-    // Navigations
+    #region Navigations
 
     public ICollection<Group> Groups { get; } = [];
     public ICollection<MembershipSubscription> Subscriptions { get; } = [];
+    
+    #endregion
 }

@@ -9,10 +9,10 @@ using SSTAlumniAssociation.Core.Context;
 
 #nullable disable
 
-namespace SSTAlumniAssociation.WebApi.Migrations
+namespace SSTAlumniAssociation.Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240911084649_InitialCreate")]
+    [Migration("20240911101804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -112,14 +112,14 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("105d9b12-a084-4417-bf68-742e33bab9d9"),
-                            EventId = new Guid("bc7016f8-2f9d-4057-a3ae-58828d66522c"),
+                            Id = new Guid("66e832ab-e00e-48aa-ba66-cb62f5dab6c0"),
+                            EventId = new Guid("535bb727-f3eb-4cb3-adcf-aef04f14e82a"),
                             UserId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631")
                         },
                         new
                         {
-                            Id = new Guid("66cd9cb6-2ed1-480d-bb1d-f4d1680177f5"),
-                            EventId = new Guid("1710e6a9-f8e5-4456-b5a4-3c7d8055159f"),
+                            Id = new Guid("21ace349-7df6-49af-a204-9581c6cf017b"),
+                            EventId = new Guid("f2c84690-0311-4563-9635-ad0982cc1229"),
                             UserId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631")
                         });
                 });
@@ -191,25 +191,25 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bc7016f8-2f9d-4057-a3ae-58828d66522c"),
+                            Id = new Guid("535bb727-f3eb-4cb3-adcf-aef04f14e82a"),
                             Active = true,
                             BadgeImage = "https://picsum.photos/200",
                             Description = "A very warm homecoming.",
-                            EndDateTime = new DateTime(2024, 9, 21, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9920),
+                            EndDateTime = new DateTime(2024, 1, 13, 15, 0, 0, 0, DateTimeKind.Utc),
                             Location = "SST Multi-Purpose Hall",
                             Name = "Homecoming 2024",
-                            StartDateTime = new DateTime(2024, 9, 11, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9920)
+                            StartDateTime = new DateTime(2024, 1, 13, 9, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = new Guid("1710e6a9-f8e5-4456-b5a4-3c7d8055159f"),
+                            Id = new Guid("f2c84690-0311-4563-9635-ad0982cc1229"),
                             Active = false,
                             BadgeImage = "https://picsum.photos/200",
-                            Description = "A very warm homecoming.",
-                            EndDateTime = new DateTime(2024, 9, 21, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9940),
-                            Location = "SST Multi-Purpose Hall",
-                            Name = "Trial",
-                            StartDateTime = new DateTime(2024, 9, 11, 8, 46, 48, 690, DateTimeKind.Utc).AddTicks(9940)
+                            Description = "Class of 2014 Reunion",
+                            EndDateTime = new DateTime(2024, 8, 17, 16, 0, 0, 0, DateTimeKind.Utc),
+                            Location = "HIGHfive @ 40 Sam Leong Road",
+                            Name = "Class of 2014 Reunion",
+                            StartDateTime = new DateTime(2024, 8, 17, 10, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -238,6 +238,9 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("BuiltIn")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -249,12 +252,50 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.ToTable("MembershipPlans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
+                            BuiltIn = true,
+                            Description = "SSTAA EXCO",
+                            Duration = new TimeSpan(365, 0, 0, 0, 0),
+                            Name = "EXCO",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            Id = new Guid("c28780c6-d687-4bb8-b9ce-5fbca1e347c2"),
+                            BuiltIn = true,
+                            Description = "All past/present staff and students who completed at least 1 year of study in SST but did not graduate",
+                            Duration = new TimeSpan(365, 0, 0, 0, 0),
+                            Name = "Associate",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            Id = new Guid("d258488b-c5a3-4f96-add7-366be4934900"),
+                            BuiltIn = true,
+                            Description = "All graduated alumni who are under 21",
+                            Duration = new TimeSpan(365, 0, 0, 0, 0),
+                            Name = "Affiliate",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            Id = new Guid("c1869b12-56a9-4ed8-96d2-ef962c39799e"),
+                            BuiltIn = true,
+                            Description = "Ordinary",
+                            Duration = new TimeSpan(365, 0, 0, 0, 0),
+                            Name = "Ordinary",
+                            Price = 0m
+                        });
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscription", b =>
@@ -288,6 +329,51 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasIndex("MembershipPlanId");
 
                     b.ToTable("MembershipSubscriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("58352738-955f-41b5-ae42-57c2e01d7452"),
+                            EndDateTime = new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
+                            MemberId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"),
+                            MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
+                            StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("d44eba3b-5556-4978-8188-7440762b1288"),
+                            EndDateTime = new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
+                            MemberId = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
+                            MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
+                            StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscriptionPayment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IntentId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IntentState")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("MembershipSubscriptionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Processor")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MembershipSubscriptionId");
+
+                    b.ToTable("MembershipSubscriptionPayment");
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.User", b =>
@@ -343,8 +429,8 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("696b775b-effa-46fd-880e-5a9c34d0966c"),
-                            CheckInDateTime = new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(80),
+                            Id = new Guid("e15ae42b-b986-4fc6-b116-e7db6b213339"),
+                            CheckInDateTime = new DateTime(2024, 8, 17, 10, 30, 0, 0, DateTimeKind.Utc),
                             ServiceAccountId = new Guid("a78a112f-3355-499e-aafd-824c14858b34"),
                             Name = "Alex",
                             Nric = "999B",
@@ -367,15 +453,15 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("732faab7-22e4-406b-9339-915d223ac2f2"),
-                            CheckInDateTime = new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(40),
+                            Id = new Guid("d96a21d0-81dc-4d65-aa7a-020af478a849"),
+                            CheckInDateTime = new DateTime(2024, 8, 17, 10, 15, 0, 0, DateTimeKind.Utc),
                             ServiceAccountId = new Guid("a78a112f-3355-499e-aafd-824c14858b34"),
                             UserId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631")
                         },
                         new
                         {
-                            Id = new Guid("3dc67aff-20d5-4299-a251-f413f0a8f4d0"),
-                            CheckInDateTime = new DateTime(2024, 9, 11, 8, 46, 48, 691, DateTimeKind.Utc).AddTicks(60),
+                            Id = new Guid("4f770e07-4f69-402d-9b1a-5e26e7f822f2"),
+                            CheckInDateTime = new DateTime(2024, 8, 17, 10, 20, 0, 0, DateTimeKind.Utc),
                             ServiceAccountId = new Guid("a78a112f-3355-499e-aafd-824c14858b34"),
                             UserId = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f")
                         });
@@ -393,10 +479,6 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.HasBaseType("SSTAlumniAssociation.Core.Entities.User");
 
                     b.Property<string>("MemberId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Membership")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -451,7 +533,6 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                             FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
                             Name = "Qin Guan",
                             MemberId = "EXCO-1",
-                            Membership = "Exco",
                             GraduationYear = 2000
                         },
                         new
@@ -460,8 +541,7 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                             Email = "tan_zheng_jie@sstaa.org",
                             FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
                             Name = "Tan Zheng Jie",
-                            MemberId = "EXCO-2",
-                            Membership = "Exco"
+                            MemberId = "EXCO-2"
                         });
                 });
 
@@ -552,6 +632,17 @@ namespace SSTAlumniAssociation.WebApi.Migrations
                     b.Navigation("MembershipPlan");
                 });
 
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscriptionPayment", b =>
+                {
+                    b.HasOne("SSTAlumniAssociation.Core.Entities.MembershipSubscription", "MembershipSubscription")
+                        .WithMany("Payments")
+                        .HasForeignKey("MembershipSubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MembershipSubscription");
+                });
+
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.GuestCheckIn", b =>
                 {
                     b.HasOne("SSTAlumniAssociation.Core.Entities.CheckIn", null)
@@ -635,6 +726,11 @@ namespace SSTAlumniAssociation.WebApi.Migrations
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.Event", b =>
                 {
                     b.Navigation("Attendees");
+                });
+
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscription", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.User", b =>
