@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/empty.proto";
+import "Protos/google/api/annotations.proto";
+
+package protos.user.v1;
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// User service for Service Accounts
+service UserService {
+  // Get user
+  rpc GetUser (GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/user/{id}"
+    };
+  };
+}
+
+message GetUserRequest {
+  string id = 1;
+}

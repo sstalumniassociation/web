@@ -19,8 +19,12 @@ pgAdmin = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
     : pgAdmin.WithEndpoint(8080, 8080);
 
 var memberWebApi = builder.AddProject<SSTAlumniAssociation_MemberWebApi>("member-web-api");
+var adminWebApi = builder.AddProject<SSTAlumniAssociation_AdminWebApi>("admin-web-api");
+var serviceAccountWebApi = builder.AddProject<SSTAlumniAssociation_ServiceAccountWebApi>("service-account-web-api");
 
 builder.AddNpmApp("webapp", "../SSTAlumniAssociation.WebApp", "dev")
-    .WithReference(memberWebApi);
+    .WithReference(memberWebApi)
+    .WithReference(adminWebApi)
+    .WithReference(serviceAccountWebApi);
 
 builder.Build().Run();

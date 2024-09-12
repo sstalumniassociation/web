@@ -9,7 +9,7 @@ export function useEvents() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.events,
-    queryFn: () => $apiClient.v1.events.get(),
+    queryFn: () => $memberApiClient.v1.events.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
@@ -18,7 +18,7 @@ export function useEvent(id: MaybeRef<string>) {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.event(toValue(id)),
-    queryFn: () => $apiClient.v1.events.byId(toValue(id)).get(),
+    queryFn: () => $memberApiClient.v1.events.byId(toValue(id)).get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
@@ -26,7 +26,7 @@ export function useEvent(id: MaybeRef<string>) {
 export function useCreateEventMutation() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $apiClient.v1.events.post,
+    mutationFn: $memberApiClient.v1.events.post,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -38,7 +38,7 @@ export function useCreateEventMutation() {
 export function useUpdateEventMutation(id: MaybeRef<string>) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $apiClient.v1.events.byId(toValue(id)).patch,
+    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).patch,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -50,7 +50,7 @@ export function useUpdateEventMutation(id: MaybeRef<string>) {
 export function useAddEventUsersMutation(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $apiClient.v1.events.byId(toValue(id)).attendees.post,
+    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).attendees.post,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.event(id),
@@ -62,7 +62,7 @@ export function useAddEventUsersMutation(id: string) {
 export function useDeleteEventMutation(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $apiClient.v1.events.byId(toValue(id)).delete,
+    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).delete,
     onSuccess() {
       queryClient.refetchQueries({
         queryKey: queryKeyFactory.events,

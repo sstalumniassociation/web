@@ -2,7 +2,20 @@ import { isDevelopment } from 'std-env'
 import { $ } from 'execa'
 import { logger } from '@nuxt/kit'
 
-const API_URL = process.env.services__webapi__https__0 || process.env.services__webapi__http__0 || process.env.NUXT_PUBLIC_API_URL
+const ADMIN_API_INFO = {
+  name: 'admin',
+  url: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+}
+
+const MEMBER_API_INFO = {
+  name: 'member',
+  url: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+}
+
+const SERVICE_ACCOUNT_API_INFO = {
+  name: 'service-account',
+  url: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+}
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -21,10 +34,17 @@ export default defineNuxtConfig({
         },
       })
 
-      log.log(`Generating Kiota code with endpoint ${API_URL}`)
-      const { stderr, stdout } = await $({ lines: true })`kiota generate -l typescript -d ${`${API_URL}/swagger/v1/swagger.json`} -c ApiClient -o ./api`
-      stderr.forEach(i => log.error(i))
-      stdout.forEach(i => log.info(i))
+      const apis = [ADMIN_API_INFO, MEMBER_API_INFO, SERVICE_ACCOUNT_API_INFO]
+
+      const tasks = apis.map(async ({ name, url }) => {
+        log.log(`Generating Kiota code with endpoint ${url}`)
+        const { stderr, stdout } = await $({ lines: true })`kiota generate -l typescript -d ${`${url}/swagger/v1/swagger.json`} -c ApiClient -o ./api/${name} --co`
+
+        stderr.forEach(i => log.error(i))
+        stdout.forEach(i => log.info(i))
+      })
+
+      await Promise.all(tasks)
     },
   },
 
@@ -186,7 +206,9 @@ export default defineNuxtConfig({
 
     public: {
       api: {
-        url: '' || API_URL,
+        member: '' || MEMBER_API_INFO.url,
+        admin: '' || ADMIN_API_INFO.url,
+        serviceAccount: '' || SERVICE_ACCOUNT_API_INFO.url,
       },
 
       growthbook: {

@@ -9,7 +9,7 @@ export function useUsers() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.users,
-    queryFn: () => $apiClient.v1.users.get(),
+    queryFn: () => $memberApiClient.v1.users.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
@@ -27,6 +27,6 @@ export function useUserSignOutMutation() {
 
 export function useBulkCreateUserMutation() {
   return useMutation({
-    mutationFn: $apiClient.v1.usersBatchCreate.post,
+    mutationFn: $memberApiClient.v1.usersBatchCreate.post,
   })
 }

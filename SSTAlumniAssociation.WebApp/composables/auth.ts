@@ -9,7 +9,7 @@ export function useWhoAmI() {
 
   return useQuery({
     queryKey: computed(() => queryKeyFactory.whoAmI(firebaseCurrentUser.value?.uid ?? '')),
-    queryFn: async () => await $apiClient.v1.auth.whoami.get(),
+    queryFn: async () => await $memberApiClient.v1.auth.whoami.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
     retry: false,
   })
