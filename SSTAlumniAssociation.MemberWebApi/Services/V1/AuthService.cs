@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Protos.Auth.V1;
 using SSTAlumniAssociation.Core.Context;
-using SSTAlumniAssociation.MemberWebApi.Extensions;
+using SSTAlumniAssociation.Core.Extensions;
 using SSTAlumniAssociation.MemberWebApi.Mappers;
 
 namespace SSTAlumniAssociation.MemberWebApi.Services.V1;
 
 /// <inheritdoc />
-[Authorize]
-public class AuthServiceV1(AppDbContext dbContext) : AuthService.AuthServiceBase
+public class AuthService(AppDbContext dbContext) : Auth.AuthBase
 {
     /// <inheritdoc />
     [AllowAnonymous]

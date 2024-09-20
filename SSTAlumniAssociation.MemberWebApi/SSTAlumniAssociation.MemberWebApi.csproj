@@ -28,12 +28,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\v1\attendee.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\article.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\auth.proto" GrpcServices="Server"/>
-        <Protobuf Include="Protos\v1\check_in.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\event.proto" GrpcServices="Server"/>
-        <Protobuf Include="Protos\v1\service_account\user.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\user.proto" GrpcServices="Server"/>
     </ItemGroup>
 

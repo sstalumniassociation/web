@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "Protos/google/api/annotations.proto";
 
-package protos.article.v1;
+package protos.articles.v1;
 
 message Article {
   string id = 1;
@@ -15,7 +15,7 @@ message Article {
 }
 
 // Article service
-service ArticleService {
+service Articles {
   // List all articles
   rpc ListArticles (ListArticlesRequest) returns (ListArticlesResponse) {
     option (google.api.http) = {

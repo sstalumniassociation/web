@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using SSTAlumniAssociation.Core.Entities;
 
-namespace SSTAlumniAssociation.MemberWebApi.Authorization.Admin;
+namespace SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
 
 /// <summary>
 /// User must be a <see cref="ServiceAccount"/>

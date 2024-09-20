@@ -9,41 +9,24 @@ using SSTAlumniAssociation.MemberWebApi.Mappers;
 
 namespace SSTAlumniAssociation.MemberWebApi.Services.V1.Event;
 
-[Authorize]
-public class EventServiceV1(AppDbContext dbContext, IAuthorizationService authorizationService)
-    : EventService.EventServiceBase
+/// <inheritdoc />
+public class EventService(AppDbContext dbContext, IAuthorizationService authorizationService)
+    : Events.EventsBase
 {
     /// <inheritdoc />
     public override async Task<ListEventsResponse> ListEvents(ListEventsRequest request, ServerCallContext context)
     {
-        var isAdmin = await authorizationService.AuthorizeAsync(
-            context.GetHttpContext().User,
-            Policies.Admin
-        );
-
-        var query = dbContext.Events.AsQueryable();
-
-        if (!isAdmin.Succeeded)
-        {
-            query = query.Where(e => e.Active == true);
-        }
-
         return new ListEventsResponse
         {
             Events =
             {
-                query.ToGrpcSimpleEvent()
+                dbContext.Events.Where(e => e.Active).ToGrpc()
             }
         };
     }
 
     public override async Task<Protos.Event.V1.Event> GetEvent(GetEventRequest request, ServerCallContext context)
     {
-        var isAdmin = await authorizationService.AuthorizeAsync(
-            context.GetHttpContext().User,
-            Policies.Admin
-        );
-
         var query = dbContext.Events.Where(e => e.Id == Guid.Parse(request.Id));
 
         if (!isAdmin.Succeeded)
@@ -97,7 +80,7 @@ public class EventServiceV1(AppDbContext dbContext, IAuthorizationService author
         var entry = dbContext.Entry(@event);
         entry.CurrentValues.SetValues(proposedEvent);
 
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(context.CancellationToken);
 
         return entry.Entity.ToGrpcSimpleEvent();
     }
@@ -112,7 +95,7 @@ public class EventServiceV1(AppDbContext dbContext, IAuthorizationService author
         }
 
         dbContext.Events.Remove(@event);
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(context.CancellationToken);
 
         return new Empty();
     }

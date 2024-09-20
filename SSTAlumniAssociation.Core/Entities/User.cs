@@ -21,12 +21,17 @@ public class User
     /// Use Firebase Auth provided ID as SSOT.
     /// </summary>
     public required string FirebaseId { get; set; }
-    
+
+    public bool Revoked => Revocations.Any(r =>
+        DateTime.UtcNow >= r.StartDate || r.EndDate is not null && DateTime.UtcNow <= r.EndDate
+    );
+
     #region Navigations
-    
+
     public ICollection<Event> Events { get; } = [];
     public ICollection<Attendee> UserEvents { get; } = [];
     public ICollection<UserCheckIn> CheckIns { get; } = [];
-    
+    public ICollection<UserRevocation> Revocations { get; } = [];
+
     #endregion
 }

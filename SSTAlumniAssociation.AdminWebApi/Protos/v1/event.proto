@@ -7,18 +7,7 @@ import "Protos/google/api/annotations.proto";
 
 import "Protos/v1/user.proto";
 
-package protos.event.v1;
-
-message EventSimple {
-  string id = 1;
-  string name = 2;
-  string description = 3;
-  string location = 4;
-  string badgeImage = 5;
-  bool active = 6;
-  google.protobuf.Timestamp start_date_time = 7;
-  google.protobuf.Timestamp end_date_time = 8;
-}
+package protos.events.v1;
 
 message Event {
   string id = 1;
@@ -29,7 +18,6 @@ message Event {
   bool active = 6;
   google.protobuf.Timestamp start_date_time = 7;
   google.protobuf.Timestamp end_date_time = 8;
-  repeated AttendeeSimple attendees = 9;
 }
 
 message AttendeeSimple {
@@ -39,10 +27,8 @@ message AttendeeSimple {
 }
 
 // Event service
-service EventService {
+service Events {
   // List all events. 
-  // If the user is an admin, then this will list all events.
-  // If the user is not an admin, then this will only list events which are marked as active.
   rpc ListEvents (ListEventsRequest) returns (ListEventsResponse) {
     option (google.api.http) = {
       get: "/v1/events"
@@ -50,24 +36,27 @@ service EventService {
   }
 
   // Get an event.
-  // If the user is an admin, then this will include the attendees of the event.
-  // It will also return the details of events marked as not active.
-  // If the user is not an admin, then this will not include the attendees of the event.
-  // It will also return 404 if the event is marked as not active.
   rpc GetEvent (GetEventRequest) returns (Event) {
     option (google.api.http) = {
       get: "/v1/events/{id}"
     };
   }
+  
+  // Get an events attendees
+  rpc ListEventAttendees (ListEventAttendeesRequest) returns (ListEventAttendeesResponse) {
+    option (google.api.http) = {
+      get: "/v1/events/{id}/attendees"
+    };
+  }
 
-  rpc CreateEvent (CreateEventRequest) returns (EventSimple) {
+  rpc CreateEvent (CreateEventRequest) returns (Event) {
     option (google.api.http) = {
       post: "/v1/events"
       body: "event"
     };
   }
 
-  rpc UpdateEvent (UpdateEventRequest) returns (EventSimple) {
+  rpc UpdateEvent (UpdateEventRequest) returns (Event) {
     option (google.api.http) = {
       patch: "/v1/events/{id}"
       body: "*"
@@ -99,11 +88,19 @@ message ListEventsRequest {
 }
 
 message ListEventsResponse {
-  repeated EventSimple events = 1;
+  repeated Event events = 1;
 }
 
 message GetEventRequest {
   string id = 1;
+}
+
+message ListEventAttendeesRequest {
+  string id = 1;
+}
+
+message ListEventAttendeesResponse {
+  repeated AttendeeSimple attendees = 1;
 }
 
 message GetAdmissionRequest {
@@ -111,12 +108,12 @@ message GetAdmissionRequest {
 }
 
 message CreateEventRequest {
-  EventSimple event = 1;
+  Event event = 1;
 }
 
 message UpdateEventRequest {
   string id = 1;
-  EventSimple event = 2;
+  Event event = 2;
   google.protobuf.FieldMask update_mask = 3;
 }
 

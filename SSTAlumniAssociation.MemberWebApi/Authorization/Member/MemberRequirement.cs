@@ -4,6 +4,6 @@ using SSTAlumniAssociation.Core.Entities;
 namespace SSTAlumniAssociation.MemberWebApi.Authorization.Member;
 
 /// <summary>
-/// User must be a <see cref="Member"/> with a member type that is not <see cref="Membership.Revoked"/> .
+/// User must be a <see cref="Member"/> with a member type that is not <see cref="Revoked"/> .
 /// </summary>
 public class MemberRequirement : IAuthorizationRequirement;

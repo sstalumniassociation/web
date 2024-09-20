@@ -4,7 +4,7 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/empty.proto";
 import "Protos/google/api/annotations.proto";
 
-package protos.user.v1;
+package protos.users.v1;
 
 message User {
   string id = 1;
@@ -63,21 +63,7 @@ message Employee {
 }
 
 // User service
-service UserService {
-  // List all users, restricted to EXCO
-  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1/users"
-    };
-  };
-
-  // Get user information, restricted to authenticated users
-  rpc GetUser (GetUserRequest) returns (User) {
-    option (google.api.http) = {
-      get: "/v1/users/{id}"
-    };
-  };
-
+service Users {
   // Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the different 
   // permission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (where
   // only the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists for
@@ -89,30 +75,6 @@ service UserService {
     };
   };
 
-  // Create users
-  rpc CreateUser (CreateUserRequest) returns (User) {
-    option (google.api.http) = {
-      post: "/v1/users"
-      body: "*"
-    };
-  }
-
-  // Batch create users
-  rpc BatchCreateUsers (BatchCreateUsersRequest) returns (BatchCreateUsersResponse) {
-    option (google.api.http) = {
-      post: "/v1/users:batchCreate"
-      body: "*"
-    };
-  }
-
-  // Update user
-  rpc UpdateUser (UpdateUserRequest) returns (User) {
-    option (google.api.http) = {
-      patch: "/v1/users/{id}"
-      body: "*"
-    };
-  }
-
   // Delete user
   rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -121,39 +83,12 @@ service UserService {
   }
 }
 
-message ListUsersRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-}
-
-message ListUsersResponse {
-  repeated User users = 1;
-}
-
 message GetUserRequest {
   string id = 1;
 }
 
 message BindUserRequest {
   string id = 1;
-}
-
-message CreateUserRequest {
-  User user = 1;
-}
-
-message BatchCreateUsersRequest {
-  repeated CreateUserRequest requests = 1;
-}
-
-message BatchCreateUsersResponse {
-  repeated User users = 1;
-}
-
-message UpdateUserRequest {
-  string id = 1;
-  User user = 2;
-  google.protobuf.FieldMask update_mask = 3;
 }
 
 message DeleteUserRequest {

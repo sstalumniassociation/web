@@ -1,9 +1,12 @@
 using Calzolari.Grpc.AspNetCore.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.ServiceAccountWebApi.Authorization;
+using SSTAlumniAssociation.ServiceAccountWebApi.Authorization.ServiceAccount;
 using SSTAlumniAssociation.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,15 +20,18 @@ builder.Services.AddNpgsql<AppDbContext>(
     optionsAction: options =>
     {
         if (!builder.Environment.IsDevelopment()) return;
-        
+
         options.EnableSensitiveDataLogging();
         options.EnableDetailedErrors();
     },
-    npgsqlOptionsAction: options =>
-    {
-        options.MigrationsAssembly("SSTAlumniAssociation.Migrations");
-    }
+    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
 );
+
+#endregion
+
+#region Services
+
+builder.Services.AddSingleton<IAuthorizationHandler, ServiceAccountHandler>();
 
 #endregion
 
@@ -45,7 +51,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .AddDefaultPolicy(Policies.ServiceAccount, policy =>
+        policy.AddRequirements(new ServiceAccountRequirement())
+    );
 
 #endregion
 

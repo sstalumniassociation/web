@@ -4,7 +4,7 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/empty.proto";
 import "Protos/google/api/annotations.proto";
 
-package protos.user.v1;
+package protos.users.v1;
 
 message User {
   string id = 1;

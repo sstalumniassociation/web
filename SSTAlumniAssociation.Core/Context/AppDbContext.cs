@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Entities;
+using SSTAlumniAssociation.Core.Entities.MembershipPlans;
 
 namespace SSTAlumniAssociation.Core.Context;
 
@@ -16,6 +17,11 @@ public partial class AppDbContext : DbContext
     /// Users
     /// </summary>
     public DbSet<User> Users { get; set; }
+    
+    /// <summary>
+    /// User revocations
+    /// </summary>
+    public DbSet<UserRevocation> UserRevocations { get; set; }
 
     /// <summary>
     /// Members
@@ -94,49 +100,13 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<CheckIn>().UseTptMappingStrategy();
         // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
 
-        var exco = new MembershipPlan
-        {
-            Id = Guid.Parse("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-            Name = "EXCO",
-            BuiltIn = true,
-            Description = "SSTAA EXCO",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var associate = new MembershipPlan
-        {
-            Id = Guid.Parse("c28780c6-d687-4bb8-b9ce-5fbca1e347c2"),
-            Name = "Associate",
-            BuiltIn = true,
-            Description =
-                "All past/present staff and students who completed at least 1 year of study in SST but did not graduate",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var affiliate = new MembershipPlan
-        {
-            Id = Guid.Parse("d258488b-c5a3-4f96-add7-366be4934900"),
-            Name = "Affiliate",
-            BuiltIn = true,
-            Description = "All graduated alumni who are under 21",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var ordinary = new MembershipPlan
-        {
-            Id = Guid.Parse("c1869b12-56a9-4ed8-96d2-ef962c39799e"),
-            Name = "Ordinary",
-            BuiltIn = true,
-            Description = "Ordinary",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
         modelBuilder.Entity<MembershipPlan>()
-            .HasData([exco, associate, affiliate, ordinary]);
+            .HasData(
+                DefaultMembershipPlans.Exco,
+                DefaultMembershipPlans.Associate,
+                DefaultMembershipPlans.Affiliate,
+                DefaultMembershipPlans.Ordinary
+            );
 
         modelBuilder
             .Entity<ServiceAccount>()
@@ -159,7 +129,7 @@ public partial class AppDbContext : DbContext
             StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
             EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
             MemberId = qinGuan.Id,
-            MembershipPlanId = exco.Id
+            MembershipPlanId = DefaultMembershipPlans.Exco.Id
         };
 
         modelBuilder.Entity<AlumniMember>()
@@ -194,7 +164,7 @@ public partial class AppDbContext : DbContext
             StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
             EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
             MemberId = zhengJie.Id,
-            MembershipPlanId = exco.Id
+            MembershipPlanId = DefaultMembershipPlans.Exco.Id
         };
 
         modelBuilder.Entity<AlumniMember>()

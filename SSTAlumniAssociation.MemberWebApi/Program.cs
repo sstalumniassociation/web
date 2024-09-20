@@ -1,5 +1,4 @@
 using Calzolari.Grpc.AspNetCore.Validation;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +7,7 @@ using Microsoft.OpenApi.Models;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.ServiceDefaults;
 using SSTAlumniAssociation.MemberWebApi.Authorization;
-using SSTAlumniAssociation.MemberWebApi.Authorization.Admin;
 using SSTAlumniAssociation.MemberWebApi.Authorization.Member;
-using SSTAlumniAssociation.MemberWebApi.Authorization.OwnerOrAdmin;
 using SSTAlumniAssociation.MemberWebApi.Services.V1;
 using SSTAlumniAssociation.MemberWebApi.Services.V1.CheckIn;
 using SSTAlumniAssociation.MemberWebApi.Services.V1.Event;
@@ -27,24 +24,19 @@ builder.Services.AddNpgsql<AppDbContext>(
     optionsAction: options =>
     {
         if (!builder.Environment.IsDevelopment()) return;
-        
+
         options.EnableSensitiveDataLogging();
         options.EnableDetailedErrors();
     },
-    npgsqlOptionsAction: options =>
-    {
-        options.MigrationsAssembly("SSTAlumniAssociation.Migrations");
-    }
+    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
 );
 
 #endregion
 
 #region Services
 
-builder.Services.AddSingleton<IAuthorizationHandler, AdminSystemAdminHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminExcoHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, MemberNonRevokedHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, MemberRequirementNonRevokedHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, MemberRequirementSystemAdminHandler>();
 
 #endregion
 
@@ -65,12 +57,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Policies.Admin, policy =>
-        policy.AddRequirements(new AdminRequirement()))
-    .AddPolicy(Policies.Member, policy =>
-        policy.AddRequirements(new MemberRequirement()))
-    .AddPolicy(Policies.OwnerOrAdmin, policy =>
-        policy.AddRequirements(new OwnerOrAdminRequirement()));
+    .AddDefaultPolicy(Policies.Member, policy =>
+        policy.AddRequirements(new MemberRequirement())
+    );
 
 #endregion
 

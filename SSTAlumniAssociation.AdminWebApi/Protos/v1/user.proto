@@ -4,7 +4,7 @@ import "google/protobuf/field_mask.proto";
 import "google/protobuf/empty.proto";
 import "Protos/google/api/annotations.proto";
 
-package protos.user.v1;
+package protos.users.v1;
 
 message User {
   string id = 1;
@@ -63,7 +63,7 @@ message Employee {
 }
 
 // User service
-service UserService {
+service Users {
   // List all users, restricted to EXCO
   rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {
@@ -75,17 +75,6 @@ service UserService {
   rpc GetUser (GetUserRequest) returns (User) {
     option (google.api.http) = {
       get: "/v1/users/{id}"
-    };
-  };
-
-  // Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the different 
-  // permission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (where
-  // only the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists for
-  // this specific use case. This route should be called by end-users only (not admins) as it will bind the user ID 
-  // provided to the current authenticated user.
-  rpc BindUser (BindUserRequest) returns (User) {
-    option (google.api.http) = {
-      post: "/v1/users/{id}/bind"
     };
   };
 

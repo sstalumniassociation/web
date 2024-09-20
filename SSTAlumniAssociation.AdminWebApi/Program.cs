@@ -1,8 +1,11 @@
 using Calzolari.Grpc.AspNetCore.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SSTAlumniAssociation.AdminWebApi.Authorization;
+using SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.ServiceDefaults;
 
@@ -17,15 +20,19 @@ builder.Services.AddNpgsql<AppDbContext>(
     optionsAction: options =>
     {
         if (!builder.Environment.IsDevelopment()) return;
-        
+
         options.EnableSensitiveDataLogging();
         options.EnableDetailedErrors();
     },
-    npgsqlOptionsAction: options =>
-    {
-        options.MigrationsAssembly("SSTAlumniAssociation.Migrations");
-    }
+    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
 );
+
+#endregion
+
+#region Services
+
+builder.Services.AddSingleton<IAuthorizationHandler, AdminRequirementExcoHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminRequirementSystemAdminHandler>();
 
 #endregion
 
@@ -45,7 +52,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .AddDefaultPolicy(Policies.Admin, policy =>
+        policy.AddRequirements(new AdminRequirement())
+    );
 
 #endregion
 

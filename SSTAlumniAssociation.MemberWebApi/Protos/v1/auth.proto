@@ -6,7 +6,7 @@ import "Protos/v1/user.proto";
 package protos.auth.v1;
 
 // Auth service
-service AuthService {
+service Auth {
   // Verify whether a user is a registered SSTAA member
   rpc VerifyUser (VerifyUserRequest) returns (VerifyUserResponse) {
     option (google.api.http) = {
