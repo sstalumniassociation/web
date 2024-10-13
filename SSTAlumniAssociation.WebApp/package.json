@@ -38,7 +38,7 @@
     "@primevue/nuxt-module": "4.0.6",
     "@primevue/themes": "4.0.6",
     "@simplewebauthn/browser": "^10.0.0",
-    "@simplewebauthn/server": "^10.0.1",
+    "@simplewebauthn/server": "^11.0.0",
     "@tanstack/query-core": "^5.55.4",
     "@tanstack/query-persist-client-core": "^5.55.4",
     "@tanstack/vue-query": "^5.55.4",
