@@ -57,7 +57,7 @@
     "drizzle-kit": "^0.24.2",
     "drizzle-orm": "^0.33.0",
     "execa": "^9.3.1",
-    "firebase": "^10.13.1",
+    "firebase": "^11.0.1",
     "framework7": "^8.3.3",
     "framework7-icons": "^5.0.5",
     "framework7-vue": "^8.3.3",
