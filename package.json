@@ -2,7 +2,7 @@
   "name": "@sstalumniassociation/monorepo",
   "type": "module",
   "version": "0.1.6",
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.12.2",
   "license": "MIT",
   "scripts": {
     "dev": "dotnet run --project ./SSTAlumniAssociation.AppHost/",
@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "latest",
-    "eslint": "^9.6.0"
+    "eslint": "^9.13.0"
   }
 }
