@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using SSTAlumniAssociation.Core.Entities;
 
 #nullable disable
 
@@ -13,6 +14,10 @@ namespace SSTAlumniAssociation.Migrations.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:Enum:payment_intent_state", "none,pending,success,failed,cancelled")
+                .Annotation("Npgsql:Enum:service_account_type", "guard_house");
+
             migrationBuilder.CreateTable(
                 name: "Articles",
                 columns: table => new
@@ -168,6 +173,27 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRevocations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Reason = table.Column<string>(type: "text", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRevocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRevocations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AlumniMembers",
                 columns: table => new
                 {
@@ -235,7 +261,7 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     StartDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PaymentIntentId = table.Column<string>(type: "text", nullable: true),
-                    PaymentIntentState = table.Column<string>(type: "text", nullable: true),
+                    PaymentIntentState = table.Column<PaymentIntentState>(type: "payment_intent_state", nullable: false),
                     MemberId = table.Column<Guid>(type: "uuid", nullable: false),
                     MembershipPlanId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -451,8 +477,8 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                 columns: new[] { "Id", "EndDateTime", "MemberId", "MembershipPlanId", "PaymentIntentId", "PaymentIntentState", "StartDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("58352738-955f-41b5-ae42-57c2e01d7452"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, null, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) },
-                    { new Guid("d44eba3b-5556-4978-8188-7440762b1288"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, null, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) }
+                    { new Guid("58352738-955f-41b5-ae42-57c2e01d7452"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.None, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) },
+                    { new Guid("d44eba3b-5556-4978-8188-7440762b1288"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.None, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) }
                 });
 
             migrationBuilder.InsertData(
@@ -526,6 +552,11 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserRevocations_UserId",
+                table: "UserRevocations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_FirebaseId",
                 table: "Users",
                 column: "FirebaseId",
@@ -564,6 +595,9 @@ namespace SSTAlumniAssociation.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserCheckIns");
+
+            migrationBuilder.DropTable(
+                name: "UserRevocations");
 
             migrationBuilder.DropTable(
                 name: "Events");

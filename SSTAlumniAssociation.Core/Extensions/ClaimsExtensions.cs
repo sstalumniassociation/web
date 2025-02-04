@@ -1,4 +1,8 @@
+using System.Net;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.Core.Extensions;
@@ -8,23 +12,18 @@ namespace SSTAlumniAssociation.Core.Extensions;
 /// </summary>
 public static class ClaimsExtensions
 {
-    /// <summary>
-    /// Retrieves the name identifier (represents <see cref="User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
-    /// </summary>
-    /// <param name="claims"></param>
-    /// <returns>ID of user</returns>
-    public static string GetNameIdentifier(this IEnumerable<Claim> claims)
+    public static IQueryable<T> WhereUserMatchesEmailFromClaims<T>(this DbSet<T> dbSet, IEnumerable<Claim> claims) where T : User
     {
-        return claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        var email = claims.SingleOrDefault(c => c.Type == ClaimTypes.Email);
+        return email is null ? dbSet : dbSet.Where(u => u.Email == email.Value);
     }
 
-    /// <summary>
-    /// Retrieves the name identifier (represents <see cref="User.Id"/> as modified by <see cref="Authorization.ClaimsTransformation"/>)
-    /// </summary>
-    /// <param name="claims"></param>
-    /// <returns>ID of user</returns>
-    public static Guid GetNameIdentifierGuid(this IEnumerable<Claim> claims)
+    public static IQueryable<T> WhereUserMatchesEmailFromClaims<T, T2>(
+        this IIncludableQueryable<T, T2> dbSet,
+        IEnumerable<Claim> claims
+    ) where T : User
     {
-        return Guid.Parse(claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        var email = claims.SingleOrDefault(c => c.Type == ClaimTypes.Email);
+        return email is null ? dbSet : dbSet.Where(u => u.Email == email.Value);
     }
 }

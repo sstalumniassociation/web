@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Extensions;
 
@@ -13,8 +14,10 @@ public class ServiceAccountHandler(AppDbContext dbContext) : AuthorizationHandle
         ServiceAccountRequirement requirement
     )
     {
-        var userId = context.User.Claims.GetNameIdentifierGuid();
-        var sa = await dbContext.ServiceAccounts.FindAsync(userId);
+        var sa = await dbContext.ServiceAccounts
+            .WhereUserMatchesEmailFromClaims(context.User.Claims)
+            .SingleOrDefaultAsync();
+
         if (sa is not null)
         {
             context.Succeed(requirement);

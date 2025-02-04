@@ -8,7 +8,7 @@ import "google/protobuf/wrappers.proto";
 import "Protos/google/api/annotations.proto";
 import "Protos/v1/user.proto";
 
-package protos.check_ins.v1;
+package protos.check_in.v1;
 
 message CheckIn {
   string id = 1;
@@ -18,14 +18,6 @@ message CheckIn {
   oneof check_in_type {
     GuestCheckIn guest = 100;
     protos.user.v1.User user = 101;
-  }
-}
-
-// CheckIn with no navigations
-message CheckInSimple {
-  oneof check_in_type {
-    GuestCheckIn guest = 100;
-    string user = 101;
   }
 }
 

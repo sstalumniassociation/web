@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization.ServiceAccount;
+using SSTAlumniAssociation.ServiceAccountWebApi.Services.V1;
 using SSTAlumniAssociation.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,23 +18,30 @@ builder.AddServiceDefaults();
 
 #region Database
 
-builder.Services.AddNpgsql<AppDbContext>(
-    builder.Configuration.GetConnectionString("Postgres"),
-    optionsAction: options =>
-    {
-        if (!builder.Environment.IsDevelopment()) return;
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Postgres"));
+dataSourceBuilder.MapEnum<ServiceAccountType>();
+dataSourceBuilder.MapEnum<PaymentIntentState>();
+var dataSource = dataSourceBuilder.Build();
 
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
-    },
-    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        }
+
+        options.UseNpgsql(dataSource,
+            npgsqlOptions => { npgsqlOptions.MigrationsAssembly("SSTAlumniAssociation.Migrations"); });
+    }
 );
 
 #endregion
 
 #region Services
 
-builder.Services.AddSingleton<IAuthorizationHandler, ServiceAccountHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, ServiceAccountHandler>();
 
 #endregion
 
@@ -61,6 +71,7 @@ builder.Services.AddAuthorizationBuilder()
 #region gRPC
 
 builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
+builder.Services.AddGrpcSwagger();
 builder.Services.AddGrpcValidation();
 
 #endregion
@@ -139,6 +150,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 // Require authorization by default and opt-out for anonymous routes
+app.MapGrpcService<UserService>().RequireAuthorization();
 
 app.UseHttpsRedirection();
 

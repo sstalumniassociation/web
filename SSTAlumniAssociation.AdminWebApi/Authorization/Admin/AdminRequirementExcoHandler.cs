@@ -15,11 +15,10 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext) : Authorization
         AdminRequirement requirement
     )
     {
-        var userId = context.User.Claims.GetNameIdentifierGuid();
         var sa = await dbContext.Members
             .Include(u => u.Subscriptions)
-            .Where(m => m.Id == userId &&
-                        m.ActiveSubscription != null &&
+            .WhereUserMatchesEmailFromClaims(context.User.Claims)
+            .Where(m => m.ActiveSubscription != null &&
                         m.ActiveSubscription.MembershipPlan.Id == DefaultMembershipPlans.Exco.Id
             )
             .SingleOrDefaultAsync();

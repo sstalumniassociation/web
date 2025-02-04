@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceDefaults;
 using SSTAlumniAssociation.MemberWebApi.Authorization;
 using SSTAlumniAssociation.MemberWebApi.Authorization.Member;
 using SSTAlumniAssociation.MemberWebApi.Services.V1;
-using SSTAlumniAssociation.MemberWebApi.Services.V1.CheckIn;
 using SSTAlumniAssociation.MemberWebApi.Services.V1.Event;
 using SSTAlumniAssociation.MemberWebApi.Services.V1.User;
 
@@ -19,24 +20,31 @@ builder.AddServiceDefaults();
 
 #region Database
 
-builder.Services.AddNpgsql<AppDbContext>(
-    builder.Configuration.GetConnectionString("Postgres"),
-    optionsAction: options =>
-    {
-        if (!builder.Environment.IsDevelopment()) return;
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Postgres"));
+dataSourceBuilder.MapEnum<ServiceAccountType>();
+dataSourceBuilder.MapEnum<PaymentIntentState>();
+var dataSource = dataSourceBuilder.Build();
 
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
-    },
-    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        }
+
+        options.UseNpgsql(dataSource,
+            npgsqlOptions => { npgsqlOptions.MigrationsAssembly("SSTAlumniAssociation.Migrations"); });
+    }
 );
 
 #endregion
 
 #region Services
 
-builder.Services.AddSingleton<IAuthorizationHandler, MemberRequirementNonRevokedHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, MemberRequirementSystemAdminHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, MemberRequirementNonRevokedHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, MemberRequirementSystemAdminHandler>();
 
 #endregion
 
@@ -66,10 +74,7 @@ builder.Services.AddAuthorizationBuilder()
 #region gRPC
 
 builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
-
-builder.Services.AddValidator<CreateUserRequestValidator>();
-builder.Services.AddValidator<CreateEventRequestValidator>();
-builder.Services.AddValidator<CreateCheckInRequestValidator>();
+builder.Services.AddGrpcSwagger();
 builder.Services.AddGrpcValidation();
 
 #endregion
@@ -96,7 +101,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association Member API", Version = "v1" });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -130,8 +135,6 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
 });
 
-builder.Services.AddGrpcSwagger();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -149,13 +152,10 @@ app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Require authorization by default and opt-out for anonymous routes
-app.MapGrpcService<ArticleServiceV1>();
-app.MapGrpcService<UserServiceV1>();
-app.MapGrpcService<EventServiceV1>();
-app.MapGrpcService<AuthServiceV1>();
-app.MapGrpcService<AttendeeServiceV1>();
-app.MapGrpcService<CheckInServiceV1>();
+app.MapGrpcService<AuthService>().RequireAuthorization();
+app.MapGrpcService<EventService>().RequireAuthorization();
+app.MapGrpcService<UserService>().RequireAuthorization();
+app.MapGrpcService<CheckInService>().RequireAuthorization();
 
 app.UseHttpsRedirection();
 

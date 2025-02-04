@@ -18,7 +18,7 @@ public class MemberRequirementNonRevokedHandler(AppDbContext dbContext) : Author
     {
         var user = await dbContext.Users
             .Include(u => u.Revocations)
-            .Where(u => u.Id == context.User.Claims.GetNameIdentifierGuid())
+            .WhereUserMatchesEmailFromClaims(context.User.Claims)
             .SingleOrDefaultAsync();
 
         if (user is { Revoked: false })

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Protos.Event.V1;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
-using SSTAlumniAssociation.Core.Entities;
+using Attendee = SSTAlumniAssociation.Core.Entities.Attendee;
 
 namespace SSTAlumniAssociation.AdminWebApi.Services.V1.Event;
 
@@ -149,7 +149,7 @@ public class EventService(
         foreach (var user in dbContext.Users.Where(u => userIds.Contains(u.Id)))
         {
             user.UserEvents.Add(
-                new Attendee
+                new Core.Entities.Attendee
                 {
                     Event = @event
                 }

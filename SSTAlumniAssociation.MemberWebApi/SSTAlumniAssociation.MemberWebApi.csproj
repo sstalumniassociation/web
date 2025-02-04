@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -11,25 +11,26 @@
 
     <ItemGroup>
         <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="8.1.0"/>
-        <PackageReference Include="FluentValidation" Version="11.9.2"/>
+        <PackageReference Include="FluentValidation" Version="11.11.0" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8"/>
-        <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="8.0.8"/>
-        <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.8.8"/>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+        <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="9.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.9.1" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4"/>
-        <PackageReference Include="Riok.Mapperly" Version="3.6.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+        <PackageReference Include="Riok.Mapperly" Version="4.1.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\v1\article.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\auth.proto" GrpcServices="Server"/>
+        <Protobuf Include="Protos\v1\check_in.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\event.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\v1\user.proto" GrpcServices="Server"/>
     </ItemGroup>

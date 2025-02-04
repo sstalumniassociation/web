@@ -1,3 +1,4 @@
+using Protos.Article.V1;
 using Riok.Mapperly.Abstractions;
 
 namespace SSTAlumniAssociation.AdminWebApi.Mappers;

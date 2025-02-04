@@ -8,7 +8,7 @@ export interface AlumniMember extends Parsable {
     /**
      * If a member is an associate and have never graduated from SST, this field will be empty.
      */
-    graduationYear?: number | null;
+    graduationYear?: number;
 }
 export interface Any extends AdditionalDataHolder, Parsable {
     /**
@@ -18,123 +18,41 @@ export interface Any extends AdditionalDataHolder, Parsable {
     /**
      * The Type property
      */
-    type?: string | null;
-}
-export interface Article extends Parsable {
-    /**
-     * The ctaTitle property
-     */
-    ctaTitle?: string | null;
-    /**
-     * The ctaUrl property
-     */
-    ctaUrl?: string | null;
-    /**
-     * The description property
-     */
-    description?: string | null;
-    /**
-     * The heroImageAlt property
-     */
-    heroImageAlt?: string | null;
-    /**
-     * The heroImageUrl property
-     */
-    heroImageUrl?: string | null;
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The title property
-     */
-    title?: string | null;
+    type?: string;
 }
 export interface Attendee extends Parsable {
     /**
      * The admissionKey property
      */
-    admissionKey?: string | null;
-    /**
-     * The event property
-     */
-    event?: EventSimple | null;
+    admissionKey?: string;
     /**
      * The id property
      */
-    id?: string | null;
+    id?: string;
     /**
      * The user property
      */
-    user?: User | null;
-}
-export interface AttendeeSimple extends Parsable {
-    /**
-     * The admissionKey property
-     */
-    admissionKey?: string | null;
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The user property
-     */
-    user?: User | null;
-}
-export interface BatchCreateUsersRequest extends Parsable {
-    /**
-     * The requests property
-     */
-    requests?: CreateUserRequest[] | null;
-}
-export interface BatchCreateUsersResponse extends Parsable {
-    /**
-     * The users property
-     */
-    users?: User[] | null;
+    user?: User;
 }
 export interface CheckIn extends Parsable {
     /**
      * The checkInDateTime property
      */
-    checkInDateTime?: string | null;
+    checkInDateTime?: string;
     /**
      * The checkOutDateTime property
      */
-    checkOutDateTime?: string | null;
-    /**
-     * The guest property
-     */
-    guest?: GuestCheckIn | null;
+    checkOutDateTime?: string;
     /**
      * The id property
      */
-    id?: string | null;
-    /**
-     * The user property
-     */
-    user?: User | null;
-}
-/**
- * CheckIn with no navigations
- */
-export interface CheckInSimple extends Parsable {
-    /**
-     * The guest property
-     */
-    guest?: GuestCheckIn | null;
-    /**
-     * The user property
-     */
-    user?: string | null;
+    id?: string;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {AlumniMember}
  */
-// @ts-ignore
 export function createAlumniMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoAlumniMember;
 }
@@ -143,103 +61,30 @@ export function createAlumniMemberFromDiscriminatorValue(parseNode: ParseNode | 
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Any}
  */
-// @ts-ignore
 export function createAnyFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoAny;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Article}
- */
-// @ts-ignore
-export function createArticleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoArticle;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Attendee}
  */
-// @ts-ignore
 export function createAttendeeFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoAttendee;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {AttendeeSimple}
- */
-// @ts-ignore
-export function createAttendeeSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAttendeeSimple;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {BatchCreateUsersRequest}
- */
-// @ts-ignore
-export function createBatchCreateUsersRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoBatchCreateUsersRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {BatchCreateUsersResponse}
- */
-// @ts-ignore
-export function createBatchCreateUsersResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoBatchCreateUsersResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {CheckIn}
  */
-// @ts-ignore
 export function createCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoCheckIn;
-}
-export interface CreateCheckInRequest extends Parsable {
-    /**
-     * CheckIn with no navigations
-     */
-    checkIn?: CheckInSimple | null;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {CheckInSimple}
- */
-// @ts-ignore
-export function createCheckInSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoCheckInSimple;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {CreateCheckInRequest}
- */
-// @ts-ignore
-export function createCreateCheckInRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoCreateCheckInRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {CreateUserRequest}
- */
-// @ts-ignore
-export function createCreateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoCreateUserRequest;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Employee}
  */
-// @ts-ignore
 export function createEmployeeFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoEmployee;
 }
@@ -248,7 +93,6 @@ export function createEmployeeFromDiscriminatorValue(parseNode: ParseNode | unde
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {EmployeeMember}
  */
-// @ts-ignore
 export function createEmployeeMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoEmployeeMember;
 }
@@ -257,7 +101,6 @@ export function createEmployeeMemberFromDiscriminatorValue(parseNode: ParseNode 
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Empty}
  */
-// @ts-ignore
 export function createEmptyFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoEmpty;
 }
@@ -266,79 +109,38 @@ export function createEmptyFromDiscriminatorValue(parseNode: ParseNode | undefin
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Event}
  */
-// @ts-ignore
 export function createEventFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoEvent;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {EventSimple}
- */
-// @ts-ignore
-export function createEventSimpleFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEventSimple;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GuestCheckIn}
- */
-// @ts-ignore
-export function createGuestCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGuestCheckIn;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListArticlesRequest}
- */
-// @ts-ignore
-export function createListArticlesRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListArticlesRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListArticlesResponse}
- */
-// @ts-ignore
-export function createListArticlesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListArticlesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ListCheckInsResponse}
  */
-// @ts-ignore
 export function createListCheckInsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoListCheckInsResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ListEventAttendeesResponse}
+ */
+export function createListEventAttendeesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoListEventAttendeesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ListEventsResponse}
  */
-// @ts-ignore
 export function createListEventsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoListEventsResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListUsersResponse}
- */
-// @ts-ignore
-export function createListUsersResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListUsersResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Member}
  */
-// @ts-ignore
 export function createMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoMember;
 }
@@ -347,7 +149,6 @@ export function createMemberFromDiscriminatorValue(parseNode: ParseNode | undefi
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ServiceAccount}
  */
-// @ts-ignore
 export function createServiceAccountFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoServiceAccount;
 }
@@ -356,7 +157,6 @@ export function createServiceAccountFromDiscriminatorValue(parseNode: ParseNode 
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {Status}
  */
-// @ts-ignore
 export function createStatusFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoStatus;
 }
@@ -365,49 +165,22 @@ export function createStatusFromDiscriminatorValue(parseNode: ParseNode | undefi
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {SystemAdmin}
  */
-// @ts-ignore
 export function createSystemAdminFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSystemAdmin;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateEventRequest}
- */
-// @ts-ignore
-export function createUpdateEventRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateEventRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateUserRequest}
- */
-// @ts-ignore
-export function createUpdateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateUserRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {User}
  */
-// @ts-ignore
 export function createUserFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoUser;
-}
-export interface CreateUserRequest extends Parsable {
-    /**
-     * The user property
-     */
-    user?: User | null;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {VerifyUserRequest}
  */
-// @ts-ignore
 export function createVerifyUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVerifyUserRequest;
 }
@@ -416,7 +189,6 @@ export function createVerifyUserRequestFromDiscriminatorValue(parseNode: ParseNo
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {VerifyUserResponse}
  */
-// @ts-ignore
 export function createVerifyUserResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVerifyUserResponse;
 }
@@ -424,7 +196,6 @@ export function createVerifyUserResponseFromDiscriminatorValue(parseNode: ParseN
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoAlumniMember(alumniMember: Partial<AlumniMember> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "graduationYear": n => { alumniMember.graduationYear = n.getNumberValue(); },
@@ -434,7 +205,6 @@ export function deserializeIntoAlumniMember(alumniMember: Partial<AlumniMember> 
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoAny(any: Partial<Any> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "@type": n => { any.type = n.getStringValue(); },
@@ -444,27 +214,9 @@ export function deserializeIntoAny(any: Partial<Any> | undefined = {}) : Record<
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoArticle(article: Partial<Article> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "ctaTitle": n => { article.ctaTitle = n.getStringValue(); },
-        "ctaUrl": n => { article.ctaUrl = n.getStringValue(); },
-        "description": n => { article.description = n.getStringValue(); },
-        "heroImageAlt": n => { article.heroImageAlt = n.getStringValue(); },
-        "heroImageUrl": n => { article.heroImageUrl = n.getStringValue(); },
-        "id": n => { article.id = n.getStringValue(); },
-        "title": n => { article.title = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoAttendee(attendee: Partial<Attendee> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "admissionKey": n => { attendee.admissionKey = n.getStringValue(); },
-        "event": n => { attendee.event = n.getObjectValue<EventSimple>(createEventSimpleFromDiscriminatorValue); },
         "id": n => { attendee.id = n.getStringValue(); },
         "user": n => { attendee.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
     }
@@ -473,84 +225,17 @@ export function deserializeIntoAttendee(attendee: Partial<Attendee> | undefined 
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoAttendeeSimple(attendeeSimple: Partial<AttendeeSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "admissionKey": n => { attendeeSimple.admissionKey = n.getStringValue(); },
-        "id": n => { attendeeSimple.id = n.getStringValue(); },
-        "user": n => { attendeeSimple.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoBatchCreateUsersRequest(batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "requests": n => { batchCreateUsersRequest.requests = n.getCollectionOfObjectValues<CreateUserRequest>(createCreateUserRequestFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoBatchCreateUsersResponse(batchCreateUsersResponse: Partial<BatchCreateUsersResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "users": n => { batchCreateUsersResponse.users = n.getCollectionOfObjectValues<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoCheckIn(checkIn: Partial<CheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "checkInDateTime": n => { checkIn.checkInDateTime = n.getStringValue(); },
         "checkOutDateTime": n => { checkIn.checkOutDateTime = n.getStringValue(); },
-        "guest": n => { checkIn.guest = n.getObjectValue<GuestCheckIn>(createGuestCheckInFromDiscriminatorValue); },
         "id": n => { checkIn.id = n.getStringValue(); },
-        "user": n => { checkIn.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
     }
 }
 /**
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoCheckInSimple(checkInSimple: Partial<CheckInSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "guest": n => { checkInSimple.guest = n.getObjectValue<GuestCheckIn>(createGuestCheckInFromDiscriminatorValue); },
-        "user": n => { checkInSimple.user = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoCreateCheckInRequest(createCheckInRequest: Partial<CreateCheckInRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "checkIn": n => { createCheckInRequest.checkIn = n.getObjectValue<CheckInSimple>(createCheckInSimpleFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoCreateUserRequest(createUserRequest: Partial<CreateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "user": n => { createUserRequest.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoEmployee(employee: Partial<Employee> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
     }
@@ -559,7 +244,6 @@ export function deserializeIntoEmployee(employee: Partial<Employee> | undefined 
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoEmployeeMember(employeeMember: Partial<EmployeeMember> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "graduationYear": n => { employeeMember.graduationYear = n.getNumberValue(); },
@@ -569,7 +253,6 @@ export function deserializeIntoEmployeeMember(employeeMember: Partial<EmployeeMe
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoEmpty(empty: Partial<Empty> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
     }
@@ -578,11 +261,9 @@ export function deserializeIntoEmpty(empty: Partial<Empty> | undefined = {}) : R
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoEvent(event: Partial<Event> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "active": n => { event.active = n.getBooleanValue(); },
-        "attendees": n => { event.attendees = n.getCollectionOfObjectValues<AttendeeSimple>(createAttendeeSimpleFromDiscriminatorValue); },
         "badgeImage": n => { event.badgeImage = n.getStringValue(); },
         "description": n => { event.description = n.getStringValue(); },
         "endDateTime": n => { event.endDateTime = n.getStringValue(); },
@@ -596,58 +277,6 @@ export function deserializeIntoEvent(event: Partial<Event> | undefined = {}) : R
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoEventSimple(eventSimple: Partial<EventSimple> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "active": n => { eventSimple.active = n.getBooleanValue(); },
-        "badgeImage": n => { eventSimple.badgeImage = n.getStringValue(); },
-        "description": n => { eventSimple.description = n.getStringValue(); },
-        "endDateTime": n => { eventSimple.endDateTime = n.getStringValue(); },
-        "id": n => { eventSimple.id = n.getStringValue(); },
-        "location": n => { eventSimple.location = n.getStringValue(); },
-        "name": n => { eventSimple.name = n.getStringValue(); },
-        "startDateTime": n => { eventSimple.startDateTime = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGuestCheckIn(guestCheckIn: Partial<GuestCheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "name": n => { guestCheckIn.name = n.getStringValue(); },
-        "nric": n => { guestCheckIn.nric = n.getStringValue(); },
-        "phone": n => { guestCheckIn.phone = n.getStringValue(); },
-        "reason": n => { guestCheckIn.reason = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoListArticlesRequest(listArticlesRequest: Partial<ListArticlesRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "pageSize": n => { listArticlesRequest.pageSize = n.getNumberValue(); },
-        "pageToken": n => { listArticlesRequest.pageToken = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoListArticlesResponse(listArticlesResponse: Partial<ListArticlesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "articles": n => { listArticlesResponse.articles = n.getCollectionOfObjectValues<Article>(createArticleFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoListCheckInsResponse(listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "checkIns": n => { listCheckInsResponse.checkIns = n.getCollectionOfObjectValues<CheckIn>(createCheckInFromDiscriminatorValue); },
@@ -657,27 +286,24 @@ export function deserializeIntoListCheckInsResponse(listCheckInsResponse: Partia
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
+export function deserializeIntoListEventAttendeesResponse(listEventAttendeesResponse: Partial<ListEventAttendeesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "attendees": n => { listEventAttendeesResponse.attendees = n.getCollectionOfObjectValues<Attendee>(createAttendeeFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
 export function deserializeIntoListEventsResponse(listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
-        "events": n => { listEventsResponse.events = n.getCollectionOfObjectValues<EventSimple>(createEventSimpleFromDiscriminatorValue); },
+        "events": n => { listEventsResponse.events = n.getCollectionOfObjectValues<Event>(createEventFromDiscriminatorValue); },
     }
 }
 /**
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoListUsersResponse(listUsersResponse: Partial<ListUsersResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "users": n => { listUsersResponse.users = n.getCollectionOfObjectValues<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoMember(member: Partial<Member> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "alumniMember": n => { member.alumniMember = n.getObjectValue<AlumniMember>(createAlumniMemberFromDiscriminatorValue); },
@@ -690,7 +316,6 @@ export function deserializeIntoMember(member: Partial<Member> | undefined = {}) 
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoServiceAccount(serviceAccount: Partial<ServiceAccount> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "serviceAccountType": n => { serviceAccount.serviceAccountType = n.getEnumValue<ServiceAccountType>(ServiceAccountTypeObject); },
@@ -700,7 +325,6 @@ export function deserializeIntoServiceAccount(serviceAccount: Partial<ServiceAcc
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoStatus(status: Partial<Status> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "code": n => { status.code = n.getNumberValue(); },
@@ -712,7 +336,6 @@ export function deserializeIntoStatus(status: Partial<Status> | undefined = {}) 
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoSystemAdmin(systemAdmin: Partial<SystemAdmin> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
     }
@@ -721,31 +344,6 @@ export function deserializeIntoSystemAdmin(systemAdmin: Partial<SystemAdmin> | u
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
-export function deserializeIntoUpdateEventRequest(updateEventRequest: Partial<UpdateEventRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "event": n => { updateEventRequest.event = n.getObjectValue<EventSimple>(createEventSimpleFromDiscriminatorValue); },
-        "id": n => { updateEventRequest.id = n.getStringValue(); },
-        "updateMask": n => { updateEventRequest.updateMask = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateUserRequest(updateUserRequest: Partial<UpdateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "id": n => { updateUserRequest.id = n.getStringValue(); },
-        "updateMask": n => { updateUserRequest.updateMask = n.getStringValue(); },
-        "user": n => { updateUserRequest.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
 export function deserializeIntoUser(user: Partial<User> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "email": n => { user.email = n.getStringValue(); },
@@ -762,7 +360,6 @@ export function deserializeIntoUser(user: Partial<User> | undefined = {}) : Reco
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoVerifyUserRequest(verifyUserRequest: Partial<VerifyUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "email": n => { verifyUserRequest.email = n.getStringValue(); },
@@ -772,7 +369,6 @@ export function deserializeIntoVerifyUserRequest(verifyUserRequest: Partial<Veri
  * The deserialization information for the current model
  * @returns {Record<string, (node: ParseNode) => void>}
  */
-// @ts-ignore
 export function deserializeIntoVerifyUserResponse(verifyUserResponse: Partial<VerifyUserResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "id": n => { verifyUserResponse.id = n.getStringValue(); },
@@ -785,7 +381,7 @@ export interface EmployeeMember extends Parsable {
     /**
      * If a member was an ex-student of SST, this field will contain their graduation year.
      */
-    graduationYear?: number | null;
+    graduationYear?: number;
 }
 export interface Empty extends Parsable {
 }
@@ -793,605 +389,293 @@ export interface Event extends Parsable {
     /**
      * The active property
      */
-    active?: boolean | null;
-    /**
-     * The attendees property
-     */
-    attendees?: AttendeeSimple[] | null;
+    active?: boolean;
     /**
      * The badgeImage property
      */
-    badgeImage?: string | null;
+    badgeImage?: string;
     /**
      * The description property
      */
-    description?: string | null;
+    description?: string;
     /**
      * The endDateTime property
      */
-    endDateTime?: string | null;
+    endDateTime?: string;
     /**
      * The id property
      */
-    id?: string | null;
+    id?: string;
     /**
      * The location property
      */
-    location?: string | null;
+    location?: string;
     /**
      * The name property
      */
-    name?: string | null;
+    name?: string;
     /**
      * The startDateTime property
      */
-    startDateTime?: string | null;
-}
-export interface EventSimple extends Parsable {
-    /**
-     * The active property
-     */
-    active?: boolean | null;
-    /**
-     * The badgeImage property
-     */
-    badgeImage?: string | null;
-    /**
-     * The description property
-     */
-    description?: string | null;
-    /**
-     * The endDateTime property
-     */
-    endDateTime?: string | null;
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The location property
-     */
-    location?: string | null;
-    /**
-     * The name property
-     */
-    name?: string | null;
-    /**
-     * The startDateTime property
-     */
-    startDateTime?: string | null;
-}
-export interface GuestCheckIn extends Parsable {
-    /**
-     * The name property
-     */
-    name?: string | null;
-    /**
-     * The nric property
-     */
-    nric?: string | null;
-    /**
-     * The phone property
-     */
-    phone?: string | null;
-    /**
-     * The reason property
-     */
-    reason?: string | null;
-}
-export interface ListArticlesRequest extends Parsable {
-    /**
-     * The pageSize property
-     */
-    pageSize?: number | null;
-    /**
-     * The pageToken property
-     */
-    pageToken?: string | null;
-}
-export interface ListArticlesResponse extends Parsable {
-    /**
-     * The articles property
-     */
-    articles?: Article[] | null;
+    startDateTime?: string;
 }
 export interface ListCheckInsResponse extends Parsable {
     /**
      * The checkIns property
      */
-    checkIns?: CheckIn[] | null;
+    checkIns?: CheckIn[];
+}
+export interface ListEventAttendeesResponse extends Parsable {
+    /**
+     * The attendees property
+     */
+    attendees?: Attendee[];
 }
 export interface ListEventsResponse extends Parsable {
     /**
      * The events property
      */
-    events?: EventSimple[] | null;
-}
-export interface ListUsersResponse extends Parsable {
-    /**
-     * The users property
-     */
-    users?: User[] | null;
+    events?: Event[];
 }
 export interface Member extends Parsable {
     /**
      * The alumniMember property
      */
-    alumniMember?: AlumniMember | null;
+    alumniMember?: AlumniMember;
     /**
      * The employeeMember property
      */
-    employeeMember?: EmployeeMember | null;
+    employeeMember?: EmployeeMember;
     /**
      * The memberId property
      */
-    memberId?: string | null;
+    memberId?: string;
     /**
      * The membership property
      */
-    membership?: Membership | null;
+    membership?: Membership;
 }
 export type Membership = (typeof MembershipObject)[keyof typeof MembershipObject];
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeAlumniMember(writer: SerializationWriter, alumniMember: Partial<AlumniMember> | undefined | null = {}) : void {
-    if (alumniMember) {
-        writer.writeNumberValue("graduationYear", alumniMember.graduationYear);
-    }
+export function serializeAlumniMember(writer: SerializationWriter, alumniMember: Partial<AlumniMember> | undefined = {}) : void {
+    writer.writeNumberValue("graduationYear", alumniMember.graduationYear);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeAny(writer: SerializationWriter, any: Partial<Any> | undefined | null = {}) : void {
-    if (any) {
-        writer.writeStringValue("@type", any.type);
-        writer.writeAdditionalData(any.additionalData);
-    }
+export function serializeAny(writer: SerializationWriter, any: Partial<Any> | undefined = {}) : void {
+    writer.writeStringValue("@type", any.type);
+    writer.writeAdditionalData(any.additionalData);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeArticle(writer: SerializationWriter, article: Partial<Article> | undefined | null = {}) : void {
-    if (article) {
-        writer.writeStringValue("ctaTitle", article.ctaTitle);
-        writer.writeStringValue("ctaUrl", article.ctaUrl);
-        writer.writeStringValue("description", article.description);
-        writer.writeStringValue("heroImageAlt", article.heroImageAlt);
-        writer.writeStringValue("heroImageUrl", article.heroImageUrl);
-        writer.writeStringValue("id", article.id);
-        writer.writeStringValue("title", article.title);
-    }
+export function serializeAttendee(writer: SerializationWriter, attendee: Partial<Attendee> | undefined = {}) : void {
+    writer.writeStringValue("admissionKey", attendee.admissionKey);
+    writer.writeStringValue("id", attendee.id);
+    writer.writeObjectValue<User>("user", attendee.user, serializeUser);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeAttendee(writer: SerializationWriter, attendee: Partial<Attendee> | undefined | null = {}) : void {
-    if (attendee) {
-        writer.writeStringValue("admissionKey", attendee.admissionKey);
-        writer.writeObjectValue<EventSimple>("event", attendee.event, serializeEventSimple);
-        writer.writeStringValue("id", attendee.id);
-        writer.writeObjectValue<User>("user", attendee.user, serializeUser);
-    }
+export function serializeCheckIn(writer: SerializationWriter, checkIn: Partial<CheckIn> | undefined = {}) : void {
+    writer.writeStringValue("checkInDateTime", checkIn.checkInDateTime);
+    writer.writeStringValue("checkOutDateTime", checkIn.checkOutDateTime);
+    writer.writeStringValue("id", checkIn.id);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeAttendeeSimple(writer: SerializationWriter, attendeeSimple: Partial<AttendeeSimple> | undefined | null = {}) : void {
-    if (attendeeSimple) {
-        writer.writeStringValue("admissionKey", attendeeSimple.admissionKey);
-        writer.writeStringValue("id", attendeeSimple.id);
-        writer.writeObjectValue<User>("user", attendeeSimple.user, serializeUser);
-    }
+export function serializeEmployee(writer: SerializationWriter, employee: Partial<Employee> | undefined = {}) : void {
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeBatchCreateUsersRequest(writer: SerializationWriter, batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined | null = {}) : void {
-    if (batchCreateUsersRequest) {
-        writer.writeCollectionOfObjectValues<CreateUserRequest>("requests", batchCreateUsersRequest.requests, serializeCreateUserRequest);
-    }
+export function serializeEmployeeMember(writer: SerializationWriter, employeeMember: Partial<EmployeeMember> | undefined = {}) : void {
+    writer.writeNumberValue("graduationYear", employeeMember.graduationYear);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeBatchCreateUsersResponse(writer: SerializationWriter, batchCreateUsersResponse: Partial<BatchCreateUsersResponse> | undefined | null = {}) : void {
-    if (batchCreateUsersResponse) {
-        writer.writeCollectionOfObjectValues<User>("users", batchCreateUsersResponse.users, serializeUser);
-    }
+export function serializeEmpty(writer: SerializationWriter, empty: Partial<Empty> | undefined = {}) : void {
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeCheckIn(writer: SerializationWriter, checkIn: Partial<CheckIn> | undefined | null = {}) : void {
-    if (checkIn) {
-        writer.writeStringValue("checkInDateTime", checkIn.checkInDateTime);
-        writer.writeStringValue("checkOutDateTime", checkIn.checkOutDateTime);
-        writer.writeObjectValue<GuestCheckIn>("guest", checkIn.guest, serializeGuestCheckIn);
-        writer.writeStringValue("id", checkIn.id);
-        writer.writeObjectValue<User>("user", checkIn.user, serializeUser);
-    }
+export function serializeEvent(writer: SerializationWriter, event: Partial<Event> | undefined = {}) : void {
+    writer.writeBooleanValue("active", event.active);
+    writer.writeStringValue("badgeImage", event.badgeImage);
+    writer.writeStringValue("description", event.description);
+    writer.writeStringValue("endDateTime", event.endDateTime);
+    writer.writeStringValue("id", event.id);
+    writer.writeStringValue("location", event.location);
+    writer.writeStringValue("name", event.name);
+    writer.writeStringValue("startDateTime", event.startDateTime);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeCheckInSimple(writer: SerializationWriter, checkInSimple: Partial<CheckInSimple> | undefined | null = {}) : void {
-    if (checkInSimple) {
-        writer.writeObjectValue<GuestCheckIn>("guest", checkInSimple.guest, serializeGuestCheckIn);
-        writer.writeStringValue("user", checkInSimple.user);
-    }
+export function serializeListCheckInsResponse(writer: SerializationWriter, listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : void {
+    writer.writeCollectionOfObjectValues<CheckIn>("checkIns", listCheckInsResponse.checkIns, serializeCheckIn);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeCreateCheckInRequest(writer: SerializationWriter, createCheckInRequest: Partial<CreateCheckInRequest> | undefined | null = {}) : void {
-    if (createCheckInRequest) {
-        writer.writeObjectValue<CheckInSimple>("checkIn", createCheckInRequest.checkIn, serializeCheckInSimple);
-    }
+export function serializeListEventAttendeesResponse(writer: SerializationWriter, listEventAttendeesResponse: Partial<ListEventAttendeesResponse> | undefined = {}) : void {
+    writer.writeCollectionOfObjectValues<Attendee>("attendees", listEventAttendeesResponse.attendees, serializeAttendee);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeCreateUserRequest(writer: SerializationWriter, createUserRequest: Partial<CreateUserRequest> | undefined | null = {}) : void {
-    if (createUserRequest) {
-        writer.writeObjectValue<User>("user", createUserRequest.user, serializeUser);
-    }
+export function serializeListEventsResponse(writer: SerializationWriter, listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : void {
+    writer.writeCollectionOfObjectValues<Event>("events", listEventsResponse.events, serializeEvent);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeEmployee(writer: SerializationWriter, employee: Partial<Employee> | undefined | null = {}) : void {
-    if (employee) {
-    }
+export function serializeMember(writer: SerializationWriter, member: Partial<Member> | undefined = {}) : void {
+    writer.writeObjectValue<AlumniMember>("alumniMember", member.alumniMember, serializeAlumniMember);
+    writer.writeObjectValue<EmployeeMember>("employeeMember", member.employeeMember, serializeEmployeeMember);
+    writer.writeStringValue("memberId", member.memberId);
+    writer.writeEnumValue<Membership>("membership", member.membership);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeEmployeeMember(writer: SerializationWriter, employeeMember: Partial<EmployeeMember> | undefined | null = {}) : void {
-    if (employeeMember) {
-        writer.writeNumberValue("graduationYear", employeeMember.graduationYear);
-    }
+export function serializeServiceAccount(writer: SerializationWriter, serviceAccount: Partial<ServiceAccount> | undefined = {}) : void {
+    writer.writeEnumValue<ServiceAccountType>("serviceAccountType", serviceAccount.serviceAccountType);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeEmpty(writer: SerializationWriter, empty: Partial<Empty> | undefined | null = {}) : void {
-    if (empty) {
-    }
+export function serializeStatus(writer: SerializationWriter, status: Partial<Status> | undefined = {}) : void {
+    writer.writeNumberValue("code", status.code);
+    writer.writeCollectionOfObjectValues<Any>("details", status.details, serializeAny);
+    writer.writeStringValue("message", status.messageEscaped);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeEvent(writer: SerializationWriter, event: Partial<Event> | undefined | null = {}) : void {
-    if (event) {
-        writer.writeBooleanValue("active", event.active);
-        writer.writeCollectionOfObjectValues<AttendeeSimple>("attendees", event.attendees, serializeAttendeeSimple);
-        writer.writeStringValue("badgeImage", event.badgeImage);
-        writer.writeStringValue("description", event.description);
-        writer.writeStringValue("endDateTime", event.endDateTime);
-        writer.writeStringValue("id", event.id);
-        writer.writeStringValue("location", event.location);
-        writer.writeStringValue("name", event.name);
-        writer.writeStringValue("startDateTime", event.startDateTime);
-    }
+export function serializeSystemAdmin(writer: SerializationWriter, systemAdmin: Partial<SystemAdmin> | undefined = {}) : void {
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeEventSimple(writer: SerializationWriter, eventSimple: Partial<EventSimple> | undefined | null = {}) : void {
-    if (eventSimple) {
-        writer.writeBooleanValue("active", eventSimple.active);
-        writer.writeStringValue("badgeImage", eventSimple.badgeImage);
-        writer.writeStringValue("description", eventSimple.description);
-        writer.writeStringValue("endDateTime", eventSimple.endDateTime);
-        writer.writeStringValue("id", eventSimple.id);
-        writer.writeStringValue("location", eventSimple.location);
-        writer.writeStringValue("name", eventSimple.name);
-        writer.writeStringValue("startDateTime", eventSimple.startDateTime);
-    }
+export function serializeUser(writer: SerializationWriter, user: Partial<User> | undefined = {}) : void {
+    writer.writeStringValue("email", user.email);
+    writer.writeObjectValue<Employee>("employee", user.employee, serializeEmployee);
+    writer.writeStringValue("firebaseId", user.firebaseId);
+    writer.writeStringValue("id", user.id);
+    writer.writeObjectValue<Member>("member", user.member, serializeMember);
+    writer.writeStringValue("name", user.name);
+    writer.writeObjectValue<ServiceAccount>("serviceAccount", user.serviceAccount, serializeServiceAccount);
+    writer.writeObjectValue<SystemAdmin>("systemAdmin", user.systemAdmin, serializeSystemAdmin);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeGuestCheckIn(writer: SerializationWriter, guestCheckIn: Partial<GuestCheckIn> | undefined | null = {}) : void {
-    if (guestCheckIn) {
-        writer.writeStringValue("name", guestCheckIn.name);
-        writer.writeStringValue("nric", guestCheckIn.nric);
-        writer.writeStringValue("phone", guestCheckIn.phone);
-        writer.writeStringValue("reason", guestCheckIn.reason);
-    }
+export function serializeVerifyUserRequest(writer: SerializationWriter, verifyUserRequest: Partial<VerifyUserRequest> | undefined = {}) : void {
+    writer.writeStringValue("email", verifyUserRequest.email);
 }
 /**
  * Serializes information the current object
  * @param writer Serialization writer to use to serialize this model
  */
-// @ts-ignore
-export function serializeListArticlesRequest(writer: SerializationWriter, listArticlesRequest: Partial<ListArticlesRequest> | undefined | null = {}) : void {
-    if (listArticlesRequest) {
-        writer.writeNumberValue("pageSize", listArticlesRequest.pageSize);
-        writer.writeStringValue("pageToken", listArticlesRequest.pageToken);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeListArticlesResponse(writer: SerializationWriter, listArticlesResponse: Partial<ListArticlesResponse> | undefined | null = {}) : void {
-    if (listArticlesResponse) {
-        writer.writeCollectionOfObjectValues<Article>("articles", listArticlesResponse.articles, serializeArticle);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeListCheckInsResponse(writer: SerializationWriter, listCheckInsResponse: Partial<ListCheckInsResponse> | undefined | null = {}) : void {
-    if (listCheckInsResponse) {
-        writer.writeCollectionOfObjectValues<CheckIn>("checkIns", listCheckInsResponse.checkIns, serializeCheckIn);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeListEventsResponse(writer: SerializationWriter, listEventsResponse: Partial<ListEventsResponse> | undefined | null = {}) : void {
-    if (listEventsResponse) {
-        writer.writeCollectionOfObjectValues<EventSimple>("events", listEventsResponse.events, serializeEventSimple);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeListUsersResponse(writer: SerializationWriter, listUsersResponse: Partial<ListUsersResponse> | undefined | null = {}) : void {
-    if (listUsersResponse) {
-        writer.writeCollectionOfObjectValues<User>("users", listUsersResponse.users, serializeUser);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeMember(writer: SerializationWriter, member: Partial<Member> | undefined | null = {}) : void {
-    if (member) {
-        writer.writeObjectValue<AlumniMember>("alumniMember", member.alumniMember, serializeAlumniMember);
-        writer.writeObjectValue<EmployeeMember>("employeeMember", member.employeeMember, serializeEmployeeMember);
-        writer.writeStringValue("memberId", member.memberId);
-        writer.writeEnumValue<Membership>("membership", member.membership);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeServiceAccount(writer: SerializationWriter, serviceAccount: Partial<ServiceAccount> | undefined | null = {}) : void {
-    if (serviceAccount) {
-        writer.writeEnumValue<ServiceAccountType>("serviceAccountType", serviceAccount.serviceAccountType);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeStatus(writer: SerializationWriter, status: Partial<Status> | undefined | null = {}) : void {
-    if (status) {
-        writer.writeNumberValue("code", status.code);
-        writer.writeCollectionOfObjectValues<Any>("details", status.details, serializeAny);
-        writer.writeStringValue("message", status.messageEscaped);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeSystemAdmin(writer: SerializationWriter, systemAdmin: Partial<SystemAdmin> | undefined | null = {}) : void {
-    if (systemAdmin) {
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateEventRequest(writer: SerializationWriter, updateEventRequest: Partial<UpdateEventRequest> | undefined | null = {}) : void {
-    if (updateEventRequest) {
-        writer.writeObjectValue<EventSimple>("event", updateEventRequest.event, serializeEventSimple);
-        writer.writeStringValue("id", updateEventRequest.id);
-        writer.writeStringValue("updateMask", updateEventRequest.updateMask);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateUserRequest(writer: SerializationWriter, updateUserRequest: Partial<UpdateUserRequest> | undefined | null = {}) : void {
-    if (updateUserRequest) {
-        writer.writeStringValue("id", updateUserRequest.id);
-        writer.writeStringValue("updateMask", updateUserRequest.updateMask);
-        writer.writeObjectValue<User>("user", updateUserRequest.user, serializeUser);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUser(writer: SerializationWriter, user: Partial<User> | undefined | null = {}) : void {
-    if (user) {
-        writer.writeStringValue("email", user.email);
-        writer.writeObjectValue<Employee>("employee", user.employee, serializeEmployee);
-        writer.writeStringValue("firebaseId", user.firebaseId);
-        writer.writeStringValue("id", user.id);
-        writer.writeObjectValue<Member>("member", user.member, serializeMember);
-        writer.writeStringValue("name", user.name);
-        writer.writeObjectValue<ServiceAccount>("serviceAccount", user.serviceAccount, serializeServiceAccount);
-        writer.writeObjectValue<SystemAdmin>("systemAdmin", user.systemAdmin, serializeSystemAdmin);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeVerifyUserRequest(writer: SerializationWriter, verifyUserRequest: Partial<VerifyUserRequest> | undefined | null = {}) : void {
-    if (verifyUserRequest) {
-        writer.writeStringValue("email", verifyUserRequest.email);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeVerifyUserResponse(writer: SerializationWriter, verifyUserResponse: Partial<VerifyUserResponse> | undefined | null = {}) : void {
-    if (verifyUserResponse) {
-        writer.writeStringValue("id", verifyUserResponse.id);
-        writer.writeBooleanValue("linked", verifyUserResponse.linked);
-    }
+export function serializeVerifyUserResponse(writer: SerializationWriter, verifyUserResponse: Partial<VerifyUserResponse> | undefined = {}) : void {
+    writer.writeStringValue("id", verifyUserResponse.id);
+    writer.writeBooleanValue("linked", verifyUserResponse.linked);
 }
 export interface ServiceAccount extends Parsable {
     /**
      * The serviceAccountType property
      */
-    serviceAccountType?: ServiceAccountType | null;
+    serviceAccountType?: ServiceAccountType;
 }
 export type ServiceAccountType = (typeof ServiceAccountTypeObject)[keyof typeof ServiceAccountTypeObject];
 export interface Status extends ApiError, Parsable {
     /**
      * The code property
      */
-    code?: number | null;
+    code?: number;
     /**
      * The details property
      */
-    details?: Any[] | null;
+    details?: Any[];
     /**
      * The message property
      */
-    messageEscaped?: string | null;
+    messageEscaped?: string;
 }
 export interface SystemAdmin extends Parsable {
-}
-export interface UpdateEventRequest extends Parsable {
-    /**
-     * The event property
-     */
-    event?: EventSimple | null;
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The updateMask property
-     */
-    updateMask?: string | null;
-}
-export interface UpdateUserRequest extends Parsable {
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The updateMask property
-     */
-    updateMask?: string | null;
-    /**
-     * The user property
-     */
-    user?: User | null;
 }
 export interface User extends Parsable {
     /**
      * The email property
      */
-    email?: string | null;
+    email?: string;
     /**
      * The employee property
      */
-    employee?: Employee | null;
+    employee?: Employee;
     /**
      * The firebaseId property
      */
-    firebaseId?: string | null;
+    firebaseId?: string;
     /**
      * The id property
      */
-    id?: string | null;
+    id?: string;
     /**
      * The member property
      */
-    member?: Member | null;
+    member?: Member;
     /**
      * The name property
      */
-    name?: string | null;
+    name?: string;
     /**
      * The serviceAccount property
      */
-    serviceAccount?: ServiceAccount | null;
+    serviceAccount?: ServiceAccount;
     /**
      * The systemAdmin property
      */
-    systemAdmin?: SystemAdmin | null;
+    systemAdmin?: SystemAdmin;
 }
 export interface VerifyUserRequest extends Parsable {
     /**
      * The email property
      */
-    email?: string | null;
+    email?: string;
 }
 export interface VerifyUserResponse extends Parsable {
     /**
      * The id property
      */
-    id?: string | null;
+    id?: string;
     /**
      * The linked property
      */
-    linked?: boolean | null;
+    linked?: boolean;
 }
 export const MembershipObject = {
     Exco: "Exco",

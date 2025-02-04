@@ -15,8 +15,10 @@ public class AdminRequirementSystemAdminHandler(AppDbContext dbContext) : Author
         AdminRequirement requirement
     )
     {
-        var userId = context.User.Claims.GetNameIdentifierGuid();
-        var sa = await dbContext.SystemAdmins.FindAsync(userId);
+        var sa = await dbContext.SystemAdmins
+            .WhereUserMatchesEmailFromClaims(context.User.Claims)
+            .SingleOrDefaultAsync();
+        
         if (sa is not null)
         {
             context.Succeed(requirement);

@@ -1,15 +1,14 @@
 {
-  "descriptionHash": "0E45582CEA4076595970596109F72F2014A7B5E724F742144F32ED9B9DA1C9D34DAC2DE54068D8EA3C1058EC3EDF57F89537A59886360146A5EAAC5CD5F83B59",
+  "descriptionHash": "B70D8B739C66D6CC8BDF29DD2793CBAFEC96B56AA3CAD9441CEE7C3F455933E989F722494DAB6FC7CBD13FB803A6C5D74FD0C9B3BB3D2E60DDE010B134E77B6F",
   "descriptionLocation": "https://localhost:7042/swagger/v1/swagger.json",
   "lockFileVersion": "1.0.0",
-  "kiotaVersion": "1.18.0",
+  "kiotaVersion": "1.13.0",
   "clientClassName": "ApiClient",
   "clientNamespaceName": "ApiSdk",
   "language": "TypeScript",
   "usesBackingStore": false,
   "excludeBackwardCompatible": false,
   "includeAdditionalData": true,
-  "disableSSLValidation": false,
   "serializers": [
     "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
     "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",

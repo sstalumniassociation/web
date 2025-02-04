@@ -23,8 +23,6 @@ public static partial class UserMapper
     private static partial Protos.User.V1.ServiceAccount ToGrpcServiceAccountBase(this ServiceAccount user);
     private static partial Protos.User.V1.SystemAdmin ToGrpcSystemAdminBase(this SystemAdmin user);
 
-    public static partial IEnumerable<Protos.User.V1.User> ToGrpc(this IEnumerable<User> user);
-
     [MapEnum(EnumMappingStrategy.ByName)]
     private static partial Protos.User.V1.ServiceAccountType
         ToGrpc(this ServiceAccountType serviceAccountType);

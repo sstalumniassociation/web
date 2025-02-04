@@ -92,13 +92,16 @@ public partial class AppDbContext : DbContext
     /// Membership subscriptions
     /// </summary>
     public DbSet<MembershipSubscription> MembershipSubscriptions { get; set; }
-
+    
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().UseTptMappingStrategy();
         modelBuilder.Entity<CheckIn>().UseTptMappingStrategy();
         // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
+
+        modelBuilder.HasPostgresEnum<ServiceAccountType>();
+        modelBuilder.HasPostgresEnum<PaymentIntentState>();
 
         modelBuilder.Entity<MembershipPlan>()
             .HasData(
@@ -107,7 +110,7 @@ public partial class AppDbContext : DbContext
                 DefaultMembershipPlans.Affiliate,
                 DefaultMembershipPlans.Ordinary
             );
-
+        
         modelBuilder
             .Entity<ServiceAccount>()
             .Property(u => u.ServiceAccountType)

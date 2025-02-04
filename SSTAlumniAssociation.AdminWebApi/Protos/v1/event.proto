@@ -7,7 +7,7 @@ import "Protos/google/api/annotations.proto";
 
 import "Protos/v1/user.proto";
 
-package protos.events.v1;
+package protos.event.v1;
 
 message Event {
   string id = 1;
@@ -20,7 +20,7 @@ message Event {
   google.protobuf.Timestamp end_date_time = 8;
 }
 
-message AttendeeSimple {
+message Attendee {
   string id = 1;
   string admission_key = 2;
   protos.user.v1.User user = 3;
@@ -100,7 +100,7 @@ message ListEventAttendeesRequest {
 }
 
 message ListEventAttendeesResponse {
-  repeated AttendeeSimple attendees = 1;
+  repeated Attendee attendees = 1;
 }
 
 message GetAdmissionRequest {

@@ -31,14 +31,15 @@ public class AuthService(AppDbContext dbContext) : Auth.AuthBase
     /// <inheritdoc />
     public override async Task<Protos.User.V1.User> WhoAmI(WhoAmIRequest request, ServerCallContext context)
     {
-        var id = context.GetHttpContext().User.Claims.GetNameIdentifierGuid();
+        var user = await dbContext.Users
+            .WhereUserMatchesEmailFromClaims(context.GetHttpContext().User.Claims)
+            .SingleOrDefaultAsync();
 
-        var user = await dbContext.Users.FindAsync(id);
         if (user is null)
         {
             throw new RpcException(new Status(StatusCode.NotFound, "User does not exist."));
         }
-        
+
         return user.ToGrpc();
     }
 }

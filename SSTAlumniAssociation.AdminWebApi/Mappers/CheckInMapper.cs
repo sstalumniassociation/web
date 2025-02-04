@@ -13,9 +13,9 @@ public static partial class CheckInMapper
     [MapDerivedType<GuestCheckIn, Protos.CheckIn.V1.CheckIn>]
     [MapDerivedType<UserCheckIn, Protos.CheckIn.V1.CheckIn>]
     public static partial Protos.CheckIn.V1.CheckIn ToGrpc(this CheckIn checkIn);
-
+    
     public static partial Protos.CheckIn.V1.CheckIn ToGrpcBase(this CheckIn checkIn);
-
+    
     // TODO : rename methods
     public static partial Protos.CheckIn.V1.GuestCheckIn ToGrpcBaseGuest(this GuestCheckIn checkIn);
 
@@ -31,14 +31,6 @@ public static partial class CheckInMapper
     #endregion
 
     #region Entity mappings
-    
-    [MapNestedProperties(nameof(Protos.CheckIn.V1.CheckInSimple.Guest))]
-    public static partial GuestCheckIn ToGuestCheckIn(this Protos.CheckIn.V1.CheckInSimple checkIn);
-
-    
-    [MapperIgnoreSource(nameof(Protos.CheckIn.V1.CheckIn.User))]
-    [MapProperty(nameof(Protos.CheckIn.V1.CheckInSimple.User), nameof(UserCheckIn.UserId))]
-    public static partial UserCheckIn ToUserCheckIn(this Protos.CheckIn.V1.CheckInSimple checkIn);
 
     [ObjectFactory]
     private static GuestCheckIn CreateGuestCheckIn()

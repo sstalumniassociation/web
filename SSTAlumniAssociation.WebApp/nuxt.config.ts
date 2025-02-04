@@ -4,17 +4,17 @@ import { logger } from '@nuxt/kit'
 
 const ADMIN_API_INFO = {
   name: 'admin',
-  url: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+  url: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || 'https://localhost:7042',
 }
 
 const MEMBER_API_INFO = {
   name: 'member',
-  url: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+  url: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || 'https://localhost:7066',
 }
 
 const SERVICE_ACCOUNT_API_INFO = {
   name: 'service-account',
-  url: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || process.env.NUXT_PUBLIC_API_URL,
+  url: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || 'https://localhost:7070',
 }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config

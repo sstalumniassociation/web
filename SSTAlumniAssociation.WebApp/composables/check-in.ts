@@ -8,7 +8,7 @@ export function useCheckInsWithAppScope() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.checkIns,
-    queryFn: () => $memberApiClient.v1.checkIn.get({ queryParameters: { scope: 'app' } }),
+    queryFn: () => $memberApiClient.v1.checkIns.get({ queryParameters: { scope: 'app' } }),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
@@ -17,14 +17,14 @@ export function useCheckInsWithAdminScope() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.checkIns,
-    queryFn: () => $memberApiClient.v1.checkIn.get({ queryParameters: { scope: 'admin' } }),
+    queryFn: () => $memberApiClient.v1.checkIns.get({ queryParameters: { scope: 'admin' } }),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
 export function useCreateCheckInMutation() {
   return useMutation({
-    mutationFn: $memberApiClient.v1.checkIn.post,
+    mutationFn: $memberApiClient.v1.checkIns.post,
   })
 }
 

@@ -1,12 +1,16 @@
-using Calzolari.Grpc.AspNetCore.Validation;
+using FastEndpoints;
+using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Npgsql;
+using NSwag;
+using Scalar.AspNetCore;
 using SSTAlumniAssociation.AdminWebApi.Authorization;
 using SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,24 +19,31 @@ builder.AddServiceDefaults();
 
 #region Database
 
-builder.Services.AddNpgsql<AppDbContext>(
-    builder.Configuration.GetConnectionString("Postgres"),
-    optionsAction: options =>
-    {
-        if (!builder.Environment.IsDevelopment()) return;
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Postgres"));
+dataSourceBuilder.MapEnum<ServiceAccountType>();
+dataSourceBuilder.MapEnum<PaymentIntentState>();
+var dataSource = dataSourceBuilder.Build();
 
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
-    },
-    npgsqlOptionsAction: options => { options.MigrationsAssembly("SSTAlumniAssociation.Migrations"); }
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        }
+
+        options.UseNpgsql(dataSource,
+            npgsqlOptions => { npgsqlOptions.MigrationsAssembly("SSTAlumniAssociation.Migrations"); });
+    }
 );
 
 #endregion
 
 #region Services
 
-builder.Services.AddSingleton<IAuthorizationHandler, AdminRequirementExcoHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminRequirementSystemAdminHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, AdminRequirementExcoHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, AdminRequirementSystemAdminHandler>();
 
 #endregion
 
@@ -59,10 +70,10 @@ builder.Services.AddAuthorizationBuilder()
 
 #endregion
 
-#region gRPC
+#region FastEndpoints
 
-builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
-builder.Services.AddGrpcValidation();
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument();
 
 #endregion
 
@@ -86,60 +97,43 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
+builder.Services.SwaggerDocument(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association Admin API", Version = "v1" });
-
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    options.DocumentSettings = s =>
     {
-        In = ParameterLocation.Header,
-        Description = "Firebase ID Token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = JwtBearerDefaults.AuthenticationScheme
-    });
+        s.Title = "SST Alumni Association Admin API";
+        s.Version = "v1";
 
-    options.AddSecurityRequirement(
-        new OpenApiSecurityRequirement
+        s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
         {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                []
-            }
-        }
-    );
-
-    var filePath = Path.Combine(AppContext.BaseDirectory, "SSTAlumniAssociation.AdminWebApi.xml");
-    options.IncludeXmlComments(filePath);
-    options.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
+            In = OpenApiSecurityApiKeyLocation.Header,
+            Description = "Firebase ID Token",
+            Name = "Authorization",
+            Type = OpenApiSecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = JwtBearerDefaults.AuthenticationScheme
+        });
+    };
 });
 
 var app = builder.Build();
+
+app.UseFastEndpoints(options => { options.Versioning.Prefix = "v"; })
+    .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
 
 if (app.Environment.IsDevelopment())
 {
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
+
+    app.MapScalarApiReference();
 }
 
 app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
-// Require authorization by default and opt-out for anonymous routes
 
 app.UseHttpsRedirection();
 

@@ -12,6 +12,8 @@ public static partial class EventMapper
 
     public static partial Protos.Event.V1.Event ToGrpc(this Event @event);
     public static partial IEnumerable<Protos.Event.V1.Event> ToGrpc(this IQueryable<Event> @event);
+    
+    public static partial Protos.Event.V1.Attendee ToGrpc(this Attendee attendee);
 
     #endregion
 }
