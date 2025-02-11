@@ -17,6 +17,7 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext) : Authorization
     {
         var sa = await dbContext.Members
             .Include(u => u.Subscriptions)
+            .ThenInclude(s => s.MembershipPlan)
             .WhereUserMatchesEmailFromClaims(context.User.Claims)
             .Where(m => m.ActiveSubscription != null &&
                         m.ActiveSubscription.MembershipPlan.Id == DefaultMembershipPlans.Exco.Id

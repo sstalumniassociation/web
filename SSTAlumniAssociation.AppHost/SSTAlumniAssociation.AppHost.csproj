@@ -19,8 +19,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SSTAlumniAssociation.AdminWebApi\SSTAlumniAssociation.AdminWebApi.csproj"/>
-        <ProjectReference Include="..\SSTAlumniAssociation.MemberWebApi\SSTAlumniAssociation.MemberWebApi.csproj"/>
-        <ProjectReference Include="..\SSTAlumniAssociation.ServiceAccountWebApi\SSTAlumniAssociation.ServiceAccountWebApi.csproj"/>
+<!--        <ProjectReference Include="..\SSTAlumniAssociation.MemberWebApi\SSTAlumniAssociation.MemberWebApi.csproj"/>-->
+<!--        <ProjectReference Include="..\SSTAlumniAssociation.ServiceAccountWebApi\SSTAlumniAssociation.ServiceAccountWebApi.csproj"/>-->
     </ItemGroup>
 
 </Project>

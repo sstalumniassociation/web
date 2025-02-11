@@ -19,13 +19,8 @@ builder.AddServiceDefaults();
 
 #region Database
 
-var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Postgres"));
-dataSourceBuilder.MapEnum<ServiceAccountType>();
-dataSourceBuilder.MapEnum<PaymentIntentState>();
-var dataSource = dataSourceBuilder.Build();
-
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
+    configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
         {
@@ -33,10 +28,12 @@ builder.Services.AddDbContext<AppDbContext>(
             options.EnableDetailedErrors();
         }
 
-        options.UseNpgsql(dataSource,
-            npgsqlOptions => { npgsqlOptions.MigrationsAssembly("SSTAlumniAssociation.Migrations"); });
-    }
-);
+        options.UseNpgsql(o =>
+            o.MigrationsAssembly("SSTAlumniAssociation.Migrations")
+                .MapEnum<ServiceAccountType>()
+                .MapEnum<PaymentIntentState>()
+        );
+    });
 
 #endregion
 
@@ -73,7 +70,24 @@ builder.Services.AddAuthorizationBuilder()
 #region FastEndpoints
 
 builder.Services.AddFastEndpoints()
-    .SwaggerDocument();
+    .SwaggerDocument(options =>
+    {
+        options.DocumentSettings = s =>
+        {
+            s.Title = "SST Alumni Association Admin API";
+            s.Version = "v1";
+
+            s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
+            {
+                In = OpenApiSecurityApiKeyLocation.Header,
+                Description = "Firebase ID Token",
+                Name = "Authorization",
+                Type = OpenApiSecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = JwtBearerDefaults.AuthenticationScheme
+            });
+        };
+    });
 
 #endregion
 
@@ -94,27 +108,7 @@ builder.Services.AddCors(options =>
 
 #endregion
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.SwaggerDocument(options =>
-{
-    options.DocumentSettings = s =>
-    {
-        s.Title = "SST Alumni Association Admin API";
-        s.Version = "v1";
-
-        s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
-        {
-            In = OpenApiSecurityApiKeyLocation.Header,
-            Description = "Firebase ID Token",
-            Name = "Authorization",
-            Type = OpenApiSecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = JwtBearerDefaults.AuthenticationScheme
-        });
-    };
-});
 
 var app = builder.Build();
 
