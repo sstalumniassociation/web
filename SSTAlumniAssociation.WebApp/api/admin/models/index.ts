@@ -4,886 +4,984 @@
 // @ts-ignore
 import { type AdditionalDataHolder, type ApiError, type Parsable, type ParseNode, type SerializationWriter } from '@microsoft/kiota-abstractions';
 
-export interface AlumniMember extends Parsable {
-    /**
-     * If a member is an associate and have never graduated from SST, this field will be empty.
-     */
-    graduationYear?: number;
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FastEndpointsErrorResponse_errors}
+ */
+// @ts-ignore
+export function createFastEndpointsErrorResponse_errorsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFastEndpointsErrorResponse_errors;
 }
-export interface Any extends AdditionalDataHolder, Parsable {
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FastEndpointsErrorResponse}
+ */
+// @ts-ignore
+export function createFastEndpointsErrorResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFastEndpointsErrorResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventEventResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventEventResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventEventResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    if(!parseNode) throw new Error("parseNode cannot be undefined");
+    const mappingValueNode = parseNode?.getChildNode("$type");
+    if (mappingValueNode) {
+        const mappingValue = mappingValueNode.getStringValue();
+        if (mappingValue) {
+            switch (mappingValue) {
+                case "AlumniMember":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest;
+                case "Employee":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest;
+                case "EmployeeMember":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest;
+                case "ServiceAccount":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest;
+                case "SystemAdmin":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest;
+                case "_member":
+                    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest;
+            }
+        }
+    }
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationAdminWebApiEndpointsUserUserResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserUserResponse;
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFastEndpointsErrorResponse(fastEndpointsErrorResponse: Partial<FastEndpointsErrorResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "errors": n => { fastEndpointsErrorResponse.errors = n.getObjectValue<FastEndpointsErrorResponse_errors>(createFastEndpointsErrorResponse_errorsFromDiscriminatorValue); },
+        "message": n => { fastEndpointsErrorResponse.messageEscaped = n.getStringValue() ?? "One or more errors occurred!"; },
+        "statusCode": n => { fastEndpointsErrorResponse.statusCode = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFastEndpointsErrorResponse_errors(fastEndpointsErrorResponse_errors: Partial<FastEndpointsErrorResponse_errors> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse(sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "ctaTitle": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.ctaTitle = n.getStringValue(); },
+        "ctaUrl": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.ctaUrl = n.getStringValue(); },
+        "description": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.description = n.getStringValue(); },
+        "heroImageAlt": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.heroImageAlt = n.getStringValue(); },
+        "heroImageUrl": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.heroImageUrl = n.getStringValue(); },
+        "id": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.id = n.getStringValue(); },
+        "title": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.title = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest(sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "ctaTitle": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.ctaTitle = n.getStringValue(); },
+        "ctaUrl": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.ctaUrl = n.getStringValue(); },
+        "description": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.description = n.getStringValue(); },
+        "heroImageAlt": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.heroImageAlt = n.getStringValue(); },
+        "heroImageUrl": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.heroImageUrl = n.getStringValue(); },
+        "title": n => { sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.title = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse(sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "checkInDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.checkInDateTime = n.getDateValue(); },
+        "checkOutDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.checkOutDateTime = n.getDateValue(); },
+        "id": n => { sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.id = n.getStringValue(); },
+        "serviceAccountId": n => { sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.serviceAccountId = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse(sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "admissionKey": n => { sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.admissionKey = n.getStringValue(); },
+        "id": n => { sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.id = n.getStringValue(); },
+        "user": n => { sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.user = n.getObjectValue<SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse>(createSSTAlumniAssociationAdminWebApiEndpointsUserUserResponseFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest(sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "userIds": n => { sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest.userIds = n.getCollectionOfPrimitiveValues<string>(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest(sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "userId": n => { sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest.userId = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest(sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "active": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.active = n.getBooleanValue(); },
+        "badgeImage": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.badgeImage = n.getStringValue(); },
+        "description": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.description = n.getStringValue(); },
+        "endDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.endDateTime = n.getDateValue(); },
+        "location": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.location = n.getStringValue(); },
+        "name": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.name = n.getStringValue(); },
+        "startDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.startDateTime = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventEventResponse(sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventEventResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "active": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.active = n.getBooleanValue(); },
+        "badgeImage": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.badgeImage = n.getStringValue(); },
+        "description": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.description = n.getStringValue(); },
+        "endDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.endDateTime = n.getDateValue(); },
+        "id": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.id = n.getStringValue(); },
+        "location": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.location = n.getStringValue(); },
+        "name": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.name = n.getStringValue(); },
+        "startDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.startDateTime = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest(sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "active": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.active = n.getBooleanValue(); },
+        "badgeImage": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.badgeImage = n.getStringValue(); },
+        "description": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.description = n.getStringValue(); },
+        "endDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.endDateTime = n.getDateValue(); },
+        "location": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.location = n.getStringValue(); },
+        "name": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.name = n.getStringValue(); },
+        "startDateTime": n => { sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.startDateTime = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest),
+        "graduationYear": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest.graduationYear = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest),
+        "graduationYear": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest.graduationYear = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest),
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest),
+        "memberId": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest.memberId = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest),
+        "serviceAccountType": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest.serviceAccountType = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        ...deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest),
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "email": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.email = n.getStringValue(); },
+        "firebaseId": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.firebaseId = n.getStringValue(); },
+        "name": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.name = n.getStringValue(); },
+        "$type": n => { sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.type = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSSTAlumniAssociationAdminWebApiEndpointsUserUserResponse(sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "email": n => { sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.email = n.getStringValue(); },
+        "firebaseId": n => { sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.firebaseId = n.getStringValue(); },
+        "id": n => { sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.id = n.getStringValue(); },
+        "name": n => { sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.name = n.getStringValue(); },
+        "revoked": n => { sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.revoked = n.getBooleanValue(); },
+    }
+}
+export interface FastEndpointsErrorResponse extends ApiError, Parsable {
+    /**
+     * The errors property
+     */
+    errors?: FastEndpointsErrorResponse_errors | null;
+    /**
+     * The message property
+     */
+    messageEscaped?: string | null;
+    /**
+     * The statusCode property
+     */
+    statusCode?: number | null;
+}
+export interface FastEndpointsErrorResponse_errors extends AdditionalDataHolder, Parsable {
+    /**
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
+     */
+    additionalData?: Record<string, unknown>;
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFastEndpointsErrorResponse(writer: SerializationWriter, fastEndpointsErrorResponse: Partial<FastEndpointsErrorResponse> | undefined | null = {}) : void {
+    if (fastEndpointsErrorResponse) {
+        writer.writeObjectValue<FastEndpointsErrorResponse_errors>("errors", fastEndpointsErrorResponse.errors, serializeFastEndpointsErrorResponse_errors);
+        writer.writeStringValue("message", fastEndpointsErrorResponse.messageEscaped ?? "One or more errors occurred!");
+        writer.writeNumberValue("statusCode", fastEndpointsErrorResponse.statusCode);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFastEndpointsErrorResponse_errors(writer: SerializationWriter, fastEndpointsErrorResponse_errors: Partial<FastEndpointsErrorResponse_errors> | undefined | null = {}) : void {
+    if (fastEndpointsErrorResponse_errors) {
+        writer.writeAdditionalData(fastEndpointsErrorResponse_errors.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse) {
+        writer.writeStringValue("ctaTitle", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.ctaTitle);
+        writer.writeStringValue("ctaUrl", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.ctaUrl);
+        writer.writeStringValue("description", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.description);
+        writer.writeStringValue("heroImageAlt", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.heroImageAlt);
+        writer.writeStringValue("heroImageUrl", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.heroImageUrl);
+        writer.writeStringValue("id", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.id);
+        writer.writeStringValue("title", sSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse.title);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest) {
+        writer.writeStringValue("ctaTitle", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.ctaTitle);
+        writer.writeStringValue("ctaUrl", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.ctaUrl);
+        writer.writeStringValue("description", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.description);
+        writer.writeStringValue("heroImageAlt", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.heroImageAlt);
+        writer.writeStringValue("heroImageUrl", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.heroImageUrl);
+        writer.writeStringValue("title", sSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest.title);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse) {
+        writer.writeDateValue("checkInDateTime", sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.checkInDateTime);
+        writer.writeDateValue("checkOutDateTime", sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.checkOutDateTime);
+        writer.writeStringValue("id", sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.id);
+        writer.writeStringValue("serviceAccountId", sSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse.serviceAccountId);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse) {
+        writer.writeStringValue("admissionKey", sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.admissionKey);
+        writer.writeStringValue("id", sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.id);
+        writer.writeObjectValue<SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse>("user", sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse.user, serializeSSTAlumniAssociationAdminWebApiEndpointsUserUserResponse);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest) {
+        writer.writeCollectionOfPrimitiveValues<string>("userIds", sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest.userIds);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest) {
+        writer.writeStringValue("userId", sSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest.userId);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest) {
+        writer.writeBooleanValue("active", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.active);
+        writer.writeStringValue("badgeImage", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.badgeImage);
+        writer.writeStringValue("description", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.description);
+        writer.writeDateValue("endDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.endDateTime);
+        writer.writeStringValue("location", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.location);
+        writer.writeStringValue("name", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.name);
+        writer.writeDateValue("startDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest.startDateTime);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventEventResponse(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventEventResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse) {
+        writer.writeBooleanValue("active", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.active);
+        writer.writeStringValue("badgeImage", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.badgeImage);
+        writer.writeStringValue("description", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.description);
+        writer.writeDateValue("endDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.endDateTime);
+        writer.writeStringValue("id", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.id);
+        writer.writeStringValue("location", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.location);
+        writer.writeStringValue("name", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.name);
+        writer.writeDateValue("startDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventEventResponse.startDateTime);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest) {
+        writer.writeBooleanValue("active", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.active);
+        writer.writeStringValue("badgeImage", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.badgeImage);
+        writer.writeStringValue("description", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.description);
+        writer.writeDateValue("endDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.endDateTime);
+        writer.writeStringValue("location", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.location);
+        writer.writeStringValue("name", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.name);
+        writer.writeDateValue("startDateTime", sSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest.startDateTime);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest)
+        writer.writeNumberValue("graduationYear", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest.graduationYear);
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest)
+        writer.writeNumberValue("graduationYear", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest.graduationYear);
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest)
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest)
+        writer.writeStringValue("memberId", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest.memberId);
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest)
+        writer.writeNumberValue("serviceAccountType", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest.serviceAccountType);
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest) {
+        serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(writer, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest)
+        writer.writeAdditionalData(sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest.additionalData);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest) {
+        writer.writeStringValue("email", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.email);
+        writer.writeStringValue("firebaseId", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.firebaseId);
+        writer.writeStringValue("name", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.name);
+        writer.writeStringValue("$type", sSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest.type);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserUserResponse(writer: SerializationWriter, sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse: Partial<SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse) {
+        writer.writeStringValue("email", sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.email);
+        writer.writeStringValue("firebaseId", sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.firebaseId);
+        writer.writeStringValue("id", sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.id);
+        writer.writeStringValue("name", sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.name);
+        writer.writeBooleanValue("revoked", sSTAlumniAssociationAdminWebApiEndpointsUserUserResponse.revoked);
+    }
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsArticleArticleResponse extends Parsable {
+    /**
+     * The ctaTitle property
+     */
+    ctaTitle?: string | null;
+    /**
+     * The ctaUrl property
+     */
+    ctaUrl?: string | null;
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The heroImageAlt property
+     */
+    heroImageAlt?: string | null;
+    /**
+     * The heroImageUrl property
+     */
+    heroImageUrl?: string | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsArticleCreateCreateArticleRequest extends Parsable {
+    /**
+     * The ctaTitle property
+     */
+    ctaTitle?: string | null;
+    /**
+     * The ctaUrl property
+     */
+    ctaUrl?: string | null;
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The heroImageAlt property
+     */
+    heroImageAlt?: string | null;
+    /**
+     * The heroImageUrl property
+     */
+    heroImageUrl?: string | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsCheckInCheckInResponse extends Parsable {
+    /**
+     * The checkInDateTime property
+     */
+    checkInDateTime?: Date | null;
+    /**
+     * The checkOutDateTime property
+     */
+    checkOutDateTime?: Date | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+    /**
+     * The serviceAccountId property
+     */
+    serviceAccountId?: string | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeAttendeeResponse extends Parsable {
+    /**
+     * The admissionKey property
+     */
+    admissionKey?: string | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+    /**
+     * The user property
+     */
+    user?: SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeBatchCreateBatchCreateEventAttendeeRequest extends Parsable {
+    /**
+     * The userIds property
+     */
+    userIds?: string[] | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventAttendeeCreateCreateEventAttendeeRequest extends Parsable {
+    /**
+     * The userId property
+     */
+    userId?: string | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventCreateCreateEventRequest extends Parsable {
+    /**
+     * The active property
+     */
+    active?: boolean | null;
+    /**
+     * The badgeImage property
+     */
+    badgeImage?: string | null;
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The endDateTime property
+     */
+    endDateTime?: Date | null;
+    /**
+     * The location property
+     */
+    location?: string | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * The startDateTime property
+     */
+    startDateTime?: Date | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventEventResponse extends Parsable {
+    /**
+     * The active property
+     */
+    active?: boolean | null;
+    /**
+     * The badgeImage property
+     */
+    badgeImage?: string | null;
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The endDateTime property
+     */
+    endDateTime?: Date | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+    /**
+     * The location property
+     */
+    location?: string | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * The startDateTime property
+     */
+    startDateTime?: Date | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsEventUpdateUpdateEventRequest extends Parsable {
+    /**
+     * The active property
+     */
+    active?: boolean | null;
+    /**
+     * The badgeImage property
+     */
+    badgeImage?: string | null;
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The endDateTime property
+     */
+    endDateTime?: Date | null;
+    /**
+     * The location property
+     */
+    location?: string | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * The startDateTime property
+     */
+    startDateTime?: Date | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateAlumniMemberRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest {
     /**
      * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
     additionalData?: Record<string, unknown>;
     /**
-     * The Type property
+     * The graduationYear property
      */
-    type?: string;
+    graduationYear?: number | null;
 }
-export interface Attendee extends Parsable {
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeMemberRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest {
     /**
-     * The admissionKey property
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
-    admissionKey?: string;
+    additionalData?: Record<string, unknown>;
     /**
-     * The id property
+     * The graduationYear property
      */
-    id?: string;
+    graduationYear?: number | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateEmployeeRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest {
     /**
-     * The user property
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
-    user?: User;
+    additionalData?: Record<string, unknown>;
 }
-export interface BatchCreateUsersRequest extends Parsable {
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateMemberRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest {
     /**
-     * The requests property
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
-    requests?: CreateUserRequest[];
-}
-export interface BatchCreateUsersResponse extends Parsable {
-    /**
-     * The users property
-     */
-    users?: User[];
-}
-export interface CheckIn extends Parsable {
-    /**
-     * The checkInDateTime property
-     */
-    checkInDateTime?: string;
-    /**
-     * The checkOutDateTime property
-     */
-    checkOutDateTime?: string;
-    /**
-     * The guest property
-     */
-    guest?: GuestCheckIn;
-    /**
-     * The id property
-     */
-    id?: string;
-    /**
-     * The user property
-     */
-    user?: User;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {AlumniMember}
- */
-export function createAlumniMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAlumniMember;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Any}
- */
-export function createAnyFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAny;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Attendee}
- */
-export function createAttendeeFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAttendee;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {BatchCreateUsersRequest}
- */
-export function createBatchCreateUsersRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoBatchCreateUsersRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {BatchCreateUsersResponse}
- */
-export function createBatchCreateUsersResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoBatchCreateUsersResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {CheckIn}
- */
-export function createCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoCheckIn;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {CreateUserRequest}
- */
-export function createCreateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoCreateUserRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Employee}
- */
-export function createEmployeeFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEmployee;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {EmployeeMember}
- */
-export function createEmployeeMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEmployeeMember;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Empty}
- */
-export function createEmptyFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEmpty;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Event}
- */
-export function createEventFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoEvent;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GuestCheckIn}
- */
-export function createGuestCheckInFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGuestCheckIn;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListCheckInsResponse}
- */
-export function createListCheckInsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListCheckInsResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListEventAttendeesResponse}
- */
-export function createListEventAttendeesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListEventAttendeesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListEventsResponse}
- */
-export function createListEventsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListEventsResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ListUsersResponse}
- */
-export function createListUsersResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoListUsersResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Member}
- */
-export function createMemberFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoMember;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {ServiceAccount}
- */
-export function createServiceAccountFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoServiceAccount;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {Status}
- */
-export function createStatusFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoStatus;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {SystemAdmin}
- */
-export function createSystemAdminFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoSystemAdmin;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateEventRequest}
- */
-export function createUpdateEventRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateEventRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateUserRequest}
- */
-export function createUpdateUserRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateUserRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {User}
- */
-export function createUserFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUser;
-}
-export interface CreateUserRequest extends Parsable {
-    /**
-     * The user property
-     */
-    user?: User;
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoAlumniMember(alumniMember: Partial<AlumniMember> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "graduationYear": n => { alumniMember.graduationYear = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoAny(any: Partial<Any> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "@type": n => { any.type = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoAttendee(attendee: Partial<Attendee> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "admissionKey": n => { attendee.admissionKey = n.getStringValue(); },
-        "id": n => { attendee.id = n.getStringValue(); },
-        "user": n => { attendee.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoBatchCreateUsersRequest(batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "requests": n => { batchCreateUsersRequest.requests = n.getCollectionOfObjectValues<CreateUserRequest>(createCreateUserRequestFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoBatchCreateUsersResponse(batchCreateUsersResponse: Partial<BatchCreateUsersResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "users": n => { batchCreateUsersResponse.users = n.getCollectionOfObjectValues<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoCheckIn(checkIn: Partial<CheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "checkInDateTime": n => { checkIn.checkInDateTime = n.getStringValue(); },
-        "checkOutDateTime": n => { checkIn.checkOutDateTime = n.getStringValue(); },
-        "guest": n => { checkIn.guest = n.getObjectValue<GuestCheckIn>(createGuestCheckInFromDiscriminatorValue); },
-        "id": n => { checkIn.id = n.getStringValue(); },
-        "user": n => { checkIn.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoCreateUserRequest(createUserRequest: Partial<CreateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "user": n => { createUserRequest.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoEmployee(employee: Partial<Employee> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoEmployeeMember(employeeMember: Partial<EmployeeMember> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "graduationYear": n => { employeeMember.graduationYear = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoEmpty(empty: Partial<Empty> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoEvent(event: Partial<Event> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "active": n => { event.active = n.getBooleanValue(); },
-        "badgeImage": n => { event.badgeImage = n.getStringValue(); },
-        "description": n => { event.description = n.getStringValue(); },
-        "endDateTime": n => { event.endDateTime = n.getStringValue(); },
-        "id": n => { event.id = n.getStringValue(); },
-        "location": n => { event.location = n.getStringValue(); },
-        "name": n => { event.name = n.getStringValue(); },
-        "startDateTime": n => { event.startDateTime = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoGuestCheckIn(guestCheckIn: Partial<GuestCheckIn> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "name": n => { guestCheckIn.name = n.getStringValue(); },
-        "nric": n => { guestCheckIn.nric = n.getStringValue(); },
-        "phone": n => { guestCheckIn.phone = n.getStringValue(); },
-        "reason": n => { guestCheckIn.reason = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoListCheckInsResponse(listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "checkIns": n => { listCheckInsResponse.checkIns = n.getCollectionOfObjectValues<CheckIn>(createCheckInFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoListEventAttendeesResponse(listEventAttendeesResponse: Partial<ListEventAttendeesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "attendees": n => { listEventAttendeesResponse.attendees = n.getCollectionOfObjectValues<Attendee>(createAttendeeFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoListEventsResponse(listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "events": n => { listEventsResponse.events = n.getCollectionOfObjectValues<Event>(createEventFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoListUsersResponse(listUsersResponse: Partial<ListUsersResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "users": n => { listUsersResponse.users = n.getCollectionOfObjectValues<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoMember(member: Partial<Member> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "alumniMember": n => { member.alumniMember = n.getObjectValue<AlumniMember>(createAlumniMemberFromDiscriminatorValue); },
-        "employeeMember": n => { member.employeeMember = n.getObjectValue<EmployeeMember>(createEmployeeMemberFromDiscriminatorValue); },
-        "memberId": n => { member.memberId = n.getStringValue(); },
-        "membership": n => { member.membership = n.getEnumValue<Membership>(MembershipObject); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoServiceAccount(serviceAccount: Partial<ServiceAccount> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "serviceAccountType": n => { serviceAccount.serviceAccountType = n.getEnumValue<ServiceAccountType>(ServiceAccountTypeObject); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoStatus(status: Partial<Status> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "code": n => { status.code = n.getNumberValue(); },
-        "details": n => { status.details = n.getCollectionOfObjectValues<Any>(createAnyFromDiscriminatorValue); },
-        "message": n => { status.messageEscaped = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoSystemAdmin(systemAdmin: Partial<SystemAdmin> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoUpdateEventRequest(updateEventRequest: Partial<UpdateEventRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "event": n => { updateEventRequest.event = n.getObjectValue<Event>(createEventFromDiscriminatorValue); },
-        "id": n => { updateEventRequest.id = n.getStringValue(); },
-        "updateMask": n => { updateEventRequest.updateMask = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoUpdateUserRequest(updateUserRequest: Partial<UpdateUserRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "id": n => { updateUserRequest.id = n.getStringValue(); },
-        "updateMask": n => { updateUserRequest.updateMask = n.getStringValue(); },
-        "user": n => { updateUserRequest.user = n.getObjectValue<User>(createUserFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-export function deserializeIntoUser(user: Partial<User> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "email": n => { user.email = n.getStringValue(); },
-        "employee": n => { user.employee = n.getObjectValue<Employee>(createEmployeeFromDiscriminatorValue); },
-        "firebaseId": n => { user.firebaseId = n.getStringValue(); },
-        "id": n => { user.id = n.getStringValue(); },
-        "member": n => { user.member = n.getObjectValue<Member>(createMemberFromDiscriminatorValue); },
-        "name": n => { user.name = n.getStringValue(); },
-        "serviceAccount": n => { user.serviceAccount = n.getObjectValue<ServiceAccount>(createServiceAccountFromDiscriminatorValue); },
-        "systemAdmin": n => { user.systemAdmin = n.getObjectValue<SystemAdmin>(createSystemAdminFromDiscriminatorValue); },
-    }
-}
-export interface Employee extends Parsable {
-}
-export interface EmployeeMember extends Parsable {
-    /**
-     * If a member was an ex-student of SST, this field will contain their graduation year.
-     */
-    graduationYear?: number;
-}
-export interface Empty extends Parsable {
-}
-export interface Event extends Parsable {
-    /**
-     * The active property
-     */
-    active?: boolean;
-    /**
-     * The badgeImage property
-     */
-    badgeImage?: string;
-    /**
-     * The description property
-     */
-    description?: string;
-    /**
-     * The endDateTime property
-     */
-    endDateTime?: string;
-    /**
-     * The id property
-     */
-    id?: string;
-    /**
-     * The location property
-     */
-    location?: string;
-    /**
-     * The name property
-     */
-    name?: string;
-    /**
-     * The startDateTime property
-     */
-    startDateTime?: string;
-}
-export interface GuestCheckIn extends Parsable {
-    /**
-     * The name property
-     */
-    name?: string;
-    /**
-     * The nric property
-     */
-    nric?: string;
-    /**
-     * The phone property
-     */
-    phone?: string;
-    /**
-     * The reason property
-     */
-    reason?: string;
-}
-export interface ListCheckInsResponse extends Parsable {
-    /**
-     * The checkIns property
-     */
-    checkIns?: CheckIn[];
-}
-export interface ListEventAttendeesResponse extends Parsable {
-    /**
-     * The attendees property
-     */
-    attendees?: Attendee[];
-}
-export interface ListEventsResponse extends Parsable {
-    /**
-     * The events property
-     */
-    events?: Event[];
-}
-export interface ListUsersResponse extends Parsable {
-    /**
-     * The users property
-     */
-    users?: User[];
-}
-export interface Member extends Parsable {
-    /**
-     * The alumniMember property
-     */
-    alumniMember?: AlumniMember;
-    /**
-     * The employeeMember property
-     */
-    employeeMember?: EmployeeMember;
+    additionalData?: Record<string, unknown>;
     /**
      * The memberId property
      */
-    memberId?: string;
+    memberId?: string | null;
+}
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateServiceAccountRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest {
     /**
-     * The membership property
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
-    membership?: Membership;
-}
-export type Membership = (typeof MembershipObject)[keyof typeof MembershipObject];
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeAlumniMember(writer: SerializationWriter, alumniMember: Partial<AlumniMember> | undefined = {}) : void {
-    writer.writeNumberValue("graduationYear", alumniMember.graduationYear);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeAny(writer: SerializationWriter, any: Partial<Any> | undefined = {}) : void {
-    writer.writeStringValue("@type", any.type);
-    writer.writeAdditionalData(any.additionalData);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeAttendee(writer: SerializationWriter, attendee: Partial<Attendee> | undefined = {}) : void {
-    writer.writeStringValue("admissionKey", attendee.admissionKey);
-    writer.writeStringValue("id", attendee.id);
-    writer.writeObjectValue<User>("user", attendee.user, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeBatchCreateUsersRequest(writer: SerializationWriter, batchCreateUsersRequest: Partial<BatchCreateUsersRequest> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<CreateUserRequest>("requests", batchCreateUsersRequest.requests, serializeCreateUserRequest);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeBatchCreateUsersResponse(writer: SerializationWriter, batchCreateUsersResponse: Partial<BatchCreateUsersResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<User>("users", batchCreateUsersResponse.users, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeCheckIn(writer: SerializationWriter, checkIn: Partial<CheckIn> | undefined = {}) : void {
-    writer.writeStringValue("checkInDateTime", checkIn.checkInDateTime);
-    writer.writeStringValue("checkOutDateTime", checkIn.checkOutDateTime);
-    writer.writeObjectValue<GuestCheckIn>("guest", checkIn.guest, serializeGuestCheckIn);
-    writer.writeStringValue("id", checkIn.id);
-    writer.writeObjectValue<User>("user", checkIn.user, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeCreateUserRequest(writer: SerializationWriter, createUserRequest: Partial<CreateUserRequest> | undefined = {}) : void {
-    writer.writeObjectValue<User>("user", createUserRequest.user, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeEmployee(writer: SerializationWriter, employee: Partial<Employee> | undefined = {}) : void {
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeEmployeeMember(writer: SerializationWriter, employeeMember: Partial<EmployeeMember> | undefined = {}) : void {
-    writer.writeNumberValue("graduationYear", employeeMember.graduationYear);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeEmpty(writer: SerializationWriter, empty: Partial<Empty> | undefined = {}) : void {
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeEvent(writer: SerializationWriter, event: Partial<Event> | undefined = {}) : void {
-    writer.writeBooleanValue("active", event.active);
-    writer.writeStringValue("badgeImage", event.badgeImage);
-    writer.writeStringValue("description", event.description);
-    writer.writeStringValue("endDateTime", event.endDateTime);
-    writer.writeStringValue("id", event.id);
-    writer.writeStringValue("location", event.location);
-    writer.writeStringValue("name", event.name);
-    writer.writeStringValue("startDateTime", event.startDateTime);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeGuestCheckIn(writer: SerializationWriter, guestCheckIn: Partial<GuestCheckIn> | undefined = {}) : void {
-    writer.writeStringValue("name", guestCheckIn.name);
-    writer.writeStringValue("nric", guestCheckIn.nric);
-    writer.writeStringValue("phone", guestCheckIn.phone);
-    writer.writeStringValue("reason", guestCheckIn.reason);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeListCheckInsResponse(writer: SerializationWriter, listCheckInsResponse: Partial<ListCheckInsResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<CheckIn>("checkIns", listCheckInsResponse.checkIns, serializeCheckIn);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeListEventAttendeesResponse(writer: SerializationWriter, listEventAttendeesResponse: Partial<ListEventAttendeesResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<Attendee>("attendees", listEventAttendeesResponse.attendees, serializeAttendee);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeListEventsResponse(writer: SerializationWriter, listEventsResponse: Partial<ListEventsResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<Event>("events", listEventsResponse.events, serializeEvent);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeListUsersResponse(writer: SerializationWriter, listUsersResponse: Partial<ListUsersResponse> | undefined = {}) : void {
-    writer.writeCollectionOfObjectValues<User>("users", listUsersResponse.users, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeMember(writer: SerializationWriter, member: Partial<Member> | undefined = {}) : void {
-    writer.writeObjectValue<AlumniMember>("alumniMember", member.alumniMember, serializeAlumniMember);
-    writer.writeObjectValue<EmployeeMember>("employeeMember", member.employeeMember, serializeEmployeeMember);
-    writer.writeStringValue("memberId", member.memberId);
-    writer.writeEnumValue<Membership>("membership", member.membership);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeServiceAccount(writer: SerializationWriter, serviceAccount: Partial<ServiceAccount> | undefined = {}) : void {
-    writer.writeEnumValue<ServiceAccountType>("serviceAccountType", serviceAccount.serviceAccountType);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeStatus(writer: SerializationWriter, status: Partial<Status> | undefined = {}) : void {
-    writer.writeNumberValue("code", status.code);
-    writer.writeCollectionOfObjectValues<Any>("details", status.details, serializeAny);
-    writer.writeStringValue("message", status.messageEscaped);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeSystemAdmin(writer: SerializationWriter, systemAdmin: Partial<SystemAdmin> | undefined = {}) : void {
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeUpdateEventRequest(writer: SerializationWriter, updateEventRequest: Partial<UpdateEventRequest> | undefined = {}) : void {
-    writer.writeObjectValue<Event>("event", updateEventRequest.event, serializeEvent);
-    writer.writeStringValue("id", updateEventRequest.id);
-    writer.writeStringValue("updateMask", updateEventRequest.updateMask);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeUpdateUserRequest(writer: SerializationWriter, updateUserRequest: Partial<UpdateUserRequest> | undefined = {}) : void {
-    writer.writeStringValue("id", updateUserRequest.id);
-    writer.writeStringValue("updateMask", updateUserRequest.updateMask);
-    writer.writeObjectValue<User>("user", updateUserRequest.user, serializeUser);
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-export function serializeUser(writer: SerializationWriter, user: Partial<User> | undefined = {}) : void {
-    writer.writeStringValue("email", user.email);
-    writer.writeObjectValue<Employee>("employee", user.employee, serializeEmployee);
-    writer.writeStringValue("firebaseId", user.firebaseId);
-    writer.writeStringValue("id", user.id);
-    writer.writeObjectValue<Member>("member", user.member, serializeMember);
-    writer.writeStringValue("name", user.name);
-    writer.writeObjectValue<ServiceAccount>("serviceAccount", user.serviceAccount, serializeServiceAccount);
-    writer.writeObjectValue<SystemAdmin>("systemAdmin", user.systemAdmin, serializeSystemAdmin);
-}
-export interface ServiceAccount extends Parsable {
+    additionalData?: Record<string, unknown>;
     /**
      * The serviceAccountType property
      */
-    serviceAccountType?: ServiceAccountType;
+    serviceAccountType?: number | null;
 }
-export type ServiceAccountType = (typeof ServiceAccountTypeObject)[keyof typeof ServiceAccountTypeObject];
-export interface Status extends ApiError, Parsable {
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateSystemAdminRequest extends AdditionalDataHolder, Parsable, SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest {
     /**
-     * The code property
+     * Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
      */
-    code?: number;
-    /**
-     * The details property
-     */
-    details?: Any[];
-    /**
-     * The message property
-     */
-    messageEscaped?: string;
+    additionalData?: Record<string, unknown>;
 }
-export interface SystemAdmin extends Parsable {
-}
-export interface UpdateEventRequest extends Parsable {
-    /**
-     * The event property
-     */
-    event?: Event;
-    /**
-     * The id property
-     */
-    id?: string;
-    /**
-     * The updateMask property
-     */
-    updateMask?: string;
-}
-export interface UpdateUserRequest extends Parsable {
-    /**
-     * The id property
-     */
-    id?: string;
-    /**
-     * The updateMask property
-     */
-    updateMask?: string;
-    /**
-     * The user property
-     */
-    user?: User;
-}
-export interface User extends Parsable {
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUserRequest extends Parsable {
     /**
      * The email property
      */
-    email?: string;
-    /**
-     * The employee property
-     */
-    employee?: Employee;
+    email?: string | null;
     /**
      * The firebaseId property
      */
-    firebaseId?: string;
-    /**
-     * The id property
-     */
-    id?: string;
-    /**
-     * The member property
-     */
-    member?: Member;
+    firebaseId?: string | null;
     /**
      * The name property
      */
-    name?: string;
+    name?: string | null;
     /**
-     * The serviceAccount property
+     * This accepts- EmployeeMember- AlumniMember- Employee- SystemAdmin- ServiceAccount
      */
-    serviceAccount?: ServiceAccount;
-    /**
-     * The systemAdmin property
-     */
-    systemAdmin?: SystemAdmin;
+    type?: string | null;
 }
-export const MembershipObject = {
-    Exco: "Exco",
-    Associate: "Associate",
-    Affiliate: "Affiliate",
-    Ordinary: "Ordinary",
-    Revoked: "Revoked",
-} as const;
-export const ServiceAccountTypeObject = {
-    GuardHouse: "GuardHouse",
-} as const;
+export interface SSTAlumniAssociationAdminWebApiEndpointsUserUserResponse extends Parsable {
+    /**
+     * The email property
+     */
+    email?: string | null;
+    /**
+     * The firebaseId property
+     */
+    firebaseId?: string | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * The revoked property
+     */
+    revoked?: boolean | null;
+}
 /* tslint:enable */
 /* eslint-enable */

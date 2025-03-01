@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.Create;
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
+[JsonDerivedType(typeof(CreateMemberRequest), "_member")]
 [JsonDerivedType(typeof(CreateEmployeeMemberRequest), "EmployeeMember")]
 [JsonDerivedType(typeof(CreateAlumniMemberRequest), "AlumniMember")]
 [JsonDerivedType(typeof(CreateEmployeeRequest), "Employee")]

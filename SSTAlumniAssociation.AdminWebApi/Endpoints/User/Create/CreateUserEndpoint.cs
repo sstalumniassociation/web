@@ -11,7 +11,7 @@ public class ListUserEndpoint(AppDbContext dbContext) : Endpoint<CreateUserReque
 {
     public override void Configure()
     {
-        Get("/User");
+        Post("/User");
         Policies(Authorization.Policies.Admin);
     }
 

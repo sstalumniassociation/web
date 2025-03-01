@@ -1,21 +1,17 @@
 using FastEndpoints;
+using FastEndpoints.ClientGen.Kiota;
 using FastEndpoints.Swagger;
+using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Npgsql;
 using NSwag;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization.ServiceAccount;
-using SSTAlumniAssociation.ServiceAccountWebApi.Services.V1;
 using SSTAlumniAssociation.ServiceDefaults;
-using OpenApiInfo = Microsoft.OpenApi.Models.OpenApiInfo;
-using OpenApiSecurityRequirement = Microsoft.OpenApi.Models.OpenApiSecurityRequirement;
-using OpenApiSecurityScheme = Microsoft.OpenApi.Models.OpenApiSecurityScheme;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +19,7 @@ builder.AddServiceDefaults();
 
 #region Database
 
+EF.IsDesignTime = builder.IsApiClientGenerationMode();
 builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
@@ -119,6 +116,14 @@ var app = builder.Build();
 
 app.UseFastEndpoints(options => { options.Versioning.Prefix = "v"; })
     .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
+
+await app.GenerateApiClientsAndExitAsync(
+    c =>
+    {
+        c.SwaggerDocumentName = "v1";
+        c.Language = GenerationLanguage.TypeScript;
+        c.OutputPath = Path.Combine("..", "SSTAlumniAssociation.WebApp", "api", "service-account");
+    });
 
 if (app.Environment.IsDevelopment())
 {
