@@ -1,21 +1,4 @@
 import { isDevelopment } from 'std-env'
-import { $ } from 'execa'
-import { logger } from '@nuxt/kit'
-
-const ADMIN_API_INFO = {
-  name: 'admin',
-  url: ,
-}
-
-const MEMBER_API_INFO = {
-  name: 'member',
-  url: ,
-}
-
-const SERVICE_ACCOUNT_API_INFO = {
-  name: 'service-account',
-  url:,
-}
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
