@@ -1,4 +1,4 @@
-namespace SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Get;
+namespace SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Attendee.List;
 
 public class ListEventAttendeeRequest
 {

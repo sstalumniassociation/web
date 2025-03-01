@@ -1,16 +1,21 @@
-using Calzolari.Grpc.AspNetCore.Validation;
+using FastEndpoints;
+using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using NSwag;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization.ServiceAccount;
 using SSTAlumniAssociation.ServiceAccountWebApi.Services.V1;
 using SSTAlumniAssociation.ServiceDefaults;
+using OpenApiInfo = Microsoft.OpenApi.Models.OpenApiInfo;
+using OpenApiSecurityRequirement = Microsoft.OpenApi.Models.OpenApiSecurityRequirement;
+using OpenApiSecurityScheme = Microsoft.OpenApi.Models.OpenApiSecurityScheme;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +23,8 @@ builder.AddServiceDefaults();
 
 #region Database
 
-var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Postgres"));
-dataSourceBuilder.MapEnum<ServiceAccountType>();
-dataSourceBuilder.MapEnum<PaymentIntentState>();
-var dataSource = dataSourceBuilder.Build();
-
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
+    configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
         {
@@ -32,10 +32,12 @@ builder.Services.AddDbContext<AppDbContext>(
             options.EnableDetailedErrors();
         }
 
-        options.UseNpgsql(dataSource,
-            npgsqlOptions => { npgsqlOptions.MigrationsAssembly("SSTAlumniAssociation.Migrations"); });
-    }
-);
+        options.UseNpgsql(o =>
+            o.MigrationsAssembly("SSTAlumniAssociation.Migrations")
+                .MapEnum<ServiceAccountType>()
+                .MapEnum<PaymentIntentState>()
+        );
+    });
 
 #endregion
 
@@ -68,11 +70,27 @@ builder.Services.AddAuthorizationBuilder()
 
 #endregion
 
-#region gRPC
+#region FastEndpoints
 
-builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
-builder.Services.AddGrpcSwagger();
-builder.Services.AddGrpcValidation();
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument(options =>
+    {
+        options.DocumentSettings = s =>
+        {
+            s.Title = "SST Alumni Association Service Account API";
+            s.Version = "v1";
+
+            s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
+            {
+                In = OpenApiSecurityApiKeyLocation.Header,
+                Description = "Firebase ID Token",
+                Name = "Authorization",
+                Type = OpenApiSecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = JwtBearerDefaults.AuthenticationScheme
+            });
+        };
+    });
 
 #endregion
 
@@ -96,43 +114,11 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association Service Account API", Version = "v1" });
-
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Firebase ID Token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = JwtBearerDefaults.AuthenticationScheme
-    });
-
-    options.AddSecurityRequirement(
-        new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                []
-            }
-        }
-    );
-
-    var filePath = Path.Combine(AppContext.BaseDirectory, "SSTAlumniAssociation.ServiceAccountWebApi.xml");
-    options.IncludeXmlComments(filePath);
-    options.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
-});
 
 var app = builder.Build();
+
+app.UseFastEndpoints(options => { options.Versioning.Prefix = "v"; })
+    .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
 
 if (app.Environment.IsDevelopment())
 {
@@ -145,12 +131,6 @@ app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
-// Require authorization by default and opt-out for anonymous routes
-app.MapGrpcService<UserService>().RequireAuthorization();
 
 app.UseHttpsRedirection();
 
