@@ -4,17 +4,17 @@ import { logger } from '@nuxt/kit'
 
 const ADMIN_API_INFO = {
   name: 'admin',
-  url: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || 'https://localhost:7042',
+  url: ,
 }
 
 const MEMBER_API_INFO = {
   name: 'member',
-  url: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || 'https://localhost:7066',
+  url: ,
 }
 
 const SERVICE_ACCOUNT_API_INFO = {
   name: 'service-account',
-  url: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || 'https://localhost:7070',
+  url:,
 }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -25,28 +25,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   sourcemap: { client: true, server: true },
   spaLoadingTemplate: './app/spa-loading-template.html',
-
-  hooks: {
-    'nitro:build:before': async () => {
-      const log = logger.create({
-        defaults: {
-          tag: 'build:before:kiota-codegen',
-        },
-      })
-
-      const apis = [ADMIN_API_INFO, MEMBER_API_INFO, SERVICE_ACCOUNT_API_INFO]
-
-      const tasks = apis.map(async ({ name, url }) => {
-        log.log(`Generating Kiota code with endpoint ${url}`)
-        const { stderr, stdout } = await $({ lines: true })`kiota generate -l typescript -d ${`${url}/swagger/v1/swagger.json`} -c ApiClient -o ./api/${name} --co`
-
-        stderr.forEach(i => log.error(i))
-        stdout.forEach(i => log.info(i))
-      })
-
-      await Promise.all(tasks)
-    },
-  },
 
   experimental: {
     // https://github.com/unjs/nitro/issues/1844
@@ -173,13 +151,13 @@ export default defineNuxtConfig({
     emulators: false,
 
     config: {
-      projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
-      apiKey: 'AIzaSyC0JXbZ3JWmKC-cEaK3bUl8sQO1lShM1GA' || process.env.FIREBASE_API_KEY,
-      authDomain: 'sstaa-app.firebaseapp.com' || process.env.FIREBASE_AUTH_DOMAIN,
-      databaseURL: 'https://sstaa-app-default-rtdb.asia-southeast1.firebasedatabase.app' || process.env.FIREBASE_DATABASE_URL,
-      storageBucket: 'sstaa-app.appspot.com' || process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: '717632543205' || process.env.FIREBASE_MESSAGING_SENDER_ID,
-      appId: '1:717632543205:web:e7918e4133d4cc209cf70c' || process.env.FIREBASE_APP_ID,
+      projectId: process.env.FIREBASE_PROJECT_ID || 'sstaa-app',
+      apiKey: process.env.FIREBASE_API_KEY || 'AIzaSyC0JXbZ3JWmKC-cEaK3bUl8sQO1lShM1GA',
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'sstaa-app.firebaseapp.com',
+      databaseURL: process.env.FIREBASE_DATABASE_URL || 'https://sstaa-app-default-rtdb.asia-southeast1.firebasedatabase.app',
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'sstaa-app.appspot.com',
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '717632543205',
+      appId: process.env.FIREBASE_APP_ID || '1:717632543205:web:e7918e4133d4cc209cf70c',
     },
 
     auth: {
@@ -188,36 +166,36 @@ export default defineNuxtConfig({
 
     appCheck: {
       debug: process.env.FIREBASE_APP_CHECK_DEBUG_TOKEN || isDevelopment,
-      provider: 'ReCaptchaEnterprise' || process.env.FIREBASE_APP_CHECK_PROVIDER,
-      key: '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu' || process.env.FIREBASE_APP_CHECK_KEY,
+      provider: process.env.FIREBASE_APP_CHECK_PROVIDER || 'ReCaptchaEnterprise',
+      key: process.env.FIREBASE_APP_CHECK_KEY || '6LfNWy8oAAAAAG9GdaqR-X8t8721YyHyILD_C6Pu',
       isTokenAutoRefreshEnabled: true,
     },
   },
 
   runtimeConfig: {
     turso: {
-      url: '' || process.env.TURSO_URL,
-      authToken: '' || process.env.TURSO_AUTH_TOKEN,
+      url: process.env.TURSO_URL || '',
+      authToken: process.env.TURSO_AUTH_TOKEN || '',
     },
 
     firebase: {
-      projectId: 'sstaa-app' || process.env.FIREBASE_PROJECT_ID,
+      projectId: process.env.FIREBASE_PROJECT_ID || 'sstaa-app',
     },
 
     public: {
       api: {
-        member: '' || MEMBER_API_INFO.url,
-        admin: '' || ADMIN_API_INFO.url,
-        serviceAccount: '' || SERVICE_ACCOUNT_API_INFO.url,
+        member: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || 'https://localhost:7066',
+        admin: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || 'https://localhost:7042',
+        serviceAccount: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || 'https://localhost:7070',
       },
 
       growthbook: {
-        clientKey: '' || process.env.NUXT_PUBLIC_GROWTHBOOK_CLIENT_KEY,
+        clientKey: process.env.NUXT_PUBLIC_GROWTHBOOK_CLIENT_KEY || '',
       },
 
       newRelic: {
-        agentId: '' || process.env.NUXT_PUBLIC_NEW_RELIC_AGENT_ID,
-        applicationId: '' || process.env.NUXT_PUBLIC_NEW_RELIC_APPLICATION_ID,
+        agentId: process.env.NUXT_PUBLIC_NEW_RELIC_AGENT_ID || '',
+        applicationId: process.env.NUXT_PUBLIC_NEW_RELIC_APPLICATION_ID || '',
       },
     },
   },
