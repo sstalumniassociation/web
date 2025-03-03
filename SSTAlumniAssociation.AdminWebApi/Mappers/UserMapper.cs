@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.User;
 using SSTAlumniAssociation.AdminWebApi.Endpoints.User.Create;
+using SSTAlumniAssociation.Core.Dtos.User;
 using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.AdminWebApi.Mappers;

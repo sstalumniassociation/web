@@ -1,4 +1,5 @@
 using FastEndpoints;
+using SSTAlumniAssociation.Core.Dtos.User;
 using SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.User;
 
 namespace SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.CheckIn;
@@ -20,5 +21,6 @@ public class GuestCheckInResponse : CheckInResponse
 
 public class UserCheckInResponse : CheckInResponse
 {
+    // TODO : restrict information available in this response
     public UserResponse User { get; set; }
 }

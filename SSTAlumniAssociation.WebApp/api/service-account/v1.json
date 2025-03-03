@@ -28,7 +28,26 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsUserUserResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+                    }
+                  ]
                 }
               }
             }
@@ -51,11 +70,56 @@
       }
     },
     "/CheckIn": {
+      "post": {
+        "tags": [
+          "Checkin"
+        ],
+        "operationId": "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckInEndpoint",
+        "requestBody": {
+          "x-name": "CreateCheckInRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckInRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCheckInResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Checkin"
         ],
-        "operationId": "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInListCheckInRequest",
+        "operationId": "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInListCheckInEndpoint",
         "responses": {
           "200": {
             "description": "Success",
@@ -86,13 +150,67 @@
           }
         ]
       }
+    },
+    "/CheckIn/{Id}/CheckOut": {
+      "post": {
+        "tags": [
+          "Checkin"
+        ],
+        "operationId": "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckOutEndpoint",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
-      "SSTAlumniAssociationServiceAccountWebApiEndpointsUserUserResponse": {
+      "SSTAlumniAssociationCoreDtosUserUserResponse": {
         "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "Employee": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse",
+            "Member": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse",
+            "AlumniMember": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse",
+            "EmployeeMember": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse",
+            "ServiceAccount": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse",
+            "SystemAdmin": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+          }
+        },
+        "example": {
+          "type": "Employee"
+        },
         "additionalProperties": false,
+        "required": [
+          "type"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -109,8 +227,213 @@
           },
           "revoked": {
             "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserEmployeeResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "x-abstract": true,
+            "additionalProperties": false,
+            "properties": {
+              "memberId": {
+                "type": "string"
+              },
+              "subscription": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMembershipSubscriptionResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMembershipSubscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentIntentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentIntentState": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserPaymentIntentStateResponse"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMembershipPlanResponse"
           }
         }
+      },
+      "SSTAlumniAssociationCoreDtosUserPaymentIntentStateResponse": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Pending",
+          "Success",
+          "Failed",
+          "Cancelled"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMembershipPlanResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "builtIn": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string",
+            "format": "duration"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "graduationYear": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "graduationYear": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserServiceAccountResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "serviceAccountType": {
+                "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountTypeResponse"
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserServiceAccountTypeResponse": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "GuardHouse"
+        ],
+        "enum": [
+          0
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserSystemAdminResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
       },
       "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCheckInResponse": {
         "type": "object",
@@ -130,6 +453,80 @@
             "format": "date-time"
           }
         }
+      },
+      "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckInRequest": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "User": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateUserCheckInRequest",
+            "Guest": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateGuestCheckInRequest"
+          }
+        },
+        "x-abstract": true,
+        "example": {
+          "type": "User",
+          "userId": "userId"
+        },
+        "additionalProperties": false,
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateUserCheckInRequest"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateGuestCheckInRequest"
+          }
+        ]
+      },
+      "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateUserCheckInRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckInRequest"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "userId": {
+                "type": "string",
+                "format": "guid"
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateGuestCheckInRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationServiceAccountWebApiEndpointsCheckInCreateCheckInRequest"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "nric": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        ]
       }
     },
     "securitySchemes": {

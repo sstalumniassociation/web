@@ -10,6 +10,8 @@ import { EventRequestBuilderNavigationMetadata, EventRequestBuilderRequestsMetad
 // @ts-ignore
 import { type UserRequestBuilder, UserRequestBuilderNavigationMetadata, UserRequestBuilderRequestsMetadata } from './user/index.js';
 // @ts-ignore
+import { type UserBatchRequestBuilder, UserBatchRequestBuilderRequestsMetadata } from './userBatch/index.js';
+// @ts-ignore
 import { apiClientProxifier, registerDefaultDeserializer, registerDefaultSerializer, type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type RequestAdapter } from '@microsoft/kiota-abstractions';
 // @ts-ignore
 import { FormParseNodeFactory, FormSerializationWriterFactory } from '@microsoft/kiota-serialization-form';
@@ -40,6 +42,10 @@ export interface ApiClient extends BaseRequestBuilder<ApiClient> {
      * The User property
      */
     get user(): UserRequestBuilder;
+    /**
+     * The UserBatch property
+     */
+    get userBatch(): UserBatchRequestBuilder;
 }
 /**
  * Instantiates a new {@link ApiClient} and sets the default values.
@@ -80,6 +86,9 @@ export const ApiClientNavigationMetadata: Record<Exclude<keyof ApiClient, KeysTo
     user: {
         requestsMetadata: UserRequestBuilderRequestsMetadata,
         navigationMetadata: UserRequestBuilderNavigationMetadata,
+    },
+    userBatch: {
+        requestsMetadata: UserBatchRequestBuilderRequestsMetadata,
     },
 };
 /* tslint:enable */

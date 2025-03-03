@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import type { Membership } from '~/api/models'
+import type { SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyResponse } from '~/api/member/models'
+import type { SSTAlumniAssociationCoreDtosUserMemberResponse } from '~/api/service-account/models'
 
 const dayjs = useDayjs()
 const { width } = useWindowSize()
 
 const { data: user, isLoading: userIsLoading } = useWhoAmI()
-const { data: checkIns, refetch } = useCheckInsWithAppScope()
+const { data: checkIns, refetch } = useMemberCheckIns()
 
 const counter = useInterval(10000)
 const { pause, resume } = useIntervalFn(refetch, 500, { immediate: false })
 
 const latestCheckIn = computed(() => {
-  return checkIns.value?.checkIns?.findLast(checkIn => checkIn.checkOutDateTime === undefined)
+  return checkIns.value?.findLast(checkIn => checkIn.checkOutDateTime === undefined)
 })
 
 const latestCheckInDuration = computed(() => {
@@ -48,7 +49,7 @@ watch(latestCheckIn, (value, oldValue) => {
     cardOpened.value = false
 })
 
-const membershipGradient: Record<Membership, string> = {
+const membershipGradient: Record<string, string> = {
   Associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
   Affiliate: 'bg-gradient-to-br from-purple-500 to-purple-600',
   Exco: 'bg-gradient-to-br from-red-500 to-red-600',
@@ -60,16 +61,22 @@ const resolvedGradientClass = computed(() => {
   if (userIsLoading.value) {
     return null
   }
-  if (user.value?.systemAdmin) {
-    return 'bg-gradient-to-br from-indigo-500 to-indigo-600'
+
+  if (!user.value?.type) {
+    throw new Error('Could not accurately determine user type.')
   }
-  if (user.value?.serviceAccount) {
-    return 'bg-gradient-to-br from-slate-500 from-slate-600'
+
+  if ('subscription' in user.value) {
+    if (!user.value.subscription?.plan?.name) {
+      throw new Error('No subscription name')
+    }
+    return membershipGradient[user.value.subscription?.plan?.name]
   }
-  if (user.value?.member && user.value?.member?.membership) {
-    return membershipGradient[user.value?.member?.membership]
-  }
-  throw new Error('Could not accurately determine user type.')
+
+  return {
+    SystemAdmin: 'bg-gradient-to-br from-indigo-500 to-indigo-600',
+    ServiceAccount: 'bg-gradient-to-br from-slate-500 from-slate-600',
+  }[user.value?.type]
 })
 
 const qrCode = useQRCode(() => latestCheckIn.value?.id ?? JSON.stringify({ user: user.value?.id ?? '' }), {
@@ -89,17 +96,17 @@ function cardClicked() {
 
     <f7Card v-else-if="user" @click="cardClicked">
       <f7CardContent
-          :style="[cardOpened && { height: 'calc(70vh - calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom)))' }]"
-          class="rounded-[16px] transition-all duration-350 ease-out"
-          :class="[{ 'h-50': !cardOpened, 'min-h-[300px]': cardOpened }, resolvedGradientClass]" valign="top"
+        :style="[cardOpened && { height: 'calc(70vh - calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom)))' }]"
+        class="rounded-[16px] transition-all duration-350 ease-out"
+        :class="[{ 'h-50': !cardOpened, 'min-h-[300px]': cardOpened }, resolvedGradientClass]" valign="top"
       >
         <div v-auto-animate class="flex flex-col w-full h-full text-white dark:text-inherit">
           <div class="flex flex-col">
             <span class="font-bold text-3xl">
               {{ user.name }}
             </span>
-            <span v-if="user.member" class="font-mono">
-              {{ user.member.memberId }}
+            <span v-if="'subscription' in user" class="font-mono">
+              {{ user.memberId }}
             </span>
           </div>
 
@@ -107,13 +114,14 @@ function cardClicked() {
             <div v-if="cardOpened" class="flex-1 flex flex-col items-center justify-center bg-white rounded-2xl my-4">
               <img :src="qrCode" alt="QR Code">
               <br>
-              <div class="text-gray-800">
+              <div v-if="'graduationYear' in user" class="text-gray-800">
                 <span class="font-semibold">
-                  Class of {{ user.member?.alumniMember?.graduationYear ?? user.member?.employeeMember?.graduationYear }}
+                  Class of
+                  {{ user.graduationYear }}
                 </span>
                 <br>
                 <span>
-                  {{ user?.member?.membership }}
+                  {{ user?.subscription?.plan?.name }}
                   member
                 </span>
               </div>

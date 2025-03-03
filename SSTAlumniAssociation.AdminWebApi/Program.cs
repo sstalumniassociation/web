@@ -23,7 +23,7 @@ builder.AddServiceDefaults();
 
 // Disable Aspire connection string checks during API client generation
 EF.IsDesignTime = builder.IsApiClientGenerationMode();
-builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
+builder.AddNpgsqlDbContext<AppDbContext>("postgres",
     configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
@@ -76,6 +76,8 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services.AddFastEndpoints()
     .SwaggerDocument(options =>
     {
+        options.MaxEndpointVersion = 1;
+        options.UseOneOfForPolymorphism = true;
         options.DocumentSettings = s =>
         {
             s.Title = "SST Alumni Association Admin API";

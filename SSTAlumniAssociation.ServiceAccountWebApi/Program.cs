@@ -20,7 +20,7 @@ builder.AddServiceDefaults();
 #region Database
 
 EF.IsDesignTime = builder.IsApiClientGenerationMode();
-builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
+builder.AddNpgsqlDbContext<AppDbContext>("postgres",
     configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
@@ -72,6 +72,8 @@ builder.Services.AddAuthorizationBuilder()
 builder.Services.AddFastEndpoints()
     .SwaggerDocument(options =>
     {
+        options.MaxEndpointVersion = 1;
+        options.UseOneOfForPolymorphism = true;
         options.DocumentSettings = s =>
         {
             s.Title = "SST Alumni Association Service Account API";

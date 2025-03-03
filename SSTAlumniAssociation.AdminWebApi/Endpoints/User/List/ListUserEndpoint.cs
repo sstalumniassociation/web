@@ -2,6 +2,7 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Dtos.User;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.List;
 

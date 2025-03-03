@@ -1,4 +1,4 @@
-using SSTAlumniAssociation.AdminWebApi.Endpoints.User;
+using SSTAlumniAssociation.Core.Dtos.User;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.CheckIn;
 

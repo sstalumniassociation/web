@@ -10,4 +10,8 @@ public static partial class CheckInMapper
     [MapDerivedType<GuestCheckIn, GuestCheckInResponse>]
     [MapDerivedType<UserCheckIn, UserCheckInResponse>]
     public static partial CheckInResponse ToResponse(this CheckIn checkIn);
+
+    [MapDerivedType<CreateGuestCheckInRequest, GuestCheckIn>]
+    [MapDerivedType<CreateUserCheckInRequest, UserCheckIn>]
+    public static partial CheckIn ToEntity(this CreateCheckInRequest req);
 }

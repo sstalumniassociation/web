@@ -9,8 +9,8 @@ const props = defineProps<{
   description?: string
   location?: string
   badgeImage?: string
-  startDateTime?: string
-  endDateTime?: string
+  startDateTime?: Date
+  endDateTime?: Date
 }>()
 
 if (!props.id) {
@@ -55,15 +55,13 @@ const [formBadgeImage, badgeImageProps] = defineField('badgeImage')
 const [formStartDateTime] = defineField('startDateTime')
 const [formEndDateTime] = defineField('endDateTime')
 
-const { mutate: updateEventMutate, isPending: updateEventIsPending } = useUpdateEventMutation(props.id)
+const { mutate: updateEventMutate, isPending: updateEventIsPending } = useAdminUpdateEventMutation(props.id)
 
 const updateEvent = handleSubmit((values) => {
   const data = {
-    event: {
-      ...values,
-      startDateTime: values.startDateTime.toString(),
-      endDateTime: values.startDateTime.toString(),
-    },
+    ...values,
+    startDateTime: values.startDateTime,
+    endDateTime: values.startDateTime,
   }
 
   updateEventMutate(data, {

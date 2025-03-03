@@ -5,7 +5,7 @@ using SSTAlumniAssociation.ServiceAccountWebApi.Mappers;
 
 namespace SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.CheckIn;
 
-public class ListCheckInRequest(AppDbContext dbContext) : EndpointWithoutRequest<List<CheckInResponse>>
+public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<List<CheckInResponse>>
 {
     public override void Configure()
     {
