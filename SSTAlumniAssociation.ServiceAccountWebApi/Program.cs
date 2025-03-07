@@ -20,7 +20,7 @@ builder.AddServiceDefaults();
 #region Database
 
 EF.IsDesignTime = builder.IsApiClientGenerationMode();
-builder.AddNpgsqlDbContext<AppDbContext>("postgres",
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())

@@ -3,7 +3,8 @@ using Projects;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
-    .WithPgWeb();
+    .WithPgWeb()
+    .AddDatabase("sstaa");
 
 var memberWebApi = builder.AddProject<SSTAlumniAssociation_MemberWebApi>("member-web-api")
     .WithReference(postgres);

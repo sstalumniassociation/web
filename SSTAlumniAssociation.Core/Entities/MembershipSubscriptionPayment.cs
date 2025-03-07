@@ -3,7 +3,7 @@ namespace SSTAlumniAssociation.Core.Entities;
 public class MembershipSubscriptionPayment
 {
     public Guid Id { get; set; }
-    
+
     /// <summary>
     /// Payment processor
     /// </summary>

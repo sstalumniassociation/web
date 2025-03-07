@@ -18,7 +18,7 @@ public class MembershipSubscription
     /// Payment processor's payment intent / request ID
     /// </summary>
     public string? PaymentIntentId { get; set; }
-    
+
     /// <summary>
     /// Payment processor's payment intent / request state
     /// </summary>

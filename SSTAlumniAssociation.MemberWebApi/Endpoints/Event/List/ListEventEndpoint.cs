@@ -14,7 +14,7 @@ public class ListEventEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var events = await dbContext.Events.ToListAsync(cancellationToken: ct);
+        var events = await dbContext.Events.Where(e => e.Active).ToListAsync(cancellationToken: ct);
         await SendAsync(events.ToResponse(), cancellation: ct);
     }
 }

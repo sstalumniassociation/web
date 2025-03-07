@@ -21,7 +21,7 @@ public class GetEventEndpoint(AppDbContext dbContext) : Endpoint<GetEventRequest
             await SendNotFoundAsync(ct);
             return;
         }
-        
+
         await SendAsync(@event.ToResponse(), cancellation: ct);
     }
 }

@@ -10,6 +10,7 @@ public class PostVerifyEndpoint(AppDbContext dbContext) : Endpoint<PostVerifyReq
     public override void Configure()
     {
         Post("/Auth/Verify");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(PostVerifyRequest req, CancellationToken ct)

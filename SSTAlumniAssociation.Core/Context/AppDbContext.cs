@@ -17,7 +17,7 @@ public partial class AppDbContext : DbContext
     /// Users
     /// </summary>
     public DbSet<User> Users { get; set; }
-    
+
     /// <summary>
     /// User revocations
     /// </summary>
@@ -92,7 +92,7 @@ public partial class AppDbContext : DbContext
     /// Membership subscriptions
     /// </summary>
     public DbSet<MembershipSubscription> MembershipSubscriptions { get; set; }
-    
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -110,7 +110,7 @@ public partial class AppDbContext : DbContext
                 DefaultMembershipPlans.Affiliate,
                 DefaultMembershipPlans.Ordinary
             );
-        
+
         modelBuilder
             .Entity<ServiceAccount>()
             .Property(u => u.ServiceAccountType)

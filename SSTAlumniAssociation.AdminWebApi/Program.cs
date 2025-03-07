@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,7 +24,7 @@ builder.AddServiceDefaults();
 
 // Disable Aspire connection string checks during API client generation
 EF.IsDesignTime = builder.IsApiClientGenerationMode();
-builder.AddNpgsqlDbContext<AppDbContext>("postgres",
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
@@ -50,8 +51,10 @@ builder.Services.AddScoped<IAuthorizationHandler, AdminRequirementSystemAdminHan
 
 #region Auth
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services
+    .AddAuthenticationJwtBearer(s =>
+    {
+    }, options =>
     {
         var projectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
         options.Authority = $"https://securetoken.google.com/{projectId}";
@@ -104,7 +107,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
-        policy.WithHeaders("Authorization", "Content-Type");
+        policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",
             "http://localhost:3000"
@@ -117,6 +120,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseFastEndpoints(options => { options.Versioning.Prefix = "v"; })
     .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
@@ -139,9 +145,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

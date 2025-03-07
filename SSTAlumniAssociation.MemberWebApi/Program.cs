@@ -20,7 +20,7 @@ builder.AddServiceDefaults();
 #region Database
 
 EF.IsDesignTime = builder.IsApiClientGenerationMode();
-builder.AddNpgsqlDbContext<AppDbContext>("postgres",
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
         if (builder.Environment.IsDevelopment())
@@ -75,7 +75,7 @@ builder.Services.AddFastEndpoints()
     {
         options.MaxEndpointVersion = 1;
         options.UseOneOfForPolymorphism = true;
-        
+
         options.DocumentSettings = s =>
         {
             s.Title = "SST Alumni Association Member API";
@@ -102,7 +102,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
-        policy.WithHeaders("Authorization", "Content-Type");
+        policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",
             "http://localhost:3000"

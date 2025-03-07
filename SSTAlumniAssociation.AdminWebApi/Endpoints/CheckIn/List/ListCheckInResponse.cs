@@ -12,7 +12,6 @@ public class ListCheckInResponse(AppDbContext dbContext) : EndpointWithoutReques
     public override void Configure()
     {
         Get("/CheckIn");
-        Policies(Authorization.Policies.Admin);
     }
 
     public override async Task HandleAsync(CancellationToken ct)

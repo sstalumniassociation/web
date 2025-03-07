@@ -128,12 +128,12 @@ function cardClicked() {
             </div>
           </div>
 
-          <div v-if="user.member && !cardOpened" class="flex flex-col">
+          <div v-if="'graduationYear' in user && !cardOpened" class="flex flex-col">
             <span class="font-semibold">
-              Class of {{ user.member?.alumniMember?.graduationYear ?? user.member?.employeeMember?.graduationYear }}
+              Class of {{ user.graduationYear }}
             </span>
             <span>
-              {{ user.member.membership }}
+              {{ user.subscription?.plan?.name }}
               member
             </span>
           </div>

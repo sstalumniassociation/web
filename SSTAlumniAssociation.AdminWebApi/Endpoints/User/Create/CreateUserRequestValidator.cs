@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.Create;
 
-public class CreateUserRequestValidator: Validator<CreateUserRequest>
+public class CreateUserRequestValidator : Validator<CreateUserRequest>
 {
     public CreateUserRequestValidator()
     {

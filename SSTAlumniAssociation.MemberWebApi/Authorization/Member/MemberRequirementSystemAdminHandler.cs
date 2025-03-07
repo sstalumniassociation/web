@@ -19,7 +19,7 @@ public class MemberRequirementSystemAdminHandler(AppDbContext dbContext) : Autho
         var user = await dbContext.SystemAdmins
             .WhereUserMatchesEmailFromClaims(context.User.Claims)
             .SingleOrDefaultAsync();
-        
+
         if (user is not null)
         {
             context.Succeed(requirement);

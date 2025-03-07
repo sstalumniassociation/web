@@ -7,7 +7,14 @@ const appConfig = useAppConfig()
 
 const { data: user } = useWhoAmI()
 const graduationYear = computed(() => {
-  return `Class of ${user.value?.member?.alumniMember?.graduationYear ?? user.value?.member?.employeeMember?.graduationYear}`
+  if (!user.value)
+    return null
+
+  if ('graduationYear' in user.value) {
+    return `Class of ${user.value?.graduationYear}`
+  }
+
+  return null
 })
 
 const dependencies = Object.keys(devDependencies)

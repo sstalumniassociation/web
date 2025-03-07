@@ -11,6 +11,6 @@ public static partial class CheckInMapper
     [MapDerivedType<GuestCheckIn, GuestCheckInResponse>]
     [MapDerivedType<UserCheckIn, UserCheckInResponse>]
     public static partial CheckInResponse ToResponse(this CheckIn checkIn);
-    
+
     public static partial IEnumerable<CheckInResponse> ToResponse(this IEnumerable<CheckIn> checkIn);
 }

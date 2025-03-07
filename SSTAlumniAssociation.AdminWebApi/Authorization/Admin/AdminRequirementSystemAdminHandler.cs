@@ -18,7 +18,7 @@ public class AdminRequirementSystemAdminHandler(AppDbContext dbContext) : Author
         var sa = await dbContext.SystemAdmins
             .WhereUserMatchesEmailFromClaims(context.User.Claims)
             .SingleOrDefaultAsync();
-        
+
         if (sa is not null)
         {
             context.Succeed(requirement);

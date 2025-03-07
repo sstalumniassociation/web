@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Create;
 
-public class CreateEventRequestValidator: Validator<CreateEventRequest>
+public class CreateEventRequestValidator : Validator<CreateEventRequest>
 {
     public CreateEventRequestValidator()
     {
@@ -12,19 +12,19 @@ public class CreateEventRequestValidator: Validator<CreateEventRequest>
             .WithMessage("Name is required.")
             .MinimumLength(5)
             .WithMessage("Name should be at least 5 characters.");
-        
+
         RuleFor(r => r.Description)
             .NotEmpty()
             .WithMessage("Description is required.")
             .MinimumLength(5)
             .WithMessage("Description should be at least 5 characters.");
-        
+
         RuleFor(r => r.Location)
             .NotEmpty()
             .WithMessage("Location is required.")
             .MinimumLength(5)
             .WithMessage("Location should be at least 5 characters.");
-        
+
         RuleFor(r => r.BadgeImage)
             .NotEmpty()
             .WithMessage("Badge image is required.")

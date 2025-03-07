@@ -14,7 +14,7 @@ public static partial class UserMapper
     [MapDerivedType<SystemAdmin, SystemAdminResponse>]
     [MapDerivedType<ServiceAccount, ServiceAccountResponse>]
     public static partial UserResponse ToResponse(this User user);
-    
+
     [MapDerivedType<CreateEmployeeMemberRequest, EmployeeMember>]
     [MapDerivedType<CreateAlumniMemberRequest, AlumniMember>]
     [MapDerivedType<CreateEmployeeRequest, Employee>]

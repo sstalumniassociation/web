@@ -4,17 +4,17 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
 const props = defineProps<{
-  id?: string
-  name?: string
-  description?: string
-  location?: string
-  badgeImage?: string
-  startDateTime?: Date
-  endDateTime?: Date
+  id?: string | null
+  name?: string | null
+  description?: string | null
+  location?: string | null
+  badgeImage?: string | null
+  startDateTime?: Date | null
+  endDateTime?: Date | null
 }>()
 
-if (!props.id) {
-  throw new Error('Event ID is required')
+if (!props.id || !props.name) {
+  throw new Error('Event ID  and nameis required')
 }
 
 const toast = useToast()

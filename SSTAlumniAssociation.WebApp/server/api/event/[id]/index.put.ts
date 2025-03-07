@@ -30,7 +30,7 @@ export default defineProtectedEventHandler(async (event) => {
   const result = await updateEventRequestBody.safeParseAsync(await readBody(event))
   if (!result.success) {
     throw createError({
-      message: result.error,
+      message: result.error.message,
       statusCode: 400,
       statusMessage: 'Bad request',
     })
