@@ -14,8 +14,9 @@ public static class ClaimsExtensions
 {
     public static IQueryable<T> WhereUserMatchesEmailFromClaims<T>(this DbSet<T> dbSet, IEnumerable<Claim> claims) where T : User
     {
-        var email = claims.SingleOrDefault(c => c.Type == ClaimTypes.Email);
-        return email is null ? dbSet : dbSet.Where(u => u.Email == email.Value);
+        var email = claims.SingleOrDefault(c => c.Type == "email");
+        ArgumentNullException.ThrowIfNull(email);
+        return dbSet.Where(u => u.Email == email.Value);
     }
 
     public static IQueryable<T> WhereUserMatchesEmailFromClaims<T, T2>(
@@ -23,7 +24,8 @@ public static class ClaimsExtensions
         IEnumerable<Claim> claims
     ) where T : User
     {
-        var email = claims.SingleOrDefault(c => c.Type == ClaimTypes.Email);
-        return email is null ? dbSet : dbSet.Where(u => u.Email == email.Value);
+        var email = claims.SingleOrDefault(c => c.Type == "email");
+        ArgumentNullException.ThrowIfNull(email);
+        return dbSet.Where(u => u.Email == email.Value);
     }
 }

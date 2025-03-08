@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
@@ -6,7 +7,7 @@ using SSTAlumniAssociation.Core.Dtos.User;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.List;
 
-public class ListUserEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<List<UserResponse>>
+public class ListUserEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<IList<UserResponse>>
 {
     public override void Configure()
     {
@@ -17,6 +18,6 @@ public class ListUserEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<L
     public override async Task HandleAsync(CancellationToken ct)
     {
         var users = await dbContext.Users.ToListAsync(cancellationToken: ct);
-        await SendOkAsync(users.Select(u => u.ToResponse()).ToList(), ct);
+        await SendOkAsync(users.ToResponse().ToImmutableList(), ct);
     }
 }

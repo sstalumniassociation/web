@@ -130,7 +130,8 @@ public partial class AppDbContext : DbContext
         {
             Id = Guid.Parse("58352738-955f-41b5-ae42-57c2e01d7452"),
             StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
-            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
+            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(3),
+            PaymentIntentState = PaymentIntentState.Success,
             MemberId = qinGuan.Id,
             MembershipPlanId = DefaultMembershipPlans.Exco.Id
         };
@@ -165,7 +166,8 @@ public partial class AppDbContext : DbContext
         {
             Id = Guid.Parse("d44eba3b-5556-4978-8188-7440762b1288"),
             StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
-            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
+            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(3),
+            PaymentIntentState = PaymentIntentState.Success,
             MemberId = zhengJie.Id,
             MembershipPlanId = DefaultMembershipPlans.Exco.Id
         };

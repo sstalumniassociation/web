@@ -18,11 +18,8 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext) : Authorization
         AdminRequirement requirement
     )
     {
-
-        Console.WriteLine(JsonSerializer.Serialize(context.User, new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve }));
         var sa = await dbContext.Members
             .Include(u => u.Subscriptions)
-            .ThenInclude(s => s.MembershipPlan)
             .WhereUserMatchesEmailFromClaims(context.User.Claims)
             .SingleOrDefaultAsync();
 
@@ -33,15 +30,18 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext) : Authorization
         }
 
         var activeSubscription = sa.Subscriptions.SingleOrDefault(s =>
-             s.StartDateTime <= DateTime.Now &&
-             s.EndDateTime >= DateTime.Now &&
-             s.PaymentIntentState == PaymentIntentState.Success &&
-             s.MembershipPlanId == DefaultMembershipPlans.Exco.Id
-         );
+            s.StartDateTime <= DateTime.Now &&
+            s.EndDateTime >= DateTime.Now &&
+            s.PaymentIntentState == PaymentIntentState.Success &&
+            s.MembershipPlanId == DefaultMembershipPlans.Exco.Id
+        );
 
-        if (sa is not null)
+        if (activeSubscription is null)
         {
-            context.Succeed(requirement);
+            context.Fail();
+            return;
         }
+
+        context.Succeed(requirement);
     }
 }

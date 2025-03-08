@@ -3,7 +3,10 @@ using System.Text.Json.Serialization;
 namespace SSTAlumniAssociation.Core.Dtos.User;
 
 [
-    JsonPolymorphic(TypeDiscriminatorPropertyName = "type"),
+    JsonPolymorphic(
+        TypeDiscriminatorPropertyName = "type",
+        UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor
+    ),
     JsonDerivedType(typeof(EmployeeResponse), "Employee"),
     JsonDerivedType(typeof(MemberResponse), "Member"),
     JsonDerivedType(typeof(AlumniMemberResponse), "AlumniMember"),

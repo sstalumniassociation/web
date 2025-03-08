@@ -17,6 +17,7 @@ public class ListEventAttendeeEndpoint(AppDbContext dbContext)
     {
         var @event = await dbContext.Events
             .Include(e => e.Attendees)
+            .ThenInclude(a => a.User)
             .SingleOrDefaultAsync(e => e.Id == req.Id, cancellationToken: ct);
 
         if (@event is null)

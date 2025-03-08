@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
 using FastEndpoints.Security;
@@ -22,8 +23,11 @@ builder.AddServiceDefaults();
 
 #region Database
 
-// Disable Aspire connection string checks during API client generation
-EF.IsDesignTime = builder.IsApiClientGenerationMode();
+if (builder.IsApiClientGenerationMode())
+{
+    EF.IsDesignTime = true;
+}
+
 builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
@@ -52,9 +56,7 @@ builder.Services.AddScoped<IAuthorizationHandler, AdminRequirementSystemAdminHan
 #region Auth
 
 builder.Services
-    .AddAuthenticationJwtBearer(s =>
-    {
-    }, options =>
+    .AddAuthenticationJwtBearer(s => { }, options =>
     {
         var projectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
         options.Authority = $"https://securetoken.google.com/{projectId}";
@@ -68,9 +70,7 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddDefaultPolicy(Policies.Admin, policy =>
-        policy.AddRequirements(new AdminRequirement())
-    );
+    .AddPolicy(Policies.Admin, policy => { policy.AddRequirements(new AdminRequirement()); });
 
 #endregion
 
@@ -107,6 +107,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
+        policy.AllowAnyMethod();
         policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",

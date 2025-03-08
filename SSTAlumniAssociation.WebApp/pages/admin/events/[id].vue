@@ -231,7 +231,7 @@ function toggleDropdown(event: Event) {
 
         <template #footer>
           <div class="space-x-4">
-            <Button :pending="deleteEventIsPending" severity="danger">
+            <Button :pending="deleteEventIsPending" severity="danger" @click="deleteEvent">
               Delete
             </Button>
             <Button variant="link" text @click="state.showDeleteConfirmation = false">

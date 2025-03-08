@@ -13,4 +13,5 @@ public static partial class UserMapper
     [MapDerivedType<SystemAdmin, SystemAdminResponse>]
     [MapDerivedType<ServiceAccount, ServiceAccountResponse>]
     public static partial UserResponse ToResponse(this User user);
+    public static partial IEnumerable<UserResponse> ToResponse(this IEnumerable<User> user);
 }

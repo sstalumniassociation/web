@@ -1,17 +1,17 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.Article;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.CheckIn.List;
 
-public class ListCheckInResponse(AppDbContext dbContext) : EndpointWithoutRequest<IEnumerable<CheckInResponse>>
+public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<IEnumerable<CheckInResponse>>
 {
     public override void Configure()
     {
         Get("/CheckIn");
+        Policies(Authorization.Policies.Admin);
     }
 
     public override async Task HandleAsync(CancellationToken ct)

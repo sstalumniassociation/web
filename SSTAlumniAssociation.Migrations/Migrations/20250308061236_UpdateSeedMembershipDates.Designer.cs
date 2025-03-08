@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SSTAlumniAssociation.Core.Context;
@@ -12,9 +13,11 @@ using SSTAlumniAssociation.Core.Entities;
 namespace SSTAlumniAssociation.Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250308061236_UpdateSeedMembershipDates")]
+    partial class UpdateSeedMembershipDates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -337,7 +340,7 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                             EndDateTime = new DateTime(2026, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
                             MemberId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"),
                             MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-                            PaymentIntentState = PaymentIntentState.Success,
+                            PaymentIntentState = PaymentIntentState.None,
                             StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -346,7 +349,7 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                             EndDateTime = new DateTime(2026, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
                             MemberId = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
                             MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-                            PaymentIntentState = PaymentIntentState.Success,
+                            PaymentIntentState = PaymentIntentState.None,
                             StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });

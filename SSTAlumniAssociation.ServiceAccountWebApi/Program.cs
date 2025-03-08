@@ -19,7 +19,11 @@ builder.AddServiceDefaults();
 
 #region Database
 
-EF.IsDesignTime = builder.IsApiClientGenerationMode();
+if (builder.IsApiClientGenerationMode())
+{
+    EF.IsDesignTime = true;
+}
+
 builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
     configureDbContextOptions: options =>
     {
@@ -61,7 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddDefaultPolicy(Policies.ServiceAccount, policy =>
+    .AddPolicy(Policies.ServiceAccount, policy =>
         policy.AddRequirements(new ServiceAccountRequirement())
     );
 
@@ -100,6 +104,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
+        policy.AllowAnyMethod();
         policy.WithHeaders("Authorization", "Content-Type");
         policy.WithOrigins(
             "https://app.sstaa.org",
