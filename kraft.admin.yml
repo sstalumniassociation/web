@@ -1,0 +1,5 @@
+spec: v0.6
+name: sstaa-admin-api
+
+runtime: base-compat:latest
+cmd: ["dotnet", "/app/SSTAlumniAssociation.AdminWebApi.dll"]

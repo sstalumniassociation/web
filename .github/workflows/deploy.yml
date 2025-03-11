@@ -43,10 +43,9 @@ jobs:
 
       - uses: unikraft/kraftkit@stable
         with:
-          arch: x86_64
-          plat: qemu
-          kraftfile: ./SSTAlumniAssociation.AdminWebApi/kraft.yml
-          rootfs: ./SSTAlumniAssociation.AdminWebApi/Dockerfile
+          kraftfile: ./kraft.admin.yml
+          rootfs: ./Dockerfile.admin
+          plat: kraftcloud
           push: true
           loglevel: 'trace'
           output: oci://ghcr.io/sstalumniassociation/web-admin-api:latest
