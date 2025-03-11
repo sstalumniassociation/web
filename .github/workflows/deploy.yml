@@ -39,6 +39,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Remove untagged images
+        shell: pwsh
+        run: |
+          ((iwr -Headers @{ "Authorization" = "Bearer $($env:UKC_TOKEN)" } https://api.sin0.kraft.cloud/v1/images/list?namespace=gqin).Content | ConvertFrom-Json).data.images | Where-Object { $_.tags.Length -lt 1 } | ForEach-Object { kraft cloud img rm $_.digest }
 
       - uses: unikraft/kraftkit@stable
         with:
@@ -52,3 +57,30 @@ jobs:
               -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
               -e Firebase__ProjectId='sstaa-app' \
               -e DOTNET_URLS='http://0.0.0.0:5000'
+
+      - uses: unikraft/kraftkit@stable
+        with:
+          run: |
+            kraft cloud deploy \
+              -K ./kraft.member.yml \
+              --rootfs ./Dockerfile.member \
+              --rollout remove \
+              -g sstaa-member-api \
+              -M 512 \
+              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+              -e Firebase__ProjectId='sstaa-app' \
+              -e DOTNET_URLS='http://0.0.0.0:5000'
+
+      - uses: unikraft/kraftkit@stable
+        with:
+          run: |
+            kraft cloud deploy \
+              -K ./kraft.service-account.yml \
+              --rootfs ./Dockerfile.service-account \
+              --rollout remove \
+              -g sstaa-service-account-api \
+              -M 512 \
+              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+              -e Firebase__ProjectId='sstaa-app' \
+              -e DOTNET_URLS='http://0.0.0.0:5000'
+
