@@ -13,7 +13,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Pars
  */
 // @ts-ignore
 export function createWhoAmIGetResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -57,7 +57,7 @@ export function deserializeIntoWhoAmIGetResponse(whoAmIGetResponse: Partial<SSTA
 // @ts-ignore
 export function serializeWhoAmIGetResponse(writer: SerializationWriter, whoAmIGetResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (whoAmIGetResponse === undefined || whoAmIGetResponse === null) return;
-    switch (whoAmIGetResponse.type) {
+    switch (whoAmIGetResponse.discriminator) {
         case "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, whoAmIGetResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;

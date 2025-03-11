@@ -9,7 +9,7 @@ public class ListArticleEndpoint(AppDbContext dbContext) : EndpointWithoutReques
     public override void Configure()
     {
         Get("/Article");
-        Policies(Authorization.Policies.Admin);
+        Policies(Authorization.Policies.Member);
     }
 
     public override async Task HandleAsync(CancellationToken ct)

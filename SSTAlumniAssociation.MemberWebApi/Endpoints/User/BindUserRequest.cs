@@ -1,5 +1,3 @@
-using FastEndpoints;
-
 namespace SSTAlumniAssociation.MemberWebApi.Endpoints.User;
 
 public class BindUserRequest

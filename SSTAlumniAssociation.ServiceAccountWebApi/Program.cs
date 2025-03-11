@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,8 +51,9 @@ builder.Services.AddScoped<IAuthorizationHandler, ServiceAccountHandler>();
 
 #region Auth
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthenticationJwtBearer(
+    _ => { },
+    options =>
     {
         var projectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
         options.Authority = $"https://securetoken.google.com/{projectId}";

@@ -13,7 +13,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Pars
  */
 // @ts-ignore
 export function createUserGetResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -57,7 +57,7 @@ export function deserializeIntoUserGetResponse(userGetResponse: Partial<SSTAlumn
 // @ts-ignore
 export function serializeUserGetResponse(writer: SerializationWriter, userGetResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (userGetResponse === undefined || userGetResponse === null) return;
-    switch (userGetResponse.type) {
+    switch (userGetResponse.discriminator) {
         case "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, userGetResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;

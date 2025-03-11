@@ -30,3 +30,5 @@ logs
 bin
 obj
 *.DotSettings.user
+
+.unikraft

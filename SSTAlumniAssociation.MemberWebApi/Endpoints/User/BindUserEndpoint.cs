@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Trace;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Dtos.User;
 using SSTAlumniAssociation.MemberWebApi.Mappers;

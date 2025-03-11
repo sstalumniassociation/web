@@ -1,9 +1,6 @@
-using System.Security.Claims;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Context;
-using SSTAlumniAssociation.Core.Entities;
-using SSTAlumniAssociation.ServiceAccountWebApi.Mappers;
 
 namespace SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.CheckIn;
 

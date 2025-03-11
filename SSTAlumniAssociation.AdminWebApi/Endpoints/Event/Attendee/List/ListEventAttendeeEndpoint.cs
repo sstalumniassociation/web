@@ -1,6 +1,5 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Get;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 

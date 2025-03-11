@@ -302,19 +302,8 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
-          }
-        ]
+        }
       }
     },
     "/Article": {
@@ -360,7 +349,7 @@
       "SSTAlumniAssociationCoreDtosUserUserResponse": {
         "type": "object",
         "discriminator": {
-          "propertyName": "type",
+          "propertyName": "discriminator",
           "mapping": {
             "Employee": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse",
             "Member": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse",
@@ -371,11 +360,11 @@
           }
         },
         "example": {
-          "type": "Employee"
+          "discriminator": "Employee"
         },
         "additionalProperties": false,
         "required": [
-          "type"
+          "discriminator"
         ],
         "properties": {
           "id": {
@@ -394,7 +383,7 @@
           "revoked": {
             "type": "boolean"
           },
-          "type": {
+          "discriminator": {
             "type": "string"
           }
         },
@@ -443,7 +432,7 @@
               "memberId": {
                 "type": "string"
               },
-              "subscription": {
+              "activeSubscription": {
                 "nullable": true,
                 "oneOf": [
                   {
@@ -478,7 +467,7 @@
           "paymentIntentState": {
             "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserPaymentIntentStateResponse"
           },
-          "plan": {
+          "membershipPlan": {
             "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMembershipPlanResponse"
           }
         }
@@ -519,8 +508,7 @@
             "type": "string"
           },
           "duration": {
-            "type": "string",
-            "format": "duration"
+            "type": "string"
           },
           "price": {
             "type": "number",
@@ -676,7 +664,8 @@
           },
           "checkOutDateTime": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           }
         }
       },

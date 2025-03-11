@@ -1,6 +1,4 @@
-using FastEndpoints;
 using SSTAlumniAssociation.Core.Dtos.User;
-using SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.User;
 
 namespace SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.CheckIn;
 
@@ -8,7 +6,7 @@ public abstract class CheckInResponse
 {
     public Guid Id { get; set; }
     public DateTime CheckInDateTime { get; set; }
-    public DateTime CheckOutDateTime { get; set; }
+    public DateTime? CheckOutDateTime { get; set; }
 }
 
 public class GuestCheckInResponse : CheckInResponse

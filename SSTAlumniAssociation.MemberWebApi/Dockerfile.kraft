@@ -20,4 +20,3 @@ RUN dotnet publish "SSTAlumniAssociation.MemberWebApi.csproj" -c $BUILD_CONFIGUR
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SSTAlumniAssociation.MemberWebApi.dll"]

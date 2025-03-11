@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { f7Card, f7CardContent, f7CardFooter, f7List, f7SkeletonBlock } from 'framework7-vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import type { SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyResponse } from '~/api/member/models'
-import type { SSTAlumniAssociationCoreDtosUserMemberResponse } from '~/api/service-account/models'
 
 const dayjs = useDayjs()
 const { width } = useWindowSize()
@@ -50,11 +48,14 @@ watch(latestCheckIn, (value, oldValue) => {
 })
 
 const membershipGradient: Record<string, string> = {
-  Associate: 'bg-gradient-to-br from-blue-500 to-blue-600',
-  Affiliate: 'bg-gradient-to-br from-purple-500 to-purple-600',
-  Exco: 'bg-gradient-to-br from-red-500 to-red-600',
-  Ordinary: 'bg-gradient-to-br from-yellow-500 to-yellow-600',
-  Revoked: 'bg-gradient-to-br from-gray-500 to-gray-600',
+  // Associatea
+  'c28780c6-d687-4bb8-b9ce-5fbca1e347c2': 'bg-gradient-to-br from-blue-500 to-blue-600',
+  // Affiliate
+  'd258488b-c5a3-4f96-add7-366be4934900': 'bg-gradient-to-br from-purple-500 to-purple-600',
+  // Exco
+  '7ad2dfda-82df-4597-a76f-40e5fd4fd28d': 'bg-gradient-to-br from-red-500 to-red-600',
+  // Ordinary
+  'c1869b12-56a9-4ed8-96d2-ef962c39799e': 'bg-gradient-to-br from-yellow-500 to-yellow-600',
 }
 
 const resolvedGradientClass = computed(() => {
@@ -62,21 +63,25 @@ const resolvedGradientClass = computed(() => {
     return null
   }
 
-  if (!user.value?.type) {
+  if (user.value?.revoked) {
+    return 'bg-gradient-to-br from-gray-500 to-gray-600'
+  }
+
+  if (!user.value?.discriminator) {
     throw new Error('Could not accurately determine user type.')
   }
 
-  if ('subscription' in user.value) {
-    if (!user.value.subscription?.plan?.name) {
+  if ('activeSubscription' in user.value) {
+    if (!user.value.activeSubscription?.membershipPlan?.name) {
       throw new Error('No subscription name')
     }
-    return membershipGradient[user.value.subscription?.plan?.name]
+    return membershipGradient[user.value.activeSubscription?.membershipPlan?.id ?? '']
   }
 
   return {
     SystemAdmin: 'bg-gradient-to-br from-indigo-500 to-indigo-600',
     ServiceAccount: 'bg-gradient-to-br from-slate-500 from-slate-600',
-  }[user.value?.type]
+  }[user.value?.discriminator]
 })
 
 const qrCode = useQRCode(() => latestCheckIn.value?.id ?? JSON.stringify({ user: user.value?.id ?? '' }), {
@@ -86,6 +91,12 @@ const qrCode = useQRCode(() => latestCheckIn.value?.id ?? JSON.stringify({ user:
 function cardClicked() {
   cardOpened.value = !cardOpened.value
 }
+
+onMounted(() => {
+  setTimeout(async () => {
+    await $memberApiClient.auth.whoAmI.get()
+  }, 3000)
+})
 </script>
 
 <template>
@@ -105,7 +116,7 @@ function cardClicked() {
             <span class="font-bold text-3xl">
               {{ user.name }}
             </span>
-            <span v-if="'subscription' in user" class="font-mono">
+            <span v-if="'activeSubscription' in user" class="font-mono">
               {{ user.memberId }}
             </span>
           </div>
@@ -121,7 +132,7 @@ function cardClicked() {
                 </span>
                 <br>
                 <span>
-                  {{ user?.subscription?.plan?.name }}
+                  {{ user?.activeSubscription?.membershipPlan?.name }}
                   member
                 </span>
               </div>
@@ -133,7 +144,7 @@ function cardClicked() {
               Class of {{ user.graduationYear }}
             </span>
             <span>
-              {{ user.subscription?.plan?.name }}
+              {{ user.activeSubscription?.membershipPlan?.name }}
               member
             </span>
           </div>

@@ -13,8 +13,8 @@ using SSTAlumniAssociation.Core.Entities;
 namespace SSTAlumniAssociation.Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250308061534_UpdateSeedMembershipPaymentIntentState")]
-    partial class UpdateSeedMembershipPaymentIntentState
+    [Migration("20250309080821_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

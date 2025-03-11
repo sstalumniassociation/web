@@ -4,7 +4,7 @@ namespace SSTAlumniAssociation.Core.Dtos.User;
 
 [
     JsonPolymorphic(
-        TypeDiscriminatorPropertyName = "type",
+        TypeDiscriminatorPropertyName = "discriminator",
         UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor
     ),
     JsonDerivedType(typeof(EmployeeResponse), "Employee"),

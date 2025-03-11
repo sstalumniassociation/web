@@ -1,5 +1,3 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Context;
@@ -10,7 +8,8 @@ using SSTAlumniAssociation.Core.Extensions;
 namespace SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
 
 /// <inheritdoc cref="AdminRequirement" />
-public class AdminRequirementExcoHandler(AppDbContext dbContext) : AuthorizationHandler<AdminRequirement>
+public class AdminRequirementExcoHandler(AppDbContext dbContext, ILogger<AdminRequirementExcoHandler> logger)
+    : AuthorizationHandler<AdminRequirement>
 {
     /// <inheritdoc />
     protected override async Task HandleRequirementAsync(
@@ -18,30 +17,22 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext) : Authorization
         AdminRequirement requirement
     )
     {
-        var sa = await dbContext.Members
-            .Include(u => u.Subscriptions)
-            .WhereUserMatchesEmailFromClaims(context.User.Claims)
-            .SingleOrDefaultAsync();
-
-        if (sa is null)
-        {
-            context.Fail();
-            return;
-        }
-
-        var activeSubscription = sa.Subscriptions.SingleOrDefault(s =>
-            s.StartDateTime <= DateTime.Now &&
-            s.EndDateTime >= DateTime.Now &&
-            s.PaymentIntentState == PaymentIntentState.Success &&
-            s.MembershipPlanId == DefaultMembershipPlans.Exco.Id
-        );
+        var activeSubscription = await dbContext.MembershipSubscriptions
+            .Include(s => s.Member)
+            .SingleOrDefaultAsync(s =>
+                s.Member.Email == context.User.Claims.GetEmail() &&
+                s.StartDateTime <= DateTime.UtcNow &&
+                s.EndDateTime >= DateTime.UtcNow &&
+                s.PaymentIntentState == PaymentIntentState.Success &&
+                s.MembershipPlanId == DefaultMembershipPlans.Exco.Id
+            );
 
         if (activeSubscription is null)
         {
-            context.Fail();
+            logger.LogWarning("Admin requirement failed for user {Email}", context.User.Claims.GetEmail());
             return;
         }
 
-        context.Succeed(requirement);
+        logger.LogInformation("Admin requirement succeeded for user {Email}", activeSubscription.Member.Email);
     }
 }

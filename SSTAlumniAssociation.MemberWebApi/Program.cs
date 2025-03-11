@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
+using Scalar.AspNetCore;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceDefaults;
@@ -51,8 +53,9 @@ builder.Services.AddScoped<IAuthorizationHandler, MemberRequirementSystemAdminHa
 
 #region Auth
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthenticationJwtBearer(
+    _ => { },
+    options =>
     {
         var projectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
         options.Authority = $"https://securetoken.google.com/{projectId}";
@@ -123,7 +126,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.UseFastEndpoints(options => { options.Versioning.Prefix = "v"; })
+app.UseFastEndpoints(options =>
+    {
+        options.Versioning.Prefix = "v";
+    })
     .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
 
 await app.GenerateApiClientsAndExitAsync(
@@ -139,6 +145,8 @@ if (app.Environment.IsDevelopment())
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
+    
+    app.MapScalarApiReference();
 }
 
 app.UseCors();

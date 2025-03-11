@@ -9,9 +9,4 @@ public class Policies
     /// Members
     /// </summary>
     public const string Member = "Member";
-
-    /// <summary>
-    /// Admin
-    /// </summary>
-    public const string Admin = "Admin";
 }

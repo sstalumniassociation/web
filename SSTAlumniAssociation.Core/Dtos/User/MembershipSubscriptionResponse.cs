@@ -7,5 +7,5 @@ public class MembershipSubscriptionResponse
     public DateTime EndDateTime { get; set; }
     public string? PaymentIntentId { get; set; }
     public PaymentIntentStateResponse PaymentIntentState { get; set; } = PaymentIntentStateResponse.None;
-    public MembershipPlanResponse Plan { get; set; }
+    public MembershipPlanResponse MembershipPlan { get; set; }
 }

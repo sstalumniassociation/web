@@ -1,7 +1,4 @@
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Attendee;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.Event.Attendee.BatchCreate;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Dtos.User;

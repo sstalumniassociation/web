@@ -1,15 +1,11 @@
-using System.Text.Json.Serialization;
 using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql;
-using NSwag;
 using Scalar.AspNetCore;
 using SSTAlumniAssociation.AdminWebApi.Authorization;
 using SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
@@ -85,16 +81,6 @@ builder.Services.AddFastEndpoints()
         {
             s.Title = "SST Alumni Association Admin API";
             s.Version = "v1";
-
-            s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
-            {
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Firebase ID Token",
-                Name = "Authorization",
-                Type = OpenApiSecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = JwtBearerDefaults.AuthenticationScheme
-            });
         };
     });
 
@@ -141,12 +127,11 @@ if (app.Environment.IsDevelopment())
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
-
-    app.MapScalarApiReference();
 }
 
 app.UseCors();
-
 app.UseHttpsRedirection();
+
+app.MapScalarApiReference();
 
 app.Run();

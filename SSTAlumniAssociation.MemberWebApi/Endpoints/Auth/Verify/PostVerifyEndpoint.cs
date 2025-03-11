@@ -1,6 +1,5 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Trace;
 using SSTAlumniAssociation.Core.Context;
 
 namespace SSTAlumniAssociation.MemberWebApi.Endpoints.Auth.Verify;

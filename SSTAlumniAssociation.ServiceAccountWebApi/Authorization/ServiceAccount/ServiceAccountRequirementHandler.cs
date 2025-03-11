@@ -15,8 +15,7 @@ public class ServiceAccountHandler(AppDbContext dbContext) : AuthorizationHandle
     )
     {
         var sa = await dbContext.ServiceAccounts
-            .WhereUserMatchesEmailFromClaims(context.User.Claims)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(u => u.Email == context.User.Claims.GetEmail());
 
         if (sa is not null)
         {

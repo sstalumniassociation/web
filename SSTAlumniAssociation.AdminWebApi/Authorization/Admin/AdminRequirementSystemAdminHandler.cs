@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Context;
-using SSTAlumniAssociation.Core.Entities.MembershipPlans;
 using SSTAlumniAssociation.Core.Extensions;
 
 namespace SSTAlumniAssociation.AdminWebApi.Authorization.Admin;
@@ -16,8 +15,7 @@ public class AdminRequirementSystemAdminHandler(AppDbContext dbContext) : Author
     )
     {
         var sa = await dbContext.SystemAdmins
-            .WhereUserMatchesEmailFromClaims(context.User.Claims)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(sa => sa.Email == context.User.Claims.GetEmail());
 
         if (sa is not null)
         {

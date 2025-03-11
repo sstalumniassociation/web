@@ -1,6 +1,4 @@
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SSTAlumniAssociation.AdminWebApi.Endpoints.Event;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Dtos.User;

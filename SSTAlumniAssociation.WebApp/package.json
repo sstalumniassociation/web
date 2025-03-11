@@ -42,6 +42,7 @@
     "@tanstack/query-core": "^5.66.11",
     "@tanstack/query-persist-client-core": "^5.66.11",
     "@tanstack/vue-query": "^5.66.11",
+    "@tanstack/vue-query-devtools": "^5.67.2",
     "@types/papaparse": "^5.3.15",
     "@unocss/nuxt": "^66.0.0",
     "@vee-validate/zod": "^4.15.0",

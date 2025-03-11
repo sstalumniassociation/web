@@ -477,8 +477,8 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                 columns: new[] { "Id", "EndDateTime", "MemberId", "MembershipPlanId", "PaymentIntentId", "PaymentIntentState", "StartDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("58352738-955f-41b5-ae42-57c2e01d7452"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.None, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) },
-                    { new Guid("d44eba3b-5556-4978-8188-7440762b1288"), new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.None, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) }
+                    { new Guid("58352738-955f-41b5-ae42-57c2e01d7452"), new DateTime(2026, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.Success, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) },
+                    { new Guid("d44eba3b-5556-4978-8188-7440762b1288"), new DateTime(2026, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc), new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"), new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"), null, PaymentIntentState.Success, new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc) }
                 });
 
             migrationBuilder.InsertData(

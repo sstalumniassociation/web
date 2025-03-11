@@ -1,6 +1,5 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.Delete;

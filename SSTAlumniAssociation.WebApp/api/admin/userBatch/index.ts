@@ -13,7 +13,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Pars
  */
 // @ts-ignore
 export function createSSTAlumniAssociationCoreDtosUserUserResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -57,7 +57,7 @@ export function deserializeIntoSSTAlumniAssociationCoreDtosUserUserResponse(sSTA
 // @ts-ignore
 export function serializeSSTAlumniAssociationCoreDtosUserUserResponse(writer: SerializationWriter, sSTAlumniAssociationCoreDtosUserUserResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (sSTAlumniAssociationCoreDtosUserUserResponse === undefined || sSTAlumniAssociationCoreDtosUserUserResponse === null) return;
-    switch (sSTAlumniAssociationCoreDtosUserUserResponse.type) {
+    switch (sSTAlumniAssociationCoreDtosUserUserResponse.discriminator) {
         case "AlumniMember":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, sSTAlumniAssociationCoreDtosUserUserResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.AdminWebApi.Mappers;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Dtos.User;
+using SSTAlumniAssociation.Core.Entities;
 
 namespace SSTAlumniAssociation.AdminWebApi.Endpoints.User.List;
 
@@ -17,7 +18,11 @@ public class ListUserEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<I
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var users = await dbContext.Users.ToListAsync(cancellationToken: ct);
+        var users = await dbContext.Users
+            .Include(u => ((Member)u).Subscriptions)
+            .ThenInclude(m => m.MembershipPlan)
+            .ToListAsync(cancellationToken: ct);
+        
         await SendOkAsync(users.ToResponse().ToImmutableList(), ct);
     }
 }

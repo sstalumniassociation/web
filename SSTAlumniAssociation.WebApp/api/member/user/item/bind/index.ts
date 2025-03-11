@@ -31,7 +31,7 @@ export interface BindRequestBuilder extends BaseRequestBuilder<BindRequestBuilde
  */
 // @ts-ignore
 export function createBindPostResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -75,7 +75,7 @@ export function deserializeIntoBindPostResponse(bindPostResponse: Partial<SSTAlu
 // @ts-ignore
 export function serializeBindPostResponse(writer: SerializationWriter, bindPostResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (bindPostResponse === undefined || bindPostResponse === null) return;
-    switch (bindPostResponse.type) {
+    switch (bindPostResponse.discriminator) {
         case "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, bindPostResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;

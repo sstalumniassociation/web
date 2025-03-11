@@ -44,7 +44,7 @@ export function createSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreateUs
  */
 // @ts-ignore
 export function createSSTAlumniAssociationCoreDtosUserUserResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -73,7 +73,7 @@ export function createSSTAlumniAssociationCoreDtosUserUserResponseFromDiscrimina
  */
 // @ts-ignore
 export function createUserPostResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    const mappingValueNode = parseNode?.getChildNode("type");
+    const mappingValueNode = parseNode?.getChildNode("discriminator");
     if (mappingValueNode) {
         const mappingValue = mappingValueNode.getStringValue();
         if (mappingValue) {
@@ -175,7 +175,7 @@ export function serializeSSTAlumniAssociationAdminWebApiEndpointsUserCreateCreat
 // @ts-ignore
 export function serializeSSTAlumniAssociationCoreDtosUserUserResponse(writer: SerializationWriter, sSTAlumniAssociationCoreDtosUserUserResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (sSTAlumniAssociationCoreDtosUserUserResponse === undefined || sSTAlumniAssociationCoreDtosUserUserResponse === null) return;
-    switch (sSTAlumniAssociationCoreDtosUserUserResponse.type) {
+    switch (sSTAlumniAssociationCoreDtosUserUserResponse.discriminator) {
         case "AlumniMember":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, sSTAlumniAssociationCoreDtosUserUserResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;
@@ -203,7 +203,7 @@ export function serializeSSTAlumniAssociationCoreDtosUserUserResponse(writer: Se
 // @ts-ignore
 export function serializeUserPostResponse(writer: SerializationWriter, userPostResponse: Partial<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse> | undefined | null = {}) : void {
     if (userPostResponse === undefined || userPostResponse === null) return;
-    switch (userPostResponse.type) {
+    switch (userPostResponse.discriminator) {
         case "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse":
             serializeSSTAlumniAssociationCoreDtosUserAlumniMemberResponse(writer, userPostResponse as SSTAlumniAssociationCoreDtosUserAlumniMemberResponse);
             break;

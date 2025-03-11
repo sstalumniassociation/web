@@ -6,7 +6,7 @@ public abstract class CheckInResponse
 {
     public Guid Id { get; set; }
     public DateTime CheckInDateTime { get; set; }
-    public DateTime CheckOutDateTime { get; set; }
+    public DateTime? CheckOutDateTime { get; set; }
     public Guid ServiceAccountId { get; set; }
 }
 

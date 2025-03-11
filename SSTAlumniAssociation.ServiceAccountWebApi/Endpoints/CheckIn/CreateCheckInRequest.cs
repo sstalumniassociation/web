@@ -1,8 +1,4 @@
 using System.Text.Json.Serialization;
-using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
-using SSTAlumniAssociation.Core.Context;
-using SSTAlumniAssociation.ServiceAccountWebApi.Mappers;
 
 namespace SSTAlumniAssociation.ServiceAccountWebApi.Endpoints.CheckIn;
 

@@ -6,7 +6,7 @@ using SSTAlumniAssociation.MemberWebApi.Mappers;
 
 namespace SSTAlumniAssociation.MemberWebApi.Endpoints.CheckIn;
 
-public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<List<CheckInResponse>>
+public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<IEnumerable<CheckInResponse>>
 {
     public override void Configure()
     {
@@ -15,11 +15,10 @@ public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutReques
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var user = await dbContext.Users
-            .WhereUserMatchesEmailFromClaims(HttpContext.User.Claims)
-            .Include(u => u.CheckIns)
-            .SingleAsync(cancellationToken: ct);
+        var checkIns = dbContext.UserCheckIns
+            .Include(u => u.User)
+            .Where(c => c.User.Email == User.Claims.GetEmail());
 
-        await SendOkAsync(user.CheckIns.Select(c => c.ToResponse()).ToList(), ct);
+        await SendOkAsync(checkIns.Select(c => c.ToResponse()), ct);
     }
 }
