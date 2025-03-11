@@ -14,6 +14,7 @@ env:
 
 jobs:
   deploy:
+    concurrency: deploy
     permissions:
       packages: write
       contents: read
@@ -40,10 +41,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Remove untagged images
-        shell: pwsh
-        run: |
-          ((iwr -Headers @{ "Authorization" = "Bearer $($env:UKC_TOKEN)" } https://api.sin0.kraft.cloud/v1/images/list?namespace=gqin).Content | ConvertFrom-Json).data.images | Where-Object { $_.tags.Length -lt 1 } | ForEach-Object { kraft cloud img rm $_.digest }
+#      - name: Remove untagged images
+#        shell: pwsh
+#        run: |
+#          ((iwr -Headers @{ "Authorization" = "Bearer $($env:UKC_TOKEN)" } https://api.sin0.kraft.cloud/v1/images/list?namespace=gqin).Content | ConvertFrom-Json).data.images | Where-Object { $_.tags.Length -lt 1 } | ForEach-Object { kraft cloud img rm $_.digest }
 
       - uses: unikraft/kraftkit@stable
         with:
