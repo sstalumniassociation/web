@@ -41,6 +41,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+#      - name: Install Kraftkit
+#        run: |
+#          curl -sSfL https://get.kraftkit.sh | sh
+#          
+#      - name: Build image
+#        run: |
+#          kraft build
+      
       - uses: unikraft/kraftkit@stable
         with:
           kraftfile: ./SSTAlumniAssociation.AdminWebApi/kraft.yml
@@ -48,5 +56,5 @@ jobs:
           arch: x86_64
           plat: kraftcloud
           push: true
-          loglevel: 'debug'
+          loglevel: 'trace'
           output: oci://ghcr.io/sstalumniassociation/web-admin-api:latest
