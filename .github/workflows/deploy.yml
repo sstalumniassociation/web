@@ -56,11 +56,8 @@ jobs:
               -M 512 \
               -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
               -e Firebase__ProjectId='sstaa-app' \
-              -e DOTNET_URLS='http://0.0.0.0:5000'
+              -e DOTNET_URLS='http://0.0.0.0:5000';
 
-      - uses: unikraft/kraftkit@stable
-        with:
-          run: |
             kraft cloud deploy \
               -K ./kraft.member.yml \
               --rootfs ./Dockerfile.member \
@@ -69,11 +66,8 @@ jobs:
               -M 512 \
               -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
               -e Firebase__ProjectId='sstaa-app' \
-              -e DOTNET_URLS='http://0.0.0.0:5000'
+              -e DOTNET_URLS='http://0.0.0.0:5000';
 
-      - uses: unikraft/kraftkit@stable
-        with:
-          run: |
             kraft cloud deploy \
               -K ./kraft.service-account.yml \
               --rootfs ./Dockerfile.service-account \
