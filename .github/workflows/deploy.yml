@@ -36,7 +36,6 @@ jobs:
 
       - uses: unikraft/kraftkit@stable
         with:
-          workdir: .
           kraftfile: ./SSTAlumniAssociation.AdminWebApi/kraft.yml
           rootfs: ./SSTAlumniAssociation.AdminWebApi/Dockerfile
           arch: x86_64
