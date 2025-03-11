@@ -53,8 +53,6 @@ jobs:
         with:
           kraftfile: ./SSTAlumniAssociation.AdminWebApi/kraft.yml
           rootfs: ./SSTAlumniAssociation.AdminWebApi/Dockerfile
-          arch: x86_64
-          plat: qemu
           push: true
           loglevel: 'trace'
           output: oci://ghcr.io/sstalumniassociation/web-admin-api:latest
