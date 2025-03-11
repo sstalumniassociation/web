@@ -42,4 +42,3 @@ jobs:
           plat: kraftcloud
           push: true
           output: oci://ghcr.io/sstalumniassociation/web-admin-api:latest
-          name: 'sstaa-admin-api'
