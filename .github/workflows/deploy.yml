@@ -11,7 +11,6 @@ on:
 env:
   UKC_TOKEN: ${{ secrets.UKC_TOKEN }}
   UKC_METRO: sin0
-  ConnectionStrings__sstaa: ${{ secrets.ConnectionStrings__sstaa }}
 
 jobs:
   deploy:
@@ -43,9 +42,13 @@ jobs:
 
       - uses: unikraft/kraftkit@stable
         with:
-          kraftfile: ./kraft.admin.yml
-          rootfs: ./Dockerfile.admin
-          plat: kraftcloud
-          push: true
-          loglevel: 'trace'
-          output: oci://ghcr.io/sstalumniassociation/web-admin-api:latest
+          run: |
+            kraft cloud deploy \
+              -K ./kraft.admin.yml \
+              --rootfs ./Dockerfile.admin \
+              --rollout remove \
+              -g sstaa-admin-api \
+              -M 512 \
+              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+              -e Firebase__ProjectId='sstaa-app' \
+              -e DOTNET_URLS='http://0.0.0.0:5000'
