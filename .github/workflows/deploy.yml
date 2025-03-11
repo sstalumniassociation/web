@@ -41,16 +41,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Install Kraftkit
-#        run: |
-#          curl -sSfL https://get.kraftkit.sh | sh
-#          
-#      - name: Build image
-#        run: |
-#          kraft build
-      
       - uses: unikraft/kraftkit@stable
         with:
+          arch: x86_64
+          plat: qemu
           kraftfile: ./SSTAlumniAssociation.AdminWebApi/kraft.yml
           rootfs: ./SSTAlumniAssociation.AdminWebApi/Dockerfile
           push: true
