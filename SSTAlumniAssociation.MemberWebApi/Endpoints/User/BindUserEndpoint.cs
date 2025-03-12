@@ -7,13 +7,6 @@ using SSTAlumniAssociation.MemberWebApi.Mappers;
 
 namespace SSTAlumniAssociation.MemberWebApi.Endpoints.User;
 
-/// <summary>
-/// Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the different
-/// permission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (where
-/// only the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists for
-/// this specific use case. This route should be called by end-users only (not admins) as it will bind the user ID
-/// provided to the current authenticated user.
-/// </summary>
 public class BindUserEndpoint(AppDbContext dbContext) : Endpoint<BindUserRequest, UserResponse>
 {
     public override void Configure()
