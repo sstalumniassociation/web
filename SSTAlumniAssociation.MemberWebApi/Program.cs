@@ -145,8 +145,6 @@ if (app.Environment.IsDevelopment())
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
-    
-    app.MapScalarApiReference();
 }
 
 app.UseCors();
@@ -155,5 +153,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
+
+app.MapScalarApiReference();
 
 app.Run();
