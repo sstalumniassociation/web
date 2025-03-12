@@ -97,8 +97,8 @@ builder.Services.AddCors(options =>
         policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",
-            "http://localhost:3000"
-        );
+            builder.Environment.IsDevelopment() ? "http://localhost:3000" : "https://*.sstaa.pages.dev"
+       );
     });
 });
 

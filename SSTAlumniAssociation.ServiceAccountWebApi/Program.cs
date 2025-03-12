@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
+using Scalar.AspNetCore;
 using SSTAlumniAssociation.Core.Context;
 using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceAccountWebApi.Authorization;
@@ -107,10 +108,10 @@ builder.Services.AddCors(options =>
     {
         policy.AllowCredentials();
         policy.AllowAnyMethod();
-        policy.WithHeaders("Authorization", "Content-Type");
+        policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",
-            "http://localhost:3000"
+            builder.Environment.IsDevelopment() ? "http://localhost:3000" : "https://*.sstaa.pages.dev"
         );
     });
 });
@@ -147,5 +148,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
+app.MapScalarApiReference();
 
 app.Run();
