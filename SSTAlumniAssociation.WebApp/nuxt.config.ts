@@ -169,9 +169,9 @@ export default defineNuxtConfig({
 
     public: {
       api: {
-        member: process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || 'https://localhost:7066',
-        admin: process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || 'https://localhost:7042',
-        serviceAccount: process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || 'https://localhost:7070',
+        member: process.env.API_MEMBER || process.env['services__member-web-api__https__0'] || process.env['services__member-web-api__http__0'] || 'https://localhost:7066',
+        admin: process.env.API_ADMIN || process.env['services__admin-web-api__https__0'] || process.env['services__admin-web-api__http__0'] || 'https://localhost:7042',
+        serviceAccount: process.env.API_SERVICE_ACCOUNT || process.env['services__service-account-web-api__https__0'] || process.env['services__service-account-web-api__http__0'] || 'https://localhost:7070',
       },
 
       growthbook: {
