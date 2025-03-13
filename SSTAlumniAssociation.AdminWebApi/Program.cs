@@ -98,7 +98,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
             "https://app.sstaa.org",
             builder.Environment.IsDevelopment() ? "http://localhost:3000" : "https://*.sstaa.pages.dev"
-       );
+       ).SetIsOriginAllowedToAllowWildcardSubdomains();
     });
 });
 
