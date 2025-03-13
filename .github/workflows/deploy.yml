@@ -65,7 +65,7 @@ jobs:
               --rollout remove \
               -g sstaa-member-api \
               -M 512 \
-              --timeout 5m \
+              --timeout 30m \
               -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
               -e Firebase__ProjectId='sstaa-app' \
               -e DOTNET_URLS='http://0.0.0.0:5000';
