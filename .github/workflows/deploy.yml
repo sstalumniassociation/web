@@ -49,15 +49,15 @@ jobs:
       - uses: unikraft/kraftkit@stable
         with:
           run: |
-            kraft cloud deploy \
-              -K ./kraft.admin.yml \
-              --rootfs ./Dockerfile.admin \
-              --rollout remove \
-              -g sstaa-admin-api \
-              -M 512 \
-              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
-              -e Firebase__ProjectId='sstaa-app' \
-              -e DOTNET_URLS='http://0.0.0.0:5000';
+            # kraft cloud deploy \
+            #   -K ./kraft.admin.yml \
+            #   --rootfs ./Dockerfile.admin \
+            #   --rollout remove \
+            #   -g sstaa-admin-api \
+            #   -M 512 \
+            #   -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+            #   -e Firebase__ProjectId='sstaa-app' \
+            #   -e DOTNET_URLS='http://0.0.0.0:5000';
 
             kraft cloud deploy \
               -K ./kraft.member.yml \
@@ -69,13 +69,13 @@ jobs:
               -e Firebase__ProjectId='sstaa-app' \
               -e DOTNET_URLS='http://0.0.0.0:5000';
 
-            kraft cloud deploy \
-              -K ./kraft.service-account.yml \
-              --rootfs ./Dockerfile.service-account \
-              --rollout remove \
-              -g sstaa-service-account-api \
-              -M 512 \
-              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
-              -e Firebase__ProjectId='sstaa-app' \
-              -e DOTNET_URLS='http://0.0.0.0:5000'
+            # kraft cloud deploy \
+            #   -K ./kraft.service-account.yml \
+            #   --rootfs ./Dockerfile.service-account \
+            #   --rollout remove \
+            #   -g sstaa-service-account-api \
+            #   -M 512 \
+            #   -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+            #   -e Firebase__ProjectId='sstaa-app' \
+            #   -e DOTNET_URLS='http://0.0.0.0:5000'
 
