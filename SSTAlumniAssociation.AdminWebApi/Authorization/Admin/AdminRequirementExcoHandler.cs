@@ -30,9 +30,11 @@ public class AdminRequirementExcoHandler(AppDbContext dbContext, ILogger<AdminRe
         if (activeSubscription is null)
         {
             logger.LogWarning("Admin requirement failed for user {Email}", context.User.Claims.GetEmail());
+            context.Fail();
             return;
         }
 
         logger.LogInformation("Admin requirement succeeded for user {Email}", activeSubscription.Member.Email);
+        context.Succeed(requirement);
     }
 }
