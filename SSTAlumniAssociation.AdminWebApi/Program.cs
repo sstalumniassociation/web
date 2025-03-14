@@ -108,6 +108,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.UseCors();
+app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -128,9 +131,6 @@ if (app.Environment.IsDevelopment())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
 }
-
-app.UseCors();
-app.UseHttpsRedirection();
 
 app.MapScalarApiReference();
 
