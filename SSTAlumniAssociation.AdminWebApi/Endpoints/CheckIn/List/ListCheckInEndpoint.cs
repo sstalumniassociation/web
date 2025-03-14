@@ -19,6 +19,9 @@ public class ListCheckInEndpoint(AppDbContext dbContext) : EndpointWithoutReques
         var checkIns = await dbContext.CheckIns
             .Include(c => ((UserCheckIn)c).User)
             .ThenInclude(u => u.Revocations)
+            .Include(c => ((UserCheckIn)c).User)
+            .ThenInclude(u => ((Member)u).Subscriptions)
+            .ThenInclude(s => s.MembershipPlan)
             .ToListAsync(cancellationToken: ct);
 
         await SendAsync(checkIns.ToResponse(), cancellation: ct);
