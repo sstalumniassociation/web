@@ -147,6 +147,15 @@ export function createSSTAlumniAssociationMemberWebApiEndpointsArticleArticleRes
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse}
+ */
+// @ts-ignore
+export function createSSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest}
  */
 // @ts-ignore
@@ -170,15 +179,6 @@ export function createSSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVer
 // @ts-ignore
 export function createSSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse}
- */
-// @ts-ignore
-export function createSSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -335,6 +335,20 @@ export function deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsArticleA
  * @returns {Record<string, (node: ParseNode) => void>}
  */
 // @ts-ignore
+export function deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse(sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse: Partial<SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "admissionKey": n => { sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admissionKey = n.getStringValue(); },
+        "admittedAt": n => { sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admittedAt = n.getDateValue(); },
+        "admittedBy": n => { sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admittedBy = n.getObjectValue<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse>(createSSTAlumniAssociationCoreDtosUserAlumniMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse>(createSSTAlumniAssociationCoreDtosUserEmployeeMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserEmployeeResponse>(createSSTAlumniAssociationCoreDtosUserEmployeeResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserMemberResponse>(createSSTAlumniAssociationCoreDtosUserMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserServiceAccountResponse>(createSSTAlumniAssociationCoreDtosUserServiceAccountResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserSystemAdminResponse>(createSSTAlumniAssociationCoreDtosUserSystemAdminResponseFromDiscriminatorValue); },
+        "event": n => { sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.event = n.getObjectValue<SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse>(createSSTAlumniAssociationMemberWebApiEndpointsEventEventResponseFromDiscriminatorValue); },
+        "id": n => { sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.id = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
 export function deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest(sSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest: Partial<SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "email": n => { sSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest.email = n.getStringValue(); },
@@ -361,18 +375,6 @@ export function deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsCheckInC
         "checkInDateTime": n => { sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.checkInDateTime = n.getDateValue(); },
         "checkOutDateTime": n => { sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.checkOutDateTime = n.getDateValue(); },
         "id": n => { sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.id = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoSSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse(sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse: Partial<SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "admissionKey": n => { sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.admissionKey = n.getStringValue(); },
-        "id": n => { sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.id = n.getStringValue(); },
-        "user": n => { sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.user = n.getObjectValue<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse>(createSSTAlumniAssociationCoreDtosUserAlumniMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse>(createSSTAlumniAssociationCoreDtosUserEmployeeMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserEmployeeResponse>(createSSTAlumniAssociationCoreDtosUserEmployeeResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserMemberResponse>(createSSTAlumniAssociationCoreDtosUserMemberResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserServiceAccountResponse>(createSSTAlumniAssociationCoreDtosUserServiceAccountResponseFromDiscriminatorValue) ?? n.getObjectValue<SSTAlumniAssociationCoreDtosUserSystemAdminResponse>(createSSTAlumniAssociationCoreDtosUserSystemAdminResponseFromDiscriminatorValue); },
     }
 }
 /**
@@ -557,6 +559,20 @@ export function serializeSSTAlumniAssociationMemberWebApiEndpointsArticleArticle
  * @param writer Serialization writer to use to serialize this model
  */
 // @ts-ignore
+export function serializeSSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse(writer: SerializationWriter, sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse: Partial<SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse> | undefined | null = {}) : void {
+    if (sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse) {
+        writer.writeStringValue("admissionKey", sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admissionKey);
+        writer.writeDateValue("admittedAt", sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admittedAt);
+        writer.writeObjectValue<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse>("admittedBy", sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.admittedBy, serializeSSTAlumniAssociationCoreDtosUserUserResponseWrapper);
+        writer.writeObjectValue<SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse>("event", sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.event, serializeSSTAlumniAssociationMemberWebApiEndpointsEventEventResponse);
+        writer.writeStringValue("id", sSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse.id);
+    }
+}
+/**
+ * Serializes information the current object
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
 export function serializeSSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest(writer: SerializationWriter, sSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest: Partial<SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest> | undefined | null = {}) : void {
     if (sSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest) {
         writer.writeStringValue("email", sSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest.email);
@@ -583,18 +599,6 @@ export function serializeSSTAlumniAssociationMemberWebApiEndpointsCheckInCheckIn
         writer.writeDateValue("checkInDateTime", sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.checkInDateTime);
         writer.writeDateValue("checkOutDateTime", sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.checkOutDateTime);
         writer.writeStringValue("id", sSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse.id);
-    }
-}
-/**
- * Serializes information the current object
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeSSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse(writer: SerializationWriter, sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse: Partial<SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse> | undefined | null = {}) : void {
-    if (sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse) {
-        writer.writeStringValue("admissionKey", sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.admissionKey);
-        writer.writeStringValue("id", sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.id);
-        writer.writeObjectValue<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse>("user", sSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse.user, serializeSSTAlumniAssociationCoreDtosUserUserResponseWrapper);
     }
 }
 /**
@@ -779,6 +783,28 @@ export interface SSTAlumniAssociationMemberWebApiEndpointsArticleArticleResponse
      */
     title?: string | null;
 }
+export interface SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse extends Parsable {
+    /**
+     * The admissionKey property
+     */
+    admissionKey?: string | null;
+    /**
+     * The admittedAt property
+     */
+    admittedAt?: Date | null;
+    /**
+     * The admittedBy property
+     */
+    admittedBy?: SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse | null;
+    /**
+     * The event property
+     */
+    event?: SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse | null;
+    /**
+     * The id property
+     */
+    id?: string | null;
+}
 export interface SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest extends Parsable {
     /**
      * The email property
@@ -808,20 +834,6 @@ export interface SSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse
      * The id property
      */
     id?: string | null;
-}
-export interface SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse extends Parsable {
-    /**
-     * The admissionKey property
-     */
-    admissionKey?: string | null;
-    /**
-     * The id property
-     */
-    id?: string | null;
-    /**
-     * The user property
-     */
-    user?: SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse | null;
 }
 export interface SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse extends Parsable {
     /**

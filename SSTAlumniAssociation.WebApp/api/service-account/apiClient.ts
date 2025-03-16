@@ -4,7 +4,7 @@
 // @ts-ignore
 import { CheckInRequestBuilderNavigationMetadata, CheckInRequestBuilderRequestsMetadata, type CheckInRequestBuilder } from './checkIn/index.js';
 // @ts-ignore
-import { type UserRequestBuilder, UserRequestBuilderNavigationMetadata } from './user/index.js';
+import { UserRequestBuilderNavigationMetadata, type UserRequestBuilder } from './user/index.js';
 // @ts-ignore
 import { apiClientProxifier, registerDefaultDeserializer, registerDefaultSerializer, type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type RequestAdapter } from '@microsoft/kiota-abstractions';
 // @ts-ignore

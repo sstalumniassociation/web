@@ -11,7 +11,6 @@
         "tags": [
           "User"
         ],
-        "summary": "Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the different\npermission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (where\nonly the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists for\nthis specific use case. This route should be called by end-users only (not admins) as it will bind the user ID\nprovided to the current authenticated user.",
         "operationId": "SSTAlumniAssociationMemberWebApiEndpointsUserBindUserEndpoint",
         "parameters": [
           {
@@ -169,7 +168,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse"
+                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse"
                   }
                 }
               }
@@ -299,6 +298,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Attendee/{AttendeeId}": {
+      "get": {
+        "tags": [
+          "Attendee"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetGetAttendeeEndpoint",
+        "parameters": [
+          {
+            "name": "attendeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse"
                 }
               }
             }
@@ -630,7 +659,7 @@
         "type": "object",
         "additionalProperties": false
       },
-      "SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeAttendeeResponse": {
+      "SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -639,9 +668,18 @@
             "format": "guid"
           },
           "admissionKey": {
-            "type": "string"
+            "type": "string",
+            "format": "guid"
           },
-          "user": {
+          "admittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "event": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse"
+          },
+          "admittedBy": {
             "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
           }
         }

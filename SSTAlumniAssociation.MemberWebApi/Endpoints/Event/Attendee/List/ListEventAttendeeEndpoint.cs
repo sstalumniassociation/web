@@ -1,6 +1,7 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.MemberWebApi.Endpoints.Attendee.Get;
 using SSTAlumniAssociation.MemberWebApi.Mappers;
 
 namespace SSTAlumniAssociation.MemberWebApi.Endpoints.Event.Attendee.List;

@@ -14,13 +14,13 @@
         <PackageReference Include="FastEndpoints.ClientGen.Kiota" Version="5.35.0" />
         <PackageReference Include="FastEndpoints.Security" Version="5.35.0" />
         <PackageReference Include="FastEndpoints.Swagger" Version="5.35.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.0.26" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.0.30" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
         <PackageReference Include="Riok.Mapperly" Version="4.1.1" />
     </ItemGroup>
 
@@ -34,6 +34,10 @@
         <ProjectReference Include="..\SSTAlumniAssociation.Core\SSTAlumniAssociation.Core.csproj" />
         <ProjectReference Include="..\SSTAlumniAssociation.Migrations\SSTAlumniAssociation.Migrations.csproj" />
         <ProjectReference Include="..\SSTAlumniAssociation.ServiceDefaults\SSTAlumniAssociation.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="Endpoints\Member\CreateMemberRequest.cs" />
     </ItemGroup>
 
     <Target Name="ClientGen" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(DOTNET_RUNNING_IN_CONTAINER)'!='true'">

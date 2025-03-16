@@ -4,13 +4,15 @@
 // @ts-ignore
 import { ArticleRequestBuilderRequestsMetadata, type ArticleRequestBuilder } from './article/index.js';
 // @ts-ignore
+import { AttendeeRequestBuilderNavigationMetadata, type AttendeeRequestBuilder } from './attendee/index.js';
+// @ts-ignore
 import { AuthRequestBuilderNavigationMetadata, type AuthRequestBuilder } from './auth/index.js';
 // @ts-ignore
 import { CheckInRequestBuilderRequestsMetadata, type CheckInRequestBuilder } from './checkIn/index.js';
 // @ts-ignore
 import { EventRequestBuilderNavigationMetadata, EventRequestBuilderRequestsMetadata, type EventRequestBuilder } from './event/index.js';
 // @ts-ignore
-import { type UserRequestBuilder, UserRequestBuilderNavigationMetadata } from './user/index.js';
+import { UserRequestBuilderNavigationMetadata, type UserRequestBuilder } from './user/index.js';
 // @ts-ignore
 import { apiClientProxifier, registerDefaultDeserializer, registerDefaultSerializer, type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type RequestAdapter } from '@microsoft/kiota-abstractions';
 // @ts-ignore
@@ -30,6 +32,10 @@ export interface ApiClient extends BaseRequestBuilder<ApiClient> {
      * The Article property
      */
     get article(): ArticleRequestBuilder;
+    /**
+     * The Attendee property
+     */
+    get attendee(): AttendeeRequestBuilder;
     /**
      * The Auth property
      */
@@ -75,6 +81,9 @@ export const ApiClientUriTemplate = "{+baseurl}";
 export const ApiClientNavigationMetadata: Record<Exclude<keyof ApiClient, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
     article: {
         requestsMetadata: ArticleRequestBuilderRequestsMetadata,
+    },
+    attendee: {
+        navigationMetadata: AttendeeRequestBuilderNavigationMetadata,
     },
     auth: {
         navigationMetadata: AuthRequestBuilderNavigationMetadata,

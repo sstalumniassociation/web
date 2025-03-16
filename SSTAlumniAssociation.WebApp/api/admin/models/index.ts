@@ -7,20 +7,20 @@ import { type AdditionalDataHolder, type ApiError, type Parsable, type ParseNode
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FastEndpointsErrorResponse_errors}
- */
-// @ts-ignore
-export function createFastEndpointsErrorResponse_errorsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoFastEndpointsErrorResponse_errors;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {FastEndpointsErrorResponse}
  */
 // @ts-ignore
 export function createFastEndpointsErrorResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoFastEndpointsErrorResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FastEndpointsErrorResponse_errors}
+ */
+// @ts-ignore
+export function createFastEndpointsErrorResponse_errorsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFastEndpointsErrorResponse_errors;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value

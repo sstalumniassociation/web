@@ -8,9 +8,9 @@ import { CheckInRequestBuilderRequestsMetadata, type CheckInRequestBuilder } fro
 // @ts-ignore
 import { EventRequestBuilderNavigationMetadata, EventRequestBuilderRequestsMetadata, type EventRequestBuilder } from './event/index.js';
 // @ts-ignore
-import { type UserRequestBuilder, UserRequestBuilderNavigationMetadata, UserRequestBuilderRequestsMetadata } from './user/index.js';
+import { UserRequestBuilderNavigationMetadata, UserRequestBuilderRequestsMetadata, type UserRequestBuilder } from './user/index.js';
 // @ts-ignore
-import { type UserBatchRequestBuilder, UserBatchRequestBuilderRequestsMetadata } from './userBatch/index.js';
+import { UserBatchRequestBuilderRequestsMetadata, type UserBatchRequestBuilder } from './userBatch/index.js';
 // @ts-ignore
 import { apiClientProxifier, registerDefaultDeserializer, registerDefaultSerializer, type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type RequestAdapter } from '@microsoft/kiota-abstractions';
 // @ts-ignore

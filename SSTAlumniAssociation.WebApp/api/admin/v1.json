@@ -36,9 +36,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       },
@@ -110,9 +107,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -147,9 +141,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -197,9 +188,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -265,9 +253,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       },
@@ -308,9 +293,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -345,9 +327,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       },
@@ -400,9 +379,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -437,9 +413,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -485,9 +458,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       },
@@ -551,9 +521,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -622,9 +589,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -659,9 +623,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -696,9 +657,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       },
@@ -751,9 +709,6 @@
         "security": [
           {
             "JWTBearerAuth": []
-          },
-          {
-            "Bearer": []
           }
         ]
       }
@@ -1466,14 +1421,6 @@
       "JWTBearerAuth": {
         "type": "http",
         "description": "Enter a JWT token to authorize the requests...",
-        "scheme": "Bearer",
-        "bearerFormat": "JWT"
-      },
-      "Bearer": {
-        "type": "http",
-        "description": "Firebase ID Token",
-        "name": "Authorization",
-        "in": "header",
         "scheme": "Bearer",
         "bearerFormat": "JWT"
       }

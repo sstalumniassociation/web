@@ -12,13 +12,11 @@ export type BindPostResponse = SSTAlumniAssociationCoreDtosUserAlumniMemberRespo
  */
 export interface BindRequestBuilder extends BaseRequestBuilder<BindRequestBuilder> {
     /**
-     * Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the differentpermission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (whereonly the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists forthis specific use case. This route should be called by end-users only (not admins) as it will bind the user IDprovided to the current authenticated user.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse>}
      */
      post(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<SSTAlumniAssociationCoreDtosUserAlumniMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse | SSTAlumniAssociationCoreDtosUserEmployeeResponse | SSTAlumniAssociationCoreDtosUserMemberResponse | SSTAlumniAssociationCoreDtosUserServiceAccountResponse | SSTAlumniAssociationCoreDtosUserSystemAdminResponse | undefined>;
     /**
-     * Bind user to a Firebase ID. Although this can also be done in the UpdateUser route, due to the differentpermission requirement for updating FirebaseId, it would introduce a partial success state for the endpoint (whereonly the FirebaseId is updated of all fields provided in the UpdateMask). Therefore, a separate route exists forthis specific use case. This route should be called by end-users only (not admins) as it will bind the user IDprovided to the current authenticated user.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
