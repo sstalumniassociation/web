@@ -16,6 +16,7 @@ public class CreateMemberEndpoint: Endpoint<CreateMemberRequest, UserResponse>
         {
             case CreateAlumniMemberRequest am:
             {
+                
                 break;
             }
             case CreateEmployeeMemberRequest em:

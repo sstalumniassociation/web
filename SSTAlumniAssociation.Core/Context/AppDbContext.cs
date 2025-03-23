@@ -129,7 +129,7 @@ public partial class AppDbContext : DbContext
             Email = "qinguan20040914@gmail.com",
         };
 
-        modelBuilder.Entity<AlumniMember>()
+        modelBuilder.Entity<SystemAdmin>()
             .HasData(qinGuan);
 
         var guardHouse = new ServiceAccount

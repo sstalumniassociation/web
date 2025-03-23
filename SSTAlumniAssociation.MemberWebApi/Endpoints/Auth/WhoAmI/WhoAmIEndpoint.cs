@@ -19,7 +19,7 @@ public class WhoAmIEndpoint(AppDbContext dbContext) : EndpointWithoutRequest<Ok<
     public override async Task<Ok<UserResponse>> ExecuteAsync(CancellationToken ct)
     {
         var user = await dbContext.Users
-            .Include(u => ((Member)u).Subscriptions)
+            .Include(u => ((Core.Entities.Member)u).Subscriptions)
             .ThenInclude(m => m.MembershipPlan)
             .SingleAsync(u => u.Email == User.Claims.GetEmail(), cancellationToken: ct);
 

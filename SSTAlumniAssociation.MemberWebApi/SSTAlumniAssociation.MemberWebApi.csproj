@@ -36,10 +36,6 @@
         <ProjectReference Include="..\SSTAlumniAssociation.ServiceDefaults\SSTAlumniAssociation.ServiceDefaults.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Include="Endpoints\Member\CreateMemberRequest.cs" />
-    </ItemGroup>
-
     <Target Name="ClientGen" AfterTargets="Build" Condition="'$(Configuration)'=='Release' And '$(DOTNET_RUNNING_IN_CONTAINER)'!='true'">
         <Exec WorkingDirectory="$(RunWorkingDirectory)" Command="$(RunCommand) --generateclients true --urls http://localhost:5001" />
     </Target>
