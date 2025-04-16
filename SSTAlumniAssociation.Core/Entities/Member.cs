@@ -10,13 +10,14 @@ public abstract class Member : User
     /// </summary>
     public required string MemberId { get; set; }
 
-    public required string PreferredName { get; set; }
-    public required string Phone { get; set; }
-    public required string Telegram { get; set; }
-    public required string MailingAddress { get; set; }
-    public required DateOnly DateOfBirth { get; set; }
-
-    public required string SstEmail { get; set; }
+    // TODO - @arashnrim need to fix lol
+    // public required string PreferredName { get; set; }
+    // public required string Phone { get; set; }
+    // public required string Telegram { get; set; }
+    // public required string MailingAddress { get; set; }
+    // public required DateOnly DateOfBirth { get; set; }
+    //
+    // public required string SstEmail { get; set; }
 
     /// <summary>
     /// This property will be null if the user does not have access to their SST account.
