@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 
 #nullable disable
 
@@ -17,9 +18,11 @@ namespace SSTAlumniAssociation.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "payment_intent_state", new[] { "none", "pending", "success", "failed", "cancelled" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "service_account_type", new[] { "guard_house" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("GroupMember", b =>
@@ -229,6 +232,35 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     b.ToTable("Group");
                 });
 
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.ManualMemberApproval", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ApproverId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("MemberId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
+
+                    b.HasIndex("MemberId")
+                        .IsUnique();
+
+                    b.ToTable("ManualMemberApprovals");
+                });
+
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -313,8 +345,8 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     b.Property<string>("PaymentIntentId")
                         .HasColumnType("text");
 
-                    b.Property<string>("PaymentIntentState")
-                        .HasColumnType("text");
+                    b.Property<PaymentIntentState>("PaymentIntentState")
+                        .HasColumnType("payment_intent_state");
 
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("timestamp with time zone");
@@ -326,24 +358,6 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     b.HasIndex("MembershipPlanId");
 
                     b.ToTable("MembershipSubscriptions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("58352738-955f-41b5-ae42-57c2e01d7452"),
-                            EndDateTime = new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
-                            MemberId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"),
-                            MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-                            StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
-                        },
-                        new
-                        {
-                            Id = new Guid("d44eba3b-5556-4978-8188-7440762b1288"),
-                            EndDateTime = new DateTime(2024, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc),
-                            MemberId = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
-                            MembershipPlanId = new Guid("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-                            StartDateTime = new DateTime(2023, 12, 31, 16, 0, 0, 0, DateTimeKind.Utc)
-                        });
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscriptionPayment", b =>
@@ -401,6 +415,32 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.UserRevocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRevocations");
+                });
+
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.GuestCheckIn", b =>
                 {
                     b.HasBaseType("SSTAlumniAssociation.Core.Entities.CheckIn");
@@ -454,13 +494,6 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                             CheckInDateTime = new DateTime(2024, 8, 17, 10, 15, 0, 0, DateTimeKind.Utc),
                             ServiceAccountId = new Guid("a78a112f-3355-499e-aafd-824c14858b34"),
                             UserId = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631")
-                        },
-                        new
-                        {
-                            Id = new Guid("4f770e07-4f69-402d-9b1a-5e26e7f822f2"),
-                            CheckInDateTime = new DateTime(2024, 8, 17, 10, 20, 0, 0, DateTimeKind.Utc),
-                            ServiceAccountId = new Guid("a78a112f-3355-499e-aafd-824c14858b34"),
-                            UserId = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f")
                         });
                 });
 
@@ -475,7 +508,33 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                 {
                     b.HasBaseType("SSTAlumniAssociation.Core.Entities.User");
 
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("MailingAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PreferredName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SstEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SstFirebaseId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Telegram")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -511,6 +570,15 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                     b.HasBaseType("SSTAlumniAssociation.Core.Entities.User");
 
                     b.ToTable("SystemAdmins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"),
+                            Email = "qinguan20040914@gmail.com",
+                            FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
+                            Name = "Qin Guan"
+                        });
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.AlumniMember", b =>
@@ -521,25 +589,6 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                         .HasColumnType("integer");
 
                     b.ToTable("AlumniMembers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("df90f5ea-a236-413f-a6c1-ca9197427631"),
-                            Email = "qinguan20040914@gmail.com",
-                            FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
-                            Name = "Qin Guan",
-                            MemberId = "EXCO-1",
-                            GraduationYear = 2000
-                        },
-                        new
-                        {
-                            Id = new Guid("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
-                            Email = "tan_zheng_jie@sstaa.org",
-                            FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
-                            Name = "Tan Zheng Jie",
-                            MemberId = "EXCO-2"
-                        });
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.EmployeeMember", b =>
@@ -610,6 +659,25 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.ManualMemberApproval", b =>
+                {
+                    b.HasOne("SSTAlumniAssociation.Core.Entities.User", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSTAlumniAssociation.Core.Entities.Member", "Member")
+                        .WithOne("ManualMemberApproval")
+                        .HasForeignKey("SSTAlumniAssociation.Core.Entities.ManualMemberApproval", "MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Approver");
+
+                    b.Navigation("Member");
+                });
+
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.MembershipSubscription", b =>
                 {
                     b.HasOne("SSTAlumniAssociation.Core.Entities.Member", "Member")
@@ -638,6 +706,17 @@ namespace SSTAlumniAssociation.Migrations.Migrations
                         .IsRequired();
 
                     b.Navigation("MembershipSubscription");
+                });
+
+            modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.UserRevocation", b =>
+                {
+                    b.HasOne("SSTAlumniAssociation.Core.Entities.User", "User")
+                        .WithMany("Revocations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.GuestCheckIn", b =>
@@ -736,11 +815,15 @@ namespace SSTAlumniAssociation.Migrations.Migrations
 
                     b.Navigation("Events");
 
+                    b.Navigation("Revocations");
+
                     b.Navigation("UserEvents");
                 });
 
             modelBuilder.Entity("SSTAlumniAssociation.Core.Entities.Member", b =>
                 {
+                    b.Navigation("ManualMemberApproval");
+
                     b.Navigation("Subscriptions");
                 });
 

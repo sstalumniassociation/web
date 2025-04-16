@@ -14,10 +14,11 @@ const state = ref({
 
 const db = useDatabase()
 const { data: checkedInUsersList } = useDatabaseList<{ $value: number }>(dbRef(db, route.params.id as string))
-const { data: event, isPending: eventIsPending } = useEvent(route.params.id as string)
+const { data: event, isPending: eventIsPending } = useAdminEvent(route.params.id as string)
+const { data: attendees, isPending: _attendeesIsPending } = useMemberEventAttendees(route.params.id as string)
 const { mutate: createUsersMutate, isPending: createUsersIsPending } = useBulkCreateUserMutation()
-const { mutate: addEventUsersMutate, isPending: addEventUsersIsPending } = useAddEventUsersMutation(route.params.id as string)
-const { mutate: deleteEventMutate, isPending: deleteEventIsPending } = useDeleteEventMutation(route.params.id as string)
+const { mutate: addEventUsersMutate, isPending: addEventUsersIsPending } = useAdminAddEventAttendeesMutation(route.params.id as string)
+const { mutate: deleteEventMutate, isPending: deleteEventIsPending } = useAdminDeleteEventMutation(route.params.id as string)
 
 const showPending = computed(() => createUsersIsPending.value || addEventUsersIsPending.value)
 
@@ -99,12 +100,10 @@ async function parseCsvFile(event: Event) {
 }
 
 function uploadUsers() {
-  createUsersMutate(users, {
+  createUsersMutate({ users }, {
     onSuccess(r) {
       addEventUsersMutate(
-        r.map(u => ({
-          userId: u.id,
-        })),
+        { userIds: r!.map(u => u.id!) },
         {
           onSuccess() {
             toast.add({
@@ -144,10 +143,10 @@ function deleteEvent() {
 
 async function downloadRollCall() {
   const { unparse } = await import('papaparse')
-  const transformedData = event.value?.attendees.map(({ id, name, admissionKey, email }) => ({
+  const transformedData = attendees.value?.map(({ id, user, admissionKey }) => ({
     id,
-    name,
-    email,
+    name: user!.name,
+    email: user!.email,
     link: `https://app.sstaa.org/pass/${admissionKey}`,
   })) ?? []
   const file = unparse(transformedData)
@@ -163,11 +162,11 @@ async function downloadRollCall() {
 }
 
 async function downloadAnalytics() {
-  const checkedInAttendees = event.value?.attendees.map((attendee) => {
+  const checkedInAttendees = attendees.value?.map((attendee) => {
     const checkedIn = checkedInUsersList.value.find(a => a.id === attendee.admissionKey)
 
     return {
-      email: attendee.email,
+      email: attendee.user?.email,
       checkedInAt: checkedIn ? dayjs.unix(checkedIn.$value).toISOString() : 'NA',
     }
   }) ?? []
@@ -227,15 +226,15 @@ function toggleDropdown(event: Event) {
             Enter the event name below to confirm deletion.
           </Message>
 
-          <InputText :placeholder="event?.name" />
+          <InputText :placeholder="event?.name!" />
         </div>
 
         <template #footer>
           <div class="space-x-4">
-            <Button :pending="deleteEventIsPending" severity="danger">
+            <Button :pending="deleteEventIsPending" severity="danger" @click="deleteEvent">
               Delete
             </Button>
-            <Button variant="ghost" text @click="state.showDeleteConfirmation = false">
+            <Button variant="link" text @click="state.showDeleteConfirmation = false">
               Cancel
             </Button>
           </div>
@@ -291,7 +290,7 @@ function toggleDropdown(event: Event) {
           </Button>
         </div>
 
-        <DataTable v-else-if="event?.attendees" :value="event.attendees">
+        <DataTable v-else-if="attendees" :value="attendees">
           <Column field="admissionKey" header="Admission Key" class="min-w-xs">
             <template #body="{ data }">
               <code class="text-sm">

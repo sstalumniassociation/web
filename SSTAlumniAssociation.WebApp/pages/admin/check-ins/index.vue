@@ -2,7 +2,7 @@
 import { FilterMatchMode } from '@primevue/core'
 
 const dayjs = useDayjs()
-const { data, isPending: checkInsPending } = useCheckInsWithAdminScope()
+const { data, isPending: checkInsPending } = useAdminCheckIns()
 
 const sizeOptions: { label: string, value: 'small' | 'large' | undefined }[] = [
   { label: 'Small', value: 'small' },
@@ -31,7 +31,7 @@ const filters = ref({
     </div>
 
     <DataTable
-      v-model:filters="filters" removable-sort paginator data-key="id" :rows="40" :value="data?.checkIns"
+      v-model:filters="filters" removable-sort paginator data-key="id" :rows="40" :value="data"
       :global-filter-fields="['user.name', 'user.phone', 'guest.name', 'guest.phone']" :size="size.value" :loading="checkInsPending"
     >
       <template #empty>

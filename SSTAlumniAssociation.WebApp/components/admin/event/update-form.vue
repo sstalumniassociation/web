@@ -4,17 +4,17 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
 const props = defineProps<{
-  id?: string
-  name?: string
-  description?: string
-  location?: string
-  badgeImage?: string
-  startDateTime?: string
-  endDateTime?: string
+  id?: string | null
+  name?: string | null
+  description?: string | null
+  location?: string | null
+  badgeImage?: string | null
+  startDateTime?: Date | null
+  endDateTime?: Date | null
 }>()
 
-if (!props.id) {
-  throw new Error('Event ID is required')
+if (!props.id || !props.name) {
+  throw new Error('Event ID  and nameis required')
 }
 
 const toast = useToast()
@@ -55,15 +55,13 @@ const [formBadgeImage, badgeImageProps] = defineField('badgeImage')
 const [formStartDateTime] = defineField('startDateTime')
 const [formEndDateTime] = defineField('endDateTime')
 
-const { mutate: updateEventMutate, isPending: updateEventIsPending } = useUpdateEventMutation(props.id)
+const { mutate: updateEventMutate, isPending: updateEventIsPending } = useAdminUpdateEventMutation(props.id)
 
 const updateEvent = handleSubmit((values) => {
   const data = {
-    event: {
-      ...values,
-      startDateTime: values.startDateTime.toString(),
-      endDateTime: values.startDateTime.toString(),
-    },
+    ...values,
+    startDateTime: values.startDateTime,
+    endDateTime: values.startDateTime,
   }
 
   updateEventMutate(data, {

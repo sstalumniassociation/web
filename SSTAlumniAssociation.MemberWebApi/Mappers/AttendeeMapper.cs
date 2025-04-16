@@ -1,17 +1,13 @@
 using Riok.Mapperly.Abstractions;
 using SSTAlumniAssociation.Core.Entities;
+using SSTAlumniAssociation.MemberWebApi.Endpoints.Attendee.Get;
 
 namespace SSTAlumniAssociation.MemberWebApi.Mappers;
 
 [Mapper]
-[UseStaticMapper(typeof(GrpcMapper))]
 [UseStaticMapper(typeof(UserMapper))]
-[UseStaticMapper(typeof(EventMapper))]
-public static partial class AttendeeMapper
+public static partial class AttendeeMappper
 {
-    #region gRPC mappings
-
-    public static partial Protos.Attendee.V1.Attendee ToGrpc(this Attendee attendee);
-
-    #endregion
+    public static partial AttendeeResponse ToResponse(this Attendee attendee);
+    public static partial IEnumerable<AttendeeResponse> ToResponse(this IEnumerable<Attendee> attendees);
 }

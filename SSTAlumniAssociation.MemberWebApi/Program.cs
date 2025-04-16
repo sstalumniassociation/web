@@ -1,20 +1,19 @@
-using Calzolari.Grpc.AspNetCore.Validation;
-using Microsoft.AspNetCore.Authentication;
+using FastEndpoints;
+using FastEndpoints.ClientGen.Kiota;
+using FastEndpoints.Security;
+using FastEndpoints.Swagger;
+using Kiota.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using NSwag;
+using Scalar.AspNetCore;
 using SSTAlumniAssociation.Core.Context;
+using SSTAlumniAssociation.Core.Entities;
 using SSTAlumniAssociation.ServiceDefaults;
 using SSTAlumniAssociation.MemberWebApi.Authorization;
-using SSTAlumniAssociation.MemberWebApi.Authorization.Admin;
 using SSTAlumniAssociation.MemberWebApi.Authorization.Member;
-using SSTAlumniAssociation.MemberWebApi.Authorization.OwnerOrAdmin;
-using SSTAlumniAssociation.MemberWebApi.Services.V1;
-using SSTAlumniAssociation.MemberWebApi.Services.V1.CheckIn;
-using SSTAlumniAssociation.MemberWebApi.Services.V1.Event;
-using SSTAlumniAssociation.MemberWebApi.Services.V1.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,36 +21,41 @@ builder.AddServiceDefaults();
 
 #region Database
 
-builder.Services.AddNpgsql<AppDbContext>(
-    builder.Configuration.GetConnectionString("Postgres"),
-    optionsAction: options =>
+if (builder.IsApiClientGenerationMode())
+{
+    EF.IsDesignTime = true;
+}
+
+builder.AddNpgsqlDbContext<AppDbContext>("sstaa",
+    configureDbContextOptions: options =>
     {
-        if (!builder.Environment.IsDevelopment()) return;
-        
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
-    },
-    npgsqlOptionsAction: options =>
-    {
-        options.MigrationsAssembly("SSTAlumniAssociation.Migrations");
-    }
-);
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        }
+
+        options.UseNpgsql(o =>
+            o.MigrationsAssembly("SSTAlumniAssociation.Migrations")
+                .MapEnum<ServiceAccountType>()
+                .MapEnum<PaymentIntentState>()
+        );
+    });
 
 #endregion
 
 #region Services
 
-builder.Services.AddSingleton<IAuthorizationHandler, AdminSystemAdminHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminExcoHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, MemberNonRevokedHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, MemberRequirementNonRevokedHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, MemberRequirementSystemAdminHandler>();
 
 #endregion
 
 #region Auth
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthenticationJwtBearer(
+    _ => { },
+    options =>
     {
         var projectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
         options.Authority = $"https://securetoken.google.com/{projectId}";
@@ -65,23 +69,36 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Policies.Admin, policy =>
-        policy.AddRequirements(new AdminRequirement()))
     .AddPolicy(Policies.Member, policy =>
-        policy.AddRequirements(new MemberRequirement()))
-    .AddPolicy(Policies.OwnerOrAdmin, policy =>
-        policy.AddRequirements(new OwnerOrAdminRequirement()));
+        policy.AddRequirements(new MemberRequirement())
+    );
 
 #endregion
 
-#region gRPC
+#region FastEndpoints
 
-builder.Services.AddGrpc(options => { options.EnableMessageValidation(); }).AddJsonTranscoding();
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument(options =>
+    {
+        options.MaxEndpointVersion = 1;
+        options.UseOneOfForPolymorphism = true;
 
-builder.Services.AddValidator<CreateUserRequestValidator>();
-builder.Services.AddValidator<CreateEventRequestValidator>();
-builder.Services.AddValidator<CreateCheckInRequestValidator>();
-builder.Services.AddGrpcValidation();
+        options.DocumentSettings = s =>
+        {
+            s.Title = "SST Alumni Association Member API";
+            s.Version = "v1";
+
+            s.AddAuth("Bearer", new NSwag.OpenApiSecurityScheme
+            {
+                In = OpenApiSecurityApiKeyLocation.Header,
+                Description = "Firebase ID Token",
+                Name = "Authorization",
+                Type = OpenApiSecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = JwtBearerDefaults.AuthenticationScheme
+            });
+        };
+    });
 
 #endregion
 
@@ -92,11 +109,12 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy.AllowCredentials();
-        policy.WithHeaders("Authorization", "Content-Type");
+        policy.AllowAnyMethod();
+        policy.WithHeaders("Authorization", "Content-Type", "User-Agent");
         policy.WithOrigins(
             "https://app.sstaa.org",
-            "http://localhost:3000"
-        );
+            builder.Environment.IsDevelopment() ? "http://localhost:3000" : "https://*.sstaa.pages.dev"
+       ).SetIsOriginAllowedToAllowWildcardSubdomains();
     });
 });
 
@@ -105,45 +123,22 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "SST Alumni Association API", Version = "v1" });
-
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Firebase ID Token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = JwtBearerDefaults.AuthenticationScheme
-    });
-
-    options.AddSecurityRequirement(
-        new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                []
-            }
-        }
-    );
-
-    var filePath = Path.Combine(AppContext.BaseDirectory, "SSTAlumniAssociation.MemberWebApi.xml");
-    options.IncludeXmlComments(filePath);
-    options.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
-});
-
-builder.Services.AddGrpcSwagger();
 
 var app = builder.Build();
+
+app.UseFastEndpoints(options =>
+    {
+        options.Versioning.Prefix = "v";
+    })
+    .UseSwaggerGen(options => { options.Path = "/openapi/{documentName}.json"; });
+
+await app.GenerateApiClientsAndExitAsync(
+    c =>
+    {
+        c.SwaggerDocumentName = "v1";
+        c.Language = GenerationLanguage.TypeScript;
+        c.OutputPath = Path.Combine("..", "SSTAlumniAssociation.WebApp", "api", "member");
+    });
 
 if (app.Environment.IsDevelopment())
 {
@@ -157,17 +152,8 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-// Require authorization by default and opt-out for anonymous routes
-app.MapGrpcService<ArticleServiceV1>();
-app.MapGrpcService<UserServiceV1>();
-app.MapGrpcService<EventServiceV1>();
-app.MapGrpcService<AuthServiceV1>();
-app.MapGrpcService<AttendeeServiceV1>();
-app.MapGrpcService<CheckInServiceV1>();
-
 app.UseHttpsRedirection();
+
+app.MapScalarApiReference();
 
 app.Run();

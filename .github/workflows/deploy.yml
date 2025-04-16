@@ -1,0 +1,82 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - wipwip
+    tags:
+      - 'v*'
+  workflow_dispatch: { }
+
+env:
+  UKC_TOKEN: ${{ secrets.UKC_TOKEN }}
+  UKC_METRO: sin0
+
+jobs:
+  deploy:
+    concurrency: deploy
+    permissions:
+      packages: write
+      contents: read
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Docker meta
+        uses: docker/metadata-action@v5
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Login to OCI registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+#      - name: Remove untagged images
+#        shell: pwsh
+#        run: |
+#          ((iwr -Headers @{ "Authorization" = "Bearer $($env:UKC_TOKEN)" } https://api.sin0.kraft.cloud/v1/images/list?namespace=gqin).Content | ConvertFrom-Json).data.images | Where-Object { $_.tags.Length -lt 1 } | ForEach-Object { kraft cloud img rm $_.digest }
+
+      - uses: unikraft/kraftkit@stable
+        with:
+          run: |
+            kraft cloud deploy \
+              -K ./kraft.admin.yml \
+              --rootfs ./Dockerfile.admin \
+              --rollout remove \
+              -g sstaa-admin-api \
+              -M 512 \
+              -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+              -e Firebase__ProjectId='sstaa-app' \
+              -e DOTNET_URLS='http://0.0.0.0:5000';
+
+            # kraft cloud deploy \
+            #   -K ./kraft.member.yml \
+            #   --rootfs ./Dockerfile.member \
+            #   --rollout remove \
+            #   -g sstaa-member-api \
+            #   -M 512 \
+            #   --timeout 30m \
+            #   -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+            #   -e Firebase__ProjectId='sstaa-app' \
+            #   -e DOTNET_URLS='http://0.0.0.0:5000';
+
+            # kraft cloud deploy \
+            #   -K ./kraft.service-account.yml \
+            #   --rootfs ./Dockerfile.service-account \
+            #   --rollout remove \
+            #   -g sstaa-service-account-api \
+            #   -M 512 \
+            #   -e ConnectionStrings__sstaa='${{ secrets.ConnectionStrings__sstaa }}' \
+            #   -e Firebase__ProjectId='sstaa-app' \
+            #   -e DOTNET_URLS='http://0.0.0.0:5000'
+

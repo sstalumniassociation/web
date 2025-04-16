@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace SSTAlumniAssociation.Core.Entities;
 
 /// <summary>
@@ -7,15 +5,20 @@ namespace SSTAlumniAssociation.Core.Entities;
 /// </summary>
 public class UserRevocation
 {
+    public Guid Id { get; set; }
+
     /// <summary>
     /// Reason for revocation
     /// </summary>
     public required string Reason { get; set; }
-    
+
+    public required DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+
     #region Navigations
-    
-    [Key] public Guid UserId { get; set; }
+
+    public Guid UserId { get; set; }
     public User User { get; set; }
-    
+
     #endregion
 }

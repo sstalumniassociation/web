@@ -8,8 +8,8 @@ public class Group
     public Guid Id { get; set; }
     public required string Name { get; set; }
     public required string Description { get; set; }
-    
+
     // Navigations
-    
+
     public ICollection<Member> Members { get; } = [];
 }

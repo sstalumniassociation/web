@@ -1,6 +1,6 @@
-// @ts-expect-error Bad types
 import { verifyIdToken } from 'web-auth-library/google'
 import { defu } from 'defu'
+// @ts-expect-error Bad types
 import type { UserToken } from 'web-auth-library/dist/google'
 import type { EventHandler, EventHandlerRequest } from 'h3'
 import type { CachedEventHandlerOptions } from 'nitropack'

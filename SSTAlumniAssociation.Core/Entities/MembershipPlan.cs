@@ -8,7 +8,7 @@ public class MembershipPlan
     /// Name of the plan
     /// </summary>
     public required string Name { get; set; }
-    
+
     /// <summary>
     /// Built in plan that cannot be modified
     /// </summary>

@@ -3,8 +3,6 @@ import { f7Block, f7Link, f7List, f7ListItem, f7NavRight, f7Navbar, f7Page, f7Pa
 import { Html5Qrcode } from 'html5-qrcode'
 
 const { data: cameras, isLoading } = useCameras()
-const { mutate: mutateCheckIn } = useCreateCheckInMutation()
-const { mutate: mutateCheckOut } = useCreateCheckOutMutation()
 
 const innerCameraId = ref('')
 const cameraId = computed({

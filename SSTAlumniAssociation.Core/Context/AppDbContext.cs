@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSTAlumniAssociation.Core.Entities;
+using SSTAlumniAssociation.Core.Entities.MembershipPlans;
 
 namespace SSTAlumniAssociation.Core.Context;
 
@@ -16,6 +17,16 @@ public partial class AppDbContext : DbContext
     /// Users
     /// </summary>
     public DbSet<User> Users { get; set; }
+
+    /// <summary>
+    /// User revocations
+    /// </summary>
+    public DbSet<UserRevocation> UserRevocations { get; set; }
+    
+    /// <summary>
+    /// Manual member approvals
+    /// </summary>
+    public DbSet<ManualMemberApproval> ManualMemberApprovals { get; set; }
 
     /// <summary>
     /// Members
@@ -94,79 +105,32 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<CheckIn>().UseTptMappingStrategy();
         // modelBuilder.Entity<AuditRecord>().UseTpcMappingStrategy();
 
-        var exco = new MembershipPlan
-        {
-            Id = Guid.Parse("7ad2dfda-82df-4597-a76f-40e5fd4fd28d"),
-            Name = "EXCO",
-            BuiltIn = true,
-            Description = "SSTAA EXCO",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var associate = new MembershipPlan
-        {
-            Id = Guid.Parse("c28780c6-d687-4bb8-b9ce-5fbca1e347c2"),
-            Name = "Associate",
-            BuiltIn = true,
-            Description =
-                "All past/present staff and students who completed at least 1 year of study in SST but did not graduate",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var affiliate = new MembershipPlan
-        {
-            Id = Guid.Parse("d258488b-c5a3-4f96-add7-366be4934900"),
-            Name = "Affiliate",
-            BuiltIn = true,
-            Description = "All graduated alumni who are under 21",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
-
-        var ordinary = new MembershipPlan
-        {
-            Id = Guid.Parse("c1869b12-56a9-4ed8-96d2-ef962c39799e"),
-            Name = "Ordinary",
-            BuiltIn = true,
-            Description = "Ordinary",
-            Duration = TimeSpan.FromDays(365),
-            Price = 0
-        };
+        modelBuilder.HasPostgresEnum<ServiceAccountType>();
+        modelBuilder.HasPostgresEnum<PaymentIntentState>();
 
         modelBuilder.Entity<MembershipPlan>()
-            .HasData([exco, associate, affiliate, ordinary]);
+            .HasData(
+                DefaultMembershipPlans.Exco,
+                DefaultMembershipPlans.Associate,
+                DefaultMembershipPlans.Affiliate,
+                DefaultMembershipPlans.Ordinary
+            );
 
         modelBuilder
             .Entity<ServiceAccount>()
             .Property(u => u.ServiceAccountType)
             .HasConversion<string>();
 
-        var qinGuan = new AlumniMember
+        var qinGuan = new SystemAdmin()
         {
             Id = Guid.Parse("df90f5ea-a236-413f-a6c1-ca9197427631"),
             Name = "Qin Guan",
             FirebaseId = "GuZZVeOdlhNsf5dZGQmU2yV1Ox33",
             Email = "qinguan20040914@gmail.com",
-            GraduationYear = 2000,
-            MemberId = "EXCO-1",
         };
 
-        var qinGuanExco = new MembershipSubscription
-        {
-            Id = Guid.Parse("58352738-955f-41b5-ae42-57c2e01d7452"),
-            StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
-            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
-            MemberId = qinGuan.Id,
-            MembershipPlanId = exco.Id
-        };
-
-        modelBuilder.Entity<AlumniMember>()
+        modelBuilder.Entity<SystemAdmin>()
             .HasData(qinGuan);
-
-        modelBuilder.Entity<MembershipSubscription>()
-            .HasData(qinGuanExco);
 
         var guardHouse = new ServiceAccount
         {
@@ -178,30 +142,6 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<ServiceAccount>()
             .HasData(guardHouse);
-
-        var zhengJie = new AlumniMember
-        {
-            Id = Guid.Parse("829bc4dc-2d8f-46df-acbb-c52c0e7f958f"),
-            Name = "Tan Zheng Jie",
-            FirebaseId = "5ZPERFPTvfMfxwhH7SGsOmXqSco2",
-            Email = "tan_zheng_jie@sstaa.org",
-            MemberId = "EXCO-2"
-        };
-
-        var zhengJieExco = new MembershipSubscription
-        {
-            Id = Guid.Parse("d44eba3b-5556-4978-8188-7440762b1288"),
-            StartDateTime = DateTime.UnixEpoch.AddSeconds(1704038400),
-            EndDateTime = DateTime.UnixEpoch.AddSeconds(1704038400).AddYears(1),
-            MemberId = zhengJie.Id,
-            MembershipPlanId = exco.Id
-        };
-
-        modelBuilder.Entity<AlumniMember>()
-            .HasData(zhengJie);
-
-        modelBuilder.Entity<MembershipSubscription>()
-            .HasData(zhengJieExco);
 
         var homecoming = new Event
         {
@@ -261,17 +201,6 @@ public partial class AppDbContext : DbContext
                     CheckInDateTime = DateTime.UnixEpoch.AddSeconds(1723888800).AddMinutes(15),
                     ServiceAccountId = guardHouse.Id,
                     UserId = qinGuan.Id
-                }
-            );
-
-        modelBuilder.Entity<UserCheckIn>()
-            .HasData(
-                new UserCheckIn
-                {
-                    Id = Guid.Parse("4f770e07-4f69-402d-9b1a-5e26e7f822f2"),
-                    CheckInDateTime = DateTime.UnixEpoch.AddSeconds(1723888800).AddMinutes(20),
-                    ServiceAccountId = guardHouse.Id,
-                    UserId = zhengJie.Id
                 }
             );
 

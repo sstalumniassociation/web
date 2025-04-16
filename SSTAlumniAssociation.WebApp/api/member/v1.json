@@ -1,0 +1,778 @@
+{
+  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SST Alumni Association Member API",
+    "version": "v1"
+  },
+  "paths": {
+    "/User/{id}/Bind": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsUserBindUserEndpoint",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/Event": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsEventListListEventEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/Event/{id}": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsEventGetGetEventEndpoint",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/Event/{id}/Attendee": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeListListEventAttendeeEndpoint",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/CheckIn": {
+      "get": {
+        "tags": [
+          "Checkin"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsCheckInListCheckInEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/Auth/WhoAmI": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsAuthWhoAmIWhoAmIEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/Auth/Verify": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyEndpoint",
+        "requestBody": {
+          "x-name": "PostVerifyRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Attendee/{AttendeeId}": {
+      "get": {
+        "tags": [
+          "Attendee"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetGetAttendeeEndpoint",
+        "parameters": [
+          {
+            "name": "attendeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Article": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "operationId": "SSTAlumniAssociationMemberWebApiEndpointsArticleListListArticleEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsArticleArticleResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SSTAlumniAssociationCoreDtosUserUserResponse": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "discriminator",
+          "mapping": {
+            "Employee": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse",
+            "Member": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse",
+            "AlumniMember": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse",
+            "EmployeeMember": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse",
+            "ServiceAccount": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse",
+            "SystemAdmin": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+          }
+        },
+        "example": {
+          "discriminator": "Employee"
+        },
+        "additionalProperties": false,
+        "required": [
+          "discriminator"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firebaseId": {
+            "type": "string"
+          },
+          "revoked": {
+            "type": "boolean"
+          },
+          "discriminator": {
+            "type": "string"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserAlumniMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserSystemAdminResponse"
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserEmployeeResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "x-abstract": true,
+            "additionalProperties": false,
+            "properties": {
+              "memberId": {
+                "type": "string"
+              },
+              "activeSubscription": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMembershipSubscriptionResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMembershipSubscriptionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentIntentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentIntentState": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserPaymentIntentStateResponse"
+          },
+          "membershipPlan": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMembershipPlanResponse"
+          }
+        }
+      },
+      "SSTAlumniAssociationCoreDtosUserPaymentIntentStateResponse": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Pending",
+          "Success",
+          "Failed",
+          "Cancelled"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserMembershipPlanResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "builtIn": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "SSTAlumniAssociationCoreDtosUserAlumniMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "graduationYear": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserEmployeeMemberResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserMemberResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "graduationYear": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserServiceAccountResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "serviceAccountType": {
+                "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserServiceAccountTypeResponse"
+              }
+            }
+          }
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserServiceAccountTypeResponse": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "GuardHouse"
+        ],
+        "enum": [
+          0
+        ]
+      },
+      "SSTAlumniAssociationCoreDtosUserSystemAdminResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsUserBindUserRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "badgeImage": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsEventGetGetEventRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsAttendeeGetAttendeeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "admissionKey": {
+            "type": "string",
+            "format": "guid"
+          },
+          "admittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "event": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationMemberWebApiEndpointsEventEventResponse"
+          },
+          "admittedBy": {
+            "$ref": "#/components/schemas/SSTAlumniAssociationCoreDtosUserUserResponse"
+          }
+        }
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsEventAttendeeListListEventAttendeeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsCheckInCheckInResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "checkInDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "checkOutDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "linked": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsAuthVerifyPostVerifyRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "SSTAlumniAssociationMemberWebApiEndpointsArticleArticleResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "heroImageUrl": {
+            "type": "string"
+          },
+          "heroImageAlt": {
+            "type": "string"
+          },
+          "ctaUrl": {
+            "type": "string"
+          },
+          "ctaTitle": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWTBearerAuth": {
+        "type": "http",
+        "description": "Enter a JWT token to authorize the requests...",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "Firebase ID Token",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

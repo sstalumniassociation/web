@@ -3,7 +3,7 @@ import { FilterMatchMode } from '@primevue/core/api'
 
 const dayjs = useDayjs()
 
-const { data: events, isPending: eventsPending } = useEvents()
+const { data: events, isPending: eventsPending } = useAdminEvents()
 
 const state = reactive({
   createPopupVisible: false,
@@ -39,7 +39,7 @@ const filters = ref({
     </div>
 
     <DataTable
-      v-model:filters="filters" :value="events?.events" paginator data-key="id" :rows="40" :loading="eventsPending"
+      v-model:filters="filters" :value="events" paginator data-key="id" :rows="40" :loading="eventsPending"
       :global-filter-fields="['name']"
     >
       <template #empty>

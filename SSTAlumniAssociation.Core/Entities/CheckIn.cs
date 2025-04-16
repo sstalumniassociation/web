@@ -4,8 +4,7 @@ public abstract class CheckIn
 {
     public Guid Id { get; set; }
 
-    public required DateTime CheckInDateTime { get; set; }
-
+    public DateTime CheckInDateTime { get; set; }
     public DateTime? CheckOutDateTime { get; set; }
 
     #region Navigations

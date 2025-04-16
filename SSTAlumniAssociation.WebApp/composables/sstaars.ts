@@ -10,16 +10,17 @@ export const useSstaarsStore = createGlobalState(() => {
   return useStorage('sstaars:data', { previousEvents: {} as Record<string, string> })
 })
 
-export function useAdmission(key: string) {
+export function useMemberEventAttendee(id: MaybeRef<string>) {
   return useQuery({
-    queryKey: queryKeyFactory.admission(key),
-    queryFn: () => $api(`/api/admission/${key}`),
+    queryKey: queryKeyFactory.admission(toValue(id)),
+    queryFn: () => $memberApiClient.attendee.byAttendeeId(toValue(id)),
     retry: false,
   })
 }
 
 export function useAdmissionPkPass(key: string) {
-  const { data: admission } = useAdmission(key)
+  const { data: admission } = useMemberEventAttendee(key)
+
   return useQuery({
     queryKey: queryKeyFactory.admissionPkPass(key),
     queryFn: () => $fetch<Blob>(`/cdn/apple-wallet/${admission.value?.eventId}/${key}.pkpass`, { method: 'GET' }),

@@ -8,7 +8,7 @@ const opened = defineModel<boolean>('opened')
 
 const auth = useFirebaseAuth()
 const authLoaded = useIsCurrentUserLoaded()
-const { data: user, error, isLoading: userIsLoading } = useWhoAmI()
+const { data: user, isLoading: userIsLoading } = useWhoAmI()
 
 const state = reactive({
   email: '',
@@ -36,9 +36,11 @@ async function login() {
 }
 
 const userIsGuardHouse = computed(() => {
-  if (!authLoaded.value || userIsLoading.value)
+  if (!authLoaded.value || userIsLoading.value || !user.value)
     return null
-  return user.value?.serviceAccount?.serviceAccountType === 'GuardHouse'
+
+  // TODO : encode serviceAccountType as string
+  return 'serviceAccountType' in user.value && user.value.serviceAccountType === 0
 })
 
 watch(userIsGuardHouse, (isGuardHouse) => {
@@ -46,8 +48,6 @@ watch(userIsGuardHouse, (isGuardHouse) => {
     opened.value = false
     return
   }
-
-  console.log(user.value, error.value)
 
   f7.toast.show({
     text: 'Current user is not a service account.',

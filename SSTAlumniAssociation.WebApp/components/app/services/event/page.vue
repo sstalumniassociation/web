@@ -19,10 +19,11 @@ const dayjs = useDayjs()
 
 const db = useDatabase()
 const { data: checkedInUsersList, pending: checkedInUsersListPending } = useDatabaseList<{ $value: number }>(dbRef(db, props.id))
-const { data: event, isLoading: eventIsLoading } = useEvent(props.id)
+const { data: event, isLoading: eventIsLoading } = useMemberEvent(props.id)
+const { data: rawAttendees, isLoading: attendeesIsLoading } = useMemberEventAttendees(props.id)
 
 const attendees = computed(() => {
-  return event.value?.attendees.map((attendee, index) => ({
+  return rawAttendees.value?.map((attendee, index) => ({
     ...attendee,
     index, // Used by f7 virtual list
   })) ?? []
@@ -64,7 +65,7 @@ async function onScan(admissionKey: string) {
 
   if (checkedInUsers.value[admissionKey]) { // Attendee is already checked in
     f7.toast.show({
-      text: `${attendee.name} already checked in`,
+      text: `${attendee.user?.name} already checked in`,
       closeTimeout: 3000,
     })
     return
@@ -73,7 +74,7 @@ async function onScan(admissionKey: string) {
   await set(dbRef(db, `${props.id}/${admissionKey}`), dayjs().unix())
 
   f7.toast.show({
-    text: `Checked in ${attendee.name}`,
+    text: `Checked in ${attendee.user?.name}`,
     closeTimeout: 10000,
   })
 }
@@ -83,7 +84,7 @@ async function onScan(admissionKey: string) {
 function searchAll(query: string, items: UnwrapRef<typeof attendees>) {
   const found = []
   for (const idx in items) {
-    if (items[idx].name?.toLowerCase().includes(query.toLowerCase()) || query.trim() === '')
+    if (items[idx].user?.name?.toLowerCase().includes(query.toLowerCase()) || query.trim() === '')
       found.push(idx)
   }
   return found
@@ -126,7 +127,7 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
               Checked in
             </div>
             <div class="rounded-md">
-              {{ checkedInUsersList.length }} / {{ event.attendees.length }}
+              {{ checkedInUsersList.length }} / {{ attendees.length }}
             </div>
           </div>
         </template>
@@ -154,25 +155,25 @@ function renderExternal(_: unknown, data: VirtualList.VirtualListRenderData) {
       >
         <ul>
           <f7ListItem
-            v-for="attendee in attendeeVirtualListData.items" :key="attendee.admissionKey" swipeout
+            v-for="attendee in attendeeVirtualListData.items" :key="attendee.admissionKey ?? ''" swipeout
             :style="`top: ${attendeeVirtualListData.topPosition}px`" :virtual-list-index="attendee.index"
           >
             <f7SwipeoutActions right>
               <f7SwipeoutButton
                 confirm-text="Are you sure?"
-                :color="checkedInUsers[attendee.admissionKey] ? 'red' : 'green'" @click="toggle(attendee.admissionKey)"
+                :color="checkedInUsers[attendee.admissionKey ?? ''] ? 'red' : 'green'" @click="toggle(attendee.admissionKey ?? '')"
               >
-                {{ checkedInUsers[attendee.admissionKey] ? 'Check out' : 'Check in' }}
+                {{ checkedInUsers[attendee.admissionKey ?? ''] ? 'Check out' : 'Check in' }}
               </f7SwipeoutButton>
             </f7SwipeoutActions>
 
             <template #title>
-              {{ attendee.name }}
+              {{ attendee.user?.name }}
             </template>
 
             <template #after>
-              <f7Chip v-if="checkedInUsers[attendee.admissionKey]" color="green">
-                {{ formattedDate(checkedInUsers[attendee.admissionKey]) }}
+              <f7Chip v-if="checkedInUsers[attendee.admissionKey ?? '']" color="green">
+                {{ formattedDate(checkedInUsers[attendee.admissionKey ?? '']) }}
               </f7Chip>
               <f7Chip v-else color="red">
                 Not checked in

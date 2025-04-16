@@ -3,30 +3,58 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 const queryKeyFactory = {
   events: ['events'],
   event: (id: string) => ['events', id],
+  attendees: (id: string) => ['events', id, 'attendees'],
 }
 
-export function useEvents() {
+export function useMemberEvents() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.events,
-    queryFn: () => $memberApiClient.v1.events.get(),
+    queryFn: () => $memberApiClient.event.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
-export function useEvent(id: MaybeRef<string>) {
+export function useAdminEvents() {
+  const firebaseCurrentUser = useCurrentUser()
+  return useQuery({
+    queryKey: queryKeyFactory.events,
+    queryFn: () => $adminApiClient.event.get(),
+    enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
+  })
+}
+
+export function useMemberEvent(id: MaybeRef<string>) {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.event(toValue(id)),
-    queryFn: () => $memberApiClient.v1.events.byId(toValue(id)).get(),
+    queryFn: () => $memberApiClient.event.byId(toValue(id)).get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
-export function useCreateEventMutation() {
+export function useAdminEvent(id: MaybeRef<string>) {
+  const firebaseCurrentUser = useCurrentUser()
+  return useQuery({
+    queryKey: queryKeyFactory.event(toValue(id)),
+    queryFn: () => $adminApiClient.event.byId(toValue(id)).get(),
+    enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
+  })
+}
+
+export function useMemberEventAttendees(id: MaybeRef<string>) {
+  const firebaseCurrentUser = useCurrentUser()
+  return useQuery({
+    queryKey: queryKeyFactory.attendees(toValue(id)),
+    queryFn: () => $memberApiClient.event.byId(toValue(id)).attendee.get(),
+    enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
+  })
+}
+
+export function useAdminCreateEventMutation() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $memberApiClient.v1.events.post,
+    mutationFn: $adminApiClient.event.post,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -35,10 +63,10 @@ export function useCreateEventMutation() {
   })
 }
 
-export function useUpdateEventMutation(id: MaybeRef<string>) {
+export function useAdminUpdateEventMutation(id: MaybeRef<string>) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).patch,
+    mutationFn: $adminApiClient.event.byId(toValue(id)).post,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.events,
@@ -47,10 +75,10 @@ export function useUpdateEventMutation(id: MaybeRef<string>) {
   })
 }
 
-export function useAddEventUsersMutation(id: string) {
+export function useAdminAddEventAttendeesMutation(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).attendees.post,
+    mutationFn: $adminApiClient.event.byId(toValue(id)).attendeeBatch.post,
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: queryKeyFactory.event(id),
@@ -59,10 +87,10 @@ export function useAddEventUsersMutation(id: string) {
   })
 }
 
-export function useDeleteEventMutation(id: string) {
+export function useAdminDeleteEventMutation(id: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: $memberApiClient.v1.events.byId(toValue(id)).delete,
+    mutationFn: $adminApiClient.event.byId(toValue(id)).delete,
     onSuccess() {
       queryClient.refetchQueries({
         queryKey: queryKeyFactory.events,

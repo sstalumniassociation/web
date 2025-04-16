@@ -17,7 +17,6 @@ Framework7.use(Framework7Vue)
 const route = useRoute()
 
 const auth = useCurrentUser()
-const queryClient = useQueryClient()
 const authLoaded = useIsCurrentUserLoaded()
 const { data: user, isLoading: userIsLoading } = useWhoAmI()
 
@@ -27,7 +26,7 @@ const state = reactive({
 
 watch([authLoaded, auth, userIsLoading, user], (values, _, onCleanup) => {
   const loggedOut = values[0] && !values[1]
-  const isGuardHouse = !values[2] && values[3]?.serviceAccount?.serviceAccountType === 'GuardHouse'
+  const isGuardHouse = !values[2] && values[3] && 'serviceAccountType' in values[3] && values[3].serviceAccountType === 'GuardHouse'
 
   const timeout = setTimeout(() => {
     state.showLoginScreen = loggedOut || !isGuardHouse

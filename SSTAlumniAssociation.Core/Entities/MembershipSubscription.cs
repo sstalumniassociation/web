@@ -22,7 +22,7 @@ public class MembershipSubscription
     /// <summary>
     /// Payment processor's payment intent / request state
     /// </summary>
-    public string? PaymentIntentState { get; set; }
+    public PaymentIntentState PaymentIntentState { get; set; } = PaymentIntentState.None;
 
     #region Navigations
 

@@ -4,32 +4,32 @@ const queryKeyFactory = {
   checkIns: ['checkIns'],
 }
 
-export function useCheckInsWithAppScope() {
+export function useMemberCheckIns() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.checkIns,
-    queryFn: () => $memberApiClient.v1.checkIn.get({ queryParameters: { scope: 'app' } }),
+    queryFn: () => $memberApiClient.checkIn.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
-export function useCheckInsWithAdminScope() {
+export function useAdminCheckIns() {
   const firebaseCurrentUser = useCurrentUser()
   return useQuery({
     queryKey: queryKeyFactory.checkIns,
-    queryFn: () => $memberApiClient.v1.checkIn.get({ queryParameters: { scope: 'admin' } }),
+    queryFn: () => $adminApiClient.checkIn.get(),
     enabled: computed(() => !!firebaseCurrentUser.value), // Only run when user exists
   })
 }
 
-export function useCreateCheckInMutation() {
+export function useServiceAccountCreateCheckInMutation() {
   return useMutation({
-    mutationFn: $memberApiClient.v1.checkIn.post,
+    mutationFn: $serviceAccountApiClient.checkIn.post,
   })
 }
 
-export function useCreateCheckOutMutation() {
+export function useServiceAccountCreateCheckOutMutation() {
   return useMutation({
-    mutationFn: (id: string) => $memberApiClient.v1.checkIn.byId(id).checkOut.post(),
+    mutationFn: (id: string) => $serviceAccountApiClient.checkIn.byId(id).checkOut.post(),
   })
 }

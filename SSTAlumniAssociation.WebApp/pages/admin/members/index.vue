@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FilterMatchMode } from '@primevue/core'
 
-const { data, isPending: usersPending } = useUsers()
+const { data, isPending: usersPending } = useAdminApiGetUsers()
 
 const sizeOptions: { label: string, value: 'small' | 'large' | undefined }[] = [
   { label: 'Small', value: 'small' },
@@ -31,7 +31,7 @@ const filters = ref({
 
     <DataTable
       v-model:filters="filters"
-      removable-sort paginator data-key="id" :rows="40" :value="data?.users" :size="size.value"
+      removable-sort paginator data-key="id" :rows="40" :value="data" :size="size.value"
       :loading="usersPending" :global-filter-fields="['name', 'email']"
     >
       <template #empty>

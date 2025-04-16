@@ -29,3 +29,6 @@ logs
 # .NET
 bin
 obj
+*.DotSettings.user
+
+.unikraft

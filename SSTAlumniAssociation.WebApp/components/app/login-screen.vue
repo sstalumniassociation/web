@@ -35,14 +35,11 @@ async function login() {
 
 async function validateEmail() {
   try {
-    const account = await $api('/api/auth/verify', {
-      method: 'POST',
-      body: {
-        email: state.email,
-      },
+    const account = await $memberApiClient.auth.verify.post({
+      email: state.email,
     })
-    state.accountLinked = account.linked
-    state.accountId = account.id
+    state.accountLinked = account!.linked!
+    state.accountId = account!.id!
   }
   catch (err) {
     if (err instanceof FetchError && err.statusCode === 404) {
