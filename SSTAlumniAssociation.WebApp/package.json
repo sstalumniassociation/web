@@ -65,7 +65,7 @@
     "idb-keyval": "^6.2.1",
     "jose": "^5.8.0",
     "material-icons": "^1.13.12",
-    "nuxt": "^3.13.1",
+    "nuxt": "^4.0.0",
     "nuxt-vuefire": "^1.0.4",
     "papaparse": "^5.4.1",
     "primevue": "4.0.6",
